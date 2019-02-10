@@ -1,3 +1,4 @@
 .vs/
 PowerMonitor.API/build/
 PowerMonitor.API/node_modules/
+PowerMonitor.API/.idea/
