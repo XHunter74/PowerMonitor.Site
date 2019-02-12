@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { WeatherForecast, ServicesService } from '../services/services-service'
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-fetch-data',
@@ -8,16 +10,16 @@ import { HttpClient } from '@angular/common/http';
 export class FetchDataComponent {
   public forecasts: WeatherForecast[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'Weather').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+  constructor(http: HttpClient, private servicesService: ServicesService) {
+    this.refreshData();
+  }
+
+  async refreshData() {
+    try {
+      this.forecasts = await this.servicesService.getSampleData();
+    } catch (e) {
+      alert("Something going wrong!");
+    }
   }
 }
 
-interface WeatherForecast {
-  dateFormatted: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
