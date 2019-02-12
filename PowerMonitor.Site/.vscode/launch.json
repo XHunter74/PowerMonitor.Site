@@ -11,14 +11,7 @@
             "reAttach": true,
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}",
-            "firefoxExecutable": "C:\\Users\\Serhiy\\AppData\\Local\\Mozilla Firefox\\firefox.exe"
+            "firefoxExecutable": "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
         },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Chrome",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
-        }
     ]
 }
