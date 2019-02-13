@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component'
 import { AuthGuard } from "./services/auth.guard";
@@ -23,7 +22,6 @@ import { PlatformInfoComponent } from './platform-info/platform-info.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     FetchDataComponent,
     AppLoginComponent,
     LoginModalComponent,
@@ -39,7 +37,6 @@ import { PlatformInfoComponent } from './platform-info/platform-info.component';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-      { path: 'counter', component: CounterComponent, canActivate: [AuthGuard] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
