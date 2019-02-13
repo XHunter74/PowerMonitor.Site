@@ -26,6 +26,11 @@
             <span class='fas fa-database'></span> Fetch data
           </a>
         </li>
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a [routerLink]='["/platform-info"]' class="nav-link" (click)='collapse()'>
+            <span class='fas fa-home'></span> Platform Info
+          </a>
+        </li>
         <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
             Login

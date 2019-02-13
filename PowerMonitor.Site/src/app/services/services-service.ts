@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { UsersService } from './users-service';
 
 import { catchError, retry } from 'rxjs/operators';
+import { ISystemInfo } from '../models/sysinfo.model';
 
 
 
@@ -43,7 +44,28 @@ export class ServicesService {
 
         let promise = new Promise<WeatherForecast[]>((resolve, reject) => {
             this.http
-                .get<WeatherForecast[]>(this.baseUrl + 'weather', { headers })
+                .get<WeatherForecast[]>(this.baseUrl + 'services', { headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    reject({ error: "Server error" });
+                });
+        });
+        return promise;
+    }
+
+    async getSystemInfo(): Promise<ISystemInfo> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+
+        let promise = new Promise<ISystemInfo>((resolve, reject) => {
+            this.http
+                .get<ISystemInfo>(this.baseUrl + 'services/sysinfo', { headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);

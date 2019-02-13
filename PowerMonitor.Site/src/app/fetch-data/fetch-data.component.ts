@@ -15,6 +15,7 @@ export class FetchDataComponent {
   }
 
   async refreshData() {
+    this.forecasts = null;
     try {
       this.forecasts = await this.servicesService.getSampleData();
     } catch (e) {

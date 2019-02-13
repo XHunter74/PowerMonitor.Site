@@ -15,6 +15,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component'
 import { AuthGuard } from "./services/auth.guard";
 import { AppLoginComponent } from './app-login/login.component';
+import { PlatformInfoComponent } from './platform-info/platform-info.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AppLoginComponent } from './app-login/login.component';
     FetchDataComponent,
     AppLoginComponent,
     LoginModalComponent,
+    PlatformInfoComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -39,6 +41,7 @@ import { AppLoginComponent } from './app-login/login.component';
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'counter', component: CounterComponent, canActivate: [AuthGuard] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuard] },
+      { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],

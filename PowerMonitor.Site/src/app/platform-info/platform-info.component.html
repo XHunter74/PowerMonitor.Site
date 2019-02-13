@@ -1,0 +1,29 @@
+<h1>Hosting Platform Information</h1>
+
+<p *ngIf="!sysInfo">Loading System Information...</p>
+<div *ngIf="sysInfo">
+    <ul>
+        <li>Manufacturer: <strong>{{ sysInfo.manufacturer }}</strong></li>
+    </ul>
+    <ul>
+        <li>Model: <strong>{{ sysInfo.model }}</strong></li>
+    </ul>
+    <ul>
+        <li>OS Platform: <strong>{{ sysInfo.platform }}</strong></li>
+    </ul>
+    <ul>
+        <li>OS: <strong>{{ sysInfo.distro }}</strong></li>
+    </ul>
+    <ul>
+        <li>CPU Manufacturer: <strong>{{ sysInfo.cpuManufacturer }}</strong></li>
+    </ul>
+    <ul>
+        <li>CPU Brand: <strong>{{ sysInfo.cpuBrand }}</strong></li>
+    </ul>
+    <ul>
+        <li>CPU Speed: <strong>{{ sysInfo.cpuSpeed }} GHz</strong></li>
+    </ul>
+    <ul>
+        <li>CPU Cores: <strong>{{ sysInfo.cpuCores }}</strong></li>
+    </ul>
+</div>
