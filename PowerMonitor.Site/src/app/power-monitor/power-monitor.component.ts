@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PowerService } from '../services/power-service';
-import { from } from 'rxjs';
+import { IVoltageModel } from '../models/voltage.model';
 
 @Component({
     selector: 'app-power-monitor',
@@ -8,16 +8,18 @@ import { from } from 'rxjs';
 })
 export class PowerMonitorComponent {
 
-    private voltageData;
+    public voltageData: IVoltageModel[];
 
     constructor(private powerService: PowerService) {
         this.refreshData();
     }
 
     public lineChartData: Array<any> = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+        {
+            data: [], label: 'Voltage, V'
+        },
     ];
-    public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
+    public lineChartLabels: Array<any> = [];
     public lineChartOptions: any = {
         responsive: true
     };
@@ -50,6 +52,8 @@ export class PowerMonitorComponent {
             const finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());;
             finishDate.setDate(finishDate.getDate() + 1);
             this.voltageData = await this.powerService.getVoltageData(startDate, finishDate);
+            this.lineChartData[0].data = this.voltageData.map(record => { return record.voltage });
+            this.lineChartLabels =this.voltageData.map(() => { return '' });;
         } catch (e) {
             alert('Something going wrong!');
         }

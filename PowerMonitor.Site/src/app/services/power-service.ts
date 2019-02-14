@@ -8,6 +8,7 @@ import { UsersService } from './users-service';
 
 import { catchError, retry } from 'rxjs/operators';
 import { ISystemInfo } from '../models/sysinfo.model';
+import { IVoltageModel } from '../models/voltage.model';
 
 
 
@@ -35,7 +36,7 @@ export class PowerService {
 
     }
 
-    async getVoltageData(start: Date, finish: Date): Promise<WeatherForecast> {
+    async getVoltageData(start: Date, finish: Date): Promise<IVoltageModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -45,9 +46,9 @@ export class PowerService {
             .set('startDate', start.toISOString())
             .set('finishDate', finish.toISOString());
 
-        const promise = new Promise<WeatherForecast>((resolve, reject) => {
+        const promise = new Promise<IVoltageModel[]>((resolve, reject) => {
             this.http
-                .get<WeatherForecast>(this.baseUrl + 'power/voltage', { params, headers })
+                .get<IVoltageModel[]>(this.baseUrl + 'power/voltage', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
