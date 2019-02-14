@@ -11,8 +11,8 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { LoginModalComponent } from './app-login/login-modal.component'
-import { AuthGuard } from "./services/auth.guard";
+import { LoginModalComponent } from './app-login/login-modal.component';
+import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 

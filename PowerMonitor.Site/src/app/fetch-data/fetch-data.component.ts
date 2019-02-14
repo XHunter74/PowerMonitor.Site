@@ -19,7 +19,7 @@ export class FetchDataComponent {
     try {
       this.forecasts = await this.servicesService.getSampleData();
     } catch (e) {
-      alert("Something going wrong!");
+      alert('Something going wrong!');
     }
   }
 }
