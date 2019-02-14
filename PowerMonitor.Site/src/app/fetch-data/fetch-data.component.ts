@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { WeatherForecast, ServicesService } from '../services/services-service'
 import { from } from 'rxjs';
 
@@ -10,7 +9,7 @@ import { from } from 'rxjs';
 export class FetchDataComponent {
   public forecasts: WeatherForecast[];
 
-  constructor(http: HttpClient, private servicesService: ServicesService) {
+  constructor(private servicesService: ServicesService) {
     this.refreshData();
   }
 

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -15,6 +16,7 @@ import { LoginModalComponent } from './app-login/login-modal.component';
 import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
+import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { PlatformInfoComponent } from './platform-info/platform-info.component';
     FetchDataComponent,
     AppLoginComponent,
     LoginModalComponent,
-    PlatformInfoComponent
+    PlatformInfoComponent,
+    PowerMonitorComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -35,10 +38,12 @@ import { PlatformInfoComponent } from './platform-info/platform-info.component';
     ReactiveFormsModule,
     NgbModule,
     BrowserAnimationsModule,
+    ChartsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
+      { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],
