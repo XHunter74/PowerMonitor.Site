@@ -5,7 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Firefox",
+            "name": "Firefox Work",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}",
+            "firefoxExecutable": "C:\\Users\\Serhiy\\AppData\\Local\\Mozilla Firefox\\firefox.exe"
+        },
+        {
+            "name": "Firefox Home",
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
