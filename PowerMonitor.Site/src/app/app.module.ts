@@ -8,10 +8,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 
+import { AppMaterialModule } from './material-module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
@@ -24,7 +24,6 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent,
     AppLoginComponent,
     LoginModalComponent,
     PlatformInfoComponent,
@@ -39,9 +38,9 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
     NgbModule,
     BrowserAnimationsModule,
     ChartsModule,
+    AppMaterialModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
