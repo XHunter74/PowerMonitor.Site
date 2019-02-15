@@ -8,7 +8,7 @@ import { UsersService } from './users-service';
 
 import { catchError, retry } from 'rxjs/operators';
 import { ISystemInfo } from '../models/sysinfo.model';
-import { IVoltageModel } from '../models/voltage.model';
+import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 
 
 
@@ -36,19 +36,21 @@ export class PowerService {
 
     }
 
-    async getVoltageData(start: Date, finish: Date): Promise<IVoltageModel[]> {
+    async getVoltageAmperageData(start: Date, finish: Date): Promise<IVoltageAmperageModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': `${authToken}`
         });
+        const startDate = start.getFullYear().toString() + '-' + (start.getMonth() + 1).toString() + '-' + start.getDate().toString();
+        const finishDate = finish.getFullYear().toString() + '-' + (finish.getMonth() + 1).toString() + '-' + finish.getDate().toString();
         const params = new HttpParams()
-            .set('startDate', start.toISOString())
-            .set('finishDate', finish.toISOString());
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
 
-        const promise = new Promise<IVoltageModel[]>((resolve, reject) => {
+        const promise = new Promise<IVoltageAmperageModel[]>((resolve, reject) => {
             this.http
-                .get<IVoltageModel[]>(this.baseUrl + 'power/voltage', { params, headers })
+                .get<IVoltageAmperageModel[]>(this.baseUrl + 'power/voltage-amperage', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
