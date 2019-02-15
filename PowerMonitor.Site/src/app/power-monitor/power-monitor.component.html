@@ -1,6 +1,6 @@
 <mat-tab-group>
     <mat-tab label="Voltage-Amperage History">
-    <br/>
+        <br />
         <p *ngIf="!voltageData">Loading Voltage...</p>
 
         <table *ngIf="voltageData" class="table" matSort (matSortChange)="sortData($event)">
@@ -28,6 +28,20 @@
             </tbody>
         </table>
     </mat-tab>
-    <mat-tab label="Power History"> Content 2 </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
+    <mat-tab label="Power History, Daily">
+        <p>Total Power: {{powerSum}}, kW/h</p>
+        <div style="display: block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+        </div>
+    </mat-tab>
+    <mat-tab label="Power History, Monthly">
+            <p>Total Power: {{powerSum}}, kW/h</p>
+            <!-- <div style="display: block">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+            </div> -->
+        </mat-tab>
 </mat-tab-group>

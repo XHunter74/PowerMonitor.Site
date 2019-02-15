@@ -9,6 +9,8 @@ import { UsersService } from './users-service';
 import { catchError, retry } from 'rxjs/operators';
 import { ISystemInfo } from '../models/sysinfo.model';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
+import { ServicesUtils } from './services-utils';
+import { IPowerDataModel } from '../models/power-data.model';
 
 
 
@@ -42,8 +44,8 @@ export class PowerService {
             'Content-Type': 'application/json',
             'Authorization': `${authToken}`
         });
-        const startDate = start.getFullYear().toString() + '-' + (start.getMonth() + 1).toString() + '-' + start.getDate().toString();
-        const finishDate = finish.getFullYear().toString() + '-' + (finish.getMonth() + 1).toString() + '-' + finish.getDate().toString();
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
         const params = new HttpParams()
             .set('startDate', startDate)
             .set('finishDate', finishDate);
@@ -56,34 +58,50 @@ export class PowerService {
                     resolve(data);
                 })
                 .catch(e => {
-                    reject({ error: 'Server error' });
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch{
+                        reject({ error: 'Server error' });
+                    }
                 });
         });
         return promise;
     }
 
-    private handleError(error: HttpErrorResponse) {
-        if (error.error instanceof ErrorEvent) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.error('An error occurred:', error.error.message);
-        } else {
-            if (error.status === 401) {
-                this.userService.logout();
-                return null;
-            }
-            console.error(
-                `Backend returned code ${error.status}, ` +
-                `body was: ${error.error}`);
-        }
-        // return an observable with a user-facing error message
-        return throwError(
-            'Something bad happened; please try again later.');
+    async getPowerData(start: Date, finish: Date): Promise<IPowerDataModel[]> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
+
+        const promise = new Promise<IPowerDataModel[]>((resolve, reject) => {
+            this.http
+                .get<IPowerDataModel[]>(this.baseUrl + 'power/power-data', { params, headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch{
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
     }
+
 }
 
-export interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+function getStringDate(val: Date) {
+    const dateStr = val.getFullYear().toString() + '-' + (val.getMonth() + 1).toString() +
+        '-' + val.getDate().toString();
+    return dateStr;
 }
