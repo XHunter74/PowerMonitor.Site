@@ -3,38 +3,14 @@ import { Sort } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
-import { IPowerDataModel } from '../models/power-data.model';
 
 @Component({
-    selector: 'app-power-monitor',
-    templateUrl: './power-monitor.component.html'
+    selector: 'voltage-amperage',
+    templateUrl: './voltage-amperage.component.html'
 })
-export class PowerMonitorComponent {
+export class VoltageAmperageComponent {
 
     public voltageData: IVoltageAmperageModel[];
-    public powerData: IPowerDataModel[];
-    public powerSum: number;
-
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true
-    };
-    public barChartLabels: string[] = [];
-    public barChartType: string = 'bar';
-    public barChartLegend: boolean = true;
-
-    public barChartData: any[] = [
-        { data: [], label: 'Power, kW/h' }
-    ];
-
-    // events
-    public chartClicked(e: any): void {
-        console.log(e);
-    }
-
-    public chartHovered(e: any): void {
-        console.log(e);
-    }
 
     constructor(private powerService: PowerService) {
         this.refreshData();
@@ -47,42 +23,10 @@ export class PowerMonitorComponent {
             let finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
                 daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1));
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
-            startDate = new Date();
-            finishDate = new Date();
-            this.powerData = await this.powerService.getPowerData(startDate, finishDate);
-            this.prepareChart(this.powerData);
-            this.powerSum = 0;
-            for (let record of this.powerData) {
-                this.powerSum = this.powerSum + record.power;
-            }
-            this.powerSum = Math.round(this.powerSum * 100) / 100;
         } catch (e) {
             console.log(e);
             alert('Something going wrong!');
         }
-    }
-
-    prepareChart(data: IPowerDataModel[]) {
-        let chartData: number[] = [];
-        let chartLabels: string[] = [];
-        if (data.length < 24) {
-            for (var i = 0; i < 24; i++) {
-                chartData.push(0);
-                chartLabels.push((i + 1).toString());
-            }
-            for (let record of data) {
-                chartData[record.hours - 1] = record.power;
-            }
-        } else {
-            chartData = data.map(e => {
-                return e.power;
-            });
-            chartLabels = data.map(e => {
-                return e.hours.toString();
-            });
-        }
-        this.barChartData[0].data = chartData;
-        this.barChartLabels = chartLabels;
     }
 
     sortData(sort: Sort) {
@@ -116,4 +60,3 @@ function daysInMonth(year: number, month: number) {
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
-

@@ -16,7 +16,8 @@ import { LoginModalComponent } from './app-login/login-modal.component';
 import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
-import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
+import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
+import { VoltageAmperageComponent } from './power-monitor/voltage-amperage.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
     AppLoginComponent,
     LoginModalComponent,
     PlatformInfoComponent,
-    PowerMonitorComponent
+    PowerMonitorDailyComponent,
+    VoltageAmperageComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -42,7 +44,8 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
-      { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
+      { path: 'power-monitor', component: PowerMonitorDailyComponent, canActivate: [AuthGuard] },
+      { path: 'voltage-amperage', component: VoltageAmperageComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],
