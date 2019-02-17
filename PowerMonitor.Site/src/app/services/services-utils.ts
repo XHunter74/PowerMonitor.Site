@@ -18,7 +18,7 @@ export class ServicesUtils {
                 `body was: ${error.error}`);
         }
         // return an observable with a user-facing error message
-        return throwError(
+        throw new Error(
             'Something bad happened; please try again later.');
     }
 }

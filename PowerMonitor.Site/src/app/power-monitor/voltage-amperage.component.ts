@@ -24,7 +24,6 @@ export class VoltageAmperageComponent {
                 daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1));
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
         } catch (e) {
-            console.log(e);
             alert('Something going wrong!');
         }
     }
