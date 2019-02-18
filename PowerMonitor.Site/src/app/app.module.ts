@@ -18,6 +18,7 @@ import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
 import { VoltageAmperageComponent } from './power-monitor/voltage-amperage.component';
+import { VoltageAmperageDailyComponent } from './power-monitor/voltage-amperage-daily.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { VoltageAmperageComponent } from './power-monitor/voltage-amperage.compo
     LoginModalComponent,
     PlatformInfoComponent,
     PowerMonitorDailyComponent,
-    VoltageAmperageComponent
+    VoltageAmperageComponent,
+    VoltageAmperageDailyComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
