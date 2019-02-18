@@ -1,5 +1,6 @@
 export interface IVoltageAmperageModel {
     created: Date;
+    hours: number;
     amperageMin: number;
     amperageMax: number;
     amperageAvg: number;

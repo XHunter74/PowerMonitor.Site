@@ -19,8 +19,8 @@ export class VoltageAmperageComponent {
     async refreshData() {
         try {
             const currentDate = new Date();
-            let startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            let finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
                 daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1));
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
         } catch (e) {
@@ -39,6 +39,7 @@ export class VoltageAmperageComponent {
             const isAsc = sort.direction === 'asc';
             switch (sort.active) {
                 case 'created': return compare(a.created, b.created, isAsc);
+                case 'hours': return compare(a.hours, b.hours, isAsc);
                 case 'voltageMax': return compare(a.voltageMax, b.voltageMax, isAsc);
                 case 'voltageMin': return compare(a.voltageMin, b.voltageMin, isAsc);
                 case 'voltageAvg': return compare(a.voltageAvg, b.voltageAvg, isAsc);

@@ -1,9 +1,10 @@
-<div style="display: block">
+<div class="table-responsive">
     <p *ngIf="!voltageData">Loading Voltage...</p>
     <table *ngIf="voltageData" class="table" matSort (matSortChange)="sortData($event)">
         <thead>
             <tr>
                 <th mat-sort-header="created">Date</th>
+                <th mat-sort-header="hours">Hours</th>
                 <th mat-sort-header="voltageMax">Voltage Max, V</th>
                 <th mat-sort-header="voltageMin">Voltage Min, V</th>
                 <th mat-sort-header="voltageAvg">Voltage Average, V</th>
@@ -15,6 +16,7 @@
         <tbody>
             <tr *ngFor="let record of voltageData" [class.selected]="user === selectedRecord">
                 <td>{{ record.created | date: 'dd.MM.yyyy'}}</td>
+                <td>{{ record.hours }}</td>
                 <td>{{ record.voltageMax }}</td>
                 <td>{{ record.voltageMin }}</td>
                 <td>{{ record.voltageAvg }}</td>
