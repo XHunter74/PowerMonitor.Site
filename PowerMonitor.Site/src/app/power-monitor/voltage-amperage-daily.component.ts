@@ -3,6 +3,7 @@ import { Sort } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'voltage-amperage-daily',
@@ -11,8 +12,11 @@ import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 export class VoltageAmperageDailyComponent {
 
     public voltageData: IVoltageAmperageModel[];
+    public currentDate: NgbDate;
 
     constructor(private powerService: PowerService) {
+        const today = new Date();
+        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDay());
         this.refreshData();
     }
 

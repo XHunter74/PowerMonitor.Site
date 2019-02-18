@@ -4,7 +4,7 @@ import { PowerService } from '../services/power-service';
 import { IPowerDataModel } from '../models/power-data.model';
 
 @Component({
-    selector: 'app-power-monitor',
+    selector: 'app-power-monitor-daily',
     templateUrl: './power-monitor-daily.component.html'
 })
 export class PowerMonitorDailyComponent {
