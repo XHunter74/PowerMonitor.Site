@@ -20,9 +20,9 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
 import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
-import { VoltageAmperageComponent } from './power-monitor/voltage-amperage.component';
-import { VoltageAmperageDailyComponent } from './power-monitor/voltage-amperage-daily.component';
-import { VoltageAmperageMonthlyComponent } from './power-monitor/voltage-amperage-monthly.component';
+import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
+import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
+import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-amperage-monthly.component';
 
 
 @NgModule({
