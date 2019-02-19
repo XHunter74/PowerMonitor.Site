@@ -10,8 +10,8 @@ import { catchError, retry } from 'rxjs/operators';
 import { ISystemInfo } from '../models/sysinfo.model';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ServicesUtils } from './services-utils';
-import { IPowerDataModel } from '../models/power-data.model';
-import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
+import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
+import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 
 
 
@@ -69,7 +69,7 @@ export class PowerService {
         return promise;
     }
 
-    async getPowerData(start: Date, finish: Date): Promise<IPowerDataModel[]> {
+    async getPowerDataHourly(start: Date, finish: Date): Promise<IPowerDataHourlyModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -81,9 +81,9 @@ export class PowerService {
             .set('startDate', startDate)
             .set('finishDate', finishDate);
 
-        const promise = new Promise<IPowerDataModel[]>((resolve, reject) => {
+        const promise = new Promise<IPowerDataHourlyModel[]>((resolve, reject) => {
             this.http
-                .get<IPowerDataModel[]>(this.baseUrl + 'power/power-data', { params, headers })
+                .get<IPowerDataHourlyModel[]>(this.baseUrl + 'power/power-data-hourly', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
@@ -99,7 +99,7 @@ export class PowerService {
         return promise;
     }
 
-    async getMonthlyPowerData(start: Date, finish: Date): Promise<IPowerDataMonthlyModel[]> {
+    async getPowerDataMonthly(start: Date, finish: Date): Promise<IPowerDataDailyModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -111,9 +111,9 @@ export class PowerService {
             .set('startDate', startDate)
             .set('finishDate', finishDate);
 
-        const promise = new Promise<IPowerDataMonthlyModel[]>((resolve, reject) => {
+        const promise = new Promise<IPowerDataDailyModel[]>((resolve, reject) => {
             this.http
-                .get<IPowerDataMonthlyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
+                .get<IPowerDataDailyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
