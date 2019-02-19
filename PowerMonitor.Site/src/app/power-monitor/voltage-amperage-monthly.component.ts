@@ -6,10 +6,10 @@ import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'voltage-amperage-daily',
+    selector: 'voltage-amperage-monthly',
     templateUrl: './voltage-amperage-daily.component.html'
 })
-export class VoltageAmperageDailyComponent {
+export class VoltageAmperageMonthlyComponent {
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: NgbDate;
@@ -22,8 +22,10 @@ export class VoltageAmperageDailyComponent {
 
     async refreshData() {
         try {
-            const startDate = new Date();
-            const finishDate = new Date();
+            const currentDate = new Date();
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
+                daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1));
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
         } catch (e) {
             alert('Something going wrong!');
