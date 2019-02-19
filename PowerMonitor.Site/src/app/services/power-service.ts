@@ -12,6 +12,7 @@ import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ServicesUtils } from './services-utils';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
+import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 
 
 
@@ -129,7 +130,7 @@ export class PowerService {
         return promise;
     }
 
-    async getPowerDataMonthly(start: Date, finish: Date): Promise<IPowerDataDailyModel[]> {
+    async getPowerDataMonthly(start: Date, finish: Date): Promise<IPowerDataMonthlyModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -141,9 +142,9 @@ export class PowerService {
             .set('startDate', startDate)
             .set('finishDate', finishDate);
 
-        const promise = new Promise<IPowerDataDailyModel[]>((resolve, reject) => {
+        const promise = new Promise<IPowerDataMonthlyModel[]>((resolve, reject) => {
             this.http
-                .get<IPowerDataDailyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
+                .get<IPowerDataMonthlyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);

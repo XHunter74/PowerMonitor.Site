@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -40,11 +40,23 @@ export class PowerMonitorDailyComponent implements OnInit {
         console.log(e);
     }
 
-    constructor(private powerService: PowerService, private router: Router) {
+    constructor(private powerService: PowerService, private router: Router,
+        private activatedRouter: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.currentDate = new Date();
+        this.activatedRouter.params.subscribe(
+            params => {
+                const year = params['year'];
+                const month = params['month'];
+                if (year && month) {
+                    // tslint:disable-next-line: radix
+                    this.currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+                } else {
+                    this.currentDate = new Date();
+                }
+            }
+        );
         this.refreshData();
     }
 

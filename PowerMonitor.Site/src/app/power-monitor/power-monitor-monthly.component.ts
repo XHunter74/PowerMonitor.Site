@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class PowerMonitorMonthlyComponent implements OnInit {
 
-    public powerData: IPowerDataDailyModel[];
+    public powerData: IPowerDataMonthlyModel[];
     public powerSum: number;
 
     public barChartOptions: any = {
@@ -30,9 +31,9 @@ export class PowerMonitorMonthlyComponent implements OnInit {
     // events
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
-            const days = e.active['0']._index + 1;
-            this.router.navigate(['power-monitor', 'hourly',
-                { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: days }]);
+            const month = e.active['0']._index + 1;
+            this.router.navigate(['power-monitor', 'daily',
+                { year: this.currentDate.getFullYear(), month: month }]);
         }
     }
 
@@ -40,19 +41,29 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         console.log(e);
     }
 
-    constructor(private powerService: PowerService, private router: Router) {
+    constructor(private powerService: PowerService, private router: Router,
+        private activatedRouter: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.currentDate = new Date();
+        this.activatedRouter.params.subscribe(
+            params => {
+                const year = params['year'];
+                if (year) {
+                    // tslint:disable-next-line: radix
+                    this.currentDate = new Date(parseInt(year), 0, 1);
+                } else {
+                    this.currentDate = new Date();
+                }
+            }
+        );
         this.refreshData();
     }
 
     async refreshData() {
         try {
-            const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-            const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-                daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
+            const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
+            const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
             this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
             this.prepareChart(this.currentDate, this.powerData);
             this.powerSum = 0;
@@ -66,25 +77,23 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         }
     }
 
-    prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
+    prepareChart(currentDate: Date, data: IPowerDataMonthlyModel[]) {
         let chartData: number[] = [];
         let chartLabels: string[] = [];
-        const days = daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1);
-        if (data.length < days) {
-            for (let i = 0; i < days; i++) {
+        if (data.length < 12) {
+            for (let i = 0; i < 12; i++) {
                 chartData.push(0);
                 chartLabels.push((i + 1).toString());
             }
             for (const record of data) {
-                const day = new Date(record.created).getDate();
-                chartData[day - 1] = record.power;
+                chartData[record.month - 1] = record.power;
             }
         } else {
             chartData = data.map(e => {
                 return e.power;
             });
             chartLabels = data.map(e => {
-                return e.hours.toString();
+                return e.month.toString();
             });
         }
         this.barChartData[0].data = chartData;
