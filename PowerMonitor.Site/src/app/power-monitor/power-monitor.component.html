@@ -1,14 +1,24 @@
-<ngb-tabset>
-    <ngb-tab title="Daily">
+<ngb-tabset #tabs [activeId]="selectedTab" (tabChange)="selectedTab = $event.nextId">
+    <ngb-tab id="daily">
+        <ng-template ngbTabTitle>
+            <a [routerLink]="['/power-monitor','daily']">Dayly</a>
+        </ng-template>
         <ng-template ngbTabContent>
             <app-power-monitor-daily></app-power-monitor-daily>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Monthly">
+    <ngb-tab id="monthly">
+        <ng-template ngbTabTitle>
+            <a [routerLink]="['/power-monitor','monthly']">Monthly</a>
+        </ng-template>
         <ng-template ngbTabContent>
+            <app-power-monitor-monthly></app-power-monitor-monthly>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Anualy">
+    <ngb-tab id="anualy">
+        <ng-template ngbTabTitle>
+            <a [routerLink]="['/power-monitor','anualy']">Anualy</a>
+        </ng-template>
         <ng-template ngbTabContent>
         </ng-template>
     </ngb-tab>

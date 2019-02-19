@@ -11,6 +11,7 @@ import { ISystemInfo } from '../models/sysinfo.model';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ServicesUtils } from './services-utils';
 import { IPowerDataModel } from '../models/power-data.model';
+import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 
 
 
@@ -91,6 +92,36 @@ export class PowerService {
                     try {
                         ServicesUtils.handleError(this.userService, e);
                     } catch{
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async getMonthlyPowerData(start: Date, finish: Date): Promise<IPowerDataMonthlyModel[]> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
+
+        const promise = new Promise<IPowerDataMonthlyModel[]>((resolve, reject) => {
+            this.http
+                .get<IPowerDataMonthlyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
                         reject({ error: 'Server error' });
                     }
                 });
