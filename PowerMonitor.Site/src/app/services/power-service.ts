@@ -99,6 +99,36 @@ export class PowerService {
         return promise;
     }
 
+    async getPowerDataDaily(start: Date, finish: Date): Promise<IPowerDataDailyModel[]> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
+
+        const promise = new Promise<IPowerDataDailyModel[]>((resolve, reject) => {
+            this.http
+                .get<IPowerDataDailyModel[]>(this.baseUrl + 'power/power-data-daily', { params, headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
     async getPowerDataMonthly(start: Date, finish: Date): Promise<IPowerDataDailyModel[]> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
