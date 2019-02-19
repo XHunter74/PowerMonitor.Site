@@ -16,7 +16,7 @@ export class VoltageAmperageDailyComponent {
 
     constructor(private powerService: PowerService) {
         const today = new Date();
-        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDay());
+        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
         this.refreshData();
     }
 
