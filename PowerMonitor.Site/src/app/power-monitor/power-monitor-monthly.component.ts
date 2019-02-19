@@ -6,10 +6,10 @@ import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-power-monitor-daily',
-    templateUrl: './power-monitor-daily.component.html'
+    selector: 'app-power-monitor-monthly',
+    templateUrl: './power-monitor-monthly.component.html'
 })
-export class PowerMonitorDailyComponent implements OnInit {
+export class PowerMonitorMonthlyComponent implements OnInit {
 
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
@@ -53,7 +53,7 @@ export class PowerMonitorDailyComponent implements OnInit {
             const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
             const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
                 daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-            this.powerData = await this.powerService.getPowerDataDaily(startDate, finishDate);
+            this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
             this.prepareChart(this.currentDate, this.powerData);
             this.powerSum = 0;
             for (const record of this.powerData) {

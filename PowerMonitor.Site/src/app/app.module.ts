@@ -17,9 +17,12 @@ import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
+import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
+import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
 import { VoltageAmperageComponent } from './power-monitor/voltage-amperage.component';
 import { VoltageAmperageDailyComponent } from './power-monitor/voltage-amperage-daily.component';
+import { VoltageAmperageMonthlyComponent } from './power-monitor/voltage-amperage-monthly.component';
 
 
 @NgModule({
@@ -31,9 +34,12 @@ import { VoltageAmperageDailyComponent } from './power-monitor/voltage-amperage-
     LoginModalComponent,
     PlatformInfoComponent,
     PowerMonitorComponent,
+    PowerMonitorHourlyComponent,
     PowerMonitorDailyComponent,
+    PowerMonitorMonthlyComponent,
     VoltageAmperageComponent,
-    VoltageAmperageDailyComponent
+    VoltageAmperageDailyComponent,
+    VoltageAmperageMonthlyComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -49,6 +55,9 @@ import { VoltageAmperageDailyComponent } from './power-monitor/voltage-amperage-
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
+      { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
+      { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
+      { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
       { path: 'voltage-amperage', component: VoltageAmperageComponent, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])

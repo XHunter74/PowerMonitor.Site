@@ -4,26 +4,29 @@ import { Sort } from '@angular/material';
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { daysInMonth } from '../utils';
 
 @Component({
-    selector: 'voltage-amperage-daily',
+    selector: 'voltage-amperage-monthly',
     templateUrl: './voltage-amperage-daily.component.html'
 })
-export class VoltageAmperageDailyComponent {
+export class VoltageAmperageMonthlyComponent {
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: NgbDate;
 
     constructor(private powerService: PowerService) {
         const today = new Date();
-        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDay());
         this.refreshData();
     }
 
     async refreshData() {
         try {
-            const startDate = new Date();
-            const finishDate = new Date();
+            const currentDate = new Date();
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const finishDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
+                daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1));
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
         } catch (e) {
             alert('Something going wrong!');
@@ -52,11 +55,6 @@ export class VoltageAmperageDailyComponent {
             }
         });
     }
-}
-
-function daysInMonth(year: number, month: number) {
-    const days = new Date(year, month, 0).getDate();
-    return days;
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
