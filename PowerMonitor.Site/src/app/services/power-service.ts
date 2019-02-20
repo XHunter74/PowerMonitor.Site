@@ -13,6 +13,7 @@ import { ServicesUtils } from './services-utils';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
+import { ISensorsDataModel } from '../models/sensors-data.model';
 
 
 
@@ -145,6 +146,31 @@ export class PowerService {
         const promise = new Promise<IPowerDataMonthlyModel[]>((resolve, reject) => {
             this.http
                 .get<IPowerDataMonthlyModel[]>(this.baseUrl + 'power/power-data-monthly', { params, headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async getSensorsData(): Promise<ISensorsDataModel> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+
+        const promise = new Promise<ISensorsDataModel>((resolve, reject) => {
+            this.http
+                .get<ISensorsDataModel>(this.baseUrl + 'power/sensors-data', { headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
