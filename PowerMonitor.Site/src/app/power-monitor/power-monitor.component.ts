@@ -19,11 +19,6 @@ export class PowerMonitorComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe(
-            params => {
-                // this.prospectId = +params['prospectid'];
-            }
-        );
     }
 
     ngAfterViewChecked(): void {
