@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppMaterialModule } from './material-module';
-import { GaugeChartComponent } from 'angular-gauge-chart'
+import { GaugeChartModule } from 'angular-gauge-chart'
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RealDataComponent } from './home/real-data.component';
@@ -28,7 +28,6 @@ import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-ampe
 
 @NgModule({
   declarations: [
-    GaugeChartComponent,
     AppComponent,
     NavMenuComponent,
     RealDataComponent,
@@ -53,6 +52,7 @@ import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-ampe
     BrowserAnimationsModule,
     ChartsModule,
     AppMaterialModule,
+    GaugeChartModule,
     RouterModule.forRoot([
       { path: '', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
