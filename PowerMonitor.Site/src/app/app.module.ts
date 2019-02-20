@@ -24,6 +24,9 @@ import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-mont
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
 import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-amperage-monthly.component';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { APP_DATE_FORMATS } from './app-date-format';
 
 
 @NgModule({
@@ -64,7 +67,13 @@ import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-ampe
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

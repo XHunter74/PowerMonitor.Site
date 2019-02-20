@@ -4,28 +4,15 @@ import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material';
 
 
 //https://momentjs.com/docs/#/displaying/format/
-export const APP_DATE_FORMATS = {
-    parse: {
-        dateInput: 'DD.MM.YYYY',
-    },
-    display: {
-        dateInput: 'DD.MM.YYYY',
-    },
-};
+
 
 @Component({
     selector: 'app-power-monitor-hourly',
-    templateUrl: './power-monitor-hourly.component.html',
-    providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
-    ]
+    templateUrl: './power-monitor-hourly.component.html'
 })
 export class PowerMonitorHourlyComponent implements OnInit {
 
