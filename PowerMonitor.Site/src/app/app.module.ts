@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppMaterialModule } from './material-module';
-import { GaugeChartComponent } from 'angular-gauge-chart'
+import { GaugeChartComponent } from 'angular-gauge-chart';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RealDataComponent } from './home/real-data.component';
