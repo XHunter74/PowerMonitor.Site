@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
-import { daysInMonth } from '../utils';
-import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
+import { Moment } from 'moment';
+import { MatDatepicker, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { FormControl } from '@angular/forms';
+import { YEAR_DATE_FORMATS } from '../app-date-format';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
     selector: 'app-power-monitor-monthly',
-    templateUrl: './power-monitor-monthly.component.html'
+    templateUrl: './power-monitor-monthly.component.html',
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS }
+      ]
 })
 export class PowerMonitorMonthlyComponent implements OnInit {
 
@@ -27,6 +34,7 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         { data: [], label: 'Power, kW/h' }
     ];
     currentDate: Date;
+    currentDateControl: FormControl = new FormControl();
 
     // events
     public chartClicked(e: any): void {
@@ -39,6 +47,16 @@ export class PowerMonitorMonthlyComponent implements OnInit {
 
     public chartHovered(e: any): void {
         console.log(e);
+    }
+
+    chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
+        const year = normalizedYear.year();
+        this.currentDate = new Date(year, 0, 1);
+        datepicker.close();
+        this.router.navigate(['power-monitor', 'monthly',
+            { year: this.currentDate.getFullYear() }]);
+        this.currentDateControl.setValue(this.currentDate.toISOString());
+        this.refreshData();
     }
 
     constructor(private powerService: PowerService, private router: Router,
@@ -57,6 +75,7 @@ export class PowerMonitorMonthlyComponent implements OnInit {
                 }
             }
         );
+        this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
 
