@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 
@@ -8,7 +8,7 @@ import { ISensorsDataModel } from '../models/sensors-data.model';
 })
 
 
-export class RealDataComponent implements OnInit {
+export class RealDataComponent implements OnInit, OnDestroy {
 
   private maxVoltage = 270;
   private nominalVoltageMin = 200;
@@ -52,6 +52,8 @@ export class RealDataComponent implements OnInit {
     }
   };
 
+  private interval;
+
   constructor(private powerService: PowerService) {
   }
 
@@ -59,14 +61,18 @@ export class RealDataComponent implements OnInit {
     this.refreshData();
   }
 
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
   async refreshData() {
     let isErrorShown = false;
-    const interval = setInterval(async () => {
+    this.interval = setInterval(async () => {
       try {
         const sensorsData = await this.powerService.getSensorsData();
         this.updateGaugeIndicators(sensorsData);
       } catch (e) {
-        clearInterval(interval);
+        clearInterval(this.interval);
         console.log(e);
         if (!isErrorShown) {
           isErrorShown = true;
