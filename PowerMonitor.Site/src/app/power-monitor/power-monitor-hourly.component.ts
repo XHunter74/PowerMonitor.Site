@@ -2,11 +2,30 @@ import { Component, OnInit } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material';
+
+
+//https://momentjs.com/docs/#/displaying/format/
+export const APP_DATE_FORMATS = {
+    parse: {
+        dateInput: 'DD.MM.YYYY',
+    },
+    display: {
+        dateInput: 'DD.MM.YYYY',
+    },
+};
 
 @Component({
     selector: 'app-power-monitor-hourly',
-    templateUrl: './power-monitor-hourly.component.html'
+    templateUrl: './power-monitor-hourly.component.html',
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
+    ]
 })
 export class PowerMonitorHourlyComponent implements OnInit {
 
@@ -26,12 +45,13 @@ export class PowerMonitorHourlyComponent implements OnInit {
     ];
 
     currentDate: Date;
+    currentDateControl: FormControl = new FormControl();
 
-    constructor(private powerService: PowerService, private router: ActivatedRoute) {
+    constructor(private powerService: PowerService, private activatedRouter: ActivatedRoute, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.router.params.subscribe(
+        this.activatedRouter.params.subscribe(
             params => {
                 const year = params['year'];
                 const month = params['month'];
@@ -44,6 +64,7 @@ export class PowerMonitorHourlyComponent implements OnInit {
                 }
             }
         );
+        this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
 
@@ -54,6 +75,13 @@ export class PowerMonitorHourlyComponent implements OnInit {
 
     public chartHovered(e: any): void {
         console.log(e);
+    }
+
+    async dateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+        this.currentDate = new Date(event.value);
+        this.router.navigate(['power-monitor', 'hourly',
+            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        await this.refreshData();
     }
 
     async refreshData() {
