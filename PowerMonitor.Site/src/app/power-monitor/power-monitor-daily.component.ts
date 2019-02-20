@@ -4,10 +4,19 @@ import { PowerService } from '../services/power-service';
 import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import {  MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { Moment } from 'moment';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MONTH_DATE_FORMATS } from '../app-date-format';
 
 @Component({
     selector: 'app-power-monitor-daily',
-    templateUrl: './power-monitor-daily.component.html'
+    templateUrl: './power-monitor-daily.component.html',
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
+      ]
 })
 export class PowerMonitorDailyComponent implements OnInit {
 
@@ -26,6 +35,7 @@ export class PowerMonitorDailyComponent implements OnInit {
         { data: [], label: 'Power, kW/h' }
     ];
     currentDate: Date;
+    currentDateControl: FormControl = new FormControl();
 
     // events
     public chartClicked(e: any): void {
@@ -38,6 +48,17 @@ export class PowerMonitorDailyComponent implements OnInit {
 
     public chartHovered(e: any): void {
         console.log(e);
+    }
+
+    chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+        const month = normlizedMonth.month();
+        const year = normlizedMonth.year();
+        this.currentDate = new Date(year, month, 1);
+        datepicker.close();
+        this.router.navigate(['power-monitor', 'daily',
+            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+        this.currentDateControl.setValue(this.currentDate.toISOString());
+        this.refreshData();
     }
 
     constructor(private powerService: PowerService, private router: Router,
@@ -57,6 +78,7 @@ export class PowerMonitorDailyComponent implements OnInit {
                 }
             }
         );
+        this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
 
