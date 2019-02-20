@@ -60,16 +60,20 @@ export class RealDataComponent implements OnInit {
   }
 
   async refreshData() {
-    try {
-      while (1 == 1) {
+    let isErrorShown = false;
+    const interval = setInterval(async () => {
+      try {
         const sensorsData = await this.powerService.getSensorsData();
         this.updateGaugeIndicators(sensorsData);
-        delay(1000);
+      } catch (e) {
+        clearInterval(interval);
+        console.log(e);
+        if (!isErrorShown) {
+          isErrorShown = true;
+          alert('Something going wrong!');
+        }
       }
-    } catch (e) {
-      console.log(e);
-      alert('Something going wrong!');
-    }
+    }, 1000);
   }
   updateGaugeIndicators(sensorsData: ISensorsDataModel) {
     this.voltageIndicator.needleValue = Math.round(sensorsData.voltage / this.maxVoltage * 100);
