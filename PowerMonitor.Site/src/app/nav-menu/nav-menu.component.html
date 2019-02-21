@@ -22,10 +22,15 @@
           </a>
         </li>
         <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a [routerLink]='["/voltage-amperage"]' class="nav-link" (click)='collapse()'>
-              <span class='fas fa-database'></span> Voltage-Amperage
-            </a>
-          </li>
+          <a [routerLink]='["/voltage-amperage"]' class="nav-link" (click)='collapse()'>
+            <span class='fas fa-database'></span> Voltage-Amperage
+          </a>
+        </li>
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a [routerLink]='["/power-failures"]' class="nav-link" (click)='collapse()'>
+            <span class='fas fa-sort-amount-up'></span> Power Failures
+          </a>
+        </li>
         <li class="nav-item" [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/platform-info"]' class="nav-link" (click)='collapse()'>
             <span class='fas fa-sort-amount-up'></span> Platform Info
