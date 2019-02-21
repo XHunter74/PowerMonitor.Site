@@ -9,10 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppMaterialModule } from './material-module';
-import { GaugeChartModule } from 'angular-gauge-chart'
+import { GaugeChartModule } from 'angular-gauge-chart';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { RealDataComponent } from './home/real-data.component';
+import { RealDataComponent } from './real-data/real-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AuthGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
