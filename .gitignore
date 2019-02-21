@@ -3,3 +3,4 @@ PowerMonitor.API/build/
 PowerMonitor.API/node_modules/
 PowerMonitor.API/.idea/
 PowerMonitor.API/powermonitor.sqlite
+Arduino/PowerMonitor/build/
