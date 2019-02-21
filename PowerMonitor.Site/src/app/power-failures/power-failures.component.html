@@ -6,4 +6,23 @@
     </mat-datepicker>
 </mat-form-field>
 <br />
-<p *ngIf="!powerData">Loading PowerData...</p>
+
+<div class="table-responsive">
+    <p *ngIf="!powerFailuresData">Loading Power Failures Data...</p>
+    <table *ngIf="powerFailuresData" class="table" matSort (matSortChange)="sortData($event)">
+        <thead>
+            <tr>
+                <th mat-sort-header="start">Start</th>
+                <th mat-sort-header="finish">Finish</th>
+                <th mat-sort-header="duration">Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of powerFailuresData">
+                <td>{{ record.start | date: 'dd.MM.yyyy hh:mm'}}</td>
+                <td>{{ record.finish | date: 'dd.MM.yyyy hh:mm'}}</td>
+                <td>{{ formatDuration(record.duration) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

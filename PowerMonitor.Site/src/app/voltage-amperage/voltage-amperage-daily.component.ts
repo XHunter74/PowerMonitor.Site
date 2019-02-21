@@ -4,9 +4,10 @@ import { Sort } from '@angular/material';
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { compare } from '../utils';
 
 @Component({
-    selector: 'voltage-amperage-daily',
+    selector: 'app-voltage-amperage-daily',
     templateUrl: './voltage-amperage-daily.component.html'
 })
 export class VoltageAmperageDailyComponent {
@@ -54,11 +55,3 @@ export class VoltageAmperageDailyComponent {
     }
 }
 
-function daysInMonth(year: number, month: number) {
-    const days = new Date(year, month, 0).getDate();
-    return days;
-}
-
-function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}

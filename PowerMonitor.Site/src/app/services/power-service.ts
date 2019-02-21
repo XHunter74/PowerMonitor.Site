@@ -14,6 +14,7 @@ import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { ISensorsDataModel } from '../models/sensors-data.model';
+import { IPowerFailureModel } from '../models/power-failure.model';
 
 
 
@@ -63,7 +64,7 @@ export class PowerService {
                 .catch(e => {
                     try {
                         ServicesUtils.handleError(this.userService, e);
-                    } catch{
+                    } catch {
                         reject({ error: 'Server error' });
                     }
                 });
@@ -93,7 +94,7 @@ export class PowerService {
                 .catch(e => {
                     try {
                         ServicesUtils.handleError(this.userService, e);
-                    } catch{
+                    } catch {
                         reject({ error: 'Server error' });
                     }
                 });
@@ -171,6 +172,36 @@ export class PowerService {
         const promise = new Promise<ISensorsDataModel>((resolve, reject) => {
             this.http
                 .get<ISensorsDataModel>(this.baseUrl + 'power/sensors-data', { headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async getPowerFailuresData(start: Date, finish: Date): Promise<IPowerFailureModel[]> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
+
+        const promise = new Promise<IPowerFailureModel[]>((resolve, reject) => {
+            this.http
+                .get<IPowerFailureModel[]>(this.baseUrl + 'power/power-availability', { params, headers })
                 .toPromise()
                 .then(data => {
                     resolve(data);
