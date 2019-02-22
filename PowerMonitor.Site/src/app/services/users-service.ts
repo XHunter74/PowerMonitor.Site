@@ -49,8 +49,9 @@ export class UsersService {
     const user = {
       username: userName,
       password: password
-    }
-    let promise = new Promise((resolve, reject) => {
+    };
+
+    const promise = new Promise((resolve, reject) => {
       this.http
         .post<ITokenModel>(this.baseUrl + 'auth/login', JSON.stringify(user), { headers })
         .toPromise()
@@ -63,7 +64,7 @@ export class UsersService {
         .catch(e => {
           localStorage.removeItem('auth_token');
           this.isLoginSubject.next(false);
-          reject({ error: "Invalid UserName/Password" });
+          reject({ error: 'Invalid UserName/Password' });
         });
     });
     return promise;

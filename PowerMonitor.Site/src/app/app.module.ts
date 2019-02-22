@@ -27,6 +27,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
+import { BoardSettingsComponent } from './board-settings/board-settings.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
     PowerMonitorMonthlyComponent,
     VoltageAmperageComponent,
     VoltageAmperageHourlyComponent,
-    PowerFailuresComponent
+    PowerFailuresComponent,
+    BoardSettingsComponent
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -59,6 +61,7 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
     RouterModule.forRoot([
       { path: '', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
+      { path: 'settings', component: BoardSettingsComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
       { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },

@@ -5,6 +5,8 @@ import { UsersService } from './users-service';
 
 import { ISystemInfo } from '../models/sysinfo.model';
 import { ServicesUtils } from './services-utils';
+import { IBoardInfoModel } from '../models/board-info.model';
+import { ICalibrationCoefficients } from '../models/calibration-coefficients.model';
 
 
 @Injectable({
@@ -32,7 +34,7 @@ export class ServicesService {
             'Authorization': `${authToken}`
         });
 
-        let promise = new Promise<ISystemInfo>((resolve, reject) => {
+        const promise = new Promise<ISystemInfo>((resolve, reject) => {
             this.http
                 .get<ISystemInfo>(this.baseUrl + 'services/sysinfo', { headers })
                 .toPromise()
@@ -42,7 +44,57 @@ export class ServicesService {
                 .catch(e => {
                     try {
                         ServicesUtils.handleError(this.userService, e);
-                    } catch{
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async getBoardBuildDate(): Promise<IBoardInfoModel> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+
+        const promise = new Promise<IBoardInfoModel>((resolve, reject) => {
+            this.http
+                .get<IBoardInfoModel>(this.baseUrl + 'services/board-build-date', { headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async getCalibrationCoefficients(): Promise<ICalibrationCoefficients> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `${authToken}`
+        });
+
+        const promise = new Promise<ICalibrationCoefficients>((resolve, reject) => {
+            this.http
+                .get<ICalibrationCoefficients>(this.baseUrl + 'services/calibration-coefficients', { headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
                         reject({ error: 'Server error' });
                     }
                 });
