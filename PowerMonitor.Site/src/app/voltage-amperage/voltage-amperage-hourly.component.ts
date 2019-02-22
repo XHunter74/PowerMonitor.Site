@@ -7,10 +7,10 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { compare } from '../utils';
 
 @Component({
-    selector: 'app-voltage-amperage-daily',
-    templateUrl: './voltage-amperage-daily.component.html'
+    selector: 'app-voltage-amperage-hourly',
+    templateUrl: './voltage-amperage-hourly.component.html'
 })
-export class VoltageAmperageDailyComponent {
+export class VoltageAmperageHourlyComponent {
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: NgbDate;

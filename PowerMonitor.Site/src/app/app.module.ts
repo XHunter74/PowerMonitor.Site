@@ -22,8 +22,7 @@ import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourl
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
 import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
-import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
-import { VoltageAmperageMonthlyComponent } from './voltage-amperage/voltage-amperage-monthly.component';
+import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { APP_DATE_FORMATS } from './app-date-format';
@@ -43,8 +42,7 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
     PowerMonitorDailyComponent,
     PowerMonitorMonthlyComponent,
     VoltageAmperageComponent,
-    VoltageAmperageDailyComponent,
-    VoltageAmperageMonthlyComponent,
+    VoltageAmperageHourlyComponent,
     PowerFailuresComponent
   ],
   entryComponents: [LoginModalComponent],
