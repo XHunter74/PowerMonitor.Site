@@ -28,6 +28,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
+import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 
 
 @NgModule({
@@ -45,9 +46,10 @@ import { BoardSettingsComponent } from './board-settings/board-settings.componen
     VoltageAmperageComponent,
     VoltageAmperageHourlyComponent,
     PowerFailuresComponent,
-    BoardSettingsComponent
+    BoardSettingsComponent,
+    SpinnerDialogComponent
   ],
-  entryComponents: [LoginModalComponent],
+  entryComponents: [LoginModalComponent, SpinnerDialogComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
