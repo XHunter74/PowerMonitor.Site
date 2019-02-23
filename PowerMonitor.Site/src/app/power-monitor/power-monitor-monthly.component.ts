@@ -4,10 +4,11 @@ import { PowerService } from '../services/power-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialogRef, MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -59,8 +60,10 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         this.refreshData();
     }
 
-    constructor(private powerService: PowerService, private router: Router,
-        private activatedRouter: ActivatedRoute) {
+    constructor(private powerService: PowerService, 
+        private router: Router,
+        private activatedRouter: ActivatedRoute,
+        private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -80,6 +83,13 @@ export class PowerMonitorMonthlyComponent implements OnInit {
     }
 
     async refreshData() {
+        let dialogRef: MatDialogRef<SpinnerDialogComponent>;
+        setTimeout(() => {
+            dialogRef = this.dialog.open(SpinnerDialogComponent, {
+                panelClass: 'transparent',
+                disableClose: true
+            });
+        });
         try {
             const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
             const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
@@ -90,7 +100,9 @@ export class PowerMonitorMonthlyComponent implements OnInit {
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
+            dialogRef.close();
         } catch (e) {
+            dialogRef.close();
             console.log(e);
             alert('Something going wrong!');
         }

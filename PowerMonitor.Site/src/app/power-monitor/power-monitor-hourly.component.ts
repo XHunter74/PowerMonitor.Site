@@ -4,7 +4,8 @@ import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent, MatDialog, MatDialogRef } from '@angular/material';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 
 
 // https://momentjs.com/docs/#/displaying/format/
@@ -34,7 +35,10 @@ export class PowerMonitorHourlyComponent implements OnInit {
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
 
-    constructor(private powerService: PowerService, private activatedRouter: ActivatedRoute, private router: Router) {
+    constructor(private powerService: PowerService,
+        private activatedRouter: ActivatedRoute,
+        private router: Router,
+        private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -72,6 +76,13 @@ export class PowerMonitorHourlyComponent implements OnInit {
     }
 
     async refreshData() {
+        let dialogRef: MatDialogRef<SpinnerDialogComponent>;
+        setTimeout(() => {
+            dialogRef = this.dialog.open(SpinnerDialogComponent, {
+                panelClass: 'transparent',
+                disableClose: true
+            });
+        });
         try {
             this.powerData = await this.powerService.getPowerDataHourly(this.currentDate, this.currentDate);
             this.prepareChart(this.powerData);
@@ -80,7 +91,9 @@ export class PowerMonitorHourlyComponent implements OnInit {
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
+            dialogRef.close();
         } catch (e) {
+            dialogRef.close();
             console.log(e);
             alert('Something going wrong!');
         }

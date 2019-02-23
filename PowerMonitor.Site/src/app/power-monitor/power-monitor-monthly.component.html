@@ -6,7 +6,6 @@
 </mat-form-field>
 <button (click)="refreshData()">Refresh</button>
 <br />
-<p *ngIf="!powerData">Loading PowerData...</p>
 <div *ngIf="powerData">
     <p>Total Power: {{powerSum}}, kW/h</p>
     <div style="display: block">
