@@ -1,4 +1,8 @@
-<form *ngIf="calibrationCoefficients" [formGroup]="coefficientsForm" (ngSubmit)="changeCoefficients()" autocomplete="on">
+<div *ngIf="boardInfo">
+    <p>Board version: {{boardInfo.version}} from {{boardInfo.buildDate | date: 'dd.MM.yyyy HH:mm'}}</p>
+</div>
+<form *ngIf="calibrationCoefficients" [formGroup]="coefficientsForm" (ngSubmit)="changeCoefficients()"
+    autocomplete="on">
     <div class="form-group">
         <label for="voltageCoefficient">Voltage Coefficient</label>
         <div class="input-group">

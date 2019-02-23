@@ -34,7 +34,7 @@ export class BoardSettingsComponent implements OnInit {
 
     async refreshData() {
         try {
-            this.boardInfo = await this.servicesService.getBoardBuildDate();
+            this.boardInfo = await this.servicesService.getBoardVersion();
             this.calibrationCoefficients = await this.servicesService.getCalibrationCoefficients();
             this.coefficientsForm.patchValue({
                 voltageCoefficient: this.calibrationCoefficients.voltageCalibration,

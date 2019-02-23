@@ -52,7 +52,7 @@ export class ServicesService {
         return promise;
     }
 
-    async getBoardBuildDate(): Promise<IBoardInfoModel> {
+    async getBoardVersion(): Promise<IBoardInfoModel> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
