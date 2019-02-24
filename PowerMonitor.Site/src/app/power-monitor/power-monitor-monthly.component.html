@@ -7,7 +7,7 @@
 <button (click)="refreshData()">Refresh</button>
 <br />
 <div *ngIf="powerData">
-    <p>Total Power: {{powerSum}}, kW/h</p>
+    <p>Total Power: {{formatNumber(powerSum)}}, kW/h</p>
     <div style="display: block">
         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
             [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"

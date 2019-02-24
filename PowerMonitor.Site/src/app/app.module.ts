@@ -24,11 +24,11 @@ import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-mont
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { AppDateAdapter } from './app-date.adapter';
 
 
 @NgModule({
@@ -75,7 +75,7 @@ import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.componen
   ],
   providers: [
     AuthGuard,
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
   bootstrap: [AppComponent]

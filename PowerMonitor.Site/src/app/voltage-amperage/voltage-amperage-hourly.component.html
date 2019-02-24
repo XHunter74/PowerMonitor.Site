@@ -11,7 +11,6 @@
 </form> -->
 
 <div class="table-responsive">
-    <p *ngIf="!voltageData">Loading Voltage...</p>
     <table *ngIf="voltageData" class="table" matSort (matSortChange)="sortData($event)">
         <thead>
             <tr>
@@ -29,12 +28,12 @@
             <tr *ngFor="let record of voltageData" [class.selected]="user === selectedRecord">
                 <td>{{ record.created | date: 'dd.MM.yyyy'}}</td>
                 <td>{{ record.hours }}</td>
-                <td>{{ record.voltageMax }}</td>
-                <td>{{ record.voltageMin }}</td>
-                <td>{{ record.voltageAvg }}</td>
-                <td>{{ record.amperageMax }}</td>
-                <td>{{ record.amperageMin }}</td>
-                <td>{{ record.amperageAvg }}</td>
+                <td>{{ formatNumber(record.voltageMax) }}</td>
+                <td>{{ formatNumber(record.voltageMin) }}</td>
+                <td>{{ formatNumber(record.voltageAvg) }}</td>
+                <td>{{ formatNumber(record.amperageMax) }}</td>
+                <td>{{ formatNumber(record.amperageMin) }}</td>
+                <td>{{ formatNumber(record.amperageAvg) }}</td>
             </tr>
         </tbody>
     </table>

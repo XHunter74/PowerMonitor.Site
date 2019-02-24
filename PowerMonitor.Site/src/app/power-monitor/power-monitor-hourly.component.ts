@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent, MatDialog, MatDialogRef } from '@angular/material';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { utils } from 'protractor';
+import { strict } from 'assert';
+import { stringUtils } from '../utils';
 
 
 // https://momentjs.com/docs/#/displaying/format/
@@ -15,10 +18,11 @@ import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.compone
     selector: 'app-power-monitor-hourly',
     templateUrl: './power-monitor-hourly.component.html'
 })
-export class PowerMonitorHourlyComponent implements OnInit {
+export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
 
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
+    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -59,6 +63,12 @@ export class PowerMonitorHourlyComponent implements OnInit {
         this.refreshData();
     }
 
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        }
+    }
+
     // events
     public chartClicked(e: any): void {
         console.log(e);
@@ -76,9 +86,8 @@ export class PowerMonitorHourlyComponent implements OnInit {
     }
 
     async refreshData() {
-        let dialogRef: MatDialogRef<SpinnerDialogComponent>;
         setTimeout(() => {
-            dialogRef = this.dialog.open(SpinnerDialogComponent, {
+            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
                 panelClass: 'transparent',
                 disableClose: true
             });
@@ -91,9 +100,9 @@ export class PowerMonitorHourlyComponent implements OnInit {
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
-            dialogRef.close();
+            this.dialogRef.close();
         } catch (e) {
-            dialogRef.close();
+            this.dialogRef.close();
             console.log(e);
             alert('Something going wrong!');
         }
@@ -122,6 +131,8 @@ export class PowerMonitorHourlyComponent implements OnInit {
         this.barChartLabels = chartLabels;
     }
 
-
+    public formatNumber(value: number): string {
+        return stringUtils.formatNumber(value);
+    }
 }
 

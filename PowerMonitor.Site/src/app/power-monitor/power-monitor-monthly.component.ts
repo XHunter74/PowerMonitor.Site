@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { stringUtils } from '../utils';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -16,12 +17,13 @@ import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.compone
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS }
-      ]
+    ]
 })
-export class PowerMonitorMonthlyComponent implements OnInit {
+export class PowerMonitorMonthlyComponent implements OnInit, OnDestroy {
 
     public powerData: IPowerDataMonthlyModel[];
     public powerSum: number;
+    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -60,7 +62,7 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         this.refreshData();
     }
 
-    constructor(private powerService: PowerService, 
+    constructor(private powerService: PowerService,
         private router: Router,
         private activatedRouter: ActivatedRoute,
         private dialog: MatDialog) {
@@ -82,10 +84,15 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         this.refreshData();
     }
 
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        }
+    }
+
     async refreshData() {
-        let dialogRef: MatDialogRef<SpinnerDialogComponent>;
         setTimeout(() => {
-            dialogRef = this.dialog.open(SpinnerDialogComponent, {
+            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
                 panelClass: 'transparent',
                 disableClose: true
             });
@@ -100,9 +107,9 @@ export class PowerMonitorMonthlyComponent implements OnInit {
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
-            dialogRef.close();
+            this.dialogRef.close();
         } catch (e) {
-            dialogRef.close();
+            this.dialogRef.close();
             console.log(e);
             alert('Something going wrong!');
         }
@@ -130,7 +137,10 @@ export class PowerMonitorMonthlyComponent implements OnInit {
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
     }
-
+   
+    public formatNumber(value: number): string {
+        return stringUtils.formatNumber(value);
+    }
 
 }
 
