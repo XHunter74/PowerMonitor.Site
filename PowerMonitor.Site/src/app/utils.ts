@@ -7,7 +7,7 @@ export function compare(a: number | string | Date, b: number | string | Date, is
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
-export class stringUtils {
+export class StringUtils {
     public static formatNumber(value: number): string {
         let strValue = (Math.round(value * 100) / 100).toString()
         if (!strValue.includes('.')) {

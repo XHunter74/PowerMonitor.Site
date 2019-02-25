@@ -1,42 +1,35 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServicesService } from '../services/services-service'
 import { ISystemInfo } from '../models/sysinfo.model';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
     selector: 'app-platform-info',
     templateUrl: './platform-info.component.html'
 })
-export class PlatformInfoComponent implements OnDestroy{
+export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     public sysInfo: ISystemInfo;
-    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
-    constructor(http: HttpClient,
-        private servicesService: ServicesService,
-        private dialog: MatDialog) {
-        this.refreshData();
+    constructor(private servicesService: ServicesService,
+        dialog: MatDialog) {
+        super(dialog);
     }
 
-    ngOnDestroy(): void {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
+    ngOnInit(): void {
+        this.refreshData();
     }
 
     async refreshData() {
         setTimeout(() => {
-            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-                panelClass: 'transparent',
-                disableClose: true
-            });
+            this.showSpinner();
         });
         try {
             this.sysInfo = await this.servicesService.getSystemInfo();
         } catch (e) {
-            alert("Something going wrong!");
+            alert('Something going wrong!');
         } finally {
             this.dialogRef.close();
         }

@@ -1,14 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatDatepickerInputEvent, MatDialog, MatDialogRef } from '@angular/material';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
-import { utils } from 'protractor';
-import { strict } from 'assert';
-import { stringUtils } from '../utils';
+import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { StringUtils } from '../utils';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 
 // https://momentjs.com/docs/#/displaying/format/
@@ -18,11 +16,10 @@ import { stringUtils } from '../utils';
     selector: 'app-power-monitor-hourly',
     templateUrl: './power-monitor-hourly.component.html'
 })
-export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
+export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit {
 
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
-    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -42,7 +39,8 @@ export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
         private router: Router,
-        private dialog: MatDialog) {
+        dialog: MatDialog) {
+        super(dialog);
     }
 
     ngOnInit(): void {
@@ -63,12 +61,6 @@ export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
         this.refreshData();
     }
 
-    ngOnDestroy(): void {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
-    }
-
     // events
     public chartClicked(e: any): void {
         console.log(e);
@@ -78,7 +70,7 @@ export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
         console.log(e);
     }
 
-    async dateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+    async dateChanged(event: MatDatepickerInputEvent<Date>) {
         this.currentDate = new Date(event.value);
         this.router.navigate(['power-monitor', 'hourly',
             { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
@@ -87,10 +79,7 @@ export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
 
     async refreshData() {
         setTimeout(() => {
-            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-                panelClass: 'transparent',
-                disableClose: true
-            });
+            this.showSpinner();
         });
         try {
             this.powerData = await this.powerService.getPowerDataHourly(this.currentDate, this.currentDate);
@@ -132,7 +121,7 @@ export class PowerMonitorHourlyComponent implements OnInit, OnDestroy {
     }
 
     public formatNumber(value: number): string {
-        return stringUtils.formatNumber(value);
+        return StringUtils.formatNumber(value);
     }
 }
 

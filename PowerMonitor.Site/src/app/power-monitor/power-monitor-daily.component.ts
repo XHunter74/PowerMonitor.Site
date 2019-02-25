@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
-import { daysInMonth, stringUtils } from '../utils';
+import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialogRef, MatDialog } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -19,11 +19,10 @@ import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.compone
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
     ]
 })
-export class PowerMonitorDailyComponent implements OnInit, OnDestroy {
+export class PowerMonitorDailyComponent extends AppBaseComponent implements OnInit {
 
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
-    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -66,7 +65,8 @@ export class PowerMonitorDailyComponent implements OnInit, OnDestroy {
     constructor(private powerService: PowerService,
         private router: Router,
         private activatedRouter: ActivatedRoute,
-        private dialog: MatDialog) {
+        dialog: MatDialog) {
+        super(dialog);
     }
 
     ngOnInit(): void {
@@ -86,18 +86,10 @@ export class PowerMonitorDailyComponent implements OnInit, OnDestroy {
         this.refreshData();
     }
 
-    ngOnDestroy(): void {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
-    }
 
     async refreshData() {
         setTimeout(() => {
-            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-                panelClass: 'transparent',
-                disableClose: true
-            });
+            this.showSpinner();
         });
         try {
             const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
@@ -141,10 +133,6 @@ export class PowerMonitorDailyComponent implements OnInit, OnDestroy {
         }
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
-    }
-
-    public formatNumber(value: number): string {
-        return stringUtils.formatNumber(value);
     }
 
 }

@@ -1,40 +1,32 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Sort, MatDialogRef, MatDialog } from '@angular/material';
+import { Sort, MatDialog } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { compare, stringUtils } from '../utils';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { compare } from '../utils';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html'
 })
-export class VoltageAmperageHourlyComponent implements OnDestroy {
+export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnDestroy {
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: NgbDate;
-    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
-    constructor(private powerService: PowerService, private dialog: MatDialog) {
+    constructor(private powerService: PowerService,
+        dialog: MatDialog) {
+        super(dialog);
         const today = new Date();
         this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
         this.refreshData();
     }
 
-    ngOnDestroy(): void {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
-    }
-
     async refreshData() {
         setTimeout(() => {
-            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-                panelClass: 'transparent',
-                disableClose: true
-            });
+            this.showSpinner();
         });
         try {
             const startDate = new Date();
@@ -70,8 +62,5 @@ export class VoltageAmperageHourlyComponent implements OnDestroy {
         });
     }
 
-    public formatNumber(value: number): string {
-        return stringUtils.formatNumber(value);
-    }
 }
 

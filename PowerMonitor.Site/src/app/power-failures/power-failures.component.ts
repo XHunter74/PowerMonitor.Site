@@ -3,12 +3,12 @@ import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialogRef, MatDialog } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog } from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
   selector: 'app-power-failures',
@@ -20,14 +20,13 @@ import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.compone
 })
 
 
-export class PowerFailuresComponent implements OnInit, OnDestroy {
+export class PowerFailuresComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
   public powerFailuresData: IPowerFailureModel[];
   private lastSort: string;
   private lastSortDirection: string;
-  private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
   chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     const month = normlizedMonth.month();
@@ -42,7 +41,8 @@ export class PowerFailuresComponent implements OnInit, OnDestroy {
   constructor(private powerService: PowerService,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private dialog: MatDialog) {
+    dialog: MatDialog) {
+    super(dialog);
   }
 
   ngOnInit(): void {
@@ -62,18 +62,9 @@ export class PowerFailuresComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  ngOnDestroy(): void {
-    if (this.dialogRef) {
-      this.dialogRef.close();
-    }
-  }
-
   async refreshData() {
     setTimeout(() => {
-      this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-        panelClass: 'transparent',
-        disableClose: true
-      });
+      this.showSpinner();
     });
     try {
       const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);

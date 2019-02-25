@@ -3,8 +3,8 @@ import { ServicesService } from '../services/services-service';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { ICalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
     selector: 'app-real-data',
@@ -12,11 +12,10 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 })
 
 
-export class BoardSettingsComponent implements OnInit, OnDestroy {
+export class BoardSettingsComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
     boardInfo: IBoardInfoModel;
     calibrationCoefficients: ICalibrationCoefficients;
-    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     coefficientsForm = new FormGroup({
         voltageCoefficient: new FormControl('',
@@ -28,25 +27,17 @@ export class BoardSettingsComponent implements OnInit, OnDestroy {
     });
 
     constructor(private servicesService: ServicesService,
-        private dialog: MatDialog) {
+        dialog: MatDialog) {
+        super(dialog);
     }
 
     ngOnInit(): void {
         this.refreshData();
     }
 
-    ngOnDestroy(): void {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
-    }
-
     async refreshData() {
         setTimeout(() => {
-            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
-                panelClass: 'transparent',
-                disableClose: true
-            });
+            this.showSpinner()
         });
         try {
             this.boardInfo = await this.servicesService.getBoardVersion();
