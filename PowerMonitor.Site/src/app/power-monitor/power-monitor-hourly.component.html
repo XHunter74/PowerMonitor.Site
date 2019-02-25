@@ -1,6 +1,6 @@
 <mat-form-field>
     <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (dateChange)="dateChanged('change', $event)">
+        (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
