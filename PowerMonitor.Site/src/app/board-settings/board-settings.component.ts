@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServicesService } from '../services/services-service';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { ICalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'app-real-data',
@@ -10,10 +12,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 
 
-export class BoardSettingsComponent implements OnInit {
+export class BoardSettingsComponent implements OnInit, OnDestroy {
 
     boardInfo: IBoardInfoModel;
     calibrationCoefficients: ICalibrationCoefficients;
+    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     coefficientsForm = new FormGroup({
         voltageCoefficient: new FormControl('',
@@ -24,17 +27,29 @@ export class BoardSettingsComponent implements OnInit {
             [Validators.required]),
     });
 
-    constructor(private servicesService: ServicesService) {
-
+    constructor(private servicesService: ServicesService,
+        private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
         this.refreshData();
     }
 
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        }
+    }
+
     async refreshData() {
+        setTimeout(() => {
+            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
+                panelClass: 'transparent',
+                disableClose: true
+            });
+        });
         try {
-            this.boardInfo = await this.servicesService.getBoardBuildDate();
+            this.boardInfo = await this.servicesService.getBoardVersion();
             this.calibrationCoefficients = await this.servicesService.getCalibrationCoefficients();
             this.coefficientsForm.patchValue({
                 voltageCoefficient: this.calibrationCoefficients.voltageCalibration,
@@ -43,6 +58,8 @@ export class BoardSettingsComponent implements OnInit {
             });
         } catch (e) {
             alert('Something going wrong!');
+        } finally {
+            this.dialogRef.close();
         }
     }
 

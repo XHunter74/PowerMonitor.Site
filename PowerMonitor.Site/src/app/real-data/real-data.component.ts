@@ -38,8 +38,8 @@ export class RealDataComponent implements OnInit, OnDestroy {
   };
 
   public currentIndicator = {
-    bottomLabel: '10.0',
-    needleValue: 30,
+    bottomLabel: '0.0',
+    needleValue: 0,
     name: 'Amperage, A',
     options: {
       hasNeedle: true,
@@ -48,7 +48,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
       arcColors: ['red', 'green', 'red'],
       arcDelimiters: [0.5, Math.round(this.nominalAmperageMax / this.maxAmperage * 100)],
       rangeLabel: ['0', this.maxAmperage.toString()],
-      needleStartValue: 50,
+      needleStartValue: 0,
     }
   };
 

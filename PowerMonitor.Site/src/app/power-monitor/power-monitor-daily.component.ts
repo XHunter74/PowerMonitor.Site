@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
-import { daysInMonth } from '../utils';
+import { daysInMonth, stringUtils } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import {  MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialogRef, MatDialog } from '@angular/material';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -16,12 +17,13 @@ import { MONTH_DATE_FORMATS } from '../app-date-format';
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
-      ]
+    ]
 })
-export class PowerMonitorDailyComponent implements OnInit {
+export class PowerMonitorDailyComponent implements OnInit, OnDestroy {
 
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
+    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -61,8 +63,10 @@ export class PowerMonitorDailyComponent implements OnInit {
         this.refreshData();
     }
 
-    constructor(private powerService: PowerService, private router: Router,
-        private activatedRouter: ActivatedRoute) {
+    constructor(private powerService: PowerService,
+        private router: Router,
+        private activatedRouter: ActivatedRoute,
+        private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -82,7 +86,19 @@ export class PowerMonitorDailyComponent implements OnInit {
         this.refreshData();
     }
 
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        }
+    }
+
     async refreshData() {
+        setTimeout(() => {
+            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
+                panelClass: 'transparent',
+                disableClose: true
+            });
+        });
         try {
             const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
             const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
@@ -94,7 +110,9 @@ export class PowerMonitorDailyComponent implements OnInit {
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
+            this.dialogRef.close();
         } catch (e) {
+            this.dialogRef.close();
             console.log(e);
             alert('Something going wrong!');
         }
@@ -125,6 +143,9 @@ export class PowerMonitorDailyComponent implements OnInit {
         this.barChartLabels = chartLabels;
     }
 
+    public formatNumber(value: number): string {
+        return stringUtils.formatNumber(value);
+    }
 
 }
 

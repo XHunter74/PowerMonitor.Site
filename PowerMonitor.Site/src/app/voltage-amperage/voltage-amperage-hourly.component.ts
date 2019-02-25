@@ -1,32 +1,48 @@
-import { Component } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Component, OnDestroy } from '@angular/core';
+import { Sort, MatDialogRef, MatDialog } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { compare } from '../utils';
+import { compare, stringUtils } from '../utils';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html'
 })
-export class VoltageAmperageHourlyComponent {
+export class VoltageAmperageHourlyComponent implements OnDestroy {
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: NgbDate;
+    private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
-    constructor(private powerService: PowerService) {
+    constructor(private powerService: PowerService, private dialog: MatDialog) {
         const today = new Date();
         this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
         this.refreshData();
     }
 
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        }
+    }
+
     async refreshData() {
+        setTimeout(() => {
+            this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
+                panelClass: 'transparent',
+                disableClose: true
+            });
+        });
         try {
             const startDate = new Date();
             const finishDate = new Date();
             this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
+            this.dialogRef.close();
         } catch (e) {
+            this.dialogRef.close();
             alert('Something going wrong!');
         }
     }
@@ -52,6 +68,10 @@ export class VoltageAmperageHourlyComponent {
                 default: return 0;
             }
         });
+    }
+
+    public formatNumber(value: number): string {
+        return stringUtils.formatNumber(value);
     }
 }
 

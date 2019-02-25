@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialogRef, MatDialog } from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
-import { last } from 'rxjs/operators';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 
 @Component({
   selector: 'app-power-failures',
@@ -20,13 +20,14 @@ import { last } from 'rxjs/operators';
 })
 
 
-export class PowerFailuresComponent implements OnInit {
+export class PowerFailuresComponent implements OnInit, OnDestroy {
 
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
   public powerFailuresData: IPowerFailureModel[];
   private lastSort: string;
   private lastSortDirection: string;
+  private dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
   chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     const month = normlizedMonth.month();
@@ -38,7 +39,10 @@ export class PowerFailuresComponent implements OnInit {
     this.refreshData();
   }
 
-  constructor(private powerService: PowerService, private router: Router, private activatedRouter: ActivatedRoute) {
+  constructor(private powerService: PowerService,
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -58,7 +62,19 @@ export class PowerFailuresComponent implements OnInit {
     this.refreshData();
   }
 
+  ngOnDestroy(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+  }
+
   async refreshData() {
+    setTimeout(() => {
+      this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
+        panelClass: 'transparent',
+        disableClose: true
+      });
+    });
     try {
       const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
       const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
@@ -69,6 +85,8 @@ export class PowerFailuresComponent implements OnInit {
       }
     } catch (e) {
       alert('Something going wrong!');
+    } finally {
+      this.dialogRef.close();
     }
   }
 

@@ -4,10 +4,10 @@
     <mat-datepicker #picker3 startView="multi-year" (yearSelected)="chosenYearHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
+<button (click)="refreshData()">Refresh</button>
 <br />
-<p *ngIf="!powerData">Loading PowerData...</p>
 <div *ngIf="powerData">
-    <p>Total Power: {{powerSum}}, kW/h</p>
+    <p>Total Power: {{formatNumber(powerSum)}}, kW/h</p>
     <div style="display: block">
         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
             [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"

@@ -8,7 +8,6 @@
 <br />
 
 <div class="table-responsive">
-    <p *ngIf="!powerFailuresData">Loading Power Failures Data...</p>
     <table *ngIf="powerFailuresData" class="table" matSort (matSortChange)="sortData($event)">
         <thead>
             <tr>
@@ -19,8 +18,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let record of powerFailuresData">
-                <td>{{ record.start | date: 'dd.MM.yyyy hh:mm'}}</td>
-                <td>{{ record.finish | date: 'dd.MM.yyyy hh:mm'}}</td>
+                <td>{{ record.start | date: 'dd.MM.yyyy HH:mm'}}</td>
+                <td>{{ record.finish | date: 'dd.MM.yyyy HH:mm'}}</td>
                 <td>{{ formatDuration(record.duration) }}</td>
             </tr>
         </tbody>
