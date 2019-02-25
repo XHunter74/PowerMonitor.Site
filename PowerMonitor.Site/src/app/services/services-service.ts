@@ -77,6 +77,33 @@ export class ServicesService {
         return promise;
     }
 
+    async uploadNewSketch(newSketch: File): Promise<IBoardInfoModel> {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Authorization': `${authToken}`
+        });
+
+        const formData: FormData = new FormData();
+        formData.append('new-sketch', newSketch, newSketch.name);
+
+        const promise = new Promise<IBoardInfoModel>((resolve, reject) => {
+            this.http
+                .post<IBoardInfoModel>(this.baseUrl + 'services/upload-sketch', formData, { headers })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    try {
+                        ServicesUtils.handleError(this.userService, e);
+                    } catch {
+                        reject({ error: 'Server error' });
+                    }
+                });
+        });
+        return promise;
+    }
+
     async getCalibrationCoefficients(): Promise<ICalibrationCoefficients> {
         const authToken = localStorage.getItem('auth_token');
         const headers = new HttpHeaders({

@@ -5,3 +5,4 @@ PowerMonitor.API/.idea/
 PowerMonitor.API/powermonitor.sqlite
 Arduino/PowerMonitor/build/
 PowerMonitor.Upload/node_modules/
+PowerMonitor.API/uploads/
