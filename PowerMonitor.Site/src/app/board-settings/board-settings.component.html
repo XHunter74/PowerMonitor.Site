@@ -43,3 +43,6 @@
         <button type="submit" class="btn btn-outline-dark" [disabled]="!coefficientsForm.valid">Change</button>
     </div>
 </form>
+
+<input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept=".hex" />
+<button type="button" (click)="uploadNewSketch()">Upload</button>

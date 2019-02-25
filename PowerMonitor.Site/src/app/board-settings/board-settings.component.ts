@@ -16,6 +16,7 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
 
     boardInfo: IBoardInfoModel;
     calibrationCoefficients: ICalibrationCoefficients;
+    newSketch: File;
 
     coefficientsForm = new FormGroup({
         voltageCoefficient: new FormControl('',
@@ -37,7 +38,7 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
 
     async refreshData() {
         setTimeout(() => {
-            this.showSpinner()
+            this.showSpinner();
         });
         try {
             this.boardInfo = await this.servicesService.getBoardVersion();
@@ -56,6 +57,22 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
 
     changeCoefficients() {
 
+    }
+
+    fileChangeEvent(fileInput: any) {
+        this.newSketch = <File>fileInput.target.files[0];
+    }
+
+    async uploadNewSketch() {
+        this.showSpinner();
+        try {
+            await this.servicesService.uploadNewSketch(this.newSketch);
+            this.dialogRef.close();
+        } catch (e) {
+            console.error(e);
+            this.dialogRef.close();
+            alert('Something going wrong!');
+        }
     }
 
     get voltageCoefficient() { return this.coefficientsForm.get('voltageCoefficient'); }
