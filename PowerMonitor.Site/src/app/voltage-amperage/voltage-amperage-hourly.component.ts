@@ -35,7 +35,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             this.dialogRef.close();
         } catch (e) {
             this.dialogRef.close();
-            alert('Something going wrong!');
+            setTimeout(() => alert('Something going wrong!'));
         }
     }
 

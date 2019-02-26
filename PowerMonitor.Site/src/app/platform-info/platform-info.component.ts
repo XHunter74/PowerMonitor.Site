@@ -29,7 +29,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
         try {
             this.sysInfo = await this.servicesService.getSystemInfo();
         } catch (e) {
-            alert('Something going wrong!');
+            setTimeout(() => alert('Something going wrong!'));
         } finally {
             this.dialogRef.close();
         }

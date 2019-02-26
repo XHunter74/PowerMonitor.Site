@@ -75,7 +75,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
         this.sortDataInt(this.lastSort, this.lastSortDirection);
       }
     } catch (e) {
-      alert('Something going wrong!');
+      setTimeout(() => alert('Something going wrong!'));
     } finally {
       this.dialogRef.close();
     }

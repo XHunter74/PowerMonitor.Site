@@ -106,7 +106,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         } catch (e) {
             this.dialogRef.close();
             console.log(e);
-            alert('Something going wrong!');
+            setTimeout(() => alert('Something going wrong!'));
         }
     }
 

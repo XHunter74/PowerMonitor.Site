@@ -101,7 +101,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         } catch (e) {
             this.dialogRef.close();
             console.log(e);
-            alert('Something going wrong!');
+            setTimeout(() => alert('Something going wrong!'));
         }
     }
 

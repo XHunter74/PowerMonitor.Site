@@ -8,10 +8,6 @@ import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 
-
-// https://momentjs.com/docs/#/displaying/format/
-
-
 @Component({
     selector: 'app-power-monitor-hourly',
     templateUrl: './power-monitor-hourly.component.html'
@@ -93,7 +89,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         } catch (e) {
             this.dialogRef.close();
             console.log(e);
-            alert('Something going wrong!');
+            setTimeout(() => alert('Something going wrong!'));
         }
     }
 

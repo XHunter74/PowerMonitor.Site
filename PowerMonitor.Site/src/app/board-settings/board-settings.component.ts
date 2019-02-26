@@ -49,7 +49,8 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
                 powerFactorCoefficient: this.calibrationCoefficients.powerFactorCalibration
             });
         } catch (e) {
-            alert('Something going wrong!');
+            console.error(e);
+            setTimeout(() => alert('Something going wrong!'));
         } finally {
             this.dialogRef.close();
         }
@@ -67,11 +68,11 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
         this.showSpinner();
         try {
             await this.servicesService.uploadNewSketch(this.newSketch);
-            this.dialogRef.close();
         } catch (e) {
             console.error(e);
+            setTimeout(() => alert('Something going wrong!'));
+        } finally {
             this.dialogRef.close();
-            alert('Something going wrong!');
         }
     }
 
