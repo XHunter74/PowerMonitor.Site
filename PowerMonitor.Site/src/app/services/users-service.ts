@@ -1,7 +1,7 @@
 import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ITokenModel } from '../models/token.model';
 
@@ -24,7 +24,7 @@ export class UsersService {
 
   }
 
-  private isLoginSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  private isLoginSubject = new Subject<boolean>();
 
   get isAuthenticatedIn(): Observable<boolean> {
     return this.isLoginSubject.asObservable();

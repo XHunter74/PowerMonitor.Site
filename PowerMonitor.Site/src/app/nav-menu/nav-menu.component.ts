@@ -11,6 +11,10 @@ export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
   constructor(private usersService: UsersService, private router: Router) {
+
+  }
+
+  ngOnInit() {
     this.usersService.isAuthenticatedIn.subscribe(isLogin => {
       if (isLogin) {
         console.log('User successfully login');
@@ -19,15 +23,6 @@ export class NavMenuComponent implements OnInit {
         this.router.navigate(['/app-login']);
       }
     });
-  }
-
-  ngOnInit() {
-    
-  }
-
-  ngOnDestroy() {
-    //Close the Observable stream
-    //this.usersService.isAuthenticatedIn.unsubscribe();
   }
 
   collapse() {

@@ -21,10 +21,17 @@ export class HttpService {
 
     async get<T>(actionUrl: string, params?: HttpParams): Promise<T> {
         const authToken = localStorage.getItem('auth_token');
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `${authToken}`
-        });
+        let headers: HttpHeaders;
+        if (authToken) {
+            headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': `${authToken}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Content-Type': 'application/json'
+            });
+        }
 
         const promise = new Promise<T>((resolve, reject) => {
             this.http
