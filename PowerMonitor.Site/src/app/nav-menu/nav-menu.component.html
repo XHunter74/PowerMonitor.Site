@@ -46,6 +46,11 @@
             <span class='fas fa-sort-amount-up'></span> Settings
           </a>
         </li>
+        <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/profile"]' class="nav-link" (click)='collapse()'>
+              <span class='fas fa-sort-amount-up'></span> Profile
+            </a>
+          </li>
         <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
             Login

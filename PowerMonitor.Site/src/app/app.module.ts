@@ -30,6 +30,7 @@ import { BoardSettingsComponent } from './board-settings/board-settings.componen
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
 import { HomeComponent } from './home-component/home.component';
+import { ProfileComponent } from './profile-component/profile.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { HomeComponent } from './home-component/home.component';
     PowerFailuresComponent,
     BoardSettingsComponent,
     SpinnerDialogComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   entryComponents: [LoginModalComponent, SpinnerDialogComponent],
   imports: [
@@ -72,6 +74,7 @@ import { HomeComponent } from './home-component/home.component';
       { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [OpenGuard] },
       { path: 'power-failures', component: PowerFailuresComponent, canActivate: [OpenGuard] },
       { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
+      { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],
