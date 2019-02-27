@@ -102,9 +102,9 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 this.powerSum = this.powerSum + record.power;
             }
             this.powerSum = Math.round(this.powerSum * 100) / 100;
-            this.dialogRef.close();
+            this.closeSpinner();
         } catch (e) {
-            this.dialogRef.close();
+            this.closeSpinner();
             console.log(e);
             setTimeout(() => alert('Something going wrong!'));
         }

@@ -52,7 +52,7 @@ export class BoardSettingsComponent extends AppBaseComponent implements OnInit, 
             console.error(e);
             setTimeout(() => alert('Something going wrong!'));
         } finally {
-            this.dialogRef.close();
+            this.closeSpinner();
         }
     }
 

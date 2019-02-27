@@ -77,7 +77,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
     } catch (e) {
       setTimeout(() => alert('Something going wrong!'));
     } finally {
-      this.dialogRef.close();
+      this.closeSpinner();
     }
   }
 
