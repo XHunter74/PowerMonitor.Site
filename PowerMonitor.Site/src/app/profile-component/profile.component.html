@@ -8,6 +8,9 @@
             <div *ngIf="password.errors.required">
                 Password is required.
             </div>
+            <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters long.
+            </div>
         </div>
     </div>
     <div class="form-group">

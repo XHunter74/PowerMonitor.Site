@@ -11,9 +11,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     profileForm = new FormGroup({
         password: new FormControl('',
-            [Validators.required]),
+            [Validators.required,
+            Validators.minLength(6)]),
         confirmPassword: new FormControl('',
-            [Validators.required])
+            [Validators.required,
+            Validators.minLength(6)])
     });
 
     ngOnInit(): void {
