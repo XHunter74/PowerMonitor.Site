@@ -64,12 +64,11 @@ import { AppDateAdapter } from './app-date.adapter';
       { path: '', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'settings', component: BoardSettingsComponent, canActivate: [AuthGuard] },
-      { path: 'power-monitor', component: PowerMonitorComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
       { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
       { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
       { path: 'power-failures', component: PowerFailuresComponent, canActivate: [AuthGuard] },
-      { path: 'voltage-amperage', component: VoltageAmperageComponent, canActivate: [AuthGuard] },
+      { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
   ],
