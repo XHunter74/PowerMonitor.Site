@@ -16,3 +16,13 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 }
+
+@Injectable()
+export class OpenGuard implements CanActivate {
+  constructor(private userService: UsersService, private router: Router) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    localStorage.setItem('last_url', state.url);
+    return true;
+  }
+}
