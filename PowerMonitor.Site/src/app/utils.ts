@@ -9,12 +9,12 @@ export function compare(a: number | string | Date, b: number | string | Date, is
 
 export class StringUtils {
     public static formatNumber(value: number): string {
-        let strValue = (Math.round(value * 100) / 100).toString()
+        let strValue = (Math.round(value * 100) / 100).toString();
         if (!strValue.includes('.')) {
             strValue = `${strValue}.00`;
         } else {
             const parts = strValue.split('.');
-            if (parts[1].length != 2) {
+            if (parts[1].length !== 2) {
                 strValue = `${strValue}0`;
             }
         }

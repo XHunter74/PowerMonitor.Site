@@ -25,7 +25,7 @@ export class AppLoginComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       'userName': new FormControl(
-        'xhunter74',
+        '',
         [Validators.required,
         Validators.minLength(4)]
       ),

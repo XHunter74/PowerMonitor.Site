@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ServicesService } from '../services/services-service'
+import { ServicesService } from '../services/services-service';
 import { ISystemInfo } from '../models/sysinfo.model';
 import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
