@@ -29,6 +29,7 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
+import { HomeComponent } from './home-component/home.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { AppDateAdapter } from './app-date.adapter';
     VoltageAmperageHourlyComponent,
     PowerFailuresComponent,
     BoardSettingsComponent,
-    SpinnerDialogComponent
+    SpinnerDialogComponent,
+    HomeComponent
   ],
   entryComponents: [LoginModalComponent, SpinnerDialogComponent],
   imports: [
@@ -61,7 +63,8 @@ import { AppDateAdapter } from './app-date.adapter';
     AppMaterialModule,
     GaugeChartModule,
     RouterModule.forRoot([
-      { path: '', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
       { path: 'settings', component: BoardSettingsComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
