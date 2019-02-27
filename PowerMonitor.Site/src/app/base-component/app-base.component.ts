@@ -27,4 +27,12 @@ export class AppBaseComponent implements OnDestroy {
             disableClose: true
         });
     }
+
+    closeSpinner() {
+        if (this.dialogRef) {
+            this.dialogRef.close();
+        } else {
+            console.error('dialog is undefined');
+        }
+    }
 }
