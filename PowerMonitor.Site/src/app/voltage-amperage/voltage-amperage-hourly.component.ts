@@ -1,40 +1,64 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Sort, MatDialog } from '@angular/material';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Sort, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { compare } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html'
 })
-export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnDestroy {
+export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
     public voltageData: IVoltageAmperageModel[];
-    public currentDate: NgbDate;
+    public currentDate: Date;
+    currentDateControl: FormControl = new FormControl();
 
     constructor(private powerService: PowerService,
+        private activatedRouter: ActivatedRoute,
+        private router: Router,
         dialog: MatDialog) {
         super(dialog);
-        const today = new Date();
-        this.currentDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    }
+
+    ngOnInit(): void {
+        this.activatedRouter.params.subscribe(
+            params => {
+                const year = params['year'];
+                const month = params['month'];
+                const day = params['day'];
+                if (year && month && day) {
+                    // tslint:disable-next-line: radix
+                    this.currentDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                } else {
+                    this.currentDate = new Date();
+                }
+            }
+        );
+        this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
 
+    async dateChanged(event: MatDatepickerInputEvent<Date>) {
+        this.currentDate = new Date(event.value);
+        this.router.navigate(['voltage-amperage', 'hourly',
+            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        await this.refreshData();
+    }
+
     async refreshData() {
-        setTimeout(() => {
+        setTimeout(async () => {
             this.showSpinner();
         });
         try {
-            const startDate = new Date();
-            const finishDate = new Date();
-            this.voltageData = await this.powerService.getVoltageAmperageData(startDate, finishDate);
-            this.dialogRef.close();
+            this.voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
+            this.closeSpinner();
         } catch (e) {
-            this.dialogRef.close();
+            this.closeSpinner();
             setTimeout(() => alert('Something going wrong!'));
         }
     }

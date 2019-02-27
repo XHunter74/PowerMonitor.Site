@@ -1,14 +1,9 @@
-<!-- <form class="form-inline">
-    <div class="form-group">
-        <div class="input-group">
-            <input class="form-control" placeholder="dd.mm.yyyy" name="dp" [(ngModel)]="currentDate" ngbDatepicker
-                #d="ngbDatepicker">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-            </div>
-        </div>
-    </div>
-</form> -->
+<mat-form-field>
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+        (dateChange)="dateChanged($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+    <mat-datepicker #picker3></mat-datepicker>
+</mat-form-field>
 
 <div class="table-responsive">
     <table *ngIf="voltageData" class="table" matSort (matSortChange)="sortData($event)">
@@ -25,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of voltageData" [class.selected]="user === selectedRecord">
+            <tr *ngFor="let record of voltageData">
                 <td>{{ record.created | date: 'dd.MM.yyyy'}}</td>
                 <td>{{ record.hours }}</td>
                 <td>{{ formatNumber(record.voltageMax) }}</td>
