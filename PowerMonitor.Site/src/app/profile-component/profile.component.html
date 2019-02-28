@@ -20,7 +20,9 @@
         </div>
         <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
             class="alert alert-danger">
-
+            <div *ngIf="confirmPassword.errors.notMatch">
+                Passwords must match
+            </div>
         </div>
     </div>
     <!-- <div *ngIf="errors" class="alert alert-danger" role="alert">
