@@ -4,7 +4,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-
+<button (click)="refreshData()">Refresh</button>
 <div class="table-responsive">
     <table *ngIf="voltageData" class="table" matSort (matSortChange)="sortData($event)">
         <thead>

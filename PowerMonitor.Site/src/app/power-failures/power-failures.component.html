@@ -5,8 +5,7 @@
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<br />
-
+<button (click)="refreshData()">Refresh</button>
 <div class="table-responsive">
     <table *ngIf="powerFailuresData" class="table" matSort (matSortChange)="sortData($event)">
         <thead>
