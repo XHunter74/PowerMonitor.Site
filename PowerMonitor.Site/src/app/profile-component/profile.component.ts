@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     changePassword() {
-
+        const password = this.profileForm.get('password').value;
     }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
