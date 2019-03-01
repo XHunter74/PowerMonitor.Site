@@ -59,6 +59,38 @@ export class UsersService {
     return promise;
   }
 
+  async changePassword(newPassword: string) {
+    const authToken = localStorage.getItem('auth_token');
+    let headers: HttpHeaders;
+    if (authToken) {
+      headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `${authToken}`
+      });
+    } else {
+      headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+    }
+
+    const passwordModel = {
+      newPassword: newPassword
+    };
+
+    const promise = new Promise((resolve, reject) => {
+      this.http
+        .post<ITokenModel>(this.baseUrl + 'auth/change-password', JSON.stringify(passwordModel), { headers })
+        .toPromise()
+        .then(() => {
+          resolve();
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
+    return promise;
+  }
+
   logout() {
     localStorage.removeItem('auth_token');
     this.isLoginSubject.next(false);

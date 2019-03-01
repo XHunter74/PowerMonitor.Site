@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UsersService } from '../services/users-service';
 
 @Component({
     selector: 'app-profile',
@@ -16,14 +17,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
         confirmPassword: new FormControl('')
     }, [this.checkPasswords]);
 
+    constructor(private usersService: UsersService) { }
+
     ngOnInit(): void {
     }
 
     ngOnDestroy(): void {
     }
 
-    changePassword() {
-        const password = this.profileForm.get('password').value;
+    async changePassword() {
+        const userPassowrd = this.profileForm.get('password').value;
+        await this.usersService
+            .changePassword(userPassowrd)
+            .then(data => {
+                alert('Password was changed successfully!');
+            })
+            .catch(e => {
+                console.log(e);
+                alert('Something going wrong!');
+            });
     }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
