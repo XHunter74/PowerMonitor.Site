@@ -53,39 +53,21 @@ export class RealDataComponent implements OnInit, OnDestroy {
     }
   };
 
-  private interval;
-
   constructor(private powerService: PowerService, private webSocketService: WebSocketService) {
   }
 
   ngOnInit(): void {
     // this.refreshData();
-    this.webSocketService.sendMessage('sssss');
-    this.webSocketService.getMessage().subscribe(msg => {
-      const sensorData = <ISensorsDataModel>msg;
-      this.updateGaugeIndicators(sensorData);
-    });
+    this.webSocketService.sendMessage('sensors-data');
+    this.webSocketService.getSensorsData()
+      .subscribe(msg => {
+        const sensorData = <ISensorsDataModel>msg;
+        this.updateGaugeIndicators(sensorData);
+      });
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.interval);
-  }
-
-  async refreshData() {
-    let isErrorShown = false;
-    this.interval = setInterval(async () => {
-      try {
-        const sensorsData = await this.powerService.getSensorsData();
-        this.updateGaugeIndicators(sensorsData);
-      } catch (e) {
-        clearInterval(this.interval);
-        console.log(e);
-        if (!isErrorShown) {
-          isErrorShown = true;
-          alert('Something going wrong!');
-        }
-      }
-    }, 1000);
+    this.webSocketService.sendMessage('close-sensors-data');
   }
 
   updateGaugeIndicators(sensorsData: ISensorsDataModel) {
@@ -95,10 +77,6 @@ export class RealDataComponent implements OnInit, OnDestroy {
     this.currentIndicator.bottomLabel = formatNumber(sensorsData.amperage);
   }
 
-}
-
-async function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function formatNumber(value: number): any {
