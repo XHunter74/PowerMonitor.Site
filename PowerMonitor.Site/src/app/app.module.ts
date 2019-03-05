@@ -31,6 +31,8 @@ import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.componen
 import { AppDateAdapter } from './app-date.adapter';
 import { HomeComponent } from './home-component/home.component';
 import { ProfileComponent } from './profile-component/profile.component';
+import { SocketIoModule } from 'ng-socket-io';
+import { WebSocket, WebSocketService } from './services/websocket.service';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import { ProfileComponent } from './profile-component/profile.component';
     ChartsModule,
     AppMaterialModule,
     GaugeChartModule,
+    SocketIoModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [OpenGuard] },
       { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
@@ -81,6 +84,8 @@ import { ProfileComponent } from './profile-component/profile.component';
   providers: [
     AuthGuard,
     OpenGuard,
+    WebSocket,
+    WebSocketService,
     { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],

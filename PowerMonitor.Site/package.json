@@ -37,9 +37,11 @@
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "ng-bootstrap": "^1.6.3",
+    "ng-socket-io": "^0.2.4",
     "ng2-charts": "^1.6.0",
     "popper.js": "^1.14.4",
     "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.4.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

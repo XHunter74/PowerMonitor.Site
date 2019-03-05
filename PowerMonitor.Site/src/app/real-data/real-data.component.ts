@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { ISensorsDataModel } from '../models/sensors-data.model';
+import { WebSocket, WebSocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-real-data',
@@ -54,11 +55,16 @@ export class RealDataComponent implements OnInit, OnDestroy {
 
   private interval;
 
-  constructor(private powerService: PowerService) {
+  constructor(private powerService: PowerService, private webSocketService: WebSocketService) {
   }
 
   ngOnInit(): void {
-    this.refreshData();
+    // this.refreshData();
+    this.webSocketService.sendMessage('sssss');
+    this.webSocketService.getMessage().subscribe(msg => {
+      const sensorData = <ISensorsDataModel>msg;
+      this.updateGaugeIndicators(sensorData);
+    });
   }
 
   ngOnDestroy(): void {
@@ -81,6 +87,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
       }
     }, 1000);
   }
+
   updateGaugeIndicators(sensorsData: ISensorsDataModel) {
     this.voltageIndicator.needleValue = Math.round(sensorsData.voltage / this.maxVoltage * 100);
     this.voltageIndicator.bottomLabel = formatNumber(sensorsData.voltage);
