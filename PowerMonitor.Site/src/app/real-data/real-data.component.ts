@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PowerService } from '../services/power-service';
 import { ISensorsDataModel } from '../models/sensors-data.model';
-import { WebSocket, WebSocketService } from '../services/websocket.service';
+import { WebSocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-real-data',
@@ -16,7 +15,6 @@ export class RealDataComponent implements OnInit, OnDestroy {
   private nominalVoltageMax = 240;
   private voltage = 230;
   private maxAmperage = 30;
-  private nominalAmperageMin = 0;
   private nominalAmperageMax = 20;
 
   public canvasWidth = 300;
@@ -53,16 +51,14 @@ export class RealDataComponent implements OnInit, OnDestroy {
     }
   };
 
-  constructor(private powerService: PowerService, private webSocketService: WebSocketService) {
+  constructor(private webSocketService: WebSocketService) {
   }
 
   ngOnInit(): void {
-    // this.refreshData();
     this.webSocketService.sendMessage('sensors-data');
     this.webSocketService.getSensorsData()
-      .subscribe(msg => {
-        const sensorData = <ISensorsDataModel>msg;
-        this.updateGaugeIndicators(sensorData);
+      .subscribe((data: ISensorsDataModel) => {
+        this.updateGaugeIndicators(data);
       });
   }
 
