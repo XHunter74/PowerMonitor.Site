@@ -44,8 +44,8 @@ export class RealDataComponent implements OnInit, OnDestroy {
       hasNeedle: true,
       needleColor: 'gray',
       needleUpdateSpeed: 500,
-      arcColors: ['red', 'green', 'red'],
-      arcDelimiters: [0.5, Math.round(this.nominalAmperageMax / this.maxAmperage * 100)],
+      arcColors: ['green', 'red'],
+      arcDelimiters: [Math.round(this.nominalAmperageMax / this.maxAmperage * 100)],
       rangeLabel: ['0', this.maxAmperage.toString()],
       needleStartValue: 0,
     }
