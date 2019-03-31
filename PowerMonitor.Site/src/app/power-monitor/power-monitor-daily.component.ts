@@ -128,7 +128,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 return e.power;
             });
             chartLabels = data.map(e => {
-                return e.hours.toString();
+                const day = new Date(e.created).getDate();
+                return day.toString();
             });
         }
         this.barChartData[0].data = chartData;
