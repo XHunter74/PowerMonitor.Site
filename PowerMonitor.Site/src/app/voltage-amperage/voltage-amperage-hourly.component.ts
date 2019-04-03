@@ -53,14 +53,14 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     async refreshData() {
         setTimeout(async () => {
             this.showSpinner();
+            try {
+                this.voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
+                this.closeSpinner();
+            } catch (e) {
+                this.closeSpinner();
+                setTimeout(() => alert('Something going wrong!'));
+            }
         });
-        try {
-            this.voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
-            this.closeSpinner();
-        } catch (e) {
-            this.closeSpinner();
-            setTimeout(() => alert('Something going wrong!'));
-        }
     }
 
     sortData(sort: Sort) {

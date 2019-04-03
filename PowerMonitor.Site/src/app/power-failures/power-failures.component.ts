@@ -63,22 +63,22 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
   }
 
   async refreshData() {
-    setTimeout(() => {
+    setTimeout(async () => {
       this.showSpinner();
-    });
-    try {
-      const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-      const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-        daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-      this.powerFailuresData = await this.powerService.getPowerFailuresData(startDate, finishDate);
-      if (this.lastSort && this.lastSortDirection) {
-        this.sortDataInt(this.lastSort, this.lastSortDirection);
+      try {
+        const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+        const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
+          daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
+        this.powerFailuresData = await this.powerService.getPowerFailuresData(startDate, finishDate);
+        if (this.lastSort && this.lastSortDirection) {
+          this.sortDataInt(this.lastSort, this.lastSortDirection);
+        }
+      } catch (e) {
+        setTimeout(() => alert('Something going wrong!'));
+      } finally {
+        this.closeSpinner();
       }
-    } catch (e) {
-      setTimeout(() => alert('Something going wrong!'));
-    } finally {
-      this.closeSpinner();
-    }
+    });
   }
 
   sortData(sort: Sort) {
