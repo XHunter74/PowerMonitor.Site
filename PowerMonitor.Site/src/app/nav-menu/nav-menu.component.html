@@ -16,13 +16,14 @@
             <span class='fas fa-home'></span> Home
           </a>
         </li>
-        <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+        <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'
+          [routerLinkActiveOptions]='{ exact: true }'>
           <a [routerLink]='["/online-data"]' class="nav-link" (click)='collapse()'>
             <span class='fas fa-home'></span> Real Data
           </a>
         </li>
         <li class="nav-item" [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/power-monitor/hourly"]' class="nav-link" (click)='collapse()'>
+          <a [routerLink]='["/power-monitor"]' class="nav-link" (click)='collapse()'>
             <span class='fas fa-database'></span> Power Monitor
           </a>
         </li>
@@ -47,10 +48,10 @@
           </a>
         </li>
         <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a [routerLink]='["/profile"]' class="nav-link" (click)='collapse()'>
-              <span class='fas fa-sort-amount-up'></span> Profile
-            </a>
-          </li>
+          <a [routerLink]='["/profile"]' class="nav-link" (click)='collapse()'>
+            <span class='fas fa-sort-amount-up'></span> Profile
+          </a>
+        </li>
         <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
             Login

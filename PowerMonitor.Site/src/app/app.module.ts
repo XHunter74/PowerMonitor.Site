@@ -72,6 +72,7 @@ import { WebSocket, WebSocketService } from './services/websocket.service';
       { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [OpenGuard] },
       { path: 'settings', component: BoardSettingsComponent, canActivate: [AuthGuard] },
+      { path: 'power-monitor', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [OpenGuard] },
