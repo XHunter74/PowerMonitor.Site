@@ -84,25 +84,25 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     }
 
     async refreshData() {
-        setTimeout(() => {
+        setTimeout(async () => {
             this.showSpinner();
-        });
-        try {
-            const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
-            const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
-            this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
-            this.prepareChart(this.powerData);
-            this.powerSum = 0;
-            for (const record of this.powerData) {
-                this.powerSum = this.powerSum + record.power;
+            try {
+                const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
+                const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
+                this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
+                this.prepareChart(this.powerData);
+                this.powerSum = 0;
+                for (const record of this.powerData) {
+                    this.powerSum = this.powerSum + record.power;
+                }
+                this.powerSum = Math.round(this.powerSum * 100) / 100;
+                this.closeSpinner();
+            } catch (e) {
+                this.closeSpinner();
+                console.log(e);
+                setTimeout(() => alert('Something going wrong!'));
             }
-            this.powerSum = Math.round(this.powerSum * 100) / 100;
-            this.closeSpinner();
-        } catch (e) {
-            this.closeSpinner();
-            console.log(e);
-            setTimeout(() => alert('Something going wrong!'));
-        }
+        });
     }
 
     prepareChart(data: IPowerDataMonthlyModel[]) {

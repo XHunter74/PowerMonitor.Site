@@ -88,26 +88,26 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
 
     async refreshData() {
-        setTimeout(() => {
+        setTimeout(async () => {
             this.showSpinner();
-        });
-        try {
-            const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-            const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-                daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-            this.powerData = await this.powerService.getPowerDataDaily(startDate, finishDate);
-            this.prepareChart(this.currentDate, this.powerData);
-            this.powerSum = 0;
-            for (const record of this.powerData) {
-                this.powerSum = this.powerSum + record.power;
+            try {
+                const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+                const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
+                    daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
+                this.powerData = await this.powerService.getPowerDataDaily(startDate, finishDate);
+                this.prepareChart(this.currentDate, this.powerData);
+                this.powerSum = 0;
+                for (const record of this.powerData) {
+                    this.powerSum = this.powerSum + record.power;
+                }
+                this.powerSum = Math.round(this.powerSum * 100) / 100;
+                this.closeSpinner();
+            } catch (e) {
+                this.closeSpinner();
+                console.log(e);
+                setTimeout(() => alert('Something going wrong!'));
             }
-            this.powerSum = Math.round(this.powerSum * 100) / 100;
-            this.closeSpinner();
-        } catch (e) {
-            this.closeSpinner();
-            console.log(e);
-            setTimeout(() => alert('Something going wrong!'));
-        }
+        });
     }
 
     prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
