@@ -7,3 +7,4 @@ Arduino/PowerMonitor/build/
 PowerMonitor.Upload/node_modules/
 PowerMonitor.API/uploads/
 PowerMonitor.API/server.off
+Arduino/PowerMonitor/.vscode/ipch/
