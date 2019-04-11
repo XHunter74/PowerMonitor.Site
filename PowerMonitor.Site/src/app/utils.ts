@@ -4,7 +4,7 @@ export function daysInMonth(year: number, month: number) {
 }
 
 export function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    return (a < b ? -1 : (a === b ? 0 : 1)) * (isAsc ? 1 : -1);
 }
 
 export class StringUtils {
