@@ -33,5 +33,20 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
             this.closeSpinner();
         }
     }
+
+    getSystemUptimeStr() {
+        let result = '';
+        if (this.sysInfo.systemUptime.days) {
+            result = result + `${this.sysInfo.systemUptime.days} days`;
+        }
+        if (this.sysInfo.systemUptime.hours) {
+            result = result + ` ${this.sysInfo.systemUptime.hours} hours`;
+        }
+        if (this.sysInfo.systemUptime.minutes) {
+            result = result + ` ${this.sysInfo.systemUptime.minutes} minutes`;
+        }
+        result = result + ` ${this.sysInfo.systemUptime.seconds} seconds`;
+        return result;
+    }
 }
 
