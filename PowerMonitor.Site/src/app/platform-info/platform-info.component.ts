@@ -40,12 +40,16 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
             result = result + `${this.sysInfo.systemUptime.days} days`;
         }
         if (this.sysInfo.systemUptime.hours) {
-            result = result + ` ${this.sysInfo.systemUptime.hours} hours`;
+            result = result + ` ${this.sysInfo.systemUptime.hours.toString().padStart(2, '0')}:`;
+        }else{
+            result = result + ` 00:`;
         }
         if (this.sysInfo.systemUptime.minutes) {
-            result = result + ` ${this.sysInfo.systemUptime.minutes} minutes`;
+            result = result + `${this.sysInfo.systemUptime.minutes.toString().padStart(2, '0')}:`;
+        }else{
+            result = result + `00:`;
         }
-        result = result + ` ${this.sysInfo.systemUptime.seconds} seconds`;
+        result = result + `${this.sysInfo.systemUptime.seconds.toString().padStart(2, '0')}`;
         return result;
     }
 }
