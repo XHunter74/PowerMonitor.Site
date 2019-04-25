@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Sort, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog, MatDatepickerInputEvent, MatSort, MatTableDataSource } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
-import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
-import { compare } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,9 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html'
 })
-export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
+export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    public voltageData: IVoltageAmperageModel[];
+    @ViewChild(MatSort) sort: MatSort;
+    sortedData = new MatTableDataSource();
+    displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
+        'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
     public currentDate: Date;
     currentDateControl: FormControl = new FormControl();
 
@@ -23,6 +24,10 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         private router: Router,
         dialog: MatDialog) {
         super(dialog);
+    }
+
+    ngAfterViewInit() {
+        this.sortedData.sort = this.sort;
     }
 
     ngOnInit(): void {
@@ -54,34 +59,12 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         setTimeout(async () => {
             this.showSpinner();
             try {
-                this.voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
+                const voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
+                this.sortedData.data = voltageData;
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
                 setTimeout(() => alert('Something going wrong!'));
-            }
-        });
-    }
-
-    sortData(sort: Sort) {
-        const data = this.voltageData.slice();
-        if (!sort.active || sort.direction === '') {
-            this.voltageData = data;
-            return;
-        }
-
-        this.voltageData = data.sort((a, b) => {
-            const isAsc = sort.direction === 'asc';
-            switch (sort.active) {
-                case 'created': return compare(a.created, b.created, isAsc);
-                case 'hours': return compare(a.hours, b.hours, isAsc);
-                case 'voltageMax': return compare(a.voltageMax, b.voltageMax, isAsc);
-                case 'voltageMin': return compare(a.voltageMin, b.voltageMin, isAsc);
-                case 'voltageAvg': return compare(a.voltageAvg, b.voltageAvg, isAsc);
-                case 'amperageMax': return compare(a.amperageMax, b.amperageMax, isAsc);
-                case 'amperageMin': return compare(a.amperageMin, b.amperageMin, isAsc);
-                case 'amperageAvg': return compare(a.amperageAvg, b.amperageAvg, isAsc);
-                default: return 0;
             }
         });
     }
