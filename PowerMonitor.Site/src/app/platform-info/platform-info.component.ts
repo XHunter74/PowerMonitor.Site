@@ -22,16 +22,16 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
     }
 
     async refreshData() {
-        setTimeout(() => {
+        setTimeout(async () => {
             this.showSpinner();
+            try {
+                this.sysInfo = await this.servicesService.getSystemInfo();
+                this.closeSpinner();
+            } catch (e) {
+                this.closeSpinner();
+                setTimeout(() => alert('Something going wrong!'));
+            }
         });
-        try {
-            this.sysInfo = await this.servicesService.getSystemInfo();
-        } catch (e) {
-            setTimeout(() => alert('Something going wrong!'));
-        } finally {
-            this.closeSpinner();
-        }
     }
 
     getSystemUptimeStr() {
@@ -41,12 +41,12 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
         }
         if (this.sysInfo.systemUptime.hours) {
             result = result + ` ${this.sysInfo.systemUptime.hours.toString().padStart(2, '0')}:`;
-        }else{
+        } else {
             result = result + ` 00:`;
         }
         if (this.sysInfo.systemUptime.minutes) {
             result = result + `${this.sysInfo.systemUptime.minutes.toString().padStart(2, '0')}:`;
-        }else{
+        } else {
             result = result + `00:`;
         }
         result = result + `${this.sysInfo.systemUptime.seconds.toString().padStart(2, '0')}`;
