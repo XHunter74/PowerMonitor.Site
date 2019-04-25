@@ -33,6 +33,7 @@ import { HomeComponent } from './home-component/home.component';
 import { ProfileComponent } from './profile-component/profile.component';
 import { SocketIoModule } from 'ng-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
+import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { WebSocket, WebSocketService } from './services/websocket.service';
     PowerMonitorMonthlyComponent,
     VoltageAmperageComponent,
     VoltageAmperageHourlyComponent,
+    VoltageAmperageDailyComponent,
     PowerFailuresComponent,
     BoardSettingsComponent,
     SpinnerDialogComponent,
@@ -78,6 +80,7 @@ import { WebSocket, WebSocketService } from './services/websocket.service';
       { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [OpenGuard] },
       { path: 'power-failures', component: PowerFailuresComponent, canActivate: [OpenGuard] },
       { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
+      { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
       { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'app-login', component: AppLoginComponent },
     ])
