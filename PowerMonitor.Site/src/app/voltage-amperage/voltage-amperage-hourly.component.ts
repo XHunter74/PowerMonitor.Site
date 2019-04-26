@@ -8,7 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
-    templateUrl: './voltage-amperage-hourly.component.html'
+    templateUrl: './voltage-amperage-hourly.component.html',
+    styleUrls: ['./voltage-amperage-hourly.component.css']
 })
 export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 

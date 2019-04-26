@@ -6,38 +6,38 @@
 </mat-form-field>
 <button (click)="refreshData()">Refresh</button>
 <div class="table-responsive">
-    <table mat-table [dataSource]="sortedData" class="table" matSort>
+    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort>
         <ng-container matColumnDef="created">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: 400"> Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.created | date: 'dd.MM.yyyy'}} </td>
+            <th *matHeaderCellDef mat-sort-header> Date </th>
+            <td *matCellDef="let element"> {{element.created | date: 'dd.MM.yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="hours">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Hours </th>
-            <td mat-cell *matCellDef="let element"> {{element.hours}} </td>
+            <th *matHeaderCellDef mat-sort-header> Hours </th>
+            <td *matCellDef="let element"> {{element.hours}} </td>
         </ng-container>
         <ng-container matColumnDef="voltageMax">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Voltage Max, V </th>
-            <td mat-cell *matCellDef="let element"> {{element.voltageMax}} </td>
+            <th *matHeaderCellDef mat-sort-header> Voltage Max, V </th>
+            <td *matCellDef="let element"> {{formatNumber(element.voltageMax)}} </td>
         </ng-container>
         <ng-container matColumnDef="voltageMin">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Voltage Min, V </th>
-            <td mat-cell *matCellDef="let element"> {{element.voltageMin}} </td>
+            <th *matHeaderCellDef mat-sort-header> Voltage Min, V </th>
+            <td *matCellDef="let element"> {{formatNumber(element.voltageMin)}} </td>
         </ng-container>
         <ng-container matColumnDef="voltageAvg">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Voltage Average, V </th>
-            <td mat-cell *matCellDef="let element"> {{element.voltageAvg}} </td>
+            <th *matHeaderCellDef mat-sort-header> Voltage Average, V </th>
+            <td *matCellDef="let element"> {{formatNumber(element.voltageAvg)}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageMax">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amperage Max, A </th>
-            <td mat-cell *matCellDef="let element"> {{element.amperageMax}} </td>
+            <th *matHeaderCellDef mat-sort-header> Amperage Max, A </th>
+            <td *matCellDef="let element"> {{formatNumber(element.amperageMax)}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageMin">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amperage Min, A </th>
-            <td mat-cell *matCellDef="let element"> {{element.amperageMin}} </td>
+            <th *matHeaderCellDef mat-sort-header> Amperage Min, A </th>
+            <td *matCellDef="let element"> {{formatNumber(element.amperageMin)}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageAvg">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amperage Average, A </th>
-            <td mat-cell *matCellDef="let element"> {{element.amperageAvg}} </td>
+            <th *matHeaderCellDef mat-sort-header> Amperage Average, A </th>
+            <td *matCellDef="let element"> {{formatNumber(element.amperageAvg)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
