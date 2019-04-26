@@ -5,6 +5,7 @@ import { WebSocketService } from '../services/websocket.service';
 @Component({
   selector: 'app-real-data',
   templateUrl: './real-data.component.html',
+  styleUrls: ['./real-data.component.css']
 })
 
 
