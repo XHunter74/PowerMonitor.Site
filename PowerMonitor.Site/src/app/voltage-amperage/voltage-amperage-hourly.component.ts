@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDatepickerInputEvent, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDatepickerInputEvent, MatSort, MatTableDataSource, Sort, SortDirection, MatSortHeader } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort;'
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
@@ -28,6 +30,19 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     }
 
     ngAfterViewInit() {
+        const restoredSortStr = localStorage.getItem(VoltageAmperageHourlySort);
+        if (restoredSortStr) {
+            const restoredSort = <Sort>JSON.parse(restoredSortStr)
+            if (restoredSort.active && restoredSort.direction) {
+                this.sort.active = restoredSort.active;
+                this.sort.direction = restoredSort.direction as SortDirection;
+                const toState = 'active';
+                (this.sort.sortables.get(restoredSort.active) as MatSortHeader)
+                    ._setAnimationTransitionState({ toState });
+                // this.sort.sortChange.emit();
+                // this.sort._stateChanges.next();
+            }
+        }
         this.sortedData.sort = this.sort;
     }
 
@@ -70,5 +85,10 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         });
     }
 
+    sortData(sort: Sort): void {
+        if (sort) {
+            localStorage.setItem(VoltageAmperageHourlySort, JSON.stringify(sort));
+        }
+    }
 }
 

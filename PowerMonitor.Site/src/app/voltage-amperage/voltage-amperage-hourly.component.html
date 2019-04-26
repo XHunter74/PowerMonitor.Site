@@ -6,7 +6,7 @@
 </mat-form-field>
 <button (click)="refreshData()">Refresh</button>
 <div class="table-responsive">
-    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort>
+    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="created">
             <th *matHeaderCellDef mat-sort-header> Date </th>
             <td *matCellDef="let element"> {{element.created | date: 'dd.MM.yyyy'}} </td>
