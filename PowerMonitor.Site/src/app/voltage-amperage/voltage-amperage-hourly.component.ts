@@ -30,20 +30,21 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     }
 
     ngAfterViewInit() {
+        this.sortedData.sort = this.sort;
+        this.restoreSort()
+    }
+    restoreSort() {
+        const sort = this.sortedData.sort;
         const restoredSortStr = localStorage.getItem(VoltageAmperageHourlySort);
         if (restoredSortStr) {
             const restoredSort = <Sort>JSON.parse(restoredSortStr)
             if (restoredSort.active && restoredSort.direction) {
-                this.sort.active = restoredSort.active;
-                this.sort.direction = restoredSort.direction as SortDirection;
-                const toState = 'active';
-                (this.sort.sortables.get(restoredSort.active) as MatSortHeader)
-                    ._setAnimationTransitionState({ toState });
-                // this.sort.sortChange.emit();
-                // this.sort._stateChanges.next();
+                sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
+                sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
+                (sort.sortables.get(restoredSort.active) as MatSortHeader)
+                    ._setAnimationTransitionState({ toState: 'active' });
             }
         }
-        this.sortedData.sort = this.sort;
     }
 
     ngOnInit(): void {
