@@ -5,6 +5,7 @@ import { PowerService } from '../services/power-service';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort;'
 
@@ -21,6 +22,10 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
     public currentDate: Date;
     currentDateControl: FormControl = new FormControl();
+    maxVoltage: IVoltageAmperageModel;
+    minVoltage: IVoltageAmperageModel;
+    maxAmperage: IVoltageAmperageModel;
+    minAmperage: IVoltageAmperageModel;
 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
@@ -78,6 +83,14 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             try {
                 const voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
                 this.sortedData.data = voltageData;
+                this.maxVoltage =
+                    voltageData.find(o => o.voltageMax === Math.max.apply(null, voltageData.map(e => e.voltageMax)));
+                this.minVoltage =
+                    voltageData.find(o => o.voltageMin === Math.min.apply(null, voltageData.map(e => e.voltageMin)));
+                this.maxAmperage =
+                    voltageData.find(o => o.amperageMax === Math.max.apply(null, voltageData.map(e => e.amperageMax)));
+                this.minAmperage =
+                    voltageData.find(o => o.amperageMin === Math.min.apply(null, voltageData.map(e => e.amperageMin)));
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
