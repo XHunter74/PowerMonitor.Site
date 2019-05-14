@@ -8,12 +8,10 @@
 <div class="row">
     <div class="col-12 col-md-6 mb-3">
         <div class="d-inline-block" *ngIf="minVoltage && minAmperage">
-            <div>Min Voltage: {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h</div>
-            <div>Min Amperage: {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h</div>
-        </div>
-        <div class="d-inline-block ml-3" *ngIf="maxVoltage && maxAmperage">
-            <div>Max Voltage: {{formatNumber(maxVoltage.voltageMax)}}V, {{maxVoltage.hours}}h</div>
-            <div>Max Amperage: {{formatNumber(maxAmperage.amperageMax)}}A, {{maxAmperage.hours}}h</div>
+            <div>Voltage: {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h -
+                {{formatNumber(maxVoltage.voltageMax)}}V, {{maxVoltage.hours}}h</div>
+            <div>Amperage: {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h -
+                {{formatNumber(maxAmperage.amperageMax)}}A, {{maxAmperage.hours}}h</div>
         </div>
     </div>
 </div>
