@@ -1,5 +1,9 @@
-export interface ICalibrationCoefficients {
+export class CalibrationCoefficients {
     voltageCalibration: number;
     currentCalibration: number;
-    powerFactorCalibration: number;
+
+    constructor(voltageCalibration: number, currentCalibration: number) {
+        this.currentCalibration = currentCalibration;
+        this.voltageCalibration = voltageCalibration;
+    }
 }

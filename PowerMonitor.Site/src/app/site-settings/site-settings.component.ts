@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServicesService } from '../services/services-service';
 import { IBoardInfoModel } from '../models/board-info.model';
-import { ICalibrationCoefficients } from '../models/calibration-coefficients.model';
+import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -15,16 +15,13 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 export class SiteSettingsComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
     boardInfo: IBoardInfoModel;
-    calibrationCoefficients: ICalibrationCoefficients;
     newSketch: File;
 
     coefficientsForm = new FormGroup({
         voltageCoefficient: new FormControl('',
             [Validators.required]),
         currentCoefficient: new FormControl('',
-            [Validators.required]),
-        powerFactorCoefficient: new FormControl('',
-            [Validators.required]),
+            [Validators.required])
     });
 
     constructor(private servicesService: ServicesService,
@@ -42,11 +39,10 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
         });
         try {
             this.boardInfo = await this.servicesService.getBoardVersion();
-            this.calibrationCoefficients = await this.servicesService.getCalibrationCoefficients();
+            const calibrationCoefficients = await this.servicesService.getCalibrationCoefficients();
             this.coefficientsForm.patchValue({
-                voltageCoefficient: this.calibrationCoefficients.voltageCalibration,
-                currentCoefficient: this.calibrationCoefficients.currentCalibration,
-                powerFactorCoefficient: this.calibrationCoefficients.powerFactorCalibration
+                voltageCoefficient: calibrationCoefficients.voltageCalibration,
+                currentCoefficient: calibrationCoefficients.currentCalibration,
             });
         } catch (e) {
             console.error(e);
@@ -56,8 +52,19 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
         }
     }
 
-    changeCoefficients() {
-
+    async changeCoefficients() {
+        setTimeout(() => {
+            this.showSpinner();
+        });
+        try {
+            const calibrationCoefficients = new CalibrationCoefficients(this.voltageCoefficient.value, this.currentCoefficient.value);
+            await this.servicesService.setCalibrationCoefficients(calibrationCoefficients);
+        } catch (e) {
+            console.error(e);
+            setTimeout(() => alert('Something going wrong!'));
+        } finally {
+            this.closeSpinner();
+        }
     }
 
     fileChangeEvent(fileInput: any) {
@@ -78,5 +85,4 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
 
     get voltageCoefficient() { return this.coefficientsForm.get('voltageCoefficient'); }
     get currentCoefficient() { return this.coefficientsForm.get('currentCoefficient'); }
-    get powerFactorCoefficient() { return this.coefficientsForm.get('powerFactorCoefficient'); }
 }

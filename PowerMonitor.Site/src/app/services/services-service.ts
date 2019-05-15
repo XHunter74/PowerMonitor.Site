@@ -5,7 +5,7 @@ import { UsersService } from './users-service';
 
 import { ISystemInfo } from '../models/sysinfo.model';
 import { IBoardInfoModel } from '../models/board-info.model';
-import { ICalibrationCoefficients } from '../models/calibration-coefficients.model';
+import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { HttpService } from './http.service';
 
 
@@ -38,8 +38,13 @@ export class ServicesService extends HttpService {
         return promise;
     }
 
-    async getCalibrationCoefficients(): Promise<ICalibrationCoefficients> {
-        const promise = this.get<ICalibrationCoefficients>('services/calibration-coefficients');
+    async getCalibrationCoefficients(): Promise<CalibrationCoefficients> {
+        const promise = this.get<CalibrationCoefficients>('services/calibration-coefficients');
+        return promise;
+    }
+
+    async setCalibrationCoefficients(coefficients: CalibrationCoefficients): Promise<string> {
+        const promise = this.post<string>('services/calibration-coefficients', coefficients);
         return promise;
     }
 }
