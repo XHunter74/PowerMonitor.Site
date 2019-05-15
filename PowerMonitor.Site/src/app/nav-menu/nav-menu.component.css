@@ -22,9 +22,10 @@
   .main-nav {
     width: calc(25% - 30px);
     min-width: 180px;
+    height: 100%;
+    max-width: 300px;
   }
   .main-nav .navbar {
-    border-radius: 0 15px 15px 0;
     border-width: 0px;
     height: 100%;
   }
@@ -51,5 +52,6 @@
   }
   .main-nav .navbar-collapse {
     padding: 0px;
+    align-items: flex-start;
   }
 }
