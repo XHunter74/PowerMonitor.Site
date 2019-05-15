@@ -1,18 +1,39 @@
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (dateChange)="dateChanged($event)">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
 <button (click)="refreshData()">Refresh</button>
 <div class="row">
     <div class="col-12 col-md-6 mb-3">
-        <div class="d-inline-block" *ngIf="minVoltage && minAmperage">
-            <div>Voltage: {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h -
-                {{formatNumber(maxVoltage.voltageMax)}}V, {{maxVoltage.hours}}h</div>
-            <div>Amperage: {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h -
-                {{formatNumber(maxAmperage.amperageMax)}}A, {{maxAmperage.hours}}h</div>
-        </div>
+        <table class="d-inline-block" *ngIf="minVoltage && minAmperage">
+            <tr>
+                <td class="pr-2">
+                    <b>Voltage:</b>
+                </td>
+                <td class="text-right">
+                    {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h -
+                </td>
+                <td class="text-right">
+                    {{formatNumber(maxVoltage.voltageMax)}}V, {{maxVoltage.hours}}h
+                </td>
+                <td class="text-right pl-3">
+                    <b>Δ:</b> {{formatNumber(maxVoltage.voltageMax - minVoltage.voltageMin)}}V
+                </td>
+            </tr>
+            <tr>
+                <td class="pr-2">
+                    <b>Amperage:</b>
+                </td>
+                <td class="text-right">
+                    {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h -
+                </td>
+                <td class="text-right">
+                    {{formatNumber(maxAmperage.amperageMax)}}A, {{maxAmperage.hours}}h
+                </td>
+                <td class="text-right pl-3"></td>
+            </tr>
+        </table>
     </div>
 </div>
 <div class="table-responsive">
