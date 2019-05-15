@@ -1,5 +1,5 @@
 <div *ngIf="boardInfo">
-    <p>Board version: {{boardInfo.version}} from {{boardInfo.buildDate | date: 'dd.MM.yyyy HH:mm'}}</p>
+    <p><b>Board version:</b> {{boardInfo.version}} from {{boardInfo.buildDate | date: 'dd.MM.yyyy HH:mm'}}</p>
 </div>
 <form [formGroup]="coefficientsForm" (ngSubmit)="changeCoefficients()" autocomplete="on">
     <div class="form-group">
