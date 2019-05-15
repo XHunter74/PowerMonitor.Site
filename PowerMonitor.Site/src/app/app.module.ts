@@ -26,7 +26,7 @@ import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amper
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
-import { BoardSettingsComponent } from './board-settings/board-settings.component';
+import { SiteSettingsComponent } from './site-settings/site-settings.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
 import { HomeComponent } from './home-component/home.component';
@@ -52,7 +52,7 @@ import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-ampera
     VoltageAmperageHourlyComponent,
     VoltageAmperageDailyComponent,
     PowerFailuresComponent,
-    BoardSettingsComponent,
+    SiteSettingsComponent,
     SpinnerDialogComponent,
     HomeComponent,
     ProfileComponent
@@ -73,7 +73,7 @@ import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-ampera
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [OpenGuard] },
       { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [OpenGuard] },
-      { path: 'settings', component: BoardSettingsComponent, canActivate: [AuthGuard] },
+      { path: 'settings', component: SiteSettingsComponent, canActivate: [AuthGuard] },
       { path: 'power-monitor', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },

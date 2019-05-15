@@ -7,12 +7,12 @@ import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
 
 @Component({
-    selector: 'app-real-data',
-    templateUrl: './board-settings.component.html',
+    selector: 'app-site-settings',
+    templateUrl: './site-settings.component.html',
 })
 
 
-export class BoardSettingsComponent extends AppBaseComponent implements OnInit, OnDestroy {
+export class SiteSettingsComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
     boardInfo: IBoardInfoModel;
     calibrationCoefficients: ICalibrationCoefficients;
