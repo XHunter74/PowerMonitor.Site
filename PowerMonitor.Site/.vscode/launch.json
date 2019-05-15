@@ -22,5 +22,14 @@
             "webRoot": "${workspaceFolder}",
             "firefoxExecutable": "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
         },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Chrome",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}",
+            "runtimeArgs": ["--disable-web-security"]
+            // "runtimeExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe --disable-web-security --user-data-dir=\"C:/ChromeDevSession\""
+        }
     ]
 }
