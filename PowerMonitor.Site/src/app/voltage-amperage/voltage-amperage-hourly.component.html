@@ -1,6 +1,5 @@
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (dateChange)="dateChanged($event)">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
@@ -23,10 +22,9 @@
                 <td class="pr-2">
                     <b>Voltage, Δ:</b>
                 </td>
+                <td class="text-right"></td>
                 <td class="text-right">
                     {{formatNumber(maxVoltage.voltageMax - minVoltage.voltageMin)}}V
-                </td>
-                <td class="text-right">
                 </td>
             </tr>
             <tr>
