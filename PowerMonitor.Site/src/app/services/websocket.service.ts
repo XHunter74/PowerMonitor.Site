@@ -26,11 +26,16 @@ export class WebSocketService {
 
     getSensorsData(): Observable<ISensorsDataModel> {
         return Observable.create((observer: Observer<ISensorsDataModel>) => {
-            this.webSocket.on('sensors-data', data => {
+            this.webSocket.on('sensors-data', (data: ISensorsDataModel) => {
                 const sensorData = <ISensorsDataModel>data;
                 observer.next(sensorData);
             });
         });
+    }
+
+    closeSensorsData() {
+        this.sendMessage('close-sensors-data');
+        this.webSocket.disconnect();
     }
 
 }

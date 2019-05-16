@@ -64,7 +64,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.webSocketService.sendMessage('close-sensors-data');
+    this.webSocketService.closeSensorsData();
   }
 
   updateGaugeIndicators(sensorsData: ISensorsDataModel) {
