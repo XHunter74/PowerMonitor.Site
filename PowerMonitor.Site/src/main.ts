@@ -5,10 +5,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 export function getBaseUrl() {
-  // return document.getElementsByTagName('base')[0].href;
-  // return "https://powermonitor.site:444/";
-  return 'http://localhost:3000/';
-  // return "http://192.168.10.154:3000/";
+  return environment.apiUrl;
 }
 
 const providers = [
