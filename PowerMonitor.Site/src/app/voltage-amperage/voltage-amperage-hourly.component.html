@@ -12,8 +12,9 @@
                     <b>Voltage:</b>
                 </td>
                 <td class="text-right">
-                    {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h -
+                    {{formatNumber(minVoltage.voltageMin)}}V, {{minVoltage.hours}}h
                 </td>
+                <td> - </td>
                 <td class="text-right">
                     {{formatNumber(maxVoltage.voltageMax)}}V, {{maxVoltage.hours}}h
                 </td>
@@ -22,18 +23,20 @@
                 <td class="pr-2">
                     <b>Voltage, Δ:</b>
                 </td>
-                <td class="text-right"></td>
                 <td class="text-right">
                     {{formatNumber(maxVoltage.voltageMax - minVoltage.voltageMin)}}V
                 </td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td class="pr-2">
                     <b>Amperage:</b>
                 </td>
                 <td class="text-right">
-                    {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h -
+                    {{formatNumber(minAmperage.amperageMin)}}A, {{minAmperage.hours}}h
                 </td>
+                <td> - </td>
                 <td class="text-right">
                     {{formatNumber(maxAmperage.amperageMax)}}A, {{maxAmperage.hours}}h
                 </td>
