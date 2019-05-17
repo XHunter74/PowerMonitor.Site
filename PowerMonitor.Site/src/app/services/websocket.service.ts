@@ -24,6 +24,10 @@ export class WebSocketService {
         this.webSocket.emit(message, data);
     }
 
+    openServer() {
+        this.webSocket.connect();
+    }
+
     getSensorsData(): Observable<ISensorsDataModel> {
         return Observable.create((observer: Observer<ISensorsDataModel>) => {
             this.webSocket.on('sensors-data', (data: ISensorsDataModel) => {

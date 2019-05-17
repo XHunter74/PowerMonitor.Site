@@ -56,6 +56,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.webSocketService.openServer();
     this.webSocketService.sendMessage('sensors-data');
     this.webSocketService.getSensorsData()
       .subscribe((data: ISensorsDataModel) => {
