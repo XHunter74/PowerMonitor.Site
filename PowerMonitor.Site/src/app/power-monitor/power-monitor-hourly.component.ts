@@ -19,7 +19,14 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
-        responsive: true
+        responsive: true,
+        scales : {
+            yAxes: [{
+               ticks: {
+                  min : 0,
+                }
+            }] 
+        }
     };
     public barChartLabels: string[] = [];
     public barChartType = 'bar';

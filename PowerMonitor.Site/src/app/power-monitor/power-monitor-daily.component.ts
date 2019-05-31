@@ -26,7 +26,14 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
-        responsive: true
+        responsive: true,
+        scales : {
+            yAxes: [{
+               ticks: {
+                  min : 0,
+                }
+            }] 
+        }
     };
     public barChartLabels: string[] = [];
     public barChartType = 'bar';
