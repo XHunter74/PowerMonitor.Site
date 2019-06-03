@@ -5,7 +5,8 @@
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (dateChange)="dateChanged($event)">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+        (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
@@ -18,16 +19,18 @@
     <table>
         <tr>
             <td>
-                <p class="mb-0">Total Power: {{formatNumber(powerSum)}}, kW</p>
+                <p class="mb-0"><b>Total Power: </b>{{formatNumber(powerSum)}}, kW</p>
             </td>
         </tr>
         <tr *ngIf="powerAvg > 0">
-            <td>
-                <p class="mb-0">Average Power: {{formatNumber(powerAvg)}}, kW/h</p>
+            <td style="color: blue">
+                <p class="mb-0"><b>Average Power: </b>{{formatNumber(powerAvg)}}, kW/h</p>
             </td>
         </tr>
     </table>
     <div style="display: block" class="mb-5">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
     </div>
 </div>

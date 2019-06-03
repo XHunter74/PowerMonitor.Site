@@ -34,7 +34,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 borderDash: [10, 10],
                 // borderDashOffset: 20,
                 label: {
-                    enabled: true,
+                    enabled: false,
                     fontColor: 'blue',
                     backgroundColor: 'white',
                     content: 'Average'

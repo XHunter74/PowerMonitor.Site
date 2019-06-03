@@ -19,12 +19,12 @@
     <table>
         <tr>
             <td>
-                <p class="mb-0">Total Power: {{formatNumber(powerSum)}}, kW</p>
+                <p class="mb-0"><b>Total Power: </b>{{formatNumber(powerSum)}}, kW</p>
             </td>
         </tr>
         <tr *ngIf="powerAvg > 0">
-            <td>
-                <p class="mb-0">Average Power: {{formatNumber(powerAvg)}}, kW/month</p>
+            <td style="color: blue">
+                <p class="mb-0"><b>Average Power: </b>{{formatNumber(powerAvg)}}, kW/h</p>
             </td>
         </tr>
     </table>

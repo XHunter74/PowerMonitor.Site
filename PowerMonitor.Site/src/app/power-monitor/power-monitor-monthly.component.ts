@@ -38,7 +38,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 borderDash: [10, 10],
                 // borderDashOffset: 20,
                 label: {
-                    enabled: true,
+                    enabled: false,
                     fontColor: 'blue',
                     backgroundColor: 'white',
                     content: 'Average'
