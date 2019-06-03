@@ -1,0 +1,11 @@
+<div *ngIf="data">
+    <div class="modal-header">
+        <h1 matDialogTitle>Error</h1>
+    </div>
+    <div class="modal-body">
+        <h5>{{data.errorMessage}}</h5>
+    </div>
+    <div class="modal-footer">
+        <button mat-button [matDialogClose]="'positive'" tabindex="2">Ok</button>
+    </div>
+</div>

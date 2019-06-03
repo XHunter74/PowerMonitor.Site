@@ -34,6 +34,7 @@ import { ProfileComponent } from './profile-component/profile.component';
 import { SocketIoModule } from 'ng-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
+import { ErrorDialogComponent } from './dialogs/error-dialog.component';
 
 
 @NgModule({
@@ -55,9 +56,10 @@ import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-ampera
     SiteSettingsComponent,
     SpinnerDialogComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    ErrorDialogComponent
   ],
-  entryComponents: [LoginModalComponent, SpinnerDialogComponent],
+  entryComponents: [LoginModalComponent, SpinnerDialogComponent, ErrorDialogComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
