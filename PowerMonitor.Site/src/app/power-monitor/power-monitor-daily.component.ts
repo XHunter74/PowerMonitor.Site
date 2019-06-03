@@ -198,5 +198,17 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         this.barChartLabels = chartLabels;
     }
 
+    async addMonth(direction: string) {
+        if (direction === 'up') {
+            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+        } else {
+            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+        }
+        this.currentDateControl.setValue(this.currentDate.toISOString());
+        this.router.navigate(['power-monitor', 'daily',
+            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+        await this.refreshData();
+    }
+
 }
 

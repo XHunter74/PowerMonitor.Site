@@ -189,6 +189,18 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         this.barChartLabels = chartLabels;
     }
 
+    async addYear(direction: string) {
+        if (direction === 'up') {
+            this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+        } else {
+            this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+        }
+        this.currentDateControl.setValue(this.currentDate.toISOString());
+        this.router.navigate(['power-monitor', 'monthly',
+            { year: this.currentDate.getFullYear() }]);
+        await this.refreshData();
+    }
+
 }
 
 
