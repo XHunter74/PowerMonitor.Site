@@ -5,6 +5,7 @@ import { CalibrationCoefficients } from '../models/calibration-coefficients.mode
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-site-settings',
@@ -46,7 +47,7 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
             });
         } catch (e) {
             console.error(e);
-            setTimeout(() => alert('Something going wrong!'));
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
         } finally {
             this.closeSpinner();
         }
@@ -61,7 +62,7 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
             await this.servicesService.setCalibrationCoefficients(calibrationCoefficients);
         } catch (e) {
             console.error(e);
-            setTimeout(() => alert('Something going wrong!'));
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
         } finally {
             this.closeSpinner();
         }
@@ -77,7 +78,7 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
             await this.servicesService.uploadNewSketch(this.newSketch);
         } catch (e) {
             console.error(e);
-            setTimeout(() => alert('Something going wrong!'));
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
         } finally {
             this.dialogRef.close();
         }

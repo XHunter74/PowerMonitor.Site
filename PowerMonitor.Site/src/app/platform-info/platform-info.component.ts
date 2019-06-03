@@ -3,6 +3,7 @@ import { ServicesService } from '../services/services-service';
 import { ISystemInfo } from '../models/sysinfo.model';
 import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-platform-info',
@@ -29,7 +30,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }

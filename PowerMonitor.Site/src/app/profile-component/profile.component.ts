@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-profile',
@@ -17,7 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         confirmPassword: new FormControl('')
     }, [this.checkPasswords]);
 
-    constructor(private usersService: UsersService) { }
+    constructor(private usersService: UsersService, private dialog: MatDialog) { }
 
     ngOnInit(): void {
     }
@@ -34,7 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             })
             .catch(e => {
                 console.log(e);
-                alert('Something going wrong!');
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             });
     }
 

@@ -7,6 +7,7 @@ import { compare } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-voltage-amperage-daily',
@@ -58,7 +59,7 @@ export class VoltageAmperageDailyComponent extends AppBaseComponent implements O
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }

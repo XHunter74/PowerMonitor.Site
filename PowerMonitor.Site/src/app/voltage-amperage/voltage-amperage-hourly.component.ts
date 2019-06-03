@@ -6,6 +6,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort;'
 
@@ -94,7 +95,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }

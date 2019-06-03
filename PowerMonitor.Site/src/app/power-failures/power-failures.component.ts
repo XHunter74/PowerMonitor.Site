@@ -9,6 +9,7 @@ import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
   selector: 'app-power-failures',
@@ -74,7 +75,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
           this.sortDataInt(this.lastSort, this.lastSortDirection);
         }
       } catch (e) {
-        setTimeout(() => alert('Something going wrong!'));
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
       } finally {
         this.closeSpinner();
       }
