@@ -10,6 +10,7 @@ import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -27,12 +28,12 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true,
-        scales : {
+        scales: {
             yAxes: [{
-               ticks: {
-                  min : 0,
+                ticks: {
+                    min: 0,
                 }
-            }] 
+            }]
         }
     };
     public barChartLabels: string[] = [];
@@ -112,7 +113,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }

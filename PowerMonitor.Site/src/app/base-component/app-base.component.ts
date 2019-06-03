@@ -7,7 +7,7 @@ export class AppBaseComponent implements OnDestroy {
 
     protected dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
-    constructor(private dialog: MatDialog) {
+    constructor(protected dialog: MatDialog) {
 
     }
 

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -26,12 +27,12 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true,
-        scales : {
+        scales: {
             yAxes: [{
-               ticks: {
-                  min : 0,
+                ticks: {
+                    min: 0,
                 }
-            }] 
+            }]
         }
     };
     public barChartLabels: string[] = [];
@@ -107,7 +108,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }

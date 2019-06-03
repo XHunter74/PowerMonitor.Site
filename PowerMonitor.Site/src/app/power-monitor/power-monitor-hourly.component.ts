@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -95,7 +96,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => alert('Something going wrong!'));
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
     }
