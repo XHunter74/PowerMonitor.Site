@@ -10,6 +10,8 @@ import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ChartOptions } from 'chart.js';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -24,7 +26,27 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     public powerData: IPowerDataMonthlyModel[];
     public powerSum: number;
     public powerAvg: number;
-    public barChartOptions: any = {
+    private annotation: any = {
+        annotations: [
+            {
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 0,
+                borderColor: 'blue',
+                borderWidth: 1.5,
+                borderDash: [10, 10],
+                // borderDashOffset: 20,
+                label: {
+                    enabled: true,
+                    fontColor: 'blue',
+                    backgroundColor: 'white',
+                    content: 'Average'
+                }
+            },
+        ],
+    };
+    public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
         responsive: true,
         scales: {
@@ -33,11 +55,12 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                     min: 0,
                 }
             }]
-        }
+        },
     };
     public barChartLabels: string[] = [];
     public barChartType = 'bar';
     public barChartLegend = true;
+    public lineChartPlugins = [pluginAnnotations];
 
     public barChartData: any[] = [
         { data: [], label: 'Power, kW/h' }
@@ -103,6 +126,12 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
+                if (this.powerAvg > 0) {
+                    this.annotation.annotations[0].value = this.powerAvg;
+                    this.barChartOptions.annotation = this.annotation;
+                } else {
+                    this.barChartOptions.annotation = null;
+                }
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
