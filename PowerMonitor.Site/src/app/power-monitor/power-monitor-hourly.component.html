@@ -2,8 +2,8 @@
     <mat-icon>chevron_left</mat-icon>
 </button>
 <button mat-button (click)="addDay('up')">
-        <mat-icon>chevron_right</mat-icon>
-    </button>
+    <mat-icon>chevron_right</mat-icon>
+</button>
 <mat-form-field>
     <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
