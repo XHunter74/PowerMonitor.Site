@@ -10,7 +10,7 @@ export class ErrorDialogComponent {
 
   static show(dialog: MatDialog, message: string, width?: string) {
     if (!width) {
-      width = '250px';
+      width = '350px';
     }
     dialog.open(ErrorDialogComponent, {
       width: width,
