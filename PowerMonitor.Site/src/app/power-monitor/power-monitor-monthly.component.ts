@@ -23,7 +23,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
 
     public powerData: IPowerDataMonthlyModel[];
     public powerSum: number;
-
+    public powerAvg: number;
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true,
@@ -100,10 +100,9 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
                 this.prepareChart(this.powerData);
                 this.powerSum = 0;
-                for (const record of this.powerData) {
-                    this.powerSum = this.powerSum + record.power;
-                }
+                this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
+                this.powerAvg = this.getAveragePower(this.powerData);
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
@@ -111,6 +110,31 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
+    }
+
+    getAveragePower(powerData: IPowerDataMonthlyModel[]): number {
+        let powerAvg = 0;
+        if (powerData && powerData.length > 1) {
+            const today = new Date();
+            let reduceSum = 0;
+            const powerSum = powerData
+                .filter(a => {
+                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1 ||
+                        a.year <= 2019 && a.month <= 2;
+                    if (reduceSumInt) {
+                        reduceSum++;
+                    }
+                    return !reduceSumInt;
+                })
+                .reduce((a, b) => a + b.power, 0);
+            if (reduceSum > 0) {
+                powerAvg = powerSum / (powerData.length - reduceSum);
+            } else {
+                powerAvg = powerSum / (powerData.length);
+            }
+            powerAvg = Math.round(powerAvg * 100) / 100;
+        }
+        return powerAvg;
     }
 
     prepareChart(data: IPowerDataMonthlyModel[]) {
