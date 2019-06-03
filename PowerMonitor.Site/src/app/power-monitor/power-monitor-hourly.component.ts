@@ -8,6 +8,9 @@ import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ChartOptions } from 'chart.js';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -17,16 +20,37 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
+    public powerAvg: number;
 
-    public barChartOptions: any = {
+    private annotation: any = {
+        annotations: [
+            {
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 0,
+                borderColor: 'blue',
+                borderWidth: 1.5,
+                borderDash: [10, 10],
+                // borderDashOffset: 20,
+                label: {
+                    enabled: true,
+                    fontColor: 'blue',
+                    backgroundColor: 'white',
+                    content: 'Average'
+                }
+            },
+        ],
+    };
+    public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
         responsive: true,
-        scales : {
+        scales: {
             yAxes: [{
-               ticks: {
-                  min : 0,
+                ticks: {
+                    min: 0,
                 }
-            }] 
+            }]
         }
     };
     public barChartLabels: string[] = [];
@@ -39,6 +63,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
+    public lineChartPlugins = [pluginAnnotations];
 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
@@ -90,6 +115,13 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 this.powerSum = 0;
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
+                this.powerAvg = this.getAveragePower(this.powerData);
+                if (this.powerAvg > 0) {
+                    this.annotation.annotations[0].value = this.powerAvg;
+                    this.barChartOptions.annotation = this.annotation;
+                } else {
+                    this.barChartOptions.annotation = null;
+                }
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
@@ -97,6 +129,32 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
+    }
+
+    getAveragePower(powerData: IPowerDataDailyModel[]): number {
+        let powerAvg = 0;
+        if (powerData && powerData.length > 1) {
+            const today = new Date();
+            let reduceSum = false;
+            const powerSum = powerData
+                .filter(a => {
+                    const creationDate = new Date(a.created);
+                    const reduceSumInt = creationDate.getDate() === today.getDate() && creationDate.getFullYear() === today.getFullYear() &&
+                        creationDate.getMonth() === today.getMonth() && a.hours === today.getHours();
+                    if (reduceSumInt) {
+                        reduceSum = true;
+                    }
+                    return !reduceSumInt;
+                })
+                .reduce((a, b) => a + b.power, 0);
+            if (reduceSum) {
+                powerAvg = powerSum / (powerData.length - 1);
+            } else {
+                powerAvg = powerSum / (powerData.length);
+            }
+            powerAvg = Math.round(powerAvg * 100) / 100;
+        }
+        return powerAvg;
     }
 
     prepareChart(data: IPowerDataHourlyModel[]) {

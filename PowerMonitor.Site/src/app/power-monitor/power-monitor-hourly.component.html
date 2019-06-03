@@ -6,7 +6,18 @@
 <button (click)="refreshData()">Refresh</button>
 <br />
 <div *ngIf="powerData">
-    <p>Total Power: {{formatNumber(powerSum)}}, kW/h</p>
+    <table>
+        <tr>
+            <td>
+                <p class="mb-0">Total Power: {{formatNumber(powerSum)}}, kW</p>
+            </td>
+        </tr>
+        <tr *ngIf="powerAvg > 0">
+            <td>
+                <p class="mb-0">Average Power: {{formatNumber(powerAvg)}}, kW/h</p>
+            </td>
+        </tr>
+    </table>
     <div style="display: block" class="mb-5">
         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
