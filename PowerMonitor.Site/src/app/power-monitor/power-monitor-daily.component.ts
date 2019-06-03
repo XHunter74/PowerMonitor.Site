@@ -24,6 +24,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
+    public powerAvg: number;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -105,10 +106,9 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 this.powerData = await this.powerService.getPowerDataDaily(startDate, finishDate);
                 this.prepareChart(this.currentDate, this.powerData);
                 this.powerSum = 0;
-                for (const record of this.powerData) {
-                    this.powerSum = this.powerSum + record.power;
-                }
+                this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
+                this.powerAvg = this.getAveragePower(this.powerData);
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
@@ -116,6 +116,32 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
+    }
+
+    getAveragePower(powerData: IPowerDataDailyModel[]): number {
+        let powerAvg = 0;
+        if (powerData && powerData.length > 1) {
+            const today = new Date();
+            let reduceSum = false;
+            const powerSum = powerData
+                .filter(a => {
+                    const creationDate = new Date(a.created);
+                    const reduceSumInt = creationDate.getDate() === today.getDate() && creationDate.getFullYear() === today.getFullYear() &&
+                        creationDate.getMonth() === today.getMonth();
+                    if (reduceSumInt) {
+                        reduceSum = true;
+                    }
+                    return !reduceSumInt;
+                })
+                .reduce((a, b) => a + b.power, 0);
+            if (reduceSum) {
+                powerAvg = powerSum / (powerData.length - 1);
+            } else {
+                powerAvg = powerSum / (powerData.length);
+            }
+            powerAvg = Math.round(powerAvg * 100) / 100;
+        }
+        return powerAvg;
     }
 
     prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
