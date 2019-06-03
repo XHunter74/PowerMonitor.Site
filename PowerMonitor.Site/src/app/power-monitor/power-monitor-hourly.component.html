@@ -3,7 +3,10 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-<button (click)="refreshData()">Refresh</button>
+<button mat-button (click)="refreshData()">
+    <mat-icon>refresh</mat-icon>
+    Refresh
+</button>
 <br />
 <div *ngIf="powerData">
     <table>

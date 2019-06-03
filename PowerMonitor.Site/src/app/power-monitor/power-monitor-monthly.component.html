@@ -4,7 +4,10 @@
     <mat-datepicker #picker3 startView="multi-year" (yearSelected)="chosenYearHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<button (click)="refreshData()">Refresh</button>
+<button mat-button (click)="refreshData()">
+    <mat-icon>refresh</mat-icon>
+    Refresh
+</button>
 <br />
 <div *ngIf="powerData">
     <table>
