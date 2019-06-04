@@ -45,6 +45,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
         responsive: true,
+        maintainAspectRatio: true,
         scales: {
             yAxes: [{
                 ticks: {

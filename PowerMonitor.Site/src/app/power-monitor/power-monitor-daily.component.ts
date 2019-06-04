@@ -49,6 +49,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     };
     public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
+        maintainAspectRatio: true,
         responsive: true,
         scales: {
             yAxes: [{

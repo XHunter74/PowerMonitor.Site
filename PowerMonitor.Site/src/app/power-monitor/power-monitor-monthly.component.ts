@@ -49,6 +49,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
         responsive: true,
+        maintainAspectRatio: true,
         scales: {
             yAxes: [{
                 ticks: {
