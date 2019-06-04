@@ -12,6 +12,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { Constans } from '../constants';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -151,7 +152,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             const powerSum = powerData
                 .filter(a => {
                     const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1 ||
-                        a.year <= 2019 && a.month <= 2;
+                        a.year <= Constans.systemStartDate.getFullYear() &&
+                        a.month <= Constans.systemStartDate.getMonth() + 1;
                     if (reduceSumInt) {
                         reduceSum++;
                     }
