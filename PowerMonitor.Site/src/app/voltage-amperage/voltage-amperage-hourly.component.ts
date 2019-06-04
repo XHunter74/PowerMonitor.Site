@@ -105,5 +105,17 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             localStorage.setItem(VoltageAmperageHourlySort, JSON.stringify(sort));
         }
     }
+
+    async addDay(direction: string) {
+        if (direction === 'up') {
+            this.currentDate.setDate(this.currentDate.getDate() + 1);
+        } else {
+            this.currentDate.setDate(this.currentDate.getDate() - 1);
+        }
+        this.currentDateControl.setValue(this.currentDate.toISOString());
+        this.router.navigate(['voltage-amperage', 'hourly',
+            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        await this.refreshData();
+    }
 }
 
