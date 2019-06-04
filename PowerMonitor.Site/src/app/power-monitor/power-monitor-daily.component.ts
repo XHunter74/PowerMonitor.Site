@@ -17,6 +17,7 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 @Component({
     selector: 'app-power-monitor-daily',
     templateUrl: './power-monitor-daily.component.html',
+    styleUrls: ['./power-monitor.component.css'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }

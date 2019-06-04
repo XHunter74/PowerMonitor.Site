@@ -1,7 +1,7 @@
-<button mat-button (click)="addMonth('down')">
+<button class="hourly__mat-button" mat-button (click)="addMonth('down')">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button mat-button (click)="addMonth('up')">
+<button class="hourly__mat-button" mat-button (click)="addMonth('up')">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
@@ -11,9 +11,8 @@
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<button mat-button (click)="refreshData()">
+<button class="hourly__mat-button" mat-button (click)="refreshData()">
     <mat-icon>refresh</mat-icon>
-    Refresh
 </button>
 <br />
 <div *ngIf="powerData">

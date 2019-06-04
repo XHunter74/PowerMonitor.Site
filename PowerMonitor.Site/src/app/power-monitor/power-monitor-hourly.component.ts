@@ -14,7 +14,8 @@ import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 
 @Component({
     selector: 'app-power-monitor-hourly',
-    templateUrl: './power-monitor-hourly.component.html'
+    templateUrl: './power-monitor-hourly.component.html',
+    styleUrls: ['./power-monitor.component.css']
 })
 export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit {
 
