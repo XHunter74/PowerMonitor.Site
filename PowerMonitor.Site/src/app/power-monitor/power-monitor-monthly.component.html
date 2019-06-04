@@ -5,7 +5,7 @@
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (click)="picker3.open()">
     <mat-datepicker-toggle matSuffix [for]=" picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3 startView="multi-year" (yearSelected)="chosenYearHandler($event, picker3)">
     </mat-datepicker>
