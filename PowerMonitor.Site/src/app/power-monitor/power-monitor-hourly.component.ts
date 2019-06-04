@@ -11,6 +11,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
+import { Constans } from '../constants';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -196,6 +197,17 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         this.router.navigate(['power-monitor', 'hourly',
             { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
         await this.refreshData();
+    }
+
+    isAddDayButtonDisabled(direction: string): boolean {
+        let nextDate = new Date(this.currentDate);
+        if (direction === 'up') {
+            nextDate.setDate(nextDate.getDate() + 1);
+            return nextDate > new Date();
+        } else {
+            nextDate.setDate(this.currentDate.getDate() - 1);
+            return nextDate < Constans.systemStartDate;
+        }
     }
 }
 
