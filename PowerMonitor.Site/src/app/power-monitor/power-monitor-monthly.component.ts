@@ -176,7 +176,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         if (data.length < 12) {
             for (let i = 0; i < 12; i++) {
                 chartData.push(0);
-                chartLabels.push((i + 1).toString());
+                chartLabels.push(Constans.monthNames[i]);
             }
             for (const record of data) {
                 chartData[record.month - 1] = record.power;
@@ -186,7 +186,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 return e.power;
             });
             chartLabels = data.map(e => {
-                return e.month.toString();
+                return Constans.monthNames[e.month - 1];
             });
         }
         this.barChartData[0].data = chartData;
