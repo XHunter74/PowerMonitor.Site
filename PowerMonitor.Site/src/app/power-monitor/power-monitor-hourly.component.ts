@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges, SimpleChanges, AfterViewChecked } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
@@ -18,7 +18,7 @@ import { Constans } from '../constants';
     templateUrl: './power-monitor-hourly.component.html',
     styleUrls: ['./power-monitor.component.css']
 })
-export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit {
+export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit, AfterViewChecked {
 
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
@@ -47,7 +47,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     public barChartOptions: (ChartOptions & { annotation: any }) = {
         scaleShowVerticalLines: false,
         responsive: true,
-        maintainAspectRatio: true,
+        // maintainAspectRatio: true,
         scales: {
             yAxes: [{
                 ticks: {
@@ -67,6 +67,9 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
     public lineChartPlugins = [pluginAnnotations];
+
+    @ViewChild('powerChart') myCanvas: ElementRef;
+    public context: CanvasRenderingContext2D;
 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
@@ -91,6 +94,12 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
+    }
+
+    ngAfterViewChecked(): void {
+        if (this.myCanvas) {
+            this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
+        }
     }
 
     // events
@@ -207,6 +216,12 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         } else {
             nextDate.setDate(nextDate.getDate() - 1);
             return nextDate < Constans.systemStartDate;
+        }
+    }
+
+    checkChart() {
+        if (this.powerData && this.context.canvas.hidden) {
+            this.prepareChart(this.powerData);
         }
     }
 }
