@@ -13,6 +13,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { Constans } from '../constants';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -210,6 +211,19 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         this.router.navigate(['power-monitor', 'daily',
             { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
         await this.refreshData();
+    }
+
+    isAddMonthButtonDisabled(direction: string): boolean {
+        const nextDate = new Date(this.currentDate);
+        if (direction === 'up') {
+            nextDate.setMonth(nextDate.getMonth() + 1);
+            const today = new Date();
+            return nextDate.getFullYear() >= today.getFullYear() && nextDate.getMonth() > today.getMonth();
+        } else {
+            nextDate.setMonth(nextDate.getMonth() - 1);
+            return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
+                nextDate.getMonth() < Constans.systemStartDate.getMonth();
+        }
     }
 
 }

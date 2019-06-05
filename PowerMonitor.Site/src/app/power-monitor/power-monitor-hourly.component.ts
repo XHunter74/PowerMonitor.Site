@@ -200,12 +200,12 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     }
 
     isAddDayButtonDisabled(direction: string): boolean {
-        let nextDate = new Date(this.currentDate);
+        const nextDate = new Date(this.currentDate);
         if (direction === 'up') {
             nextDate.setDate(nextDate.getDate() + 1);
             return nextDate > new Date();
         } else {
-            nextDate.setDate(this.currentDate.getDate() - 1);
+            nextDate.setDate(nextDate.getDate() - 1);
             return nextDate < Constans.systemStartDate;
         }
     }
