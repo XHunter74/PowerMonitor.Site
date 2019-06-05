@@ -205,6 +205,17 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         await this.refreshData();
     }
 
+    isAddYearButtonDisabled(direction: string): boolean {
+        const nextDate = new Date(this.currentDate);
+        if (direction === 'up') {
+            nextDate.setFullYear(nextDate.getFullYear() + 1);
+            return nextDate.getFullYear() > new Date().getFullYear();
+        } else {
+            nextDate.setFullYear(nextDate.getFullYear() - 1);
+            return nextDate.getFullYear() < Constans.systemStartDate.getFullYear();
+        }
+    }
+
 }
 
 
