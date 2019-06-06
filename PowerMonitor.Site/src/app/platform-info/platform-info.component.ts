@@ -4,6 +4,7 @@ import { ISystemInfo } from '../models/sysinfo.model';
 import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-platform-info',
@@ -12,10 +13,12 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     public sysInfo: ISystemInfo;
+    siteVersion: string;
 
     constructor(private servicesService: ServicesService,
         dialog: MatDialog) {
         super(dialog);
+        this.siteVersion = environment.version;
     }
 
     ngOnInit(): void {
