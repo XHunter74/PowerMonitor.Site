@@ -52,12 +52,12 @@
         </li> -->
                 <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
-                        Login
+                        <span class="fas fa-sign-in-alt"> Login</span>
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a class="nav-link" (click)='logout()'>
-                        <span>Logout</span>
+                        <span class="fas fa-sign-out-alt"> Logout</span>
                     </a>
                 </li>
             </ul>
