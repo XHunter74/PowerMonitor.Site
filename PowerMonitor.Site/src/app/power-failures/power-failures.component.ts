@@ -14,6 +14,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 @Component({
   selector: 'app-power-failures',
   templateUrl: './power-failures.component.html',
+  styleUrls: ['./power-failures.component.html'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }

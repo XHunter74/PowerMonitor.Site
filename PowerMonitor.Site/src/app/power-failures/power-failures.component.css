@@ -1,0 +1,9 @@
+@media screen and (max-width: 768px) {
+    .hourly__mat-button {
+        padding: 0;
+        min-width: 40px;
+    }
+    .mat-form-field-infix {
+        width: 100px;
+    }
+}
