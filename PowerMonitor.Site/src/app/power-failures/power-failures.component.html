@@ -1,5 +1,6 @@
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (click)="picker3.open()">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+        (click)="picker3.open()">
     <mat-datepicker-toggle matSuffix [for]=" picker3">
     </mat-datepicker-toggle>
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
@@ -9,20 +10,20 @@
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="table-responsive">
-    <table *ngIf="powerFailuresData" class="table" matSort (matSortChange)="sortData($event)">
-        <thead>
-            <tr>
-                <th mat-sort-header="start">Start</th>
-                <th mat-sort-header="finish">Finish</th>
-                <th mat-sort-header="duration">Duration</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let record of powerFailuresData">
-                <td>{{ record.start | date: 'dd.MM.yyyy HH:mm'}}</td>
-                <td>{{ record.finish | date: 'dd.MM.yyyy HH:mm'}}</td>
-                <td>{{ formatDuration(record.duration) }}</td>
-            </tr>
-        </tbody>
+    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
+        <ng-container matColumnDef="start">
+            <th *matHeaderCellDef mat-sort-header> Start </th>
+            <td *matCellDef="let element"> {{element.start | date: 'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="finish">
+            <th *matHeaderCellDef mat-sort-header> Finish </th>
+            <td *matCellDef="let element"> {{element.finish | date: 'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+            <th *matHeaderCellDef mat-sort-header> Duration </th>
+            <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>

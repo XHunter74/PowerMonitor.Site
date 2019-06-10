@@ -1,15 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog } from '@angular/material';
+import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog, MatTableDataSource, MatSort, MatSortHeader } from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+
+const PowerFailuresSort = 'power-failures-sort;'
 
 @Component({
   selector: 'app-power-failures',
@@ -22,29 +24,26 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 })
 
 
-export class PowerFailuresComponent extends AppBaseComponent implements OnInit, OnDestroy {
+export class PowerFailuresComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @ViewChild(MatSort) sort: MatSort;
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
-  public powerFailuresData: IPowerFailureModel[];
+  displayedColumns: string[] = ['start', 'finish', 'duration'];
+  sortedData = new MatTableDataSource();
   private lastSort: string;
   private lastSortDirection: string;
-
-  chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const month = normlizedMonth.month();
-    const year = normlizedMonth.year();
-    this.currentDate = new Date(year, month, 1);
-    datepicker.close();
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures', { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
-    this.refreshData();
-  }
 
   constructor(private powerService: PowerService,
     private router: Router,
     private activatedRouter: ActivatedRoute,
     dialog: MatDialog) {
     super(dialog);
+  }
+
+  ngAfterViewInit() {
+    this.sortedData.sort = this.sort;
+    this.restoreSort()
   }
 
   ngOnInit(): void {
@@ -64,6 +63,20 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
     this.refreshData();
   }
 
+  restoreSort() {
+    const sort = this.sortedData.sort;
+    const restoredSortStr = localStorage.getItem(PowerFailuresSort);
+    if (restoredSortStr) {
+        const restoredSort = <Sort>JSON.parse(restoredSortStr)
+        if (restoredSort.active && restoredSort.direction) {
+            sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
+            sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
+            (sort.sortables.get(restoredSort.active) as MatSortHeader)
+                ._setAnimationTransitionState({ toState: 'active' });
+        }
+    }
+}
+
   async refreshData() {
     setTimeout(async () => {
       this.showSpinner();
@@ -71,10 +84,8 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
         const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
         const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
           daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-        this.powerFailuresData = await this.powerService.getPowerFailuresData(startDate, finishDate);
-        if (this.lastSort && this.lastSortDirection) {
-          this.sortDataInt(this.lastSort, this.lastSortDirection);
-        }
+        const powerData = await this.powerService.getPowerFailuresData(startDate, finishDate);
+        this.sortedData.data = powerData;
       } catch (e) {
         setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
       } finally {
@@ -84,24 +95,19 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
   }
 
   sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-    this.lastSort = sort.active;
-    this.lastSortDirection = sort.direction;
-    this.sortDataInt(sort.active, sort.direction);
+    if (sort) {
+      localStorage.setItem(PowerFailuresSort, JSON.stringify(sort));
+  }
   }
 
-  private sortDataInt(activeSort: string, direction: string) {
-    this.powerFailuresData = this.powerFailuresData.sort((a, b) => {
-      const isAsc = direction === 'asc';
-      switch (activeSort) {
-        case 'start': return compare(a.start, b.start, isAsc);
-        case 'finish': return compare(a.finish, b.finish, isAsc);
-        case 'duration': return compare(a.duration, b.duration, isAsc);
-        default: return 0;
-      }
-    });
+  chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const month = normlizedMonth.month();
+    const year = normlizedMonth.year();
+    this.currentDate = new Date(year, month, 1);
+    datepicker.close();
+    this.currentDateControl.setValue(this.currentDate.toISOString());
+    this.router.navigate(['power-failures', { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+    this.refreshData();
   }
 
   formatDuration(duration: number) {
