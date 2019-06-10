@@ -67,15 +67,15 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
     const sort = this.sortedData.sort;
     const restoredSortStr = localStorage.getItem(PowerFailuresSort);
     if (restoredSortStr) {
-        const restoredSort = <Sort>JSON.parse(restoredSortStr)
-        if (restoredSort.active && restoredSort.direction) {
-            sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
-            sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
-            (sort.sortables.get(restoredSort.active) as MatSortHeader)
-                ._setAnimationTransitionState({ toState: 'active' });
-        }
+      const restoredSort = <Sort>JSON.parse(restoredSortStr)
+      if (restoredSort.active && restoredSort.direction) {
+        sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
+        sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
+        (sort.sortables.get(restoredSort.active) as MatSortHeader)
+          ._setAnimationTransitionState({ toState: 'active' });
+      }
     }
-}
+  }
 
   async refreshData() {
     setTimeout(async () => {
@@ -86,10 +86,10 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
           daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
         const powerData = await this.powerService.getPowerFailuresData(startDate, finishDate);
         this.sortedData.data = powerData;
-      } catch (e) {
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
-      } finally {
         this.closeSpinner();
+      } catch (e) {
+        this.closeSpinner();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
       }
     });
   }
@@ -97,7 +97,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
   sortData(sort: Sort) {
     if (sort) {
       localStorage.setItem(PowerFailuresSort, JSON.stringify(sort));
-  }
+    }
   }
 
   chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
