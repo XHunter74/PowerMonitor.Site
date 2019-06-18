@@ -11,7 +11,7 @@ import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
-const PowerFailuresSort = 'power-failures-sort;'
+const PowerFailuresSort = 'power-failures-sort'
 
 @Component({
   selector: 'app-power-failures',

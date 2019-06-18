@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 
-const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort;'
+const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort'
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
