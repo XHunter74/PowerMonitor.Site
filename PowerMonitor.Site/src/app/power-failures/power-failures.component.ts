@@ -10,6 +10,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { Constans } from '../constants';
 
 const PowerFailuresSort = 'power-failures-sort'
 
@@ -33,6 +34,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
   sortedData = new MatTableDataSource();
   private lastSort: string;
   private lastSortDirection: string;
+  maxPowerFailure: IPowerFailureModel;
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -86,6 +88,8 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
           daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
         const powerData = await this.powerService.getPowerFailuresData(startDate, finishDate);
         this.sortedData.data = powerData;
+        this.maxPowerFailure =
+                    powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
@@ -123,6 +127,31 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
     if (minutes < 10) { minutesS = '0' + minutesS; }
     if (seconds < 10) { secondsS = '0' + secondsS; }
     return hoursS + 'h ' + minutesS + 'm ' + secondsS + 's';
+  }
+
+  async addMonth(direction: string) {
+    if (direction === 'up') {
+      this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+    } else {
+      this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+    }
+    this.currentDateControl.setValue(this.currentDate.toISOString());
+    this.router.navigate(['power-failures',
+      { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+    await this.refreshData();
+  }
+
+  isAddMonthButtonDisabled(direction: string): boolean {
+    const nextDate = new Date(this.currentDate);
+    if (direction === 'up') {
+      nextDate.setMonth(nextDate.getMonth() + 1);
+      const today = new Date();
+      return nextDate.getFullYear() >= today.getFullYear() && nextDate.getMonth() > today.getMonth();
+    } else {
+      nextDate.setMonth(nextDate.getMonth() - 1);
+      return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
+        nextDate.getMonth() < Constans.systemStartDate.getMonth();
+    }
   }
 
 }
