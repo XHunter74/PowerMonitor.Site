@@ -35,6 +35,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
   private lastSort: string;
   private lastSortDirection: string;
   maxPowerFailure: IPowerFailureModel;
+  totalPowerFailure: number;
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -90,6 +91,8 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
         this.sortedData.data = powerData;
         this.maxPowerFailure =
           powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
+        this.totalPowerFailure = 0;
+        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
