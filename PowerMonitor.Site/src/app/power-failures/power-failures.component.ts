@@ -89,7 +89,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
         const powerData = await this.powerService.getPowerFailuresData(startDate, finishDate);
         this.sortedData.data = powerData;
         this.maxPowerFailure =
-                    powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
+          powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
@@ -114,7 +114,7 @@ export class PowerFailuresComponent extends AppBaseComponent implements OnInit, 
     this.refreshData();
   }
 
-  formatDuration(duration: number) {
+  formatDuration(duration: number): string {
     const sec_num = Math.floor(duration / 1000); // don't forget the second param
     const hours = Math.floor(sec_num / 3600);
     const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
