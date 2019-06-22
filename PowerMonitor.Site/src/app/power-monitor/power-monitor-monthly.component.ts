@@ -206,7 +206,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     }
 
     isAddYearButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(this.currentDate);
+        const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
+            this.currentDate.getDate());
         if (direction === 'up') {
             nextDate.setFullYear(nextDate.getFullYear() + 1);
             return nextDate.getFullYear() > new Date().getFullYear();

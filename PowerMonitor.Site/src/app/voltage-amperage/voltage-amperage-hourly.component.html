@@ -1,7 +1,7 @@
-<button class="hourly__mat-button" mat-button (click)="addDay('down')">
+<button class="hourly__mat-button" mat-button (click)="addDay('down')" [disabled]="isAddDayButtonDisabled('down')">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addDay('up')">
+<button class="hourly__mat-button" mat-button (click)="addDay('up')" [disabled]="isAddDayButtonDisabled('up')">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>

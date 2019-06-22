@@ -214,7 +214,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     isAddMonthButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(this.currentDate);
+        const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
+            this.currentDate.getDate());
         if (direction === 'up') {
             nextDate.setMonth(nextDate.getMonth() + 1);
             const today = new Date();
