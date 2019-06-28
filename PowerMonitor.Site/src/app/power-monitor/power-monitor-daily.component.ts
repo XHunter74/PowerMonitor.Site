@@ -71,6 +71,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
     public lineChartPlugins = [pluginAnnotations];
+    powerForecast: number;
 
     // events
     public chartClicked(e: any): void {
@@ -134,6 +135,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
+                this.powerForecast = this.getPowerForecast();
                 if (this.powerAvg > 0) {
                     this.annotation.annotations[0].value = this.powerAvg;
                     this.barChartOptions.annotation = this.annotation;
@@ -147,6 +149,18 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
+    }
+
+    getPowerForecast(): number {
+        const currentDate = new Date();
+        if (this.currentDate.getMonth() == currentDate.getMonth() &&
+            this.currentDate.getFullYear() == currentDate.getFullYear()) {
+            const days = daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1);
+            const forecastPower = this.powerAvg * days;
+            return forecastPower;
+        } else {
+            return null;
+        }
     }
 
     getAveragePower(powerData: IPowerDataDailyModel[]): number {

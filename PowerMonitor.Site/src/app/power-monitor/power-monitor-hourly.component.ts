@@ -128,6 +128,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
+                this.powerForecast = this.getPowerForecast();
                 if (this.powerAvg > 0) {
                     this.annotation.annotations[0].value = this.powerAvg;
                     this.barChartOptions.annotation = this.annotation;
@@ -141,6 +142,18 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
             }
         });
+    }
+
+    getPowerForecast(): any {
+        const currentDate = new Date();
+        if (this.currentDate.getDate() == currentDate.getDate() &&
+            this.currentDate.getMonth() == currentDate.getMonth() &&
+            this.currentDate.getFullYear() == currentDate.getFullYear()) {
+            const forecastPower = this.powerAvg * 24;
+            return forecastPower;
+        } else {
+            return null;
+        }
     }
 
     getAveragePower(powerData: IPowerDataDailyModel[]): number {
