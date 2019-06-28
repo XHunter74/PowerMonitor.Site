@@ -71,7 +71,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
     public lineChartPlugins = [pluginAnnotations];
-    powerForecast: number;
+    public powerForecast: number;
 
     // events
     public chartClicked(e: any): void {

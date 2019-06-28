@@ -70,6 +70,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     @ViewChild('powerChart') myCanvas: ElementRef;
     public context: CanvasRenderingContext2D;
+    public powerForecast: number;
 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
