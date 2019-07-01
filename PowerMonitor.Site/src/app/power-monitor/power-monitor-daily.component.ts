@@ -153,8 +153,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     getPowerForecast(): number {
         const currentDate = new Date();
-        if (this.currentDate.getMonth() == currentDate.getMonth() &&
-            this.currentDate.getFullYear() == currentDate.getFullYear()) {
+        if (this.currentDate.getMonth() === currentDate.getMonth() &&
+            this.currentDate.getFullYear() === currentDate.getFullYear()) {
             const days = daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1);
             const forecastPower = this.powerAvg * days;
             return forecastPower;
@@ -165,28 +165,26 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     getAveragePower(powerData: IPowerDataDailyModel[]): number {
         let powerAvg = 0;
-        if (powerData && powerData.length > 1) {
-            const today = new Date();
-            let reduceSum = false;
-            const powerSum = powerData
-                .filter(a => {
-                    const creationDate = new Date(a.created);
-                    const reduceSumInt = creationDate.getDate() === today.getDate() && creationDate.getFullYear() === today.getFullYear() &&
-                        creationDate.getMonth() === today.getMonth();
-                    if (reduceSumInt) {
-                        reduceSum = true;
-                    }
-                    return !reduceSumInt;
-                })
-                .reduce((a, b) => a + b.power, 0);
-            if (reduceSum) {
-                powerAvg = powerSum / (powerData.length - 1);
-            } else {
-                powerAvg = powerSum / (powerData.length);
+        if (powerData && powerData.length > 0) {
+            let days = powerData.length;
+            if (this.isCurrentMonth(this.currentDate)) {
+                days = days - 1;
+                const today = new Date();
+                const partOfDay = (today.getHours() + today.getMinutes() / 60) / 24;
+                days = days + partOfDay;
             }
-            powerAvg = Math.round(powerAvg * 100) / 100;
+            if (days > 0) {
+                powerAvg = this.powerSum / days;
+                powerAvg = Math.round(powerAvg * 100) / 100;
+            }
         }
         return powerAvg;
+    }
+    isCurrentMonth(currentDate: Date) {
+        const today = new Date();
+        const isCurrentMonthResult = currentDate.getFullYear() === today.getFullYear() &&
+            currentDate.getMonth() === today.getMonth();
+        return isCurrentMonthResult;
     }
 
     prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
