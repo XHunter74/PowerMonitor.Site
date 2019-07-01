@@ -161,24 +161,18 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         let powerAvg = 0;
         if (powerData && powerData.length > 1) {
             const today = new Date();
-            let reduceSum = false;
-            const powerSum = powerData
-                .filter(a => {
-                    const creationDate = new Date(a.created);
-                    const reduceSumInt = creationDate.getDate() === today.getDate() && creationDate.getFullYear() === today.getFullYear() &&
-                        creationDate.getMonth() === today.getMonth() && a.hours === today.getHours();
-                    if (reduceSumInt) {
-                        reduceSum = true;
+            if (today.getDate() === this.currentDate.getDate() &&
+                today.getMonth() === this.currentDate.getMonth() &&
+                today.getFullYear() === this.currentDate.getFullYear()) {
+                {
+                    const partOfDay = today.getHours() + today.getMinutes() / 60;
+                    if (partOfDay > 0) {
+                        powerAvg = this.powerSum / partOfDay;
                     }
-                    return !reduceSumInt;
-                })
-                .reduce((a, b) => a + b.power, 0);
-            if (reduceSum) {
-                powerAvg = powerSum / (powerData.length - 1);
+                }
             } else {
-                powerAvg = powerSum / (powerData.length);
+                powerAvg = this.powerSum / 24;
             }
-            powerAvg = Math.round(powerAvg * 100) / 100;
         }
         return powerAvg;
     }
