@@ -13,6 +13,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { Constans } from '../constants';
+import { daysInMonth } from '../utils';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -149,7 +150,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         if (powerData && powerData.length > 1) {
             const today = new Date();
             let reduceSum = 0;
-            const powerSum = powerData
+            let powerSum = powerData
                 .filter(a => {
                     const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1 ||
                         a.year <= Constans.systemStartDate.getFullYear() &&
@@ -160,8 +161,20 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                     return !reduceSumInt;
                 })
                 .reduce((a, b) => a + b.power, 0);
+            const powerSumCurrentMonth = powerData
+                .filter(a => {
+                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1
+                    return reduceSumInt;
+                })
+                .reduce((a, b) => a + b.power, 0);
+
             if (reduceSum > 0) {
-                powerAvg = powerSum / (powerData.length - reduceSum);
+                let months = powerData.length - reduceSum;
+                if (powerSumCurrentMonth && powerSumCurrentMonth > 0) {
+                    months = months + today.getDate() / daysInMonth(today.getFullYear(), today.getMonth());
+                    powerSum = powerSum + powerSumCurrentMonth;
+                }
+                powerAvg = powerSum / months;
             } else {
                 powerAvg = powerSum / (powerData.length);
             }
