@@ -45,11 +45,11 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
                 voltageCoefficient: calibrationCoefficients.voltageCalibration,
                 currentCoefficient: calibrationCoefficients.currentCalibration,
             });
+            this.closeSpinner();
         } catch (e) {
+            this.closeSpinner();
             console.error(e);
             setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
-        } finally {
-            this.closeSpinner();
         }
     }
 

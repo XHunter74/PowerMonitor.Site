@@ -25,7 +25,7 @@ export class HttpService {
         if (authToken) {
             headers = new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': `${authToken}`
+                'Authorization': `Bearer ${authToken}`
             });
         } else {
             headers = new HttpHeaders({
@@ -55,7 +55,7 @@ export class HttpService {
         const authToken = localStorage.getItem('auth_token');
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': `${authToken}`
+            'Authorization': `Bearer ${authToken}`
         });
         if (body instanceof FormData) {
             headers = new HttpHeaders({
