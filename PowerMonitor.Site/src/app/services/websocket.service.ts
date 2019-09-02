@@ -17,6 +17,8 @@ export class WebSocket extends Socket {
 @Injectable()
 export class WebSocketService {
 
+    private socket;
+
     constructor(private webSocket: WebSocket) {
     }
 
@@ -25,7 +27,7 @@ export class WebSocketService {
     }
 
     openServer() {
-        this.webSocket.connect();
+        this.socket = this.webSocket.connect();
     }
 
     getSensorsData(): Observable<ISensorsDataModel> {
@@ -40,6 +42,10 @@ export class WebSocketService {
     closeSensorsData() {
         this.sendMessage('close-sensors-data');
         this.webSocket.disconnect();
+    }
+
+    get isConnected(): boolean {
+        return this.socket && this.socket.connected;
     }
 
 }

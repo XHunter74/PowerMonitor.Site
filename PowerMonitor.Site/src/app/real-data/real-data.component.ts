@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
+import 'rxjs/add/observable/interval';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-real-data',
@@ -17,6 +19,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
   private voltage = 230;
   private maxAmperage = 30;
   private nominalAmperageMax = 20;
+  private lastUpdate: Date;
 
   public canvasWidth = 300;
   public centralLabel = '';
@@ -51,21 +54,35 @@ export class RealDataComponent implements OnInit, OnDestroy {
       needleStartValue: 0,
     }
   };
+  timerSub: Subscription;
 
   constructor(private webSocketService: WebSocketService) {
   }
 
   ngOnInit(): void {
-    this.webSocketService.openServer();
-    this.webSocketService.sendMessage('sensors-data');
-    this.webSocketService.getSensorsData()
-      .subscribe((data: ISensorsDataModel) => {
-        this.updateGaugeIndicators(data);
-      });
+    this.initSocketConnection();
+    this.timerSub = Observable.interval(1000).subscribe(() => {
+      if (!this.webSocketService.isConnected) {
+        this.initSocketConnection();
+      }
+    }
+    );
+  }
+
+  initSocketConnection() {
+    if (!this.webSocketService.isConnected) {
+      this.webSocketService.openServer();
+      this.webSocketService.sendMessage('sensors-data');
+      this.webSocketService.getSensorsData()
+        .subscribe((data: ISensorsDataModel) => {
+          this.updateGaugeIndicators(data);
+        });
+    }
   }
 
   ngOnDestroy(): void {
     this.webSocketService.closeSensorsData();
+    this.timerSub.unsubscribe();
   }
 
   updateGaugeIndicators(sensorsData: ISensorsDataModel) {
