@@ -5,9 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog, MatTableDataSource, MatSort, MatSortHeader } from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
-import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MONTH_DATE_FORMATS } from '../app-date-format';
+import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constans } from '../constants';
@@ -20,7 +19,7 @@ const PowerFailuresSort = 'power-failures-sort'
   styleUrls: ['./power-failures-monthly.component.css'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS }
   ]
 })
 
@@ -30,7 +29,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   @ViewChild(MatSort) sort: MatSort;
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
-  displayedColumns: string[] = ['start', 'finish', 'duration'];
+  displayedColumns: string[] = ['month', 'duration'];
   sortedData = new MatTableDataSource();
   private lastSort: string;
   private lastSortDirection: string;
@@ -53,10 +52,9 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     this.activatedRouter.params.subscribe(
       params => {
         const year = params['year'];
-        const month = params['month'];
-        if (year && month) {
+        if (year) {
           // tslint:disable-next-line: radix
-          this.currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+          this.currentDate = new Date(parseInt(year), 0, 1);
         } else {
           this.currentDate = new Date();
         }
@@ -84,15 +82,8 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     setTimeout(async () => {
       this.showSpinner();
       try {
-        const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-        const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-          daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-        const powerData = await this.powerService.getPowerFailuresData(startDate, finishDate);
+        const powerData = await this.powerService.getPowerFailuresMonthlyData(this.currentDate.getFullYear());
         this.sortedData.data = powerData;
-        this.maxPowerFailure =
-          powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
-        this.totalPowerFailure = 0;
-        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
@@ -107,15 +98,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     }
   }
 
-  chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const month = normlizedMonth.month();
-    const year = normlizedMonth.year();
-    this.currentDate = new Date(year, month, 1);
-    datepicker.close();
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures', { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
-    this.refreshData();
-  }
+
 
   formatDuration(duration: number): string {
     const sec_num = Math.floor(duration / 1000); // don't forget the second param
@@ -132,30 +115,38 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     return hoursS + 'h ' + minutesS + 'm ' + secondsS + 's';
   }
 
-  async addMonth(direction: string) {
+  async addYear(direction: string) {
     if (direction === 'up') {
-      this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+      this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
     } else {
-      this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+      this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
     }
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures',
-      { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+    this.router.navigate(['power-failures', 'monthly',
+      { year: this.currentDate.getFullYear() }]);
     await this.refreshData();
   }
 
-  isAddMonthButtonDisabled(direction: string): boolean {
+  isAddYearButtonDisabled(direction: string): boolean {
     const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-            this.currentDate.getDate());
+      this.currentDate.getDate());
     if (direction === 'up') {
-      nextDate.setMonth(nextDate.getMonth() + 1);
-      const today = new Date();
-      return nextDate.getFullYear() >= today.getFullYear() && nextDate.getMonth() > today.getMonth();
+      nextDate.setFullYear(nextDate.getFullYear() + 1);
+      return nextDate.getFullYear() > new Date().getFullYear();
     } else {
-      nextDate.setMonth(nextDate.getMonth() - 1);
-      return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
-        nextDate.getMonth() < Constans.systemStartDate.getMonth();
+      nextDate.setFullYear(nextDate.getFullYear() - 1);
+      return nextDate.getFullYear() < Constans.systemStartDate.getFullYear();
     }
+  }
+
+  chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const year = normalizedYear.year();
+    this.currentDate = new Date(year, 0, 1);
+    datepicker.close();
+    this.router.navigate(['power-failures', 'monthly',
+      { year: this.currentDate.getFullYear() }]);
+    this.currentDateControl.setValue(this.currentDate.toISOString());
+    this.refreshData();
   }
 
 }

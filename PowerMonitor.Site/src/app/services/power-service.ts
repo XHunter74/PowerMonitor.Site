@@ -9,6 +9,7 @@ import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { IPowerFailureModel } from '../models/power-failure.model';
+import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { HttpService } from './http.service';
 
 
@@ -84,6 +85,22 @@ export class PowerService extends HttpService {
 
         const promise = this.get<IPowerFailureModel[]>('power/power-availability', params);
         return promise;
+    }
+
+    async getPowerFailuresMonthlyData(year: number): Promise<PowerFailureMonthlyModel[]> {
+        const params = new HttpParams()
+            .set('year', year.toString());
+
+        let data = await this.get<PowerFailureMonthlyModel[]>('power/power-availability-monthly', params);
+        data = data.map(e => {
+            const i = new PowerFailureMonthlyModel();
+            i.year = e.year;
+            i.month = e.month;
+            i.eventDate = new Date(e.year, e.month - 1, 1);
+            i.duration = e.duration;
+            return i;
+        })
+        return data;
     }
 
 }
