@@ -35,6 +35,8 @@ import { SocketIoModule } from 'ng-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
 import { ErrorDialogComponent } from './dialogs/error-dialog.component';
+import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
+import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import { ErrorDialogComponent } from './dialogs/error-dialog.component';
     VoltageAmperageHourlyComponent,
     VoltageAmperageDailyComponent,
     PowerFailuresComponent,
+    PowerFailuresDailyComponent,
+    PowerFailuresMonthlyComponent,
     SiteSettingsComponent,
     SpinnerDialogComponent,
     HomeComponent,
@@ -81,6 +85,8 @@ import { ErrorDialogComponent } from './dialogs/error-dialog.component';
       { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
       { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [OpenGuard] },
       { path: 'power-failures', component: PowerFailuresComponent, canActivate: [OpenGuard] },
+      { path: 'power-failures/daily', component: PowerFailuresComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
+      { path: 'power-failures/monthly', component: PowerFailuresComponent, data: { name: 'monthly' }, canActivate: [OpenGuard] },
       { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
       { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },

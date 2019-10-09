@@ -1,51 +1,20 @@
-<button class="hourly__mat-button" mat-button (click)="addMonth('down')" [disabled]="isAddMonthButtonDisabled('down')">
-    <mat-icon>chevron_left</mat-icon>
-</button>
-<button class="hourly__mat-button" mat-button (click)="addMonth('up')" [disabled]="isAddMonthButtonDisabled('up')">
-    <mat-icon>chevron_right</mat-icon>
-</button>
-<mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (click)="picker3.open()">
-    <mat-datepicker-toggle matSuffix [for]=" picker3">
-    </mat-datepicker-toggle>
-    <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
-    </mat-datepicker>
-</mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()">
-    <mat-icon>refresh</mat-icon>
-</button>
-<div class="row">
-    <div class="col-12 col-md-6 mb-3">
-        <table class="d-inline-block" *ngIf="maxPowerFailure">
-            <tr>
-                <td class="pr-2"><b>Total failure:</b> </td>
-                <td class="text-right"> {{formatDuration(totalPowerFailure)}}</td>
-                <td class="text-right"></td>
-            </tr>
-            <tr>
-                <td class="pr-2"><b>Max failure:</b> </td>
-                <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}}</td>
-                <td class="text-right">, {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="table-responsive">
-    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
-        <ng-container matColumnDef="start">
-            <th *matHeaderCellDef mat-sort-header> Start </th>
-            <td *matCellDef="let element"> {{element.start | date: 'dd.MM.yyyy HH:mm'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="finish">
-            <th *matHeaderCellDef mat-sort-header> Finish </th>
-            <td *matCellDef="let element"> {{element.finish | date: 'dd.MM.yyyy HH:mm'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="duration">
-            <th *matHeaderCellDef mat-sort-header> Duration </th>
-            <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+<ngb-tabset #tabs [activeId]="selectedTab" (tabChange)="selectedTab = $event.nextId">
+    <ngb-tab id="daily">
+        <ng-template ngbTabTitle>
+            <a [routerLink]="['/power-failures','daily']">Daily</a>
+        </ng-template>
+        <ng-template ngbTabContent>
+            <app-power-failures-daily></app-power-failures-daily>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab id="monthly">
+        <ng-template ngbTabTitle>
+            <a [routerLink]="['/power-failures','monthly']">Monthly</a>
+        </ng-template>
+        <ng-template ngbTabContent>
+            <app-power-failures-monthly></app-power-failures-monthly>
+        </ng-template>
+    </ngb-tab>
+    
+
+</ngb-tabset>
