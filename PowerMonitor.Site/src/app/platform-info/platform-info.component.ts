@@ -56,5 +56,10 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
         result = result + `${this.sysInfo.systemUptime.seconds.toString().padStart(2, '0')}`;
         return result;
     }
+
+    getSystemDateTime(): Date {
+        const localDate = new Date(this.sysInfo.systemDateTimeStr)
+        return localDate;
+    }
 }
 

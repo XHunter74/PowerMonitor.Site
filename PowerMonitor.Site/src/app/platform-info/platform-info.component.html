@@ -31,4 +31,7 @@
     <ul>
         <li>System Uptime: <strong>{{ getSystemUptimeStr() }}</strong></li>
     </ul>
+    <ul>
+        <li>System Time: <strong>{{ getSystemDateTime() | date: 'dd.MM.yyyy HH:mm:ss'}}</strong></li>
+    </ul>
 </div>

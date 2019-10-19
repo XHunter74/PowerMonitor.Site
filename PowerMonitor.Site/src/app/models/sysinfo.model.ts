@@ -7,7 +7,8 @@ export interface ISystemInfo {
     cpuBrand: string;
     cpuSpeed: string;
     cpuCores: string;
-    systemUptime: ISystemUptime
+    systemUptime: ISystemUptime;
+    systemDateTimeStr: string;
 }
 
 export interface ISystemUptime {
