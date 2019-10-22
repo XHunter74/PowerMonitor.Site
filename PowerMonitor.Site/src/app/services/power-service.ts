@@ -98,6 +98,7 @@ export class PowerService extends HttpService {
             i.month = e.month;
             i.eventDate = new Date(e.year, e.month - 1, 1);
             i.duration = e.duration;
+            i.events = e.events;
             return i;
         })
         return data;
