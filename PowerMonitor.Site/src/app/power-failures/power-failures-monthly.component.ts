@@ -10,6 +10,7 @@ import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constans } from '../constants';
+import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 
 const PowerFailuresSort = 'power-failures-sort'
 
@@ -29,7 +30,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   @ViewChild(MatSort) sort: MatSort;
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
-  displayedColumns: string[] = ['month', 'duration'];
+  displayedColumns: string[] = ['month', 'duration', 'events'];
   sortedData = new MatTableDataSource();
   private lastSort: string;
   private lastSortDirection: string;
@@ -149,4 +150,10 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     this.refreshData();
   }
 
+  clickOnRowHandler(row: PowerFailureMonthlyModel) {
+    if (row) {
+      this.router.navigate(['power-failures', 'daily',
+                { year: row.year, month: row.month }]);
+    }
+  }
 }

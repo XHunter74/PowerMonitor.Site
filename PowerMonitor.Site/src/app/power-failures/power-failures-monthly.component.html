@@ -39,7 +39,11 @@
             <th *matHeaderCellDef mat-sort-header> Duration </th>
             <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
         </ng-container>
+        <ng-container matColumnDef="events">
+            <th *matHeaderCellDef mat-sort-header> Events </th>
+            <td *matCellDef="let element"> {{element.events}} </td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickOnRowHandler(row)"></tr>
     </table>
 </div>
