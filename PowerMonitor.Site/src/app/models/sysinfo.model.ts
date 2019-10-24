@@ -1,4 +1,5 @@
 export interface ISystemInfo {
+    version: string;
     manufacturer: string;
     model: string;
     platform: string;
