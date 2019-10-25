@@ -44,6 +44,6 @@
             <td *matCellDef="let element"> {{element.events}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickOnRowHandler(row)"></tr>
+        <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickOnRowHandler(row)"></tr>
     </table>
 </div>
