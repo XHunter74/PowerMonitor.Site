@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,8 +12,13 @@ export class PowerMonitorComponent implements OnInit, AfterViewChecked {
     @ViewChild('tabs')
     private tabs: NgbTabset;
 
-    constructor(private route: ActivatedRoute) {
-        this.route.data.subscribe(d => {
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private router: Router, ) {
+        if (router.url === '/' || router.url.toLowerCase() === '/power-monitor') {
+            router.navigate(['power-monitor', 'hourly'])
+        }
+        this.activatedRoute.data.subscribe(d => {
             this.selectedTab = d.name;
         });
     }

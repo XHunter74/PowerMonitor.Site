@@ -76,7 +76,7 @@ import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-m
     GaugeChartModule,
     SocketIoModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [OpenGuard] },
+      { path: '', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
       { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'platform-info', component: PlatformInfoComponent, canActivate: [OpenGuard] },
       { path: 'settings', component: SiteSettingsComponent, canActivate: [AuthGuard] },
