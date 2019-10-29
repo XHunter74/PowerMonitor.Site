@@ -1,6 +1,6 @@
 {
   "name": "powermonitor.site",
-  "version": "0.5.19",
+  "version": "0.5.21",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

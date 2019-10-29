@@ -17,7 +17,7 @@
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/online-data"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-tachometer-alt'></span> Real Data
+                        <span class='fas fa-tachometer-alt'></span> Live Data
                     </a>
                 </li>
                 <li class="nav-item" [routerLinkActive]='["link-active"]'>
