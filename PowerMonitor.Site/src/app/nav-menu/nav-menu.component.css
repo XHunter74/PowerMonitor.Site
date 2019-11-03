@@ -18,6 +18,20 @@
   background-color: #4189C7;
   color: white;
 }
+.api-enabled {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(22, 190, 58);
+  border-radius: 50%;
+  display: inline-block;
+}
+.api-disabled {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(99, 21, 201);
+  border-radius: 50%;
+  display: inline-block;
+}
 @media (min-width: 768px) {
   .main-nav {
     width: calc(25% - 30px);

@@ -1,7 +1,11 @@
 <div class='main-nav'>
     <nav class='navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column'>
         <div class="navbar-header p-0">
-            <a class='navbar-brand' [routerLink]='["/"]'>Power Monitor</a>
+            <p>
+                <a class='navbar-brand' [routerLink]='["/"]'>Power Monitor</a>
+                <span class="api-enabled" *ngIf="isAPIOnline"></span>
+                <span class="api-disabled" *ngIf="!isAPIOnline"></span>
+            </p>
             <button type='button' class='navbar-toggler' data-toggle='collapse' [attr.aria-expanded]='isExpanded'
                 (click)='toggle()'>
                 <span class='sr-only'>Toggle navigation</span>
