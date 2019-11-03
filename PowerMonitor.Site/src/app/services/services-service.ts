@@ -26,6 +26,10 @@ export class ServicesService extends HttpService {
         return promise;
     }
 
+    async pingApi(): Promise<string> {
+        return this.post<string>('services/ping', null);
+    }
+
     async getBoardVersion(): Promise<IBoardInfoModel> {
         const promise = this.get<IBoardInfoModel>('services/board-build-date');
         return promise;

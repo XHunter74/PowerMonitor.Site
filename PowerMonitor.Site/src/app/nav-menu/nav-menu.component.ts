@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users-service';
 import { Router } from '@angular/router';
+import { ServicesService } from '../services/services-service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,9 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
+  isAPIOnline = false;
 
-  constructor(private usersService: UsersService, private router: Router) {
-
+  constructor(
+    private usersService: UsersService,
+    private servicesService: ServicesService,
+    private router: Router
+  ) {
+    this.startTimer();
   }
 
   ngOnInit() {
@@ -39,5 +45,17 @@ export class NavMenuComponent implements OnInit {
 
   logout() {
     this.usersService.logout();
+  }
+
+  startTimer() {
+    setInterval(async () => {
+      try {
+        await this.servicesService.pingApi();
+        this.isAPIOnline = true;
+      }
+      catch (e) {
+        this.isAPIOnline = false;
+      }
+    }, 10000)
   }
 }
