@@ -1,11 +1,10 @@
 <div class='main-nav'>
     <nav class='navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column'>
         <div class="navbar-header p-0">
-            <p>
-                <a class='navbar-brand' *ngIf="apiState===2" style="color:white" [routerLink]='["/"]'>Power Monitor</a>
-                <a class='navbar-brand' *ngIf="apiState===1" style="color:#4189C7" [routerLink]='["/"]'>Power Monitor</a>
-                <a class='navbar-brand' *ngIf="apiState===0" style="color:rgb(160, 157, 163)" [routerLink]='["/"]'>Power Monitor</a>
-            </p>
+            <a class='navbar-brand' *ngIf="apiState===2" style="color:white" [routerLink]='["/"]'>Power Monitor</a>
+            <a class='navbar-brand' *ngIf="apiState===1" style="color:#4189C7" [routerLink]='["/"]'>Power Monitor</a>
+            <a class='navbar-brand' *ngIf="apiState===0" style="color:rgb(160, 157, 163)" [routerLink]='["/"]'>Power
+                Monitor</a>
             <button type='button' class='navbar-toggler' data-toggle='collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
                 <span class='sr-only'>Toggle navigation</span>
                 <span class='navbar-toggler-icon'></span>
@@ -39,11 +38,11 @@
                         <span class='fas fa-info-circle'></span> Platform Info
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
+                <!-- <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/settings"]' class="nav-link" (click)='collapse()'>
                         <span class='fas fa-cogs'></span> Settings
                     </a>
-                </li>
+                </li> -->
                 <!-- <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/profile"]' class="nav-link" (click)='collapse()'>
             <span class='fas fa-sort-amount-up'></span> Profile

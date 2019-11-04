@@ -1,2 +1,2 @@
 npm run build-prod
-firebase deploy
+rem npm run firebase deploy
