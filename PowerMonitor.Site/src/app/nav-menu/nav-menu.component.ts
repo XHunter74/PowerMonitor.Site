@@ -10,13 +10,14 @@ import { ServicesService } from '../services/services-service';
 })
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
-  isAPIOnline = false;
+  isAPIOnline;
 
   constructor(
     private usersService: UsersService,
     private servicesService: ServicesService,
     private router: Router
   ) {
+    this.checkApiState();
     this.startTimer();
   }
 
@@ -49,13 +50,26 @@ export class NavMenuComponent implements OnInit {
 
   startTimer() {
     setInterval(async () => {
-      try {
-        await this.servicesService.pingApi();
-        this.isAPIOnline = true;
-      }
-      catch (e) {
-        this.isAPIOnline = false;
-      }
-    }, 10000)
+      await this.checkApiState();
+    }, 10000);
+  }
+
+  private async checkApiState() {
+    try {
+      await this.servicesService.pingApi();
+      this.isAPIOnline = true;
+    } catch (e) {
+      this.isAPIOnline = false;
+    }
+  }
+
+  get apiState(): number {
+    if (typeof this.isAPIOnline === 'undefined') {
+      return 0;
+    }
+    if (!this.isAPIOnline) {
+      return 1;
+    }
+    return 2;
   }
 }
