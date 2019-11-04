@@ -9,3 +9,5 @@ PowerMonitor.API/uploads/
 PowerMonitor.API/server.off
 Arduino/PowerMonitor/.vscode/ipch/
 PowerMonitor.Site/.firebase/hosting.ZGlzdA.cache
+PowerMonitor.Backup/build/
+PowerMonitor.Backup/node_modules/
