@@ -1,6 +1,7 @@
 import { HttpParams, HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from './users-service';
 import { Inject, Optional, SkipSelf } from '@angular/core';
+import { HeaderItem } from './header.item';
 
 
 export class HttpService {
@@ -21,21 +22,29 @@ export class HttpService {
 
     async get<T>(actionUrl: string, params?: HttpParams): Promise<T> {
         const authToken = localStorage.getItem('auth_token');
-        let headers: HttpHeaders;
+        let headers = [];
         if (authToken) {
-            headers = new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            });
-        } else {
-            headers = new HttpHeaders({
-                'Content-Type': 'application/json'
-            });
+            const header = new HeaderItem();
+            header.name = 'Authorization';
+            header.value = `Bearer ${authToken}`;
+            headers.push(header);
+        }
+
+        return await this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params);
+    }
+
+    async getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Promise<T> {
+        let requestHeaders: HttpHeaders;
+        if (headers && headers.length > 0) {
+            requestHeaders = new HttpHeaders();
+            headers.forEach(e => {
+                requestHeaders = requestHeaders.append(e.name, e.value);
+            })
         }
 
         const promise = new Promise<T>((resolve, reject) => {
             this.http
-                .get<T>(`${this.baseUrl}${actionUrl}`, { params, headers })
+                .get<T>(actionUrl, { params, headers: requestHeaders })
                 .toPromise()
                 .then(data => {
                     resolve(data);

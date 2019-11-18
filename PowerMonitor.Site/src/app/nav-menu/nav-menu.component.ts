@@ -56,9 +56,10 @@ export class NavMenuComponent implements OnInit {
 
   private async checkApiState() {
     try {
-      await this.servicesService.pingApi();
-      this.isAPIOnline = true;
+      const state = await this.servicesService.pingApi();
+      this.isAPIOnline = state.status.toLowerCase() === 'well';
     } catch (e) {
+      console.error(e);
       this.isAPIOnline = false;
     }
   }
