@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.powermonitor.site:444/',
+  apiUrl: 'https://api.powermonitor.site/',
   version: 'DEV'
 };
