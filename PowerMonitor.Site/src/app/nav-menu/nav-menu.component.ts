@@ -51,7 +51,7 @@ export class NavMenuComponent implements OnInit {
   startTimer() {
     setInterval(async () => {
       await this.checkApiState();
-    }, 10000);
+    }, 60000);
   }
 
   private async checkApiState() {
