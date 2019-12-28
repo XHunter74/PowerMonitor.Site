@@ -231,7 +231,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         if (direction === 'up') {
             nextDate.setMonth(nextDate.getMonth() + 1);
             const today = new Date();
-            return nextDate.getFullYear() >= today.getFullYear() && nextDate.getMonth() > today.getMonth();
+            return (nextDate.getFullYear() * 12 + nextDate.getMonth()) > (today.getFullYear() * 12 + today.getMonth());
         } else {
             nextDate.setMonth(nextDate.getMonth() - 1);
             return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
