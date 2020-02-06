@@ -8,7 +8,8 @@ import { Observer } from 'rxjs';
 @Injectable()
 export class WebSocket extends Socket {
 
-    constructor(@Inject('BASE_URL') baseUrl) {
+    constructor(@Inject('BASE_URL') baseUrl: string) {
+        baseUrl = baseUrl.replace('api/', '');
         super({ url: baseUrl, options: {} });
     }
 
