@@ -1,4 +1,3 @@
 export class HealthState {
-    service: string;
-    status: string;
+    response: string;
 }

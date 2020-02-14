@@ -31,15 +31,8 @@ export class ServicesService extends HttpService {
     }
 
     async pingApi(): Promise<HealthState> {
-        const actionUrl = Constans.healthUrl;
-        const params = new HttpParams()
-            .set('serviceName', Constans.ServiceName)
-            .set('timeout', Constans.healthTimeout.toString());
-        const apiKey = new HeaderItem();
-        apiKey.name = 'api-key';
-        apiKey.value = Constans.healthApiKey
-        const states = await this.getExt<HealthState[]>(actionUrl, [apiKey], params);
-        return states[0];
+        const promise = this.post<HealthState>('services/ping', null);
+        return promise;
     }
 
     async getBoardVersion(): Promise<IBoardInfoModel> {

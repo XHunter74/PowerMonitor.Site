@@ -51,13 +51,13 @@ export class NavMenuComponent implements OnInit {
   startTimer() {
     setInterval(async () => {
       await this.checkApiState();
-    }, 60000);
+    }, 20000);
   }
 
   private async checkApiState() {
     try {
       const state = await this.servicesService.pingApi();
-      this.isAPIOnline = state.status.toLowerCase() === 'well';
+      this.isAPIOnline = state.response.toLowerCase() === 'pong';
     } catch (e) {
       console.error(e);
       this.isAPIOnline = false;
