@@ -13,3 +13,5 @@ PowerMonitor.Backup/build/
 PowerMonitor.Backup/node_modules/
 PowerMonitor.Backup/logs/
 PowerMonitor.Health/functions-server/dist/
+PowerMonitor.AI/build/
+PowerMonitor.AI/node_modules/
