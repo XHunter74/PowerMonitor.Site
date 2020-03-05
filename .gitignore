@@ -15,3 +15,4 @@ PowerMonitor.Backup/logs/
 PowerMonitor.Health/functions-server/dist/
 PowerMonitor.AI/build/
 PowerMonitor.AI/node_modules/
+PowerMonitor.AI/model/
