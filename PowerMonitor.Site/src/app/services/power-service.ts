@@ -11,6 +11,7 @@ import { ISensorsDataModel } from '../models/sensors-data.model';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { HttpService } from './http.service';
+import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 
 
 
@@ -35,6 +36,11 @@ export class PowerService extends HttpService {
 
         const promise = this.get<IVoltageAmperageModel[]>('power/voltage-amperage', params);
 
+        return promise;
+    }
+
+    async getPowerDataStats(): Promise<IPowerDataStatsModel[]> {
+        const promise = this.get<IPowerDataStatsModel[]>('power/power-data-stats');
         return promise;
     }
 

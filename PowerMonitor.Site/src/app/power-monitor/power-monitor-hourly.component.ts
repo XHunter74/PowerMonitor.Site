@@ -12,6 +12,7 @@ import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Constans } from '../constants';
+import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -21,6 +22,7 @@ import { Constans } from '../constants';
 export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit, AfterViewChecked {
 
     public powerData: IPowerDataHourlyModel[];
+    private powerDataStats: IPowerDataStatsModel[];
     public powerSum: number;
     public powerAvg: number;
 
@@ -124,6 +126,14 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             this.showSpinner();
             try {
                 this.powerData = await this.powerService.getPowerDataHourly(this.currentDate, this.currentDate);
+                const currentDate = new Date();
+                if (this.currentDate.getDate() == currentDate.getDate() &&
+                    this.currentDate.getMonth() == currentDate.getMonth() &&
+                    this.currentDate.getFullYear() == currentDate.getFullYear()) {
+                    this.powerDataStats = await this.powerService.getPowerDataStats();
+                } else {
+                    this.powerDataStats = null;
+                }
                 this.prepareChart(this.powerData);
                 this.powerSum = 0;
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
@@ -150,8 +160,16 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         if (this.currentDate.getDate() == currentDate.getDate() &&
             this.currentDate.getMonth() == currentDate.getMonth() &&
             this.currentDate.getFullYear() == currentDate.getFullYear()) {
-            const forecastPower = this.powerAvg * 24;
-            return forecastPower;
+            const currentHour = currentDate.getHours();
+            let result = 0;
+            for (let i = 0; i < 24; i++) {
+                if (i < currentHour) {
+                    result += this.powerData[i].power;
+                } else {
+                    result += this.powerDataStats[i].power
+                }
+            }
+            return result;
         } else {
             return null;
         }
