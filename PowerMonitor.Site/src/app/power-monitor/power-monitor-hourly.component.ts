@@ -22,7 +22,6 @@ import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit, AfterViewChecked {
 
     public powerData: IPowerDataHourlyModel[];
-    private powerDataStats: IPowerDataStatsModel[];
     public powerSum: number;
     public powerAvg: number;
 
@@ -126,20 +125,12 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             this.showSpinner();
             try {
                 this.powerData = await this.powerService.getPowerDataHourly(this.currentDate, this.currentDate);
-                const currentDate = new Date();
-                if (this.currentDate.getDate() == currentDate.getDate() &&
-                    this.currentDate.getMonth() == currentDate.getMonth() &&
-                    this.currentDate.getFullYear() == currentDate.getFullYear()) {
-                    this.powerDataStats = await this.powerService.getPowerDataStats();
-                } else {
-                    this.powerDataStats = null;
-                }
                 this.prepareChart(this.powerData);
                 this.powerSum = 0;
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
-                this.powerForecast = this.getPowerForecast();
+                this.powerForecast = await this.getPowerForecast();
                 if (this.powerAvg > 0) {
                     this.annotation.annotations[0].value = this.powerAvg;
                     this.barChartOptions.annotation = this.annotation;
@@ -155,22 +146,29 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         });
     }
 
-    getPowerForecast(): any {
+    private async getPowerForecast(): Promise<number> {
         const currentDate = new Date();
         if (this.currentDate.getDate() == currentDate.getDate() &&
             this.currentDate.getMonth() == currentDate.getMonth() &&
             this.currentDate.getFullYear() == currentDate.getFullYear()) {
+            const powerDataStats = await this.powerService.getPowerDataStats();
             const currentHour = currentDate.getHours();
             let result = 0;
             for (let i = 0; i < 24; i++) {
                 if (i < currentHour) {
                     result += this.powerData[i].power;
                 } else {
-                    result += this.powerDataStats[i].power
+                    if (i < this.powerData.length &&
+                        this.powerData[i].power > powerDataStats[i].power) {
+                        result += this.powerData[i].power;
+                    } else {
+                        result += powerDataStats[i].power
+                    }
                 }
             }
             return result;
         } else {
+            this
             return null;
         }
     }
