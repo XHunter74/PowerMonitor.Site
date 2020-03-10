@@ -130,13 +130,13 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
-                this.powerForecast = await this.getPowerForecast();
                 if (this.powerAvg > 0) {
                     this.annotation.annotations[0].value = this.powerAvg;
                     this.barChartOptions.annotation = this.annotation;
                 } else {
                     this.barChartOptions.annotation = null;
                 }
+                this.powerForecast = await this.getPowerForecast();
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
