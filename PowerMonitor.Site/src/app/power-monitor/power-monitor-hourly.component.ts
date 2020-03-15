@@ -124,6 +124,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         setTimeout(async () => {
             this.showSpinner();
             try {
+                this.powerForecast = null;
                 this.powerData = await this.powerService.getPowerDataHourly(this.currentDate, this.currentDate);
                 this.prepareChart(this.powerData);
                 this.powerSum = 0;
