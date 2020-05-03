@@ -22,7 +22,7 @@ export class HttpService {
 
     async get<T>(actionUrl: string, params?: HttpParams): Promise<T> {
         const authToken = localStorage.getItem('auth_token');
-        let headers = [];
+        const headers = [];
         if (authToken) {
             const header = new HeaderItem();
             header.name = 'Authorization';
@@ -39,7 +39,7 @@ export class HttpService {
             requestHeaders = new HttpHeaders();
             headers.forEach(e => {
                 requestHeaders = requestHeaders.append(e.name, e.value);
-            })
+            });
         }
 
         const promise = new Promise<T>((resolve, reject) => {
@@ -90,6 +90,29 @@ export class HttpService {
         return promise;
     }
 
+    async delete(actionUrl: string, body?: any, params?: HttpParams) {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+        });
+        const promise = new Promise((resolve, reject) => {
+            this.http
+                .delete(`${this.baseUrl}${actionUrl}`, { headers, params })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    const error = this.handleError(this.userService, e);
+                    if (error) {
+                        reject(error);
+                    }
+                });
+        });
+        return promise;
+    }
+
     handleError(userService: UsersService, error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             // A client-side or network error occurred. Handle it accordingly.
@@ -104,7 +127,6 @@ export class HttpService {
                 `body was: ${error.error}`);
         }
         // return an observable with a user-facing error message
-        throw new Error(
-            'Something bad happened; please try again later.');
+        return error;
     }
 }

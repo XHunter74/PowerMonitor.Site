@@ -5,6 +5,7 @@ import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { PowerService } from '../services/power-service';
+import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
 
 @Component({
   selector: 'app-electricity-metering',
@@ -51,7 +52,17 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async deleteRecord(recordId: number) {
-
+    const dialogRef = QuestionDialogComponent.show(this.dialog, 'Would you like to delete this record?');
+    const dialogResult = await dialogRef.afterClosed().toPromise();
+    if (dialogResult === 'positive') {
+      try {
+        await this.powerService.deletePowerMeteringRecord(recordId);
+        await this.refreshData();
+      } catch (err) {
+        console.log(err);
+        ErrorDialogComponent.show(this.dialog, `Could not delete this record because: '${err.error.message}'`);
+      }
+    }
   }
 
 }

@@ -3,7 +3,10 @@ import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog, MatTableDataSource, MatSort, MatSortHeader } from '@angular/material';
+import {
+  MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog,
+  MatTableDataSource, MatSort, MatSortHeader
+} from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { daysInMonth, compare } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';

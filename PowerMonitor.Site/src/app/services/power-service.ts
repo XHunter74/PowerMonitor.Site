@@ -116,6 +116,11 @@ export class PowerService extends HttpService {
         return result;
     }
 
+    async deletePowerMeteringRecord(recordId: number) {
+        const actionUrl = `metering/energy-data/${recordId}`;
+        await this.delete(actionUrl);
+    }
+
 }
 
 function getStringDate(val: Date) {

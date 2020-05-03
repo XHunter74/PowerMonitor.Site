@@ -39,6 +39,7 @@ import { PowerFailuresDailyComponent } from './power-failures/power-failures-dai
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
 import { ElectricityMeteringComponent } from './electricity-metering/electricity-metering.component';
 import { AppRoutingModule } from './app-routing.module';
+import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 
 
 @NgModule({
@@ -64,9 +65,13 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     ProfileComponent,
     ErrorDialogComponent,
-    ElectricityMeteringComponent
+    ElectricityMeteringComponent,
+    QuestionDialogComponent,
   ],
-  entryComponents: [LoginModalComponent, SpinnerDialogComponent, ErrorDialogComponent],
+  entryComponents: [
+    LoginModalComponent, SpinnerDialogComponent,
+    ErrorDialogComponent, QuestionDialogComponent
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,

@@ -3,6 +3,7 @@
         "Datepicker",
         "Paginator",
         "Sidenav",
-        "datasets"
+        "datasets",
+        "tabindex"
     ]
 }
