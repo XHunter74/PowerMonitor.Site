@@ -7,9 +7,9 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { Constans } from '../constants';
+import { Constants } from '../constants';
 
-const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort'
+const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
 @Component({
     selector: 'app-voltage-amperage-hourly',
@@ -38,13 +38,13 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     ngAfterViewInit() {
         this.sortedData.sort = this.sort;
-        this.restoreSort()
+        this.restoreSort();
     }
     restoreSort() {
         const sort = this.sortedData.sort;
         const restoredSortStr = localStorage.getItem(VoltageAmperageHourlySort);
         if (restoredSortStr) {
-            const restoredSort = <Sort>JSON.parse(restoredSortStr)
+            const restoredSort = <Sort>JSON.parse(restoredSortStr);
             if (restoredSort.active && restoredSort.direction) {
                 sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
                 sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
@@ -127,7 +127,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             return nextDate > new Date();
         } else {
             nextDate.setDate(nextDate.getDate() - 1);
-            return nextDate < Constans.systemStartDate;
+            return nextDate < Constants.systemStartDate;
         }
     }
 }

@@ -1,20 +1,16 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog, MatTableDataSource } from '@angular/material';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MONTH_DATE_FORMATS } from '../app-date-format';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { PowerService } from '../services/power-service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
+import { EditElectricityMeteringComponent } from './edit-electricity-metering.component';
+import { PowerMeteringDto } from '../models/power-metering.dto';
 
 @Component({
   selector: 'app-electricity-metering',
   templateUrl: './electricity-metering.component.html',
   styleUrls: ['./electricity-metering.component.css'],
-  providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
-  ]
 })
 
 
@@ -41,8 +37,8 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     setTimeout(async () => {
       this.showSpinner();
       try {
-        const powerData = await this.powerService.getPowerMeteringData();
-        this.sortedData.data = powerData;
+        // const powerData = await this.powerService.getPowerMeteringData();
+        // this.sortedData.data = powerData;
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
@@ -62,6 +58,22 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
         console.log(err);
         ErrorDialogComponent.show(this.dialog, `Could not delete this record because: '${err.error.message}'`);
       }
+    }
+  }
+
+  async addNewRecord() {
+    const dialogRef = EditElectricityMeteringComponent.show(this.dialog);
+    const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+    if (dialogResult) {
+
+    }
+  }
+
+  async editRecord(record: PowerMeteringDto) {
+    const dialogRef = EditElectricityMeteringComponent.show(this.dialog, record);
+    const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+    if (dialogResult) {
+
     }
   }
 

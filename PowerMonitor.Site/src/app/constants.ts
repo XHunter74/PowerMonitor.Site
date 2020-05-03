@@ -1,4 +1,4 @@
-export class Constans {
+export class Constants {
     static systemStartDate = new Date(2019, 1, 18);
     static shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
         'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];

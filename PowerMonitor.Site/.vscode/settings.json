@@ -3,7 +3,10 @@
         "Datepicker",
         "Paginator",
         "Sidenav",
+        "chartjs",
         "datasets",
+        "sortables",
+        "sysinfo",
         "tabindex"
     ]
 }

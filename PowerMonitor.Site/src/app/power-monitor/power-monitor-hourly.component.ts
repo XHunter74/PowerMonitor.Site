@@ -11,8 +11,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
-import { Constans } from '../constants';
-import { IPowerDataStatsModel } from '../models/power-data-stats.model';
+import { Constants } from '../constants';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -149,9 +148,9 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     private async getPowerForecast(): Promise<number> {
         const currentDate = new Date();
-        if (this.currentDate.getDate() == currentDate.getDate() &&
-            this.currentDate.getMonth() == currentDate.getMonth() &&
-            this.currentDate.getFullYear() == currentDate.getFullYear()) {
+        if (this.currentDate.getDate() === currentDate.getDate() &&
+            this.currentDate.getMonth() === currentDate.getMonth() &&
+            this.currentDate.getFullYear() === currentDate.getFullYear()) {
             const powerDataStats = await this.powerService.getPowerDataStats();
             const currentHour = currentDate.getHours();
             let result = 0;
@@ -163,13 +162,12 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                         this.powerData[i].power > powerDataStats[i].power) {
                         result += this.powerData[i].power;
                     } else {
-                        result += powerDataStats[i].power
+                        result += powerDataStats[i].power;
                     }
                 }
             }
             return result;
         } else {
-            this
             return null;
         }
     }
@@ -241,7 +239,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             return nextDate > new Date();
         } else {
             nextDate.setDate(nextDate.getDate() - 1);
-            return nextDate < Constans.systemStartDate;
+            return nextDate < Constants.systemStartDate;
         }
     }
 

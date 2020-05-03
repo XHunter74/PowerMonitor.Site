@@ -1,4 +1,4 @@
-<button class="hourly__mat-button" mat-button>
+<button class="hourly__mat-button" mat-button (click)="addNewRecord()">
     <mat-icon>add</mat-icon>
 </button>
 <button class="hourly__mat-button" mat-button (click)="refreshData()">
@@ -25,6 +25,9 @@
         <ng-container matColumnDef="buttons">
             <th *matHeaderCellDef></th>
             <td *matCellDef="let element">
+                <button *ngIf="element.id" class="hourly__mat-button" mat-button (click)=editRecord(element)>
+                    <mat-icon>edit</mat-icon>
+                </button>
                 <button *ngIf="element.id" class="hourly__mat-button" mat-button (click)=deleteRecord(element.id)>
                     <mat-icon>delete</mat-icon>
                 </button>

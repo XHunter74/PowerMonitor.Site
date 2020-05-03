@@ -1,0 +1,11 @@
+<div class="modal-body">
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker3" placeholder="" [value]="data.eventDate" [readonly]="true" (click)="picker3.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+</div>
+<div class="modal-footer">
+    <button type="submit" mat-button tabindex="2" (click)="saveItem()"> Save </button>
+    <button type="reset" mat-button [matDialogClose]="null" tabindex="3"> Cancel </button>
+</div>

@@ -3,16 +3,19 @@ import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog, MatTableDataSource, MatSort, MatSortHeader } from '@angular/material';
+import {
+  MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog,
+  MatTableDataSource, MatSort, MatSortHeader
+} from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { Constans } from '../constants';
+import { Constants } from '../constants';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 
-const PowerFailuresSort = 'power-failures-sort'
+const PowerFailuresSort = 'power-failures-sort';
 
 @Component({
   selector: 'app-power-failures-monthly',
@@ -46,7 +49,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
 
   ngAfterViewInit() {
     this.sortedData.sort = this.sort;
-    this.restoreSort()
+    this.restoreSort();
   }
 
   ngOnInit(): void {
@@ -69,7 +72,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     const sort = this.sortedData.sort;
     const restoredSortStr = localStorage.getItem(PowerFailuresSort);
     if (restoredSortStr) {
-      const restoredSort = <Sort>JSON.parse(restoredSortStr)
+      const restoredSort = <Sort>JSON.parse(restoredSortStr);
       if (restoredSort.active && restoredSort.direction) {
         sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
         sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
@@ -136,7 +139,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       return nextDate.getFullYear() > new Date().getFullYear();
     } else {
       nextDate.setFullYear(nextDate.getFullYear() - 1);
-      return nextDate.getFullYear() < Constans.systemStartDate.getFullYear();
+      return nextDate.getFullYear() < Constants.systemStartDate.getFullYear();
     }
   }
 
@@ -153,7 +156,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   clickOnRowHandler(row: PowerFailureMonthlyModel) {
     if (row) {
       this.router.navigate(['power-failures', 'daily',
-                { year: row.year, month: row.month }]);
+        { year: row.year, month: row.month }]);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { UsersService } from './users-service';
 
@@ -7,10 +7,7 @@ import { ISystemInfo } from '../models/sysinfo.model';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { HttpService } from './http.service';
-import { Constans } from '../constants';
 import { HealthState } from '../models/health-state.model';
-import { HeaderItem } from './header.item';
-import { state } from '@angular/animations';
 
 
 @Injectable({

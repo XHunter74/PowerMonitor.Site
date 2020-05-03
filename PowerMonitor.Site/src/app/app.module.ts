@@ -40,6 +40,7 @@ import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-m
 import { ElectricityMeteringComponent } from './electricity-metering/electricity-metering.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
+import { EditElectricityMeteringComponent } from './electricity-metering/edit-electricity-metering.component';
 
 
 @NgModule({
@@ -67,10 +68,12 @@ import { QuestionDialogComponent } from './dialogs/question-dialog/question-dial
     ErrorDialogComponent,
     ElectricityMeteringComponent,
     QuestionDialogComponent,
+    EditElectricityMeteringComponent,
   ],
   entryComponents: [
     LoginModalComponent, SpinnerDialogComponent,
-    ErrorDialogComponent, QuestionDialogComponent
+    ErrorDialogComponent, QuestionDialogComponent,
+    EditElectricityMeteringComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -13,9 +13,9 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { Constans } from '../constants';
+import { Constants } from '../constants';
 
-const PowerFailuresSort = 'power-failures-sort'
+const PowerFailuresSort = 'power-failures-sort';
 
 @Component({
   selector: 'app-power-failures-daily',
@@ -49,7 +49,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
 
   ngAfterViewInit() {
     this.sortedData.sort = this.sort;
-    this.restoreSort()
+    this.restoreSort();
   }
 
   ngOnInit(): void {
@@ -73,7 +73,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     const sort = this.sortedData.sort;
     const restoredSortStr = localStorage.getItem(PowerFailuresSort);
     if (restoredSortStr) {
-      const restoredSort = <Sort>JSON.parse(restoredSortStr)
+      const restoredSort = <Sort>JSON.parse(restoredSortStr);
       if (restoredSort.active && restoredSort.direction) {
         sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
         sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
@@ -110,9 +110,9 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     }
   }
 
-  chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const month = normlizedMonth.month();
-    const year = normlizedMonth.year();
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const month = normalizedMonth.month();
+    const year = normalizedMonth.year();
     this.currentDate = new Date(year, month, 1);
     datepicker.close();
     this.currentDateControl.setValue(this.currentDate.toISOString());
@@ -156,8 +156,8 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
       return (nextDate.getFullYear() * 12 + nextDate.getMonth()) > (today.getFullYear() * 12 + today.getMonth());
     } else {
       nextDate.setMonth(nextDate.getMonth() - 1);
-      return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
-        nextDate.getMonth() < Constans.systemStartDate.getMonth();
+      return nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
+        nextDate.getMonth() < Constants.systemStartDate.getMonth();
     }
   }
 

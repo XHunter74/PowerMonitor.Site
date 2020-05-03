@@ -13,7 +13,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import { Constans } from '../constants';
+import { Constants } from '../constants';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -86,9 +86,9 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         console.log(e);
     }
 
-    chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-        const month = normlizedMonth.month();
-        const year = normlizedMonth.year();
+    chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+        const month = normalizedMonth.month();
+        const year = normalizedMonth.year();
         this.currentDate = new Date(year, month, 1);
         datepicker.close();
         this.router.navigate(['power-monitor', 'daily',
@@ -234,8 +234,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             return (nextDate.getFullYear() * 12 + nextDate.getMonth()) > (today.getFullYear() * 12 + today.getMonth());
         } else {
             nextDate.setMonth(nextDate.getMonth() - 1);
-            return nextDate.getFullYear() <= Constans.systemStartDate.getFullYear() &&
-                nextDate.getMonth() < Constans.systemStartDate.getMonth();
+            return nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
+                nextDate.getMonth() < Constants.systemStartDate.getMonth();
         }
     }
 

@@ -12,7 +12,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import { Constans } from '../constants';
+import { Constants } from '../constants';
 import { daysInMonth } from '../utils';
 
 @Component({
@@ -153,8 +153,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             let powerSum = powerData
                 .filter(a => {
                     const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1 ||
-                        a.year <= Constans.systemStartDate.getFullYear() &&
-                        a.month <= Constans.systemStartDate.getMonth() + 1;
+                        a.year <= Constants.systemStartDate.getFullYear() &&
+                        a.month <= Constants.systemStartDate.getMonth() + 1;
                     if (reduceSumInt) {
                         reduceSum++;
                     }
@@ -163,7 +163,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 .reduce((a, b) => a + b.power, 0);
             const powerSumCurrentMonth = powerData
                 .filter(a => {
-                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1
+                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1;
                     return reduceSumInt;
                 })
                 .reduce((a, b) => a + b.power, 0);
@@ -189,7 +189,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         if (data.length < 12) {
             for (let i = 0; i < 12; i++) {
                 chartData.push(0);
-                chartLabels.push(Constans.shortMonthNames[i]);
+                chartLabels.push(Constants.shortMonthNames[i]);
             }
             for (const record of data) {
                 chartData[record.month - 1] = record.power;
@@ -199,7 +199,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 return e.power;
             });
             chartLabels = data.map(e => {
-                return Constans.shortMonthNames[e.month - 1];
+                return Constants.shortMonthNames[e.month - 1];
             });
         }
         this.barChartData[0].data = chartData;
@@ -226,7 +226,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             return nextDate.getFullYear() > new Date().getFullYear();
         } else {
             nextDate.setFullYear(nextDate.getFullYear() - 1);
-            return nextDate.getFullYear() < Constans.systemStartDate.getFullYear();
+            return nextDate.getFullYear() < Constants.systemStartDate.getFullYear();
         }
     }
 
