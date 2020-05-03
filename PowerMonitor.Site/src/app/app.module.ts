@@ -37,6 +37,8 @@ import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-ampera
 import { ErrorDialogComponent } from './dialogs/error-dialog.component';
 import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
+import { ElectricityMeteringComponent } from './electricity-metering/electricity-metering.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-m
     SpinnerDialogComponent,
     HomeComponent,
     ProfileComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    ElectricityMeteringComponent
   ],
   entryComponents: [LoginModalComponent, SpinnerDialogComponent, ErrorDialogComponent],
   imports: [

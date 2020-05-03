@@ -12,6 +12,7 @@ import { IPowerFailureModel } from '../models/power-failure.model';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { HttpService } from './http.service';
 import { IPowerDataStatsModel } from '../models/power-data-stats.model';
+import { PowerMeteringDto } from '../models/power-metering.dto';
 
 
 
@@ -106,8 +107,13 @@ export class PowerService extends HttpService {
             i.duration = e.duration;
             i.events = e.events;
             return i;
-        })
+        });
         return data;
+    }
+
+    async getPowerMeteringData(): Promise<PowerMeteringDto[]> {
+        const result = this.get<PowerMeteringDto[]>('metering/energy-data');
+        return result;
     }
 
 }

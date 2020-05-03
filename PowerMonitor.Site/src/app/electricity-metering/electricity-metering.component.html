@@ -1,0 +1,36 @@
+<button class="hourly__mat-button" mat-button>
+    <mat-icon>add</mat-icon>
+</button>
+<button class="hourly__mat-button" mat-button (click)="refreshData()">
+    <mat-icon>refresh</mat-icon>
+</button>
+<div class="table-responsive">
+    <table mat-table [dataSource]="sortedData" class="table custom-table">
+        <ng-container matColumnDef="eventDate">
+            <th *matHeaderCellDef> Date </th>
+            <td *matCellDef="let element"> {{element.eventDate | date: 'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="factualData">
+            <th *matHeaderCellDef> Factual </th>
+            <td *matCellDef="let element"> {{element.factualData}} </td>
+        </ng-container>
+        <ng-container matColumnDef="monitorData">
+            <th *matHeaderCellDef> Monitor </th>
+            <td *matCellDef="let element"> {{element.monitorData}} </td>
+        </ng-container>
+        <ng-container matColumnDef="difference">
+            <th *matHeaderCellDef> Difference </th>
+            <td *matCellDef="let element"> {{element.difference}} </td>
+        </ng-container>
+        <ng-container matColumnDef="buttons">
+            <th *matHeaderCellDef></th>
+            <td *matCellDef="let element">
+                <button *ngIf="element.id" class="hourly__mat-button" mat-button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
