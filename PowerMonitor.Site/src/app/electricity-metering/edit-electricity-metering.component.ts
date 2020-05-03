@@ -12,7 +12,7 @@ import { PowerMeteringDto } from '../models/power-metering.dto';
 export class EditElectricityMeteringComponent {
 
     data: PowerMeteringDto;
-    eventTime: Date;
+    eventTime: { hour: number; minute: number; };
 
     constructor(
         @Optional() @Inject(MAT_DIALOG_DATA) public componentData: PowerMeteringDto,
@@ -23,6 +23,7 @@ export class EditElectricityMeteringComponent {
             componentData.eventDate = new Date();
         }
         this.data = componentData;
+        this.eventTime = { hour: this.data.eventDate.getHours(), minute: this.data.eventDate.getMinutes() };
     }
 
     static show(dialog: MatDialog, data?: PowerMeteringDto): MatDialogRef<EditElectricityMeteringComponent> {
@@ -34,6 +35,10 @@ export class EditElectricityMeteringComponent {
     }
 
     saveItem() {
+        const eventDate = this.data.eventDate;
+        eventDate.setHours(this.eventTime.hour);
+        eventDate.setMinutes(this.eventTime.minute);
+        this.data.eventDate = eventDate;
         this.dialogRef.close(this.data);
     }
 }

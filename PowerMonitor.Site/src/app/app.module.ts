@@ -41,6 +41,7 @@ import { ElectricityMeteringComponent } from './electricity-metering/electricity
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { EditElectricityMeteringComponent } from './electricity-metering/edit-electricity-metering.component';
+import { DigitOnlyDirective } from './directives/digit-only.directive';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { EditElectricityMeteringComponent } from './electricity-metering/edit-el
     ElectricityMeteringComponent,
     QuestionDialogComponent,
     EditElectricityMeteringComponent,
+    DigitOnlyDirective
   ],
   entryComponents: [
     LoginModalComponent, SpinnerDialogComponent,
