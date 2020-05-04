@@ -6,6 +6,7 @@ import { PowerService } from '../services/power-service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
 import { EditElectricityMeteringComponent } from './edit-electricity-metering.component';
 import { PowerMeteringDto } from '../models/power-metering.dto';
+import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 
 @Component({
   selector: 'app-electricity-metering',
@@ -37,8 +38,8 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     setTimeout(async () => {
       this.showSpinner();
       try {
-        // const powerData = await this.powerService.getPowerMeteringData();
-        // this.sortedData.data = powerData;
+        const powerData = await this.powerService.getPowerMeteringData();
+        this.sortedData.data = powerData;
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
@@ -65,7 +66,16 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     const dialogRef = EditElectricityMeteringComponent.show(this.dialog);
     const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
     if (dialogResult) {
-
+      try {
+        const newRecord = new NewPowerMeteringDto();
+        newRecord.eventDate = dialogResult.eventDate;
+        newRecord.value = dialogResult.factualData;
+        await this.powerService.addPowerMeteringRecord(newRecord);
+        await this.refreshData();
+      } catch (err) {
+        console.log(err);
+        ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
+      }
     }
   }
 
@@ -73,7 +83,16 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     const dialogRef = EditElectricityMeteringComponent.show(this.dialog, record);
     const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
     if (dialogResult) {
-
+      try {
+        const newRecord = new NewPowerMeteringDto();
+        newRecord.eventDate = dialogResult.eventDate;
+        newRecord.value = dialogResult.factualData;
+        await this.powerService.editPowerMeteringRecord(dialogResult.id, newRecord);
+        await this.refreshData();
+      } catch (err) {
+        console.log(err);
+        ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
+      }
     }
   }
 

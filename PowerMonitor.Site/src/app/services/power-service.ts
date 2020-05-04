@@ -13,6 +13,7 @@ import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model'
 import { HttpService } from './http.service';
 import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 import { PowerMeteringDto } from '../models/power-metering.dto';
+import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 
 
 
@@ -112,13 +113,27 @@ export class PowerService extends HttpService {
     }
 
     async getPowerMeteringData(): Promise<PowerMeteringDto[]> {
-        const result = this.get<PowerMeteringDto[]>('metering/energy-data');
+        const result = await this.get<PowerMeteringDto[]>('metering/energy-data');
+        result.forEach(e => {
+            e.eventDate = new Date(e.eventDate);
+        });
         return result;
     }
 
     async deletePowerMeteringRecord(recordId: number) {
         const actionUrl = `metering/energy-data/${recordId}`;
         await this.delete(actionUrl);
+    }
+
+    async addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Promise<PowerMeteringDto> {
+        const createdRecord = await this.post<PowerMeteringDto>('metering/energy-data', newRecord);
+        return createdRecord;
+    }
+
+    async editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Promise<PowerMeteringDto> {
+        const actionUrl = `metering/energy-data/${recordId}`;
+        const createdRecord = await this.put<PowerMeteringDto>(actionUrl, newRecord);
+        return createdRecord;
     }
 
 }

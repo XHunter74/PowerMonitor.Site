@@ -80,10 +80,33 @@ export class HttpService {
                     resolve(data);
                 })
                 .catch(e => {
-                    try {
-                        this.handleError(this.userService, e);
-                    } catch {
-                        reject({ error: 'Server error' });
+                    const error = this.handleError(this.userService, e);
+                    if (error) {
+                        reject(error);
+                    }
+                });
+        });
+        return promise;
+    }
+
+    async put<T>(actionUrl: string, body: any, params?: HttpParams) {
+        const authToken = localStorage.getItem('auth_token');
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+        });
+
+        const promise = new Promise<T>((resolve, reject) => {
+            this.http
+                .put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
+                .toPromise()
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(e => {
+                    const error = this.handleError(this.userService, e);
+                    if (error) {
+                        reject(error);
                     }
                 });
         });

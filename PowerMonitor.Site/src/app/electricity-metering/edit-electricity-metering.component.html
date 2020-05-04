@@ -1,4 +1,42 @@
-<form #recordForm="ngForm" autocomplete="on" class="form">
+<form [formGroup]="recordForm" autocomplete="on" class="form">
+    <div class="modal-body">
+        <div class="form-group row">
+            <label class="control-label" for="eventDateField">Date:</label>
+            <input matInput [matDatepicker]="picker3" placeholder="" formControlName="eventDateField" [readonly]="true" (click)="picker3.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+            <!-- <input type="text" class="form-control" formControlName="nameField">
+            <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)" class="alert alert-danger">
+                <div *ngIf="nameField.errors.required">
+                    Name is required.
+                </div>
+            </div> -->
+        </div>
+        <div class="form-group row">
+            <label class="control-label" for="eventTimeField">Time: </label>
+            <ngb-timepicker formControlName="eventTimeField" required></ngb-timepicker>
+            <div *ngIf="eventTimeField.errors" class="alert alert-danger">
+                <div *ngIf="eventTimeField.errors['required']">
+                    Select some time
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <input formControlName="factualDataField" required class="form-control" digitOnly type="text">
+            <div *ngIf="factualDataField.invalid && (factualDataField.dirty || factualDataField.touched)" class="alert alert-danger">
+                <div *ngIf="factualDataField.errors.required">
+                    Factual data is required.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2" (click)="saveItem()"> Save
+        </button>
+        <button type="reset" mat-button [matDialogClose]="null" tabindex="3"> Cancel </button>
+    </div>
+</form>
+<!-- <form #recordForm="ngForm" autocomplete="on" class="form">
     <div class="modal-body">
         <div class="form-group">
             <mat-form-field>
@@ -8,13 +46,13 @@
             </mat-form-field>
         </div>
         <div class="form-group">
-            <ngb-timepicker id="eventTime" name="eventTime" #eventTime required [(ngModel)]="eventTime"></ngb-timepicker>
-            <!-- <div *ngIf="eventTime.errors" class="alert alert-danger">
+            <ngb-timepicker id="eventTime" name="eventTime" required [(ngModel)]="eventTime"></ngb-timepicker> -->
+<!-- <div *ngIf="eventTime.errors" class="alert alert-danger">
                 <div *ngIf="eventTime.errors['required']">
                     Select some time
                 </div>
             </div> -->
-        </div>
+<!-- </div>
         <div class="form-group">
             <input id="factualData" name="factualData" #factualData="ngModel" required class="form-control" digitOnly [(ngModel)]="data.factualData" type="text">
             <div *ngIf="factualData.invalid && (factualData.dirty || factualData.touched)" class="alert alert-danger">
@@ -25,7 +63,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2" (click)="saveItem()"> Save </button>
+        <button type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2" (click)="saveItem()"> Save
+        </button>
         <button type="reset" mat-button [matDialogClose]="null" tabindex="3"> Cancel </button>
     </div>
-</form>
+</form> -->

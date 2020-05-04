@@ -1,6 +1,7 @@
-import { Component, Optional, Inject } from '@angular/core';
+import { Component, Optional, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { PowerMeteringDto } from '../models/power-metering.dto';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-edit-electricity-metering',
@@ -9,10 +10,19 @@ import { PowerMeteringDto } from '../models/power-metering.dto';
 })
 
 
-export class EditElectricityMeteringComponent {
+export class EditElectricityMeteringComponent implements OnInit {
 
     data: PowerMeteringDto;
     eventTime: { hour: number; minute: number; };
+    recordForm = new FormGroup({
+        eventDateField: new FormControl('',
+            [Validators.required]),
+        eventTimeField: new FormControl('',
+            [Validators.required]),
+        factualDataField: new FormControl('',
+            [Validators.required])
+    });
+
 
     constructor(
         @Optional() @Inject(MAT_DIALOG_DATA) public componentData: PowerMeteringDto,
@@ -34,11 +44,31 @@ export class EditElectricityMeteringComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.recordForm.patchValue({
+            eventDateField: this.data.eventDate,
+            eventTimeField: this.eventTime,
+            factualDataField: this.data.factualData,
+        });
+    }
+
     saveItem() {
-        const eventDate = this.data.eventDate;
-        eventDate.setHours(this.eventTime.hour);
-        eventDate.setMinutes(this.eventTime.minute);
+        let eventDate: Date;
+        try {
+            eventDate = this.eventDateField.value.toDate();
+        } catch{
+            eventDate = this.eventDateField.value;
+        }
+        const eventTime = this.eventTimeField.value as { hour: number, minute: number };
+        eventDate.setHours(eventTime.hour);
+        eventDate.setMinutes(eventTime.minute);
         this.data.eventDate = eventDate;
+        const factualData = Number(this.factualDataField.value);
+        this.data.factualData = factualData;
         this.dialogRef.close(this.data);
     }
+
+    get eventDateField() { return this.recordForm.get('eventDateField'); }
+    get eventTimeField() { return this.recordForm.get('eventTimeField'); }
+    get factualDataField() { return this.recordForm.get('factualDataField'); }
 }
