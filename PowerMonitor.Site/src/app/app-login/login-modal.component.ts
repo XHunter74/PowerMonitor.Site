@@ -49,19 +49,17 @@ export class LoginModalComponent implements OnInit {
     this.errors = '';
     console.log('Try to login...');
     const userName = this.loginForm.get('userName').value;
-    const userPassowrd = this.loginForm.get('password').value;
-    await this.usersService
-      .login(userName, userPassowrd)
-      .then(data => {
-        console.log('Authorized');
-        this.activeModal.close('Close click');
-        console.log('Return URL=', this.returnUrl);
-        this.router.navigateByUrl(this.returnUrl);
-      })
-      .catch(e => {
-        console.log('Unauthorized');
-        this.errors = e.error;
-      });
+    const userPassword = this.loginForm.get('password').value;
+    try {
+      await this.usersService.login(userName, userPassword);
+      console.log('Authorized');
+      this.activeModal.close('Close click');
+      console.log('Return URL=', this.returnUrl);
+      this.router.navigateByUrl(this.returnUrl);
+    } catch (err) {
+      console.log('Unauthorized');
+      this.errors = err.error.message;
+    }
   }
 
   processCancel() {

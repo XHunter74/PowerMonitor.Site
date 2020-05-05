@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/users-service';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services-service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,8 +13,8 @@ export class NavMenuComponent implements OnInit {
   isAPIOnline;
 
   constructor(
-    private usersService: UsersService,
-    private servicesService: ServicesService,
+    private readonly authService: AuthService,
+    private readonly servicesService: ServicesService,
     private router: Router
   ) {
     this.checkApiState();
@@ -22,7 +22,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usersService.isAuthenticatedIn.subscribe(isLogin => {
+    this.authService.isAuthenticated.subscribe(isLogin => {
       if (isLogin) {
         console.log('User successfully login');
       } else {
@@ -41,11 +41,11 @@ export class NavMenuComponent implements OnInit {
   }
 
   isLoggedIn() {
-    return this.usersService.isLoggedIn();
+    return this.authService.isSignedIn();
   }
 
   logout() {
-    this.usersService.logout();
+    this.authService.logout();
   }
 
   startTimer() {

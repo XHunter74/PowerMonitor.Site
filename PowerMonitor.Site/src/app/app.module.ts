@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -42,6 +42,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { EditElectricityMeteringComponent } from './electricity-metering/edit-electricity-metering.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { AuthService } from './services/auth.service';
+import { AppHttpInterceptor } from './services/http.interceptor';
+import { UsersService } from './services/users-service';
 
 
 @NgModule({
@@ -92,6 +95,9 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
   ],
   providers: [
     AuthGuard,
+    AuthService,
+    UsersService,
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     OpenGuard,
     WebSocket,
     WebSocketService,

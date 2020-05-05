@@ -1,8 +1,5 @@
 import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
-
-import { UsersService } from './users-service';
-
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
@@ -14,6 +11,7 @@ import { HttpService } from './http.service';
 import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
+import { AuthService } from './auth.service';
 
 
 
@@ -23,10 +21,9 @@ import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 export class PowerService extends HttpService {
 
     constructor(http: HttpClient,
-        userService: UsersService,
-        @Inject('BASE_URL') baseUrl,
+        authService: AuthService,
         @Optional() @SkipSelf() parentModule: PowerService) {
-        super(http, userService, baseUrl, parentModule);
+        super(http, parentModule, authService);
     }
 
     async getVoltageAmperageData(start: Date, finish: Date): Promise<IVoltageAmperageModel[]> {

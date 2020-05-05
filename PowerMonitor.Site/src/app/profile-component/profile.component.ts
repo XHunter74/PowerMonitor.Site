@@ -28,16 +28,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     async changePassword() {
-        const userPassowrd = this.profileForm.get('password').value;
-        await this.usersService
-            .changePassword(userPassowrd)
-            .then(data => {
-                alert('Password was changed successfully!');
-            })
-            .catch(e => {
-                console.log(e);
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
-            });
+        const userPassword = this.profileForm.get('password').value;
+        try {
+            await this.usersService.changePassword(userPassword);
+            alert('Password was changed successfully!');
+
+        } catch (err) {
+            console.log(err);
+            ErrorDialogComponent.show(this.dialog, 'Something going wrong!');
+        }
     }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group

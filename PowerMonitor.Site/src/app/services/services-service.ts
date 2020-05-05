@@ -1,13 +1,11 @@
 import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { UsersService } from './users-service';
-
 import { ISystemInfo } from '../models/sysinfo.model';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { HttpService } from './http.service';
 import { HealthState } from '../models/health-state.model';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -16,10 +14,9 @@ import { HealthState } from '../models/health-state.model';
 export class ServicesService extends HttpService {
 
     constructor(http: HttpClient,
-        userService: UsersService,
-        @Inject('BASE_URL') baseUrl,
+        authService: AuthService,
         @Optional() @SkipSelf() parentModule: ServicesService) {
-        super(http, userService, baseUrl, parentModule);
+        super(http, parentModule, authService);
     }
 
     async getSystemInfo(): Promise<ISystemInfo> {
