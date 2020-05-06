@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-login-modal-component',
   templateUrl: './login-modal.component.html',
+  styleUrls: ['./login-modal.component.css']
 })
 
 export class LoginModalComponent implements OnInit {
@@ -22,18 +23,23 @@ export class LoginModalComponent implements OnInit {
       [Validators.required])
   });
 
-  constructor(private usersService: UsersService,
+  constructor(
+    private readonly dialogRef: MatDialogRef<LoginModalComponent>,
+    private usersService: UsersService,
     private route: ActivatedRoute,
-    public activeModal: NgbActiveModal,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
-  static show(modalService: NgbModal) {
-    const modalOptions: NgbModalOptions = {
-      backdrop: 'static',
-      keyboard: false
-    };
+  static show(dialog: MatDialog, width?: string) {
+    if (!width) {
+      width = '500px';
+    }
     setTimeout(() => {
-      const modalRef = modalService.open(LoginModalComponent, modalOptions);
+      dialog.open(LoginModalComponent,
+        {
+          width,
+          hasBackdrop: false
+        });
     });
   }
 
@@ -53,7 +59,7 @@ export class LoginModalComponent implements OnInit {
     try {
       await this.usersService.login(userName, userPassword);
       console.log('Authorized');
-      this.activeModal.close('Close click');
+      this.dialogRef.close('Close click');
       console.log('Return URL=', this.returnUrl);
       this.router.navigateByUrl(this.returnUrl);
     } catch (err) {
@@ -63,8 +69,8 @@ export class LoginModalComponent implements OnInit {
   }
 
   processCancel() {
-    this.activeModal.close('Cancel click');
-    this.router.navigateByUrl(this.returnUrl);
+    this.dialogRef.close('Cancel click');
+    this.router.navigate(['/']);
   }
 
   get userName() { return this.loginForm.get('userName'); }

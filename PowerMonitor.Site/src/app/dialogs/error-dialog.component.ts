@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { ErrorDialogData } from './Models/error-dialog-data';
 
 @Component({
-  selector: 'app-slyde-error-dialog',
+  selector: 'app-error-dialog',
   templateUrl: './error-dialog.component.html',
 })
 export class ErrorDialogComponent {

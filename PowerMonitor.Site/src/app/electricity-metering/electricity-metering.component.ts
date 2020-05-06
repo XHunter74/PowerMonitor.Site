@@ -49,8 +49,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async deleteRecord(recordId: number) {
-    const dialogRef = QuestionDialogComponent.show(this.dialog, 'Would you like to delete this record?');
-    const dialogResult = await dialogRef.afterClosed().toPromise();
+    const dialogResult = await QuestionDialogComponent.show(this.dialog, 'Would you like to delete this record?');
     if (dialogResult === 'positive') {
       try {
         await this.powerService.deletePowerMeteringRecord(recordId);

@@ -125,12 +125,12 @@ export class HttpService {
         } else {
             if (error.status === 401) {
                 authService.logout();
+                return null;
             }
             console.error(
                 `Backend returned code ${error.status}, ` +
                 `body was: ${JSON.stringify(error.error)}`);
         }
-        // return an observable with a user-facing error message
         return error;
     }
 }
