@@ -31,9 +31,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         .pipe(catchError((error: HttpErrorResponse) => {
           switch (error.status) {
             case 401:
-              // TODO Need To Implement: Refresh token
-              // return this.handle401Error(request, next, error);
-              return throwError(error);
+              return this.handle401Error(request, next, error);
             default:
               return throwError(error);
           }
