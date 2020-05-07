@@ -111,6 +111,9 @@ export class PowerService extends HttpService {
 
     async getPowerMeteringData(): Promise<PowerMeteringDto[]> {
         const result = await this.get<PowerMeteringDto[]>('metering/energy-data');
+        if (!result) {
+            return [];
+        }
         result.forEach(e => {
             e.eventDate = new Date(e.eventDate);
         });

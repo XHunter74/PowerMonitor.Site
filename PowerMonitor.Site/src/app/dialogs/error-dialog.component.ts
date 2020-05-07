@@ -5,6 +5,7 @@ import { ErrorDialogData } from './Models/error-dialog-data';
 @Component({
   selector: 'app-error-dialog',
   templateUrl: './error-dialog.component.html',
+  styleUrls: ['./error-dialog.component.css']
 })
 export class ErrorDialogComponent {
 

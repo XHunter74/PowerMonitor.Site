@@ -62,8 +62,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async addNewRecord() {
-    const dialogRef = EditElectricityMeteringComponent.show(this.dialog);
-    const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog);
     if (dialogResult) {
       try {
         const newRecord = new NewPowerMeteringDto();
@@ -79,8 +78,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async editRecord(record: PowerMeteringDto) {
-    const dialogRef = EditElectricityMeteringComponent.show(this.dialog, record);
-    const dialogResult = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, record);
     if (dialogResult) {
       try {
         const newRecord = new NewPowerMeteringDto();

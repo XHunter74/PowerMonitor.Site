@@ -36,12 +36,14 @@ export class EditElectricityMeteringComponent implements OnInit {
         this.eventTime = { hour: this.data.eventDate.getHours(), minute: this.data.eventDate.getMinutes() };
     }
 
-    static show(dialog: MatDialog, data?: PowerMeteringDto): MatDialogRef<EditElectricityMeteringComponent> {
-        return dialog.open(EditElectricityMeteringComponent, {
+    static async show(dialog: MatDialog, data?: PowerMeteringDto): Promise<PowerMeteringDto> {
+        const dialogRef = dialog.open(EditElectricityMeteringComponent, {
             width: '700px',
             maxHeight: '700px',
             data
         });
+        const dialogData = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+        return dialogData;
     }
 
     ngOnInit(): void {
@@ -56,7 +58,7 @@ export class EditElectricityMeteringComponent implements OnInit {
         let eventDate: Date;
         try {
             eventDate = this.eventDateField.value.toDate();
-        } catch{
+        } catch {
             eventDate = this.eventDateField.value;
         }
         const eventTime = this.eventTimeField.value as { hour: number, minute: number };
