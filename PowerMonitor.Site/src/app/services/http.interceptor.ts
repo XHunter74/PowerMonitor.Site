@@ -71,5 +71,6 @@ export class AppHttpInterceptor implements HttpInterceptor {
             }));
       }
     }
+    throw (error);
   }
 }
