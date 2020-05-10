@@ -62,7 +62,12 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async addNewRecord() {
-    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog);
+    const data = new PowerMeteringDto();
+    data.eventDate = new Date();
+    if (this.sortedData.data && this.sortedData.data.length > 0) {
+      data.factualData = (this.sortedData.data[0] as PowerMeteringDto).monitorData;
+    }
+    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, data);
     if (dialogResult) {
       try {
         const newRecord = new NewPowerMeteringDto();
