@@ -126,6 +126,9 @@ export class HttpService {
             if (error.status === 401) {
                 authService.logout();
                 return null;
+            } else if (error.status === 400 && error.error.message === 'Token does not exists') {
+                authService.logout();
+                return null;
             }
             console.error(
                 `Backend returned code ${error.status}, ` +
