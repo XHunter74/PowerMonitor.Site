@@ -18,6 +18,7 @@
                         "progress": true,
                         "polyfills": "src/polyfills.ts",
                         "assets": [
+                            "src/assets/favicon.png",
                             "src/assets"
                         ],
                         "styles": [
