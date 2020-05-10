@@ -31,7 +31,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     }
 
     if (this.authToken) {
-      const requestToHandle = request.clone({ headers: request.headers.set('authorization', `Bearer ${this.authToken}`) });
+      const requestToHandle = this.injectToken(request);
       return next.handle(requestToHandle)
         .pipe(catchError((error: HttpErrorResponse) => {
           switch (error.status) {
@@ -47,6 +47,10 @@ export class AppHttpInterceptor implements HttpInterceptor {
     }
   }
 
+  injectToken(request: HttpRequest<any>) {
+    return request.clone({ headers: request.headers.set('Authorization', `Bearer ${this.authToken}`) });
+  }
+
   handle401Error(request: HttpRequest<any>, next: HttpHandler, error: HttpErrorResponse):
     Observable<HttpSentEvent | HttpHeaderResponse |
       HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
@@ -59,7 +63,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
             switchMap((token) => {
               this.isRefreshingToken = false;
               this.authService.processLogin(token);
-              const requestToHandle = request.clone({ headers: request.headers.set('authorization', `Bearer ${this.authToken}`) });
+              const requestToHandle = this.injectToken(request);
               this.tokenSubject.next(true);
               return next.handle(requestToHandle);
             })
@@ -70,7 +74,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
             filter(result => result),
             take(1),
             switchMap(() => {
-              const requestToHandle = request.clone({ headers: request.headers.set('authorization', `Bearer ${this.authToken}`) });
+              const requestToHandle = this.injectToken(request);
               return next.handle(requestToHandle);
             }));
       }
