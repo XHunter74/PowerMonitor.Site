@@ -155,12 +155,13 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             const currentHour = currentDate.getHours();
             let result = 0;
             for (let i = 0; i < 24; i++) {
+                const powerDataRecord = this.powerData.find(e => e.hours === i);
+                const power = powerDataRecord ? powerDataRecord.power : 0;
                 if (i < currentHour) {
-                    result += this.powerData[i].power;
+                    result += power;
                 } else {
-                    if (i < this.powerData.length &&
-                        this.powerData[i].power > powerDataStats[i].power) {
-                        result += this.powerData[i].power;
+                    if (power > powerDataStats[i].power) {
+                        result += power;
                     } else {
                         result += powerDataStats[i].power;
                     }
