@@ -123,8 +123,12 @@ export class HttpService {
             console.error('An error occurred:', error.error.message);
         } else {
             if (error.status === 401) {
-                authService.logout();
-                return null;
+                if (!error.url.endsWith('api/auth/login')) {
+                    authService.logout();
+                    return null;
+                } else {
+                    return error;
+                }
             } else if (error.status === 400 && error.error.message === 'Token does not exists') {
                 authService.logout();
                 return null;
