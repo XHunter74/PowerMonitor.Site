@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.powermonitor.site/api/',
+  apiUrl: 'https://api.powermonitor.smart-env.site/api/',
   version: 'DEV'
 };
