@@ -21,10 +21,14 @@ export class AppBaseComponent implements OnDestroy {
         return StringUtils.formatNumber(value);
     }
 
-    showSpinner() {
+    showSpinner(message?: string) {
+        if (!message) {
+            message = '';
+        }
         this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
             panelClass: 'transparent',
-            disableClose: true
+            disableClose: true,
+            data: message
         });
     }
 

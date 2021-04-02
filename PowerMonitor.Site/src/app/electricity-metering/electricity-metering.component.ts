@@ -70,12 +70,15 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, data);
     if (dialogResult) {
       try {
+        this.showSpinner('Saving...');
         const newRecord = new NewPowerMeteringDto();
         newRecord.eventDate = dialogResult.eventDate;
         newRecord.value = dialogResult.factualData;
         await this.powerService.addPowerMeteringRecord(newRecord);
+        this.closeSpinner();
         await this.refreshData();
       } catch (err) {
+        this.closeSpinner();
         console.log(err);
         ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
       }
@@ -86,12 +89,15 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, record);
     if (dialogResult) {
       try {
+        this.showSpinner('Saving...');
         const newRecord = new NewPowerMeteringDto();
         newRecord.eventDate = dialogResult.eventDate;
         newRecord.value = dialogResult.factualData;
         await this.powerService.editPowerMeteringRecord(dialogResult.id, newRecord);
+        this.closeSpinner();
         await this.refreshData();
       } catch (err) {
+        this.closeSpinner();
         console.log(err);
         ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
       }

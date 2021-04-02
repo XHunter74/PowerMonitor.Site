@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-spinner-dialog',
   templateUrl: './spinner-dialog.component.html',
   styleUrls: ['./spinner-dialog.component.css']
 })
-export class SpinnerDialogComponent implements OnInit {
+export class SpinnerDialogComponent {
 
-  constructor() { }
+  public message: string;
 
-  ngOnInit() {
+  constructor(@Inject(MAT_DIALOG_DATA) data?: string) {
+    if (data && data !== '') {
+      this.message = data;
+    } else {
+      this.message = 'Loading...';
+    }
   }
 
 }
