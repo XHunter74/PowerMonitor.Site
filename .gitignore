@@ -15,3 +15,6 @@ PowerMonitor.Backup/logs/
 PowerMonitor.Health/functions-server/dist/
 PowerMonitor.AI/build/
 PowerMonitor.AI/node_modules/
+PowerMonitor.Adjust/build/
+PowerMonitor.Adjust/logs/
+PowerMonitor.Adjust/node_modules/
