@@ -14,12 +14,11 @@ import { Observable, Subscription } from 'rxjs';
 export class RealDataComponent implements OnInit, OnDestroy {
 
   private maxVoltage = 270;
-  private nominalVoltageMin = 200;
-  private nominalVoltageMax = 240;
+  private nominalVoltageMin = 207;
+  private nominalVoltageMax = 253;
   private voltage = 230;
   private maxAmperage = 30;
   private nominalAmperageMax = 20;
-  private lastUpdate: Date;
 
   public canvasWidth = 300;
   public centralLabel = '';
