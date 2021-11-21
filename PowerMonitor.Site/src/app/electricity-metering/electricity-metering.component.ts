@@ -17,7 +17,7 @@ import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 
 export class ElectricityMeteringComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'buttons'];
+  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference'];
   sortedData = new MatTableDataSource();
 
   constructor(
