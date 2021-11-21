@@ -26,7 +26,7 @@ const routes: Routes = [
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
     { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-    { path: 'electricity-metering', component: ElectricityMeteringComponent, canActivate: [AuthGuard] },
+    { path: 'power-consumption', component: ElectricityMeteringComponent, canActivate: [AuthGuard] },
     { path: 'app-login', component: AppLoginComponent },
 ];
 
