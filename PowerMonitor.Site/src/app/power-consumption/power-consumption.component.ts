@@ -17,8 +17,9 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 
 export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference'];
+  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'buttons'];
   sortedData = new MatTableDataSource();
+  minId = -1;
 
   constructor(
     dialog: MatDialog,
@@ -39,6 +40,12 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
       this.showSpinner();
       try {
         const powerData = await this.powerService.getPowerConsumptionData();
+        const minItem = powerData.reduce((prev, curr) => {
+          return prev.id < curr.id ? prev : curr;
+        });
+        if (minItem !== null) {
+          this.minId = minItem.id;
+        }
         this.sortedData.data = powerData;
         this.closeSpinner();
       } catch (e) {
@@ -102,6 +109,10 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
         ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
       }
     }
+  }
+
+  isDeleteButtonDisabled(elementId: number) {
+    return elementId !== this.minId;
   }
 
 }

@@ -22,6 +22,14 @@
             <th *matHeaderCellDef> Difference </th>
             <td *matCellDef="let element"> {{element.difference}} </td>
         </ng-container>
+        <ng-container matColumnDef="buttons">
+            <th *matHeaderCellDef></th>
+            <td *matCellDef="let element">
+                <button *ngIf="element.id" class="hourly__mat-button" [disabled]="isDeleteButtonDisabled(element.id)" mat-button (click)=deleteRecord(element.id)>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
