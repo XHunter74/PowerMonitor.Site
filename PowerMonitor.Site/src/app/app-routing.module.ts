@@ -9,7 +9,7 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { ProfileComponent } from './profile-component/profile.component';
 import { AppLoginComponent } from './app-login/login.component';
-import { ElectricityMeteringComponent } from './electricity-metering/electricity-metering.component';
+import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 
 const routes: Routes = [
     { path: '', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
@@ -26,7 +26,7 @@ const routes: Routes = [
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [OpenGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [OpenGuard] },
     { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-    { path: 'power-consumption', component: ElectricityMeteringComponent, canActivate: [AuthGuard] },
+    { path: 'power-consumption', component: PowerConsumptionComponent, canActivate: [AuthGuard] },
     { path: 'app-login', component: AppLoginComponent },
 ];
 

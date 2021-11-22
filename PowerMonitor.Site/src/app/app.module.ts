@@ -34,14 +34,14 @@ import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-ampera
 import { ErrorDialogComponent } from './dialogs/error-dialog.component';
 import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
-import { ElectricityMeteringComponent } from './electricity-metering/electricity-metering.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
-import { EditElectricityMeteringComponent } from './electricity-metering/edit-electricity-metering.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { AuthService } from './services/auth.service';
 import { AppHttpInterceptor } from './services/http.interceptor';
 import { UsersService } from './services/users-service';
+import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
+import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
 
 
 @NgModule({
@@ -67,15 +67,15 @@ import { UsersService } from './services/users-service';
     HomeComponent,
     ProfileComponent,
     ErrorDialogComponent,
-    ElectricityMeteringComponent,
+    PowerConsumptionComponent,
     QuestionDialogComponent,
-    EditElectricityMeteringComponent,
+    EditPowerConsumptionComponent,
     DigitOnlyDirective
   ],
   entryComponents: [
     LoginModalComponent, SpinnerDialogComponent,
     ErrorDialogComponent, QuestionDialogComponent,
-    EditElectricityMeteringComponent
+    EditPowerConsumptionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

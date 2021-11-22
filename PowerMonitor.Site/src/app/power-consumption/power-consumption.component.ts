@@ -4,18 +4,18 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { PowerService } from '../services/power-service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
-import { EditElectricityMeteringComponent } from './edit-electricity-metering.component';
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
+import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
 
 @Component({
-  selector: 'app-electricity-metering',
-  templateUrl: './electricity-metering.component.html',
-  styleUrls: ['./electricity-metering.component.css'],
+  selector: 'app-power-consumption',
+  templateUrl: './power-consumption.component.html',
+  styleUrls: ['./power-consumption.component.css'],
 })
 
 
-export class ElectricityMeteringComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference'];
   sortedData = new MatTableDataSource();
@@ -38,7 +38,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     setTimeout(async () => {
       this.showSpinner();
       try {
-        const powerData = await this.powerService.getPowerMeteringData();
+        const powerData = await this.powerService.getPowerConsumptionData();
         this.sortedData.data = powerData;
         this.closeSpinner();
       } catch (e) {
@@ -67,7 +67,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
     if (this.sortedData.data && this.sortedData.data.length > 0) {
       data.factualData = (this.sortedData.data[0] as PowerMeteringDto).monitorData;
     }
-    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, data);
+    const dialogResult = await EditPowerConsumptionComponent.show(this.dialog, data);
     if (dialogResult) {
       try {
         this.showSpinner('Saving...');
@@ -86,7 +86,7 @@ export class ElectricityMeteringComponent extends AppBaseComponent implements On
   }
 
   async editRecord(record: PowerMeteringDto) {
-    const dialogResult = await EditElectricityMeteringComponent.show(this.dialog, record);
+    const dialogResult = await EditPowerConsumptionComponent.show(this.dialog, record);
     if (dialogResult) {
       try {
         this.showSpinner('Saving...');

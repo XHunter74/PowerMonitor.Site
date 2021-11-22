@@ -9,7 +9,7 @@ import { IPowerFailureModel } from '../models/power-failure.model';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { HttpService } from './http.service';
 import { IPowerDataStatsModel } from '../models/power-data-stats.model';
-import { PowerMeteringDto } from '../models/power-metering.dto';
+import { PowerMeteringDto as PowerConsumptionDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { AuthService } from './auth.service';
 
@@ -109,8 +109,8 @@ export class PowerService extends HttpService {
         return data;
     }
 
-    async getPowerMeteringData(): Promise<PowerMeteringDto[]> {
-        const result = await this.get<PowerMeteringDto[]>('metering/energy-data');
+    async getPowerConsumptionData(): Promise<PowerConsumptionDto[]> {
+        const result = await this.get<PowerConsumptionDto[]>('power-consumption/energy-data');
         if (!result) {
             return [];
         }
@@ -121,18 +121,18 @@ export class PowerService extends HttpService {
     }
 
     async deletePowerMeteringRecord(recordId: number) {
-        const actionUrl = `metering/energy-data/${recordId}`;
+        const actionUrl = `power-consumption/energy-data/${recordId}`;
         await this.delete(actionUrl);
     }
 
-    async addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Promise<PowerMeteringDto> {
-        const createdRecord = await this.post<PowerMeteringDto>('metering/energy-data', newRecord);
+    async addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Promise<PowerConsumptionDto> {
+        const createdRecord = await this.post<PowerConsumptionDto>('power-consumption/energy-data', newRecord);
         return createdRecord;
     }
 
-    async editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Promise<PowerMeteringDto> {
-        const actionUrl = `metering/energy-data/${recordId}`;
-        const createdRecord = await this.put<PowerMeteringDto>(actionUrl, newRecord);
+    async editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Promise<PowerConsumptionDto> {
+        const actionUrl = `power-consumption/energy-data/${recordId}`;
+        const createdRecord = await this.put<PowerConsumptionDto>(actionUrl, newRecord);
         return createdRecord;
     }
 

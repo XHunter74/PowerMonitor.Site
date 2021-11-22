@@ -4,13 +4,13 @@ import { PowerMeteringDto } from '../models/power-metering.dto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-edit-electricity-metering',
-    templateUrl: './edit-electricity-metering.component.html',
-    styleUrls: ['./edit-electricity-metering.component.css'],
+    selector: 'app-edit-power-consumption',
+    templateUrl: './edit-power-consumption.component.html',
+    styleUrls: ['./edit-power-consumption.component.css'],
 })
 
 
-export class EditElectricityMeteringComponent implements OnInit {
+export class EditPowerConsumptionComponent implements OnInit {
 
     data: PowerMeteringDto;
     eventTime: { hour: number; minute: number; };
@@ -26,7 +26,7 @@ export class EditElectricityMeteringComponent implements OnInit {
 
     constructor(
         @Optional() @Inject(MAT_DIALOG_DATA) public componentData: PowerMeteringDto,
-        @Optional() private readonly dialogRef: MatDialogRef<EditElectricityMeteringComponent>,
+        @Optional() private readonly dialogRef: MatDialogRef<EditPowerConsumptionComponent>,
     ) {
         if (!componentData) {
             componentData = new PowerMeteringDto();
@@ -37,7 +37,7 @@ export class EditElectricityMeteringComponent implements OnInit {
     }
 
     static async show(dialog: MatDialog, data?: PowerMeteringDto): Promise<PowerMeteringDto> {
-        const dialogRef = dialog.open(EditElectricityMeteringComponent, {
+        const dialogRef = dialog.open(EditPowerConsumptionComponent, {
             width: '700px',
             maxHeight: '700px',
             data
