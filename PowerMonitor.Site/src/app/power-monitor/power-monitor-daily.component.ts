@@ -123,6 +123,9 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
 
     async refreshData() {
+        if (this.currentDateControl.value !== this.currentDate.toISOString()) {
+            this.currentDateControl.setValue(this.currentDate.toISOString());
+        }
         setTimeout(async () => {
             this.showSpinner();
             try {
