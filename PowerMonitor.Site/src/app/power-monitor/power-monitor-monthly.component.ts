@@ -119,6 +119,9 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     }
 
     async refreshData() {
+        if (this.currentDateControl.value !== this.currentDate.toISOString()) {
+            this.currentDateControl.setValue(this.currentDate.toISOString());
+        }
         setTimeout(async () => {
             this.showSpinner();
             try {
