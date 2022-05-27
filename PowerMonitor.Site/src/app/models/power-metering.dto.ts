@@ -5,4 +5,5 @@ export class PowerMeteringDto {
     monitorData: number;
     difference: number;
     hours: number;
+    coefficient: number;
 }

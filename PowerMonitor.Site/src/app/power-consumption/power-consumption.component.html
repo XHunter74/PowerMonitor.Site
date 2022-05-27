@@ -22,6 +22,10 @@
             <th *matHeaderCellDef> Difference </th>
             <td *matCellDef="let element"> {{element.difference}} </td>
         </ng-container>
+        <ng-container matColumnDef="coefficient">
+            <th *matHeaderCellDef> Coefficient </th>
+            <td *matCellDef="let element"> {{element.coefficient}} </td>
+        </ng-container>
         <ng-container matColumnDef="buttons">
             <th *matHeaderCellDef></th>
             <td *matCellDef="let element">

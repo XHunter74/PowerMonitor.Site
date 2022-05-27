@@ -17,7 +17,7 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 
 export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'buttons'];
+  displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'coefficient', 'buttons'];
   sortedData = new MatTableDataSource();
   minId = -1;
 
