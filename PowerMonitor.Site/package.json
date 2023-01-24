@@ -9,6 +9,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-pipe": "ng build --prod",
     "build-prod": "npm version patch && node ./replace.build.js && ng build --prod",
     "build:ssr": "npm run build -- --app=ssr --output-hashing=media",
     "test": "ng test",
