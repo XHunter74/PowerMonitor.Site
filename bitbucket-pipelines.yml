@@ -26,3 +26,11 @@ pipelines:
             - npm run build-prod
           artifacts:
             - dist/** # Save modules for next steps
+      - step:
+          name: Firebase deploy
+          deployment: production
+          script:
+             - pipe: atlassian/firebase-deploy:3.1.1
+               variables:
+                FIREBASE_TOKEN: $FIREBASE_TOKEN
+                PROJECT_ID: $FIREBASE_PROJECT
