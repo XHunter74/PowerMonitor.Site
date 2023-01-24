@@ -23,7 +23,11 @@ pipelines:
             - node
           script:
             - cd PowerMonitor.Site
-            - npm run build-pipe
+            - npm run build-prod
+            - git add package.json
+            - git add package-lock.json
+            - git add src/environments/environment.prod.ts
+            - git commit -m "[skip ci] Updating version."
           artifacts:
             - PowerMonitor.Site/dist/** # Save modules for next steps
       - step:
