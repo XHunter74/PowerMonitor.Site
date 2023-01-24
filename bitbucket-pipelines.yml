@@ -23,7 +23,7 @@ pipelines:
             - node
           script:
             - cd PowerMonitor.Site
-            - npm run build-prod
+            - npm run build-pipe
           artifacts:
             - dist/** # Save modules for next steps
       - step:
