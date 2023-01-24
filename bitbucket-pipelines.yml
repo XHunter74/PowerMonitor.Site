@@ -16,7 +16,7 @@ pipelines:
             - cd PowerMonitor.Site 
             - npm install
           artifacts:
-            - node_modules/** # Save modules for next steps
+            - PowerMonitor.Site/node_modules/** # Save modules for next steps
       - step:
           name: Build
           caches:
@@ -25,11 +25,12 @@ pipelines:
             - cd PowerMonitor.Site
             - npm run build-pipe
           artifacts:
-            - dist/** # Save modules for next steps
+            - PowerMonitor.Site/dist/** # Save modules for next steps
       - step:
           name: Firebase deploy
           deployment: production
           script:
+             - cd PowerMonitor.Site
              - pipe: atlassian/firebase-deploy:3.1.1
                variables:
                 FIREBASE_TOKEN: 1//09x9S597ktDmaCgYIARAAGAkSNwF-L9IrF2bOVWC83IAOe5baIp4oTAgxG9rePukx3pAYMGWOp_Hbt_nWucNEbSkuynzo9k0iXqE
