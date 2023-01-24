@@ -27,7 +27,7 @@ pipelines:
             - git add package.json
             - git add package-lock.json
             - git add src/environments/environment.prod.ts
-            - git commit -m "[skip ci] Updating version."
+            - git commit -m "[skip ci] Updating site version."
             - git push
           artifacts:
             - PowerMonitor.Site/dist/** # Save modules for next steps
