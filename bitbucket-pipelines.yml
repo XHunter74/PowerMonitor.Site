@@ -22,6 +22,7 @@ pipelines:
           caches:
             - node
           script:
+            - cd PowerMonitor.Site
             - npm run build-prod
           artifacts:
             - dist/** # Save modules for next steps
