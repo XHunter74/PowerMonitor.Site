@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
-import { AuthGuard, AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth.guard';
 import { RealDataComponent } from './real-data/real-data.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { SiteSettingsComponent } from './site-settings/site-settings.component';
