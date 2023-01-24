@@ -1,8 +1,3 @@
-# This is an example Starter pipeline configuration
-# Use a skeleton to build, test and deploy using manual and parallel steps
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-
 image: node:14.21.1
 
 pipelines:
@@ -18,7 +13,6 @@ pipelines:
           condition:
               changesets:
                  includePaths:
-                   # only xml files directly under path1 directory
                    - "PowerMonitor.Site/**"
           artifacts:
             - PowerMonitor.Site/node_modules/** # Save modules for next steps
@@ -29,18 +23,15 @@ pipelines:
           script:
             - cd PowerMonitor.Site
             - npm run build-prod
-            - git add package.json
-            - git add package-lock.json
-            - git add src/environments/environment.prod.ts
-            - git commit -m "[skip ci] Updating site version."
-            - git push
           condition:
               changesets:
                  includePaths:
-                   # only xml files directly under path1 directory
                    - "PowerMonitor.Site/**"
           artifacts:
-            - PowerMonitor.Site/dist/** # Save modules for next steps
+            - PowerMonitor.Site/dist/** # Save build for next steps
+            - PowerMonitor.Site/package.json
+            - PowerMonitor.Site/package-lock.json
+            - PowerMonitor.Site/src/environments/environment.prod.ts
       - step:
           name: Firebase deploy (Site)
           deployment: production
@@ -50,6 +41,21 @@ pipelines:
                variables:
                 FIREBASE_TOKEN: 1//09x9S597ktDmaCgYIARAAGAkSNwF-L9IrF2bOVWC83IAOe5baIp4oTAgxG9rePukx3pAYMGWOp_Hbt_nWucNEbSkuynzo9k0iXqE
                 PROJECT_ID: powermonitor-edc69
+          condition:
+              changesets:
+                 includePaths:
+                   - "PowerMonitor.Site/**"
+      - step:
+          name: Commit new version (Site)
+          caches:
+            - node
+          script:
+            - cd PowerMonitor.Site
+            - git add package.json
+            - git add package-lock.json
+            - git add src/environments/environment.prod.ts
+            - git commit -m "[skip ci] Updating site version."
+            - git push
           condition:
               changesets:
                  includePaths:

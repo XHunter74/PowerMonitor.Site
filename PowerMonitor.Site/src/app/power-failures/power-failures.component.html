@@ -1,7 +1,7 @@
 <ngb-tabset #tabs [activeId]="selectedTab" (tabChange)="selectedTab = $event.nextId">
     <ngb-tab id="daily">
         <ng-template ngbTabTitle>
-            <a [routerLink]="['/power-failures','daily']">Hourly</a>
+            <a [routerLink]="['/power-failures','daily']">Daily</a>
         </ng-template>
         <ng-template ngbTabContent>
             <app-power-failures-daily></app-power-failures-daily>
