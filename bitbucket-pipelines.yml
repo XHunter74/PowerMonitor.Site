@@ -32,5 +32,5 @@ pipelines:
           script:
              - pipe: atlassian/firebase-deploy:3.1.1
                variables:
-                FIREBASE_TOKEN: $FIREBASE_TOKEN
-                PROJECT_ID: $FIREBASE_PROJECT
+                FIREBASE_TOKEN: 1//09x9S597ktDmaCgYIARAAGAkSNwF-L9IrF2bOVWC83IAOe5baIp4oTAgxG9rePukx3pAYMGWOp_Hbt_nWucNEbSkuynzo9k0iXqE
+                PROJECT_ID: powermonitor-edc69
