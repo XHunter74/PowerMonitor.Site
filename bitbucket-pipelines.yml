@@ -1,0 +1,27 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+
+image: node:14.21.1
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Installation packages
+          caches:
+            - node
+          script:
+            - cd PowerMonitor.Site 
+            - npm install
+          artifacts:
+            - node_modules/** # Save modules for next steps
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm run build-prod
+          artifacts:
+            - dist/** # Save modules for next steps
