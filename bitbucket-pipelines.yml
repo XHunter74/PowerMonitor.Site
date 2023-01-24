@@ -9,16 +9,21 @@ pipelines:
   branches:
     master:
       - step:
-          name: Installation packages
+          name: Installation packages (Site)
           caches:
             - node
           script:
             - cd PowerMonitor.Site 
             - npm install
+          condition:
+              changesets:
+                 includePaths:
+                   # only xml files directly under path1 directory
+                   - "PowerMonitor.Site/**"
           artifacts:
             - PowerMonitor.Site/node_modules/** # Save modules for next steps
       - step:
-          name: Build
+          name: Build (Site)
           caches:
             - node
           script:
@@ -29,10 +34,15 @@ pipelines:
             - git add src/environments/environment.prod.ts
             - git commit -m "[skip ci] Updating site version."
             - git push
+          condition:
+              changesets:
+                 includePaths:
+                   # only xml files directly under path1 directory
+                   - "PowerMonitor.Site/**"
           artifacts:
             - PowerMonitor.Site/dist/** # Save modules for next steps
       - step:
-          name: Firebase deploy
+          name: Firebase deploy (Site)
           deployment: production
           script:
              - cd PowerMonitor.Site
@@ -40,3 +50,8 @@ pipelines:
                variables:
                 FIREBASE_TOKEN: 1//09x9S597ktDmaCgYIARAAGAkSNwF-L9IrF2bOVWC83IAOe5baIp4oTAgxG9rePukx3pAYMGWOp_Hbt_nWucNEbSkuynzo9k0iXqE
                 PROJECT_ID: powermonitor-edc69
+          condition:
+              changesets:
+                 includePaths:
+                   # only xml files directly under path1 directory
+                   - "PowerMonitor.Site/**"
