@@ -40,6 +40,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
+  private rowsColor: any[] = [];
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -98,8 +99,26 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
         this.totalPowerFailure = 0;
         this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
         this.failureAmount = powerData.length;
+        let previousDate;
+        let previousIdx = 0;
+        this.rowsColor = [];
+        for (const item of powerData) {
+          const itemDate = new Date(item.start);
+          if (!previousDate ||
+            previousDate.getTime() !== (new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate())).getTime()) {
+            previousDate = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+            previousIdx++;
+          }
+          const newItem = {
+            rowDate: previousDate,
+            idx: previousIdx
+          };
+          this.rowsColor.push(newItem);
+        }
+
         this.closeSpinner();
       } catch (e) {
+        console.log(e.message);
         this.closeSpinner();
         setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
       }
@@ -160,6 +179,17 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
       nextDate.setMonth(nextDate.getMonth() - 1);
       return nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
         nextDate.getMonth() < Constants.systemStartDate.getMonth();
+    }
+  }
+
+  getRowIndex(row) {
+    if (this.rowsColor && this.rowsColor.length > 0) {
+      let rowDate = new Date(row.start);
+      rowDate = new Date(rowDate.getFullYear(), rowDate.getMonth(), rowDate.getDate());
+      const item = this.rowsColor.find(e => e.rowDate.getTime() === rowDate.getTime());
+      return item.idx;
+    } else {
+      return 1;
     }
   }
 

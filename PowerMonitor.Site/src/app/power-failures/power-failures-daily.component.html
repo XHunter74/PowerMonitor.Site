@@ -50,6 +50,6 @@
             <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{alternate: getRowIndex(row) % 2 == 0 }"></tr>
     </table>
 </div>
