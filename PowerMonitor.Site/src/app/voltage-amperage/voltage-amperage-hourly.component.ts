@@ -18,7 +18,7 @@ const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 })
 export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
     sortedData = new MatTableDataSource();
     displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
         'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];

@@ -9,7 +9,7 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 export class PowerMonitorComponent implements OnInit, AfterViewChecked {
     selectedTab: string;
 
-    @ViewChild('tabs')
+    @ViewChild('tabs', { static: true })
     private tabs: NgbTabset;
 
     constructor(

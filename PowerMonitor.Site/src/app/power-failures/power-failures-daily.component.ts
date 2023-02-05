@@ -30,7 +30,7 @@ const PowerFailuresSort = 'power-failures-sort';
 
 export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
   currentDateControl: FormControl = new FormControl();
   displayedColumns: string[] = ['start', 'finish', 'duration'];

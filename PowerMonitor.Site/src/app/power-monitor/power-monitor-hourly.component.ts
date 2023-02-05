@@ -68,7 +68,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     currentDateControl: FormControl = new FormControl();
     public lineChartPlugins = [pluginAnnotations];
 
-    @ViewChild('powerChart') myCanvas: ElementRef;
+    @ViewChild('powerChart', { static: false }) myCanvas: ElementRef;
     public context: CanvasRenderingContext2D;
     public powerForecast: number;
 
