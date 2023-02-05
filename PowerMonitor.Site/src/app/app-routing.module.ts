@@ -28,6 +28,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'power-consumption', component: PowerConsumptionComponent, canActivate: [AuthGuard] },
     { path: 'app-login', component: AppLoginComponent },
+    { path: '**', component: AppLoginComponent },
 ];
 
 @NgModule({
