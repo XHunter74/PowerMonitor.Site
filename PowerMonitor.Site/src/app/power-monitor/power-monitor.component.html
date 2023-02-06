@@ -1,27 +1,22 @@
-<ngb-tabset #tabs [activeId]="selectedTab" (tabChange)="selectedTab = $event.nextId">
-    <ngb-tab id="hourly">
-        <ng-template ngbTabTitle>
-            <a [routerLink]="['/power-monitor','hourly']">Hourly</a>
-        </ng-template>
-        <ng-template ngbTabContent>
+<nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
+    <ng-container ngbNavItem [ngbNavItem]="1">
+        <a ngbNavLink>Hourly</a>
+        <ng-template ngbNavContent>
             <app-power-monitor-hourly></app-power-monitor-hourly>
         </ng-template>
-    </ngb-tab>
-    <ngb-tab id="daily">
-        <ng-template ngbTabTitle>
-            <a [routerLink]="['/power-monitor','daily']">Daily</a>
-        </ng-template>
-        <ng-template ngbTabContent>
+    </ng-container>
+    <ng-container ngbNavItem [ngbNavItem]="2">
+        <a ngbNavLink>Daily</a>
+        <ng-template ngbNavContent>
             <app-power-monitor-daily></app-power-monitor-daily>
         </ng-template>
-    </ngb-tab>
-    <ngb-tab id="monthly">
-        <ng-template ngbTabTitle>
-            <a [routerLink]="['/power-monitor','monthly']">Monthly</a>
-        </ng-template>
-        <ng-template ngbTabContent>
+    </ng-container>
+    <ng-container ngbNavItem [ngbNavItem]="3">
+        <a ngbNavLink>Monthly</a>
+        <ng-template ngbNavContent>
             <app-power-monitor-monthly></app-power-monitor-monthly>
         </ng-template>
-    </ngb-tab>
+    </ng-container>
+</nav>
 
-</ngb-tabset>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
