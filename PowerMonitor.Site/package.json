@@ -48,7 +48,7 @@
     "@angular/cli": "^9.0.0",
     "@angular/compiler-cli": "^9.0.0",
     "replace-in-file": "^4.1.0",
-    "typescript": "3.8.3"
+    "typescript": "~4.3.5"
   },
   "optionalDependencies": {
     "node-sass": "^4.10.0"
