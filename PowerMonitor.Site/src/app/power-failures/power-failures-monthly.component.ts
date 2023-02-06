@@ -15,7 +15,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 
-const PowerFailuresSort = 'power-failures-sort';
+const PowerFailuresSort = 'power-failures-sort-monthly';
 
 @Component({
   selector: 'app-power-failures-monthly',

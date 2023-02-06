@@ -15,7 +15,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
 
-const PowerFailuresSort = 'power-failures-sort';
+const PowerFailuresSort = 'power-failures-sort-daily';
 
 @Component({
   selector: 'app-power-failures-daily',
