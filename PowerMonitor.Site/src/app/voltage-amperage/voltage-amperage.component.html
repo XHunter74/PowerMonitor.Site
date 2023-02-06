@@ -1,17 +1,10 @@
-<ngb-tabset>
-    <ngb-tab title="Hourly">
-        <ng-template ngbTabContent>
+<nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
+    <ng-container ngbNavItem [ngbNavItem]="1">
+        <a ngbNavLink>Hourly</a>
+        <ng-template ngbNavContent>
             <app-voltage-amperage-hourly></app-voltage-amperage-hourly>
         </ng-template>
-    </ngb-tab>
-    <!-- <ngb-tab title="Daily">
-        <ng-template ngbTabContent>
-            <app-voltage-amperage-daily></app-voltage-amperage-daily>
-        </ng-template>
-    </ngb-tab> -->
-    <!-- <ngb-tab title="Anualy">
-        <ng-template ngbTabContent>
-        </ng-template>
-    </ngb-tab> -->
+    </ng-container>
+</nav>
 
-</ngb-tabset>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

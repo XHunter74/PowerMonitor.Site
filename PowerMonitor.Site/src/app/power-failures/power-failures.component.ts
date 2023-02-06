@@ -1,20 +1,28 @@
 import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbNav, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-power-failures',
     templateUrl: './power-failures.component.html'
 })
 export class PowerFailuresComponent implements OnInit, AfterViewChecked {
-    selectedTab: string;
+    selectedTab: number;
 
-    @ViewChild('tabs', { static: true })
-    private tabs: NgbTabset;
+    @ViewChild('nav', { static: true })
+    private tabs: NgbNav;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute,
+        private router: Router) {
         this.route.data.subscribe(d => {
-            this.selectedTab = d.name;
+            switch (d.name) {
+                case "daily":
+                    this.selectedTab = 1;
+                    break;
+                case "monthly":
+                    this.selectedTab = 2;
+                    break;
+            }
         });
     }
 
@@ -23,7 +31,16 @@ export class PowerFailuresComponent implements OnInit, AfterViewChecked {
 
     ngAfterViewChecked(): void {
         if (this.tabs) {
-            //this.tabs.select(this.selectedTab);
+        }
+    }
+    onNavChange(changeEvent: NgbNavChangeEvent) {
+        switch (changeEvent.nextId) {
+            case 1:
+                this.router.navigate(['power-failures', 'daily']);
+                break;
+            case 2:
+                this.router.navigate(['power-failures', 'monthly']);
+                break;
         }
     }
 }
