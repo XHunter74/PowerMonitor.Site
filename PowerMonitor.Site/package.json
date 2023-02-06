@@ -18,17 +18,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^9.1.0",
+    "@angular/animations": "^10.2.0",
     "@angular/cdk": "^8.0.0",
-    "@angular/common": "^9.1.0",
-    "@angular/compiler": "^9.1.0",
-    "@angular/core": "^9.1.0",
-    "@angular/forms": "^9.1.0",
+    "@angular/common": "^10.2.0",
+    "@angular/compiler": "^10.2.0",
+    "@angular/core": "^10.2.0",
+    "@angular/forms": "^10.2.0",
     "@angular/material": "^8.0.0",
     "@angular/material-moment-adapter": "^8.0.0",
-    "@angular/platform-browser": "^9.1.0",
-    "@angular/platform-browser-dynamic": "^9.1.0",
-    "@angular/router": "^9.1.0",
+    "@angular/platform-browser": "^10.2.0",
+    "@angular/platform-browser-dynamic": "^10.2.0",
+    "@angular/router": "^10.2.0",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "angular-gauge-chart": "^0.7.2",
     "chart.js": "^2.7.3",
@@ -45,9 +45,9 @@
   "devDependencies": {
     "codelyzer": "^5.0.0",
     "@angular-devkit/build-angular": "^0.901.15",
-    "@angular/cli": "^9.0.0",
-    "@angular/compiler-cli": "^9.0.0",
+    "@angular/cli": "^10.2.0",
+    "@angular/compiler-cli": "^10.2.0",
     "replace-in-file": "^4.1.0",
-    "typescript": "^4.0.0"
+    "typescript": "~4.0.0"
   }
 }
