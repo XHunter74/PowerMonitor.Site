@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { PowerService } from '../services/power-service';
 import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';

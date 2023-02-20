@@ -10,7 +10,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { Constants } from '../constants';
 import { daysInMonth } from '../utils';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';

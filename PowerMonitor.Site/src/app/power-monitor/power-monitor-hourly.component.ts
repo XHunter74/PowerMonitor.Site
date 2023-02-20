@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
