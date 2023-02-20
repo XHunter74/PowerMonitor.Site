@@ -1,9 +1,11 @@
-import { OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 import { StringUtils } from '../utils';
 
-// TODO: Add Angular decorator.
+@Component({
+    template: ''
+})
 export class AppBaseComponent implements OnDestroy {
 
     protected dialogRef: MatDialogRef<SpinnerDialogComponent>;
