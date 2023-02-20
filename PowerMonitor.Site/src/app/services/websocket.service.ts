@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { ISensorsDataModel } from '../models/sensors-data.model';

@@ -1,7 +1,7 @@
 import { Component, Optional, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-edit-power-consumption',
