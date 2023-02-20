@@ -32,7 +32,10 @@ export class WebSocketService {
 
     getSensorsData(): Observable<ISensorsDataModel> {
         var data = this.webSocket.fromEvent('sensors-data')
-            .pipe(map((data: ISensorsDataModel) => data));
+            .pipe(map((data: ISensorsDataModel) => {
+                data.power = Math.round(data.power * 10) / 10;
+                return data;
+            }));
         return data;
     }
 

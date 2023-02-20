@@ -19,6 +19,8 @@ export class RealDataComponent implements OnInit, OnDestroy {
   private voltage = 230;
   private maxAmperage = 30;
   private nominalAmperageMax = 20;
+  private maxPower = 8;
+  private nominalPowerMax = 5;
 
   public canvasWidth = 300;
   public centralLabel = '';
@@ -50,6 +52,21 @@ export class RealDataComponent implements OnInit, OnDestroy {
       arcColors: ['green', 'red'],
       arcDelimiters: [Math.round(this.nominalAmperageMax / this.maxAmperage * 100)],
       rangeLabel: ['0', this.maxAmperage.toString()],
+      needleStartValue: 0,
+    }
+  };
+
+  public powerIndicator = {
+    bottomLabel: '0.0',
+    needleValue: 0,
+    name: 'Power, kW',
+    options: {
+      hasNeedle: true,
+      needleColor: 'gray',
+      needleUpdateSpeed: 500,
+      arcColors: ['green', 'red'],
+      arcDelimiters: [Math.round(this.nominalPowerMax / this.maxPower * 100)],
+      rangeLabel: ['0', this.maxPower.toString()],
       needleStartValue: 0,
     }
   };
@@ -89,6 +106,8 @@ export class RealDataComponent implements OnInit, OnDestroy {
     this.voltageIndicator.bottomLabel = formatNumber(sensorsData.voltage);
     this.currentIndicator.needleValue = Math.round(sensorsData.amperage / this.maxAmperage * 100);
     this.currentIndicator.bottomLabel = formatNumber(sensorsData.amperage);
+    this.powerIndicator.needleValue = Math.round(sensorsData.power / this.maxPower * 100);
+    this.powerIndicator.bottomLabel = formatNumber(sensorsData.power);
   }
 
 }
