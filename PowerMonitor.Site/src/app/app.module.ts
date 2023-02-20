@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 import { AppMaterialModule } from './material-module';
 import { GaugeChartModule } from 'angular-gauge-chart';
 import { AppComponent } from './app.component';
@@ -84,7 +84,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
     ReactiveFormsModule,
     NgbModule,
     BrowserAnimationsModule,
-    ChartsModule,
+    NgChartsModule,
     AppMaterialModule,
     GaugeChartModule,
     SocketIoModule,

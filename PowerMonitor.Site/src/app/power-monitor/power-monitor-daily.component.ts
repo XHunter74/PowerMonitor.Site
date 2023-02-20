@@ -10,12 +10,12 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { ChartConfiguration, Chart } from 'chart.js';
 import { Constants } from '../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { default as Annotation } from 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -31,38 +31,35 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
     public powerAvg: number;
+    
     private annotation: any = {
-        annotations: [
-            {
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y-axis-0',
-                value: 0,
-                borderColor: 'blue',
-                borderWidth: 1.5,
-                borderDash: [10, 10],
-                // borderDashOffset: 20,
-                label: {
-                    enabled: false,
-                    fontColor: 'blue',
-                    backgroundColor: 'white',
-                    content: 'Average'
-                }
-            },
-        ],
-    };
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        maintainAspectRatio: true,
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    min: 0,
-                }
-            }]
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y',
+        value: 0,
+        borderColor: 'blue',
+        borderWidth: 1.5,
+        borderDash: [10, 10],
+        // borderDashOffset: 20,
+        label: {
+            enabled: false,
+            fontColor: 'blue',
+            backgroundColor: 'white',
+            content: 'Average'
         }
     };
+    public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            annotation: {
+                annotations: [
+                    this.annotation
+                ]
+            }
+        }
+    };
+
     public barChartLabels: string[] = [];
     public barChartType = 'bar';
     public barChartLegend = true;
@@ -72,20 +69,15 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     ];
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
-    public lineChartPlugins = [pluginAnnotations];
     public powerForecast: number;
 
     // events
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
-            const days = e.active['0']._index + 1;
+            const days = e.active['0'].index + 1;
             this.router.navigate(['power-monitor', 'hourly',
                 { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: days }]);
         }
-    }
-
-    public chartHovered(e: any): void {
-        console.log(e);
     }
 
     chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
@@ -107,6 +99,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     ngOnInit(): void {
+        Chart.register(Annotation);
         this.activatedRouter.params.subscribe(
             params => {
                 const year = params['year'];
@@ -142,10 +135,10 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 this.powerAvg = this.getAveragePower(this.powerData);
                 this.powerForecast = this.getPowerForecast();
                 if (this.powerAvg > 0) {
-                    this.annotation.annotations[0].value = this.powerAvg;
-                    this.barChartOptions.annotation = this.annotation;
+                    this.annotation.value = this.powerAvg;
+                    this.annotation.borderWidth = 1.5;
                 } else {
-                    this.barChartOptions.annotation = null;
+                    this.annotation.borderWidth = 0;
                 }
                 this.closeSpinner();
             } catch (e) {

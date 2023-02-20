@@ -5,7 +5,8 @@
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (click)="picker3.open()">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+        (click)="picker3.open()">
     <mat-datepicker-toggle matSuffix [for]=" picker3">
     </mat-datepicker-toggle>
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
@@ -34,6 +35,7 @@
         </tr>
     </table>
     <div style="display: block" class="mb-5">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" (chartClick)="chartClicked($event)"></canvas>
     </div>
 </div>

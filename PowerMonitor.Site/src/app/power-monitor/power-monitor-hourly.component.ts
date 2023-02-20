@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges, SimpleChanges, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
@@ -7,12 +7,12 @@ import { FormControl } from '@angular/forms';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { ChartOptions } from 'chart.js';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { ChartConfiguration, Chart } from 'chart.js';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Constants } from '../constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { default as Annotation } from 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -26,37 +26,33 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     public powerAvg: number;
 
     private annotation: any = {
-        annotations: [
-            {
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y-axis-0',
-                value: 0,
-                borderColor: 'blue',
-                borderWidth: 1.5,
-                borderDash: [10, 10],
-                // borderDashOffset: 20,
-                label: {
-                    enabled: false,
-                    fontColor: 'blue',
-                    backgroundColor: 'white',
-                    content: 'Average'
-                }
-            },
-        ],
-    };
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    min: 0,
-                }
-            }]
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y',
+        value: 0,
+        borderColor: 'blue',
+        borderWidth: 1.5,
+        borderDash: [10, 10],
+        // borderDashOffset: 20,
+        label: {
+            enabled: false,
+            fontColor: 'blue',
+            backgroundColor: 'white',
+            content: 'Average'
         }
     };
+    public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            annotation: {
+                annotations: [
+                    this.annotation
+                ]
+            }
+        }
+    };
+
     public barChartLabels: string[] = [];
     public barChartType = 'bar';
     public barChartLegend = true;
@@ -67,7 +63,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     currentDate: Date;
     currentDateControl: FormControl = new FormControl();
-    public lineChartPlugins = [pluginAnnotations];
+    public lineChartPlugins = [Annotation];
 
     @ViewChild('powerChart') myCanvas: ElementRef;
     public context: CanvasRenderingContext2D;
@@ -81,6 +77,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     }
 
     ngOnInit(): void {
+        Chart.register(Annotation);
         this.activatedRouter.params.subscribe(
             params => {
                 const year = params['year'];
@@ -102,15 +99,6 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         if (this.myCanvas) {
             this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
         }
-    }
-
-    // events
-    public chartClicked(e: any): void {
-        console.log(e);
-    }
-
-    public chartHovered(e: any): void {
-        console.log(e);
     }
 
     async dateChanged(event: MatDatepickerInputEvent<Date>) {
@@ -135,10 +123,10 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
                 this.powerAvg = this.getAveragePower(this.powerData);
                 if (this.powerAvg > 0) {
-                    this.annotation.annotations[0].value = this.powerAvg;
-                    this.barChartOptions.annotation = this.annotation;
+                    this.annotation.value = this.powerAvg;
+                    this.annotation.borderWidth = 1.5;
                 } else {
-                    this.barChartOptions.annotation = null;
+                    this.annotation.borderWidth = 0;
                 }
                 this.powerForecast = await this.getPowerForecast();
                 this.closeSpinner();
