@@ -28,7 +28,7 @@ import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.componen
 import { AppDateAdapter } from './app-date.adapter';
 import { HomeComponent } from './home-component/home.component';
 import { ProfileComponent } from './profile-component/profile.component';
-import { SocketIoModule } from 'ng-socket-io';
+import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
 import { ErrorDialogComponent } from './dialogs/error-dialog.component';
