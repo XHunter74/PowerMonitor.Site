@@ -1,9 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { ISensorsDataModel } from '../models/sensors-data.model';
-import { Observer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WebSocket extends Socket {
@@ -32,12 +31,9 @@ export class WebSocketService {
     }
 
     getSensorsData(): Observable<ISensorsDataModel> {
-        return Observable.create((observer: Observer<ISensorsDataModel>) => {
-            this.webSocket.on('sensors-data', (data: ISensorsDataModel) => {
-                const sensorData = <ISensorsDataModel>data;
-                observer.next(sensorData);
-            });
-        });
+        var data = this.webSocket.fromEvent('sensors-data')
+            .pipe(map((data: ISensorsDataModel) => data));
+        return data;
     }
 
     closeSensorsData() {
