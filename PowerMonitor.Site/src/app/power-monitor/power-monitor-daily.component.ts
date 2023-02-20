@@ -10,7 +10,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { ChartOptions } from 'chart.js';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { Constants } from '../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -51,7 +51,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             },
         ],
     };
-    public barChartOptions: (ChartOptions & { annotation: any }) = {
+    public barChartOptions: any = {
         scaleShowVerticalLines: false,
         maintainAspectRatio: true,
         responsive: true,
