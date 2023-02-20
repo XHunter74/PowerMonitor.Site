@@ -4,7 +4,6 @@ import { PowerService } from '../services/power-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { Moment } from 'moment';
-import { MatDatepicker, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -14,6 +13,9 @@ import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { Constants } from '../constants';
 import { daysInMonth } from '../utils';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
     selector: 'app-power-monitor-monthly',

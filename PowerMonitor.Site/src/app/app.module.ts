@@ -20,7 +20,6 @@ import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.
 import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { SiteSettingsComponent } from './site-settings/site-settings.component';
@@ -42,6 +41,7 @@ import { AppHttpInterceptor } from './services/http.interceptor';
 import { UsersService } from './services/users-service';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
 
 @NgModule({

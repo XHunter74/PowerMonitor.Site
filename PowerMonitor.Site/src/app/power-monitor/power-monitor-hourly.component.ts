@@ -4,7 +4,6 @@ import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
@@ -12,6 +11,8 @@ import { ChartOptions } from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Constants } from '../constants';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-power-monitor-hourly',

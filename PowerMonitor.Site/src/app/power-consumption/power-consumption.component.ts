@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { PowerService } from '../services/power-service';
@@ -7,6 +6,8 @@ import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dia
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-power-consumption',

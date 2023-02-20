@@ -3,10 +3,6 @@ import { PowerService } from '../services/power-service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import {
-  MatDatepicker, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, Sort, MatDialog,
-  MatTableDataSource, MatSort, MatSortHeader
-} from '@angular/material';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
@@ -14,6 +10,11 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 const PowerFailuresSort = 'power-failures-sort';
 

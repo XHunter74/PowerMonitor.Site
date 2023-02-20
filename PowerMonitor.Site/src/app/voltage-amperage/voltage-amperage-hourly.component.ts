@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDatepickerInputEvent, MatSort, MatTableDataSource, Sort, SortDirection, MatSortHeader } from '@angular/material';
 
 import { PowerService } from '../services/power-service';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -8,6 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
+import { MatDialog } from '@angular/material/dialog';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {MatSort, Sort, MatSortHeader} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 

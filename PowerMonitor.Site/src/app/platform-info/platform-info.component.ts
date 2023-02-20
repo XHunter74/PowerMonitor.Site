@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services-service';
 import { ISystemInfo } from '../models/sysinfo.model';
-import { MatDialog } from '@angular/material';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { environment } from '../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-platform-info',
