@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.powermonitor.my-home.live/api/',
-  version: '1.1.84'
+  version: '1.1.85'
 };
