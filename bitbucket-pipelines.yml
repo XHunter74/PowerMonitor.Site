@@ -39,8 +39,8 @@ pipelines:
              - cd PowerMonitor.Site
              - pipe: atlassian/firebase-deploy:3.1.1
                variables:
-                FIREBASE_TOKEN: 1//09x9S597ktDmaCgYIARAAGAkSNwF-L9IrF2bOVWC83IAOe5baIp4oTAgxG9rePukx3pAYMGWOp_Hbt_nWucNEbSkuynzo9k0iXqE
-                PROJECT_ID: powermonitor-edc69
+                FIREBASE_TOKEN: $FIREBASE_TOKEN
+                PROJECT_ID: $PROJECT_ID
           condition:
               changesets:
                  includePaths:
