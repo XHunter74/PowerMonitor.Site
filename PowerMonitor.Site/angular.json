@@ -22,11 +22,11 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.css",
+                            "src/styles.css"
                         ],
                         "scripts": [],
                         "allowedCommonJsDependencies": [
-                            "chart",
+                            "chart.js",
                             "socket.io-client",
                             "rxjs",
                             "chartjs-plugin-annotation"
