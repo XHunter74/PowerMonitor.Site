@@ -7,7 +7,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES2015",
+    "target": "ES2017",
+    "module": "ES2020",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -19,6 +20,5 @@
     ]
   },
   "angularCompilerOptions": {
-    "enableIvy": false
   }
 }
