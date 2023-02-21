@@ -29,7 +29,9 @@
                             "chart.js",
                             "socket.io-client",
                             "rxjs",
-                            "chartjs-plugin-annotation"
+                            "chartjs-plugin-annotation",
+                            "moment",
+                            "popper"
                         ]
                     },
                     "configurations": {
