@@ -4,6 +4,7 @@ import { WebSocketService } from '../services/websocket.service';
 import 'rxjs/add/observable/interval';
 import { Observable, Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-real-data',
   templateUrl: './real-data.component.html',
@@ -13,7 +14,7 @@ import { Observable, Subscription } from 'rxjs';
 
 export class RealDataComponent implements OnInit, OnDestroy {
 
-  private maxVoltage = 270;
+  private maxVoltage = 300;
   private nominalVoltageMin = 207;
   private nominalVoltageMax = 253;
   private voltage = 230;
@@ -22,54 +23,60 @@ export class RealDataComponent implements OnInit, OnDestroy {
   private maxPower = 8;
   private nominalPowerMax = 5;
 
-  public canvasWidth = 300;
-  public centralLabel = '';
-
-  public voltageIndicator = {
-    bottomLabel: this.voltage.toString(),
-    needleValue: Math.round(230 / this.maxVoltage * 100),
-    name: 'Voltage, V',
+  voltageChart = {
+    type: "Gauge",
+    data: [
+      ["Voltage", { v: this.voltage, f: `${this.voltage} V` }],
+    ],
     options: {
-      hasNeedle: true,
-      needleColor: 'gray',
-      needleUpdateSpeed: 500,
-      arcColors: ['red', 'green', 'red'],
-      arcDelimiters: [Math.round(this.nominalVoltageMin / this.maxVoltage * 100),
-      Math.round(this.nominalVoltageMax / this.maxVoltage * 100)],
-      rangeLabel: ['0', this.maxVoltage.toString()],
-      needleStartValue: 50,
-    }
+      width: 200,
+      height: 200,
+      redFrom: 0,
+      redTo: this.nominalVoltageMin,
+      greenFrom: this.nominalVoltageMin,
+      greenTo: this.nominalVoltageMax,
+      yellowFrom: this.nominalVoltageMax,
+      yellowTo: this.maxVoltage,
+      min: 0,
+      max: this.maxVoltage,
+      yellowColor: '#DC3912'
+    },
   };
 
-  public currentIndicator = {
-    bottomLabel: '0.0',
-    needleValue: 0,
-    name: 'Amperage, A',
+  amperageChart = {
+    type: "Gauge",
+    data: [
+      ["Amperage", { v: 0, f: '0 A' }],
+    ],
     options: {
-      hasNeedle: true,
-      needleColor: 'gray',
-      needleUpdateSpeed: 500,
-      arcColors: ['green', 'red'],
-      arcDelimiters: [Math.round(this.nominalAmperageMax / this.maxAmperage * 100)],
-      rangeLabel: ['0', this.maxAmperage.toString()],
-      needleStartValue: 0,
-    }
+      width: 200,
+      height: 200,
+      greenFrom: 0,
+      greenTo: this.nominalAmperageMax,
+      redFrom: this.nominalAmperageMax,
+      redTo: this.maxAmperage,
+      min: 0,
+      max: this.maxAmperage,
+    },
   };
 
-  public powerIndicator = {
-    bottomLabel: '0.0',
-    needleValue: 0,
-    name: 'Power, kW',
+  powerChart = {
+    type: "Gauge",
+    data: [
+      ["Power", { v: 0, f: '0 kW' }],
+    ],
     options: {
-      hasNeedle: true,
-      needleColor: 'gray',
-      needleUpdateSpeed: 500,
-      arcColors: ['green', 'red'],
-      arcDelimiters: [Math.round(this.nominalPowerMax / this.maxPower * 100)],
-      rangeLabel: ['0', this.maxPower.toString()],
-      needleStartValue: 0,
-    }
+      width: 200,
+      height: 200,
+      greenFrom: 0,
+      greenTo: this.nominalPowerMax,
+      redFrom: this.nominalPowerMax,
+      redTo: this.maxPower,
+      min: 0,
+      max: this.maxPower,
+    },
   };
+
   timerSub: Subscription;
 
   constructor(private webSocketService: WebSocketService) {
@@ -101,21 +108,19 @@ export class RealDataComponent implements OnInit, OnDestroy {
     this.timerSub.unsubscribe();
   }
 
-  updateGaugeIndicators(sensorsData: ISensorsDataModel) {
-    this.voltageIndicator.needleValue = Math.round(sensorsData.voltage / this.maxVoltage * 100);
-    this.voltageIndicator.bottomLabel = formatNumber(sensorsData.voltage);
-    this.currentIndicator.needleValue = Math.round(sensorsData.amperage / this.maxAmperage * 100);
-    this.currentIndicator.bottomLabel = formatNumber(sensorsData.amperage);
-    this.powerIndicator.needleValue = Math.round(sensorsData.power / this.maxPower * 100);
-    this.powerIndicator.bottomLabel = formatNumber(sensorsData.power);
+  updateGaugeIndicators(data: ISensorsDataModel) {
+    const voltage = Math.round(data.voltage);
+    this.voltageChart.data = [
+      ["Voltage", { v: voltage, f: `${voltage} V` }],
+    ];
+    const amperage = Math.round(data.amperage * 10) / 10;
+    this.amperageChart.data = [
+      ["Amperage", { v: amperage, f: `${amperage} A` }],
+    ];
+    const power = Math.round(data.power * 10) / 10;
+    this.powerChart.data = [
+      ["Power", { v: power, f: `${power} kW` }],
+    ];
   }
 
-}
-
-function formatNumber(value: number): any {
-  let result = (Math.round(value * 10) / 10).toString();
-  if (!result.includes('.')) {
-    result += '.0';
-  }
-  return result;
 }

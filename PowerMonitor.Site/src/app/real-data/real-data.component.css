@@ -1,6 +1,18 @@
-
 @media screen and (max-width: 768px) {
-    .gauge-chart{
+    .gauge-chart {
         margin: 0 auto;
     }
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.google-chart {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.gauge-row {
+    /* justify-content: center */
 }

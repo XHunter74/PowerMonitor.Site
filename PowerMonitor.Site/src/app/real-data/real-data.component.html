@@ -1,13 +1,7 @@
 <div class="container">
-    <div class="row">
-        <rg-gauge-chart class="gauge-chart" [canvasWidth]="canvasWidth" [needleValue]="voltageIndicator.needleValue"
-            [options]="voltageIndicator.options" [name]="voltageIndicator.name"
-            [bottomLabel]="voltageIndicator.bottomLabel"></rg-gauge-chart>
-        <rg-gauge-chart class="gauge-chart" [canvasWidth]="canvasWidth" [needleValue]="currentIndicator.needleValue"
-            [options]="currentIndicator.options" [name]="currentIndicator.name"
-            [bottomLabel]="currentIndicator.bottomLabel"></rg-gauge-chart>
-        <rg-gauge-chart class="gauge-chart" [canvasWidth]="canvasWidth" [needleValue]="powerIndicator.needleValue"
-            [options]="powerIndicator.options" [name]="powerIndicator.name"
-            [bottomLabel]="powerIndicator.bottomLabel"></rg-gauge-chart>
+    <div class="row gauge-row">
+        <google-chart [type]="voltageChart.type" [data]="voltageChart.data" [options]="voltageChart.options"></google-chart>
+        <google-chart [type]="amperageChart.type" [data]="amperageChart.data" [options]="amperageChart.options"></google-chart>
+        <google-chart [type]="powerChart.type" [data]="powerChart.data" [options]="powerChart.options"></google-chart>
     </div>
 </div>

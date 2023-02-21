@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgChartsModule } from 'ng2-charts';
 import { AppMaterialModule } from './material-module';
-import { GaugeChartModule } from 'angular-gauge-chart';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RealDataComponent } from './real-data/real-data.component';
@@ -42,6 +41,7 @@ import { UsersService } from './services/users-service';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 
 @NgModule({
@@ -86,9 +86,9 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
     BrowserAnimationsModule,
     NgChartsModule,
     AppMaterialModule,
-    GaugeChartModule,
     SocketIoModule,
     AppRoutingModule,
+    GoogleChartsModule,
   ],
   providers: [
     AuthGuard,
