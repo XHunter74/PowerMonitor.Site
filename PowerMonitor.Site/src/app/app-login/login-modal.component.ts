@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,10 +16,10 @@ export class LoginModalComponent implements OnInit {
   errors: string;
   returnUrl: string;
 
-  loginForm = new FormGroup({
-    userName: new FormControl('',
+  loginForm = new UntypedFormGroup({
+    userName: new UntypedFormControl('',
       [Validators.required]),
-    password: new FormControl('',
+    password: new UntypedFormControl('',
       [Validators.required])
   });
 

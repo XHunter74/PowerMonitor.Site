@@ -1,6 +1,6 @@
 import { Component, Optional, Inject, OnInit } from '@angular/core';
 import { PowerMeteringDto } from '../models/power-metering.dto';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -14,12 +14,12 @@ export class EditPowerConsumptionComponent implements OnInit {
 
     data: PowerMeteringDto;
     eventTime: { hour: number; minute: number; };
-    recordForm = new FormGroup({
-        eventDateField: new FormControl('',
+    recordForm = new UntypedFormGroup({
+        eventDateField: new UntypedFormControl('',
             [Validators.required]),
-        eventTimeField: new FormControl('',
+        eventTimeField: new UntypedFormControl('',
             [Validators.required]),
-        factualDataField: new FormControl('',
+        factualDataField: new UntypedFormControl('',
             [Validators.required])
     });
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,11 +12,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class ProfileComponent implements OnInit, OnDestroy {
 
-    profileForm = new FormGroup({
-        password: new FormControl('',
+    profileForm = new UntypedFormGroup({
+        password: new UntypedFormControl('',
             [Validators.required,
             Validators.minLength(6)]),
-        confirmPassword: new FormControl('')
+        confirmPassword: new UntypedFormControl('')
     }, [this.checkPasswords]);
 
     constructor(private usersService: UsersService, private dialog: MatDialog) { }
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
     }
 
-    checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    checkPasswords(group: UntypedFormGroup) { // here we have the 'passwords' group
         const password = group.controls.password.value;
         const confirmPassword = group.controls.confirmPassword.value;
         const error = password === confirmPassword ? null : { notMatch: true };

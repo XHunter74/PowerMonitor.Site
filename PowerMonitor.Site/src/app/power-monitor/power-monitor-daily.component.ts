@@ -3,7 +3,7 @@ import { PowerService } from '../services/power-service';
 import { daysInMonth } from '../utils';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
@@ -67,7 +67,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         { data: [], label: 'Power, kW/h' }
     ];
     currentDate: Date;
-    currentDateControl: FormControl = new FormControl();
+    currentDateControl: UntypedFormControl = new UntypedFormControl();
     public powerForecast: number;
 
     // events

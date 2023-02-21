@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServicesService } from '../services/services-service';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
@@ -18,10 +18,10 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
     boardInfo: IBoardInfoModel;
     newSketch: File;
 
-    coefficientsForm = new FormGroup({
-        voltageCoefficient: new FormControl('',
+    coefficientsForm = new UntypedFormGroup({
+        voltageCoefficient: new UntypedFormControl('',
             [Validators.required]),
-        currentCoefficient: new FormControl('',
+        currentCoefficient: new UntypedFormControl('',
             [Validators.required])
     });
 

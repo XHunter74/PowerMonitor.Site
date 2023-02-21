@@ -6,7 +6,7 @@ import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { compare } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ export class VoltageAmperageDailyComponent extends AppBaseComponent implements O
 
     public voltageData: IVoltageAmperageModel[];
     public currentDate: Date;
-    currentDateControl: FormControl = new FormControl();
+    currentDateControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,

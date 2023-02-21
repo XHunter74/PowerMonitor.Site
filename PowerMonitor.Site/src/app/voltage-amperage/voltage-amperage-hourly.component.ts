@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular
 
 import { PowerService } from '../services/power-service';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
@@ -26,7 +26,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
         'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
     public currentDate: Date;
-    currentDateControl: FormControl = new FormControl();
+    currentDateControl: UntypedFormControl = new UntypedFormControl();
     maxVoltage: IVoltageAmperageModel;
     minVoltage: IVoltageAmperageModel;
     maxAmperage: IVoltageAmperageModel;

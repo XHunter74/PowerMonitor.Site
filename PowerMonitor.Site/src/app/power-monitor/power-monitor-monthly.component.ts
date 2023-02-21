@@ -4,7 +4,7 @@ import { PowerService } from '../services/power-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { Moment } from 'moment';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -68,7 +68,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         { data: [], label: 'Power, kW/h' }
     ];
     currentDate: Date;
-    currentDateControl: FormControl = new FormControl();
+    currentDateControl: UntypedFormControl = new UntypedFormControl();
 
     // events
     public chartClicked(e: any): void {

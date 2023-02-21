@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@ang
 import { PowerService } from '../services/power-service';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
@@ -61,7 +61,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     ];
 
     currentDate: Date;
-    currentDateControl: FormControl = new FormControl();
+    currentDateControl: UntypedFormControl = new UntypedFormControl();
     public lineChartPlugins = [Annotation];
 
     @ViewChild('powerChart') myCanvas: ElementRef;

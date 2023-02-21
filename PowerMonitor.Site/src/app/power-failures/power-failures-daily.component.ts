@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { PowerService } from '../services/power-service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { IPowerFailureModel } from '../models/power-failure.model';
@@ -33,7 +33,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
-  currentDateControl: FormControl = new FormControl();
+  currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['start', 'finish', 'duration'];
   sortedData = new MatTableDataSource();
   maxPowerFailure: IPowerFailureModel;
