@@ -1,21 +1,47 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+
 .vs/
-PowerMonitor.API/build/
-PowerMonitor.API/node_modules/
-PowerMonitor.API/.idea/
-PowerMonitor.API/powermonitor.sqlite
-Arduino/PowerMonitor/build/
-PowerMonitor.Upload/node_modules/
-PowerMonitor.API/uploads/
-PowerMonitor.API/server.off
-Arduino/PowerMonitor/.vscode/ipch/
-PowerMonitor.Site/.firebase/hosting.ZGlzdA.cache
-PowerMonitor.Backup/build/
-PowerMonitor.Backup/node_modules/
-PowerMonitor.Backup/logs/
-PowerMonitor.Health/functions-server/dist/
-PowerMonitor.AI/build/
-PowerMonitor.AI/node_modules/
-PowerMonitor.Adjust/build/
-PowerMonitor.Adjust/logs/
-PowerMonitor.Adjust/node_modules/
-PowerMonitor.Site/.angular/
+.firebase/hosting.ZGlzdA.cache
+.angular/
