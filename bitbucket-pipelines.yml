@@ -10,10 +10,6 @@ pipelines:
           script:
             - cd PowerMonitor.Site 
             - npm install --force
-          condition:
-              changesets:
-                 includePaths:
-                   - "PowerMonitor.Site/**"
           artifacts:
             - PowerMonitor.Site/node_modules/** # Save modules for next steps
       - step:
@@ -23,10 +19,6 @@ pipelines:
           script:
             - cd PowerMonitor.Site
             - npm run build-prod
-          condition:
-              changesets:
-                 includePaths:
-                   - "PowerMonitor.Site/**"
           artifacts:
             - PowerMonitor.Site/dist/** # Save build for next steps
             - PowerMonitor.Site/package.json
@@ -41,10 +33,6 @@ pipelines:
                variables:
                 FIREBASE_TOKEN: $FIREBASE_TOKEN
                 PROJECT_ID: $PROJECT_ID
-          condition:
-              changesets:
-                 includePaths:
-                   - "PowerMonitor.Site/**"
       - step:
           name: Commit new version (Site)
           caches:
@@ -58,8 +46,3 @@ pipelines:
             - git commit -m "[skip ci] Updating site version."
             - git tag -a v$appversion -m "Site version $appversion"
             - git push origin master --tags
-          condition:
-              changesets:
-                 includePaths:
-                   # only xml files directly under path1 directory
-                   - "PowerMonitor.Site/**"
