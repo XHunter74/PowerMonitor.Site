@@ -9,7 +9,7 @@ pipelines:
             - node
           script:
             - cd PowerMonitor.Site 
-            - npm install
+            - npm install --force
           condition:
               changesets:
                  includePaths:
