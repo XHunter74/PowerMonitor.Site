@@ -36,8 +36,6 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   currentDateControl: FormControl = new FormControl();
   displayedColumns: string[] = ['start', 'finish', 'duration'];
   sortedData = new MatTableDataSource();
-  private lastSort: string;
-  private lastSortDirection: string;
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;

@@ -24,7 +24,7 @@ export class QuestionDialogComponent {
             width,
             data: new QuestionDialogDataDto(question, positiveButton, negativeButton)
         });
-        const dialogResult = await dialogRef.afterClosed().toPromise<string>();
+        const dialogResult = await dialogRef.afterClosed().toPromise();
         return dialogResult;
     }
 

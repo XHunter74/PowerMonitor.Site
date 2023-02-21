@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
-import 'rxjs/add/observable/interval';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { interval } from 'rxjs';
 
 
 @Component({
@@ -84,7 +84,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initSocketConnection();
-    this.timerSub = Observable.interval(1000).subscribe(() => {
+    this.timerSub = interval(1000).subscribe(() => {
       if (!this.webSocketService.isConnected) {
         this.initSocketConnection();
       }

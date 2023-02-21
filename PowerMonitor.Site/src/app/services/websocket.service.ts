@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs/Observable';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class WebSocket extends Socket {

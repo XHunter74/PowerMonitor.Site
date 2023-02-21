@@ -2,6 +2,16 @@
     .gauge-chart {
         margin: 0 auto;
     }
+
+    .gauge-row {
+        justify-content: center
+    }
+}
+
+@media screen and (min-width:961px) {
+    .gauge-row {
+        justify-content: left
+    }
 }
 
 .container {
@@ -13,6 +23,6 @@
     margin-left: 10px;
 }
 
-.gauge-row {
-    /* justify-content: center */
-}
+/* .gauge-row {
+    justify-content: center
+} */
