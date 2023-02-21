@@ -8,7 +8,6 @@ pipelines:
           caches:
             - node
           script:
-            - cd PowerMonitor.Site 
             - npm install --force
           artifacts:
             - PowerMonitor.Site/node_modules/** # Save modules for next steps
@@ -17,18 +16,16 @@ pipelines:
           caches:
             - node
           script:
-            - cd PowerMonitor.Site
             - npm run build-prod
           artifacts:
-            - PowerMonitor.Site/dist/** # Save build for next steps
-            - PowerMonitor.Site/package.json
-            - PowerMonitor.Site/package-lock.json
-            - PowerMonitor.Site/src/environments/environment.prod.ts
+            - dist/** # Save build for next steps
+            - package.json
+            - package-lock.json
+            - src/environments/environment.prod.ts
       - step:
           name: Firebase deploy (Site)
           deployment: production
           script:
-             - cd PowerMonitor.Site
              - pipe: atlassian/firebase-deploy:3.1.1
                variables:
                 FIREBASE_TOKEN: $FIREBASE_TOKEN
@@ -38,7 +35,6 @@ pipelines:
           caches:
             - node
           script:
-            - cd PowerMonitor.Site
             - appversion=`node app-version.js`
             - git add package.json
             - git add package-lock.json
