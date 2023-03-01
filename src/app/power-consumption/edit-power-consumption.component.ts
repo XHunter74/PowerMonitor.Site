@@ -1,4 +1,4 @@
-import { Component, Optional, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Optional, Inject, OnInit } from '@angular/core';
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
@@ -27,7 +27,6 @@ export class EditPowerConsumptionComponent implements OnInit {
     constructor(
         @Optional() @Inject(MAT_DIALOG_DATA) public componentData: PowerMeteringDto,
         @Optional() private readonly dialogRef: MatDialogRef<EditPowerConsumptionComponent>,
-        private renderer: Renderer2
     ) {
         if (!componentData) {
             componentData = new PowerMeteringDto();
@@ -53,9 +52,6 @@ export class EditPowerConsumptionComponent implements OnInit {
             eventTimeField: this.eventTime,
             factualDataField: this.data.factualData,
         });
-        // setTimeout(() => {
-        //     this.renderer.selectRootElement('#factualDataField').focus();
-        // }, 500);
     }
 
     saveItem() {
