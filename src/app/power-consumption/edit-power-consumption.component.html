@@ -1,8 +1,9 @@
 <form [formGroup]="recordForm" autocomplete="on" class="form">
     <div class="modal-body">
         <div class="form-group row">
-            <label class="control-label" for="eventDateField">Date:</label>
-            <input matInput [matDatepicker]="picker3" placeholder="" formControlName="eventDateField" [readonly]="true" (click)="picker3.open()">
+            <label class="control-label" style="width: 90px;" for="eventDateField">Date:</label>
+            <input matInput [matDatepicker]="picker3" placeholder="" formControlName="eventDateField" [readonly]="true"
+                (click)="picker3.open()">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
             <!-- <input type="text" class="form-control" formControlName="nameField">
@@ -13,8 +14,8 @@
             </div> -->
         </div>
         <div class="form-group row">
-            <label class="control-label" for="eventTimeField">Time: </label>
-            <ngb-timepicker formControlName="eventTimeField" required></ngb-timepicker>
+            <label class="control-label" style="width: 90px;" for="eventTimeField">Time: </label>
+            <ngb-timepicker formControlName="eventTimeField" required class="timepicker"></ngb-timepicker>
             <div *ngIf="eventTimeField.errors" class="alert alert-danger">
                 <div *ngIf="eventTimeField.errors['required']">
                     Select some time
@@ -22,8 +23,10 @@
             </div>
         </div>
         <div class="form-group row">
-            <input formControlName="factualDataField" required class="form-control" digitOnly type="text">
-            <div *ngIf="factualDataField.invalid && (factualDataField.dirty || factualDataField.touched)" class="alert alert-danger">
+            <label class="control-label" style="width: 90px;" for="eventTimeField">Value: </label>
+            <input id="factualDataField" formControlName="factualDataField" required class="form-control" digitOnly [autofocus] type="text">
+            <div *ngIf="factualDataField.invalid && (factualDataField.dirty || factualDataField.touched)"
+                class="alert alert-danger">
                 <div *ngIf="factualDataField.errors.required">
                     Factual data is required.
                 </div>

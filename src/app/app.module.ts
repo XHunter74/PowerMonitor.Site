@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +34,7 @@ import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-m
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthService } from './services/auth.service';
 import { AppHttpInterceptor } from './services/http.interceptor';
 import { UsersService } from './services/users-service';
@@ -42,6 +42,7 @@ import { PowerConsumptionComponent } from './power-consumption/power-consumption
 import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
         PowerConsumptionComponent,
         QuestionDialogComponent,
         EditPowerConsumptionComponent,
-        DigitOnlyDirective
+        DigitOnlyDirective,
+        AutofocusDirective,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

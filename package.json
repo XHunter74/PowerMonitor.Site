@@ -33,6 +33,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@popperjs/core": "^2.11.6",
     "angular-google-charts": "2.2.3",
+    "bootstrap": "^5.2.3",
     "chart.js": "^3.4.0",
     "chartjs-plugin-annotation": "^2.1.1",
     "hammerjs": "^2.0.8",
