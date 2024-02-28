@@ -10,7 +10,7 @@ import { ChartConfiguration, Chart } from 'chart.js';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Constants } from '../constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 
 @Component({

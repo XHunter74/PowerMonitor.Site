@@ -4,7 +4,7 @@ import { ISystemInfo } from '../models/sysinfo.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { environment } from '../../environments/environment';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
     selector: 'app-platform-info',

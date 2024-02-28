@@ -3,7 +3,7 @@ import { ServicesService } from '../services/services-service';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 

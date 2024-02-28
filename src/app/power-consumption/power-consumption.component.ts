@@ -6,8 +6,8 @@ import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dia
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 
 @Component({
   selector: 'app-power-consumption',

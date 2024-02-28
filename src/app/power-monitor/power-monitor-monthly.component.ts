@@ -13,7 +13,7 @@ import { ChartConfiguration, Chart } from 'chart.js';
 import { Constants } from '../constants';
 import { daysInMonth } from '../utils';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 
