@@ -22,6 +22,7 @@ export class QuestionDialogComponent {
         }
         const dialogRef = dialog.open(QuestionDialogComponent, {
             width,
+            height: '100px',
             data: new QuestionDialogDataDto(question, positiveButton, negativeButton)
         });
         const dialogResult = await dialogRef.afterClosed().toPromise();

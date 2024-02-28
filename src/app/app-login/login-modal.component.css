@@ -6,3 +6,26 @@
     height: auto;
     max-height: 480px;
 }
+
+.modal-body {
+    margin: 10px;
+}
+
+.footer-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.login-form {
+    height: 260px;
+}
+
+.alert-danger {
+    height: 30px;
+    padding: 2px;
+    background-color: white;
+    border: none;
+    color: red;
+}
