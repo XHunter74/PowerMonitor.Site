@@ -10,7 +10,7 @@ import { Constants } from '../constants';
 import { MatDialog } from '@angular/material/dialog';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatSort, Sort, MatSortHeader} from '@angular/material/sort';
-import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
+import {MatTableDataSource} from '@angular/material/table';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 

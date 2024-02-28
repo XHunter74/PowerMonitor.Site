@@ -7,7 +7,7 @@ import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-power-consumption',
