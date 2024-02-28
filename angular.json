@@ -16,7 +16,9 @@
                         "main": "src/main.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "progress": true,
-                        "polyfills": "src/polyfills.ts",
+                        "polyfills": [
+                            "zone.js"
+                        ],
                         "assets": [
                             "src/assets/favicon.png",
                             "src/assets"

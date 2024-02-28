@@ -1,0 +1,1 @@
+ng generate @angular/material:mdc-migration
