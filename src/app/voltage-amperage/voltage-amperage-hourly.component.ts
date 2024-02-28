@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatSort, Sort, MatSortHeader} from '@angular/material/sort';
 import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';

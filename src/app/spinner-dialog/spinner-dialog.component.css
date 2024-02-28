@@ -1,4 +1,16 @@
-.transparent .mat-dialog-container {
+.transparent .mat-mdc-dialog-container {
     box-shadow: none;
     background: rgba(0, 0, 0, 0.0);
+}
+
+.mat-mdc-progress-spinner{
+}
+
+.spinner-dialog-container{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

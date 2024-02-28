@@ -9,7 +9,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-voltage-amperage-daily',

@@ -3,7 +3,7 @@ import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login-modal-component',

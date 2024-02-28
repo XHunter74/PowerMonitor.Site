@@ -12,7 +12,7 @@ import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
 import { Constants } from '../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 

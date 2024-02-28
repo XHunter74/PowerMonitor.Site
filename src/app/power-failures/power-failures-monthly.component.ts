@@ -13,7 +13,7 @@ import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model'
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
