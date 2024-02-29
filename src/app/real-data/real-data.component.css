@@ -12,10 +12,10 @@
     .gauge-row {
         justify-content: left
     }
-}
 
-.container {
-    margin-top: 50px;
+    .container {
+        margin-top: 50px;
+    }
 }
 
 .google-chart {
