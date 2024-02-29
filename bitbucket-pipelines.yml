@@ -19,6 +19,7 @@ pipelines:
             - npm run build-prod
           artifacts:
             - dist/** # Save build for next steps
+            - firebase.json
             # - package.json
             # - package-lock.json
             # - src/environments/environment.prod.ts
