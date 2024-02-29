@@ -1,6 +1,6 @@
-<form [formGroup]="recordForm" autocomplete="on" class="form">
+<form [formGroup]="recordForm" autocomplete="on" class="form edit-consumption-form">
     <div class="modal-body">
-        <div class="form-group row">
+        <div class="form-group">
             <label class="control-label" style="width: 90px;" for="eventDateField">Date:</label>
             <input matInput [matDatepicker]="picker3" placeholder="" formControlName="eventDateField" [readonly]="true"
                 (click)="picker3.open()">
@@ -13,7 +13,7 @@
                 </div>
             </div> -->
         </div>
-        <div class="form-group row">
+        <div class="form-group ">
             <label class="control-label" style="width: 90px;" for="eventTimeField">Time: </label>
             <ngb-timepicker formControlName="eventTimeField" required class="timepicker"></ngb-timepicker>
             <div *ngIf="eventTimeField.errors" class="alert alert-danger">
@@ -22,9 +22,10 @@
                 </div>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group">
             <label class="control-label" style="width: 90px;" for="eventTimeField">Value: </label>
-            <input id="factualDataField" formControlName="factualDataField" required class="form-control" digitOnly [autofocus] type="text">
+            <input id="factualDataField" formControlName="factualDataField" required class="form-control" digitOnly
+                [autofocus] type="text">
             <div *ngIf="factualDataField.invalid && (factualDataField.dirty || factualDataField.touched)"
                 class="alert alert-danger">
                 <div *ngIf="factualDataField.errors.required">
@@ -33,10 +34,12 @@
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2" (click)="saveItem()"> Save
-        </button>
-        <button type="reset" mat-button [matDialogClose]="null" tabindex="3"> Cancel </button>
+    <div class="footer-container">
+        <div class="modal-footer">
+            <button type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2" (click)="saveItem()"> Save
+            </button>
+            <button type="reset" mat-button [matDialogClose]="null" tabindex="3"> Cancel </button>
+        </div>
     </div>
 </form>
 <!-- <form #recordForm="ngForm" autocomplete="on" class="form">

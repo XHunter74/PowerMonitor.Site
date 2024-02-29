@@ -14,6 +14,18 @@
     margin-left: -12px;
 }
 
-.modal-footer{
+.modal-footer {
     margin-right: 20px;
+}
+
+.edit-consumption-form {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.footer-container {
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+    width: 100%;
 }

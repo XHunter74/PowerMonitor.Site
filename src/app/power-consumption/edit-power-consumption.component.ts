@@ -38,9 +38,9 @@ export class EditPowerConsumptionComponent implements OnInit {
 
     static async show(dialog: MatDialog, data?: PowerMeteringDto): Promise<PowerMeteringDto> {
         const dialogRef = dialog.open(EditPowerConsumptionComponent, {
-            width: '750px',
+            width: '390px',
             maxHeight: '700px',
-            height: '310px',
+            height: '430px',
             data
         });
         const dialogData = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
