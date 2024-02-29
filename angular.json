@@ -74,21 +74,21 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "PowerMonitor:build"
+                      "buildTarget": "PowerMonitor:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "PowerMonitor:build:production"
+                          "buildTarget": "PowerMonitor:build:production"
                         },
                         "local-prod": {
-                            "browserTarget": "PowerMonitor:build:local-prod"
+                          "buildTarget": "PowerMonitor:build:local-prod"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "PowerMonitor:build"
+                      "buildTarget": "PowerMonitor:build"
                     }
                 },
                 "lint": {
