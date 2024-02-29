@@ -29,7 +29,8 @@ pipelines:
           script:
              - pipe: atlassian/firebase-deploy:5.1.0
                variables:
-                KEY_FILE: $FIREBASE_KEY_FILE
+                # KEY_FILE: $FIREBASE_KEY_FILE
+                FIREBASE_TOKEN: $FIREBASE_TOKEN
                 NODE_JS_VERSION: '18'
                 PROJECT_ID: $PROJECT_ID
       - step:
