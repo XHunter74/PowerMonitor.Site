@@ -26,7 +26,7 @@ pipelines:
           name: Firebase deploy (Site)
           deployment: production
           script:
-             - pipe: atlassian/firebase-deploy:3.1.1
+             - pipe: atlassian/firebase-deploy:5.1.0
                variables:
                 KEY_FILE: $FIREBASE_KEY_FILE
                 NODE_JS_VERSION: '18'
