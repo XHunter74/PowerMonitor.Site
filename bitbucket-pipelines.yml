@@ -28,7 +28,8 @@ pipelines:
           script:
              - pipe: atlassian/firebase-deploy:3.1.1
                variables:
-                FIREBASE_TOKEN: $FIREBASE_TOKEN
+                KEY_FILE: $FIREBASE_KEY_FILE
+                NODE_JS_VERSION: '18'
                 PROJECT_ID: $PROJECT_ID
       - step:
           name: Commit new version (Site)
