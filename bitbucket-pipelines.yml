@@ -20,9 +20,9 @@ pipelines:
           artifacts:
             - dist/** # Save build for next steps
             - firebase.json
-            # - package.json
-            # - package-lock.json
-            # - src/environments/environment.prod.ts
+            - package.json
+            - package-lock.json
+            - src/environments/environment.prod.ts
       - step:
           name: Firebase deploy (Site)
           deployment: production
