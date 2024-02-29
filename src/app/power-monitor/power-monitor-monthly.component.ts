@@ -96,7 +96,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         super(dialog);
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         Chart.register(Annotation);
         this.activatedRouter.params.subscribe(
             params => {
@@ -110,7 +110,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        await this.refreshData();
     }
 
     async refreshData() {

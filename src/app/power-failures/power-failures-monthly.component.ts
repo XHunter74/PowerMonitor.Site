@@ -29,7 +29,7 @@ const PowerFailuresSort = 'power-failures-sort-monthly';
 })
 
 
-export class PowerFailuresMonthlyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PowerFailuresMonthlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
@@ -48,12 +48,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     super(dialog);
   }
 
-  ngAfterViewInit() {
-    this.sortedData.sort = this.sort;
-    this.restoreSort();
-  }
-
-  ngOnInit(): void {
+  async ngOnInit() {
     this.activatedRouter.params.subscribe(
       params => {
         const year = params['year'];
@@ -66,7 +61,9 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       }
     );
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.refreshData();
+    await this.refreshData();
+    this.sortedData.sort = this.sort;
+    this.restoreSort();
   }
 
   restoreSort() {

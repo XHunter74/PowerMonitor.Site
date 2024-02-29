@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {Sort} from '@angular/material/sort';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Sort } from '@angular/material/sort';
 
 import { PowerService } from '../services/power-service';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
@@ -28,7 +28,7 @@ export class VoltageAmperageDailyComponent extends AppBaseComponent implements O
         super(dialog);
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.activatedRouter.params.subscribe(
             params => {
                 const year = params['year'];
@@ -43,7 +43,7 @@ export class VoltageAmperageDailyComponent extends AppBaseComponent implements O
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        await this.refreshData();
     }
 
     async dateChanged(event: MatDatepickerInputEvent<Date>) {

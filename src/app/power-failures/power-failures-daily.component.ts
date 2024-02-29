@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { IPowerFailureModel } from '../models/power-failure.model';
-import { daysInMonth, compare } from '../utils';
+import { daysInMonth } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -29,7 +29,7 @@ const PowerFailuresSort = 'power-failures-sort-daily';
 })
 
 
-export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
@@ -48,12 +48,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     super(dialog);
   }
 
-  ngAfterViewInit() {
-    this.sortedData.sort = this.sort;
-    this.restoreSort();
-  }
-
-  ngOnInit(): void {
+  async ngOnInit() {
     this.activatedRouter.params.subscribe(
       params => {
         const year = params['year'];
@@ -67,7 +62,9 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
       }
     );
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.refreshData();
+    await this.refreshData();
+    this.sortedData.sort = this.sort;
+    this.restoreSort();
   }
 
   restoreSort() {

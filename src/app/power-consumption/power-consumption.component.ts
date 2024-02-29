@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { PowerService } from '../services/power-service';
@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 
-export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'coefficient', 'buttons'];
   sortedData = new MatTableDataSource();
@@ -27,9 +27,6 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     private powerService: PowerService,
   ) {
     super(dialog);
-  }
-
-  ngAfterViewInit() {
   }
 
   async ngOnInit() {

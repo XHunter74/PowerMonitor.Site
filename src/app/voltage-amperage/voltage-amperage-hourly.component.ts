@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { PowerService } from '../services/power-service';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -8,9 +8,9 @@ import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
 import { Constants } from '../constants';
 import { MatDialog } from '@angular/material/dialog';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {MatSort, Sort, MatSortHeader} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
@@ -19,7 +19,7 @@ const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
     templateUrl: './voltage-amperage-hourly.component.html',
     styleUrls: ['./voltage-amperage-hourly.component.css']
 })
-export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     sortedData = new MatTableDataSource();
@@ -39,10 +39,6 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         super(dialog);
     }
 
-    ngAfterViewInit() {
-        this.sortedData.sort = this.sort;
-        this.restoreSort();
-    }
     restoreSort() {
         const sort = this.sortedData.sort;
         const restoredSortStr = localStorage.getItem(VoltageAmperageHourlySort);
@@ -57,7 +53,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         }
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.activatedRouter.params.subscribe(
             params => {
                 const year = params['year'];
@@ -72,7 +68,9 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        await this.refreshData();
+        this.sortedData.sort = this.sort;
+        this.restoreSort();
     }
 
     async dateChanged(event: MatDatepickerInputEvent<Date>) {

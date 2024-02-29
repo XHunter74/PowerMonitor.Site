@@ -75,7 +75,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         super(dialog);
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         Chart.register(Annotation);
         this.activatedRouter.params.subscribe(
             params => {
@@ -91,7 +91,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        await this.refreshData();
     }
 
     ngAfterViewChecked(): void {

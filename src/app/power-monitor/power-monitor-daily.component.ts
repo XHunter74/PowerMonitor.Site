@@ -30,7 +30,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
     public powerAvg: number;
-    
+
     private annotation: any = {
         type: 'line',
         mode: 'horizontal',
@@ -97,7 +97,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         super(dialog);
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         Chart.register(Annotation);
         this.activatedRouter.params.subscribe(
             params => {
@@ -112,7 +112,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        await this.refreshData();
     }
 
 
