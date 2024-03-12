@@ -4,7 +4,8 @@
 
 
 .table>:not(caption)>*>* {
-    border-bottom-width: 0px;
+    /* border-bottom-width: 0px; */
+    border-color: lightgrey;
 }
 
 .mat-mdc-form-field {
