@@ -49,7 +49,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   }
 
   async ngOnInit() {
-    this.activatedRouter.params.subscribe(
+    this.activatedRouter.queryParams.subscribe(
       params => {
         const year = params['year'];
         const month = params['month'];
@@ -133,7 +133,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     this.currentDate = new Date(year, month, 1);
     datepicker.close();
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures/daily', { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+    this.router.navigate(['power-failures/daily'], { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
     this.refreshData();
   }
 
@@ -159,8 +159,8 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
       this.currentDate.setMonth(this.currentDate.getMonth() - 1);
     }
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures/daily',
-      { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+    this.router.navigate(['power-failures/daily'],
+      { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
     await this.refreshData();
   }
 

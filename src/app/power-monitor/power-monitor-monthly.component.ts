@@ -74,8 +74,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
             const month = e.active['0'].index + 1;
-            this.router.navigate(['power-monitor', 'daily',
-                { year: this.currentDate.getFullYear(), month: month }]);
+            this.router.navigate(['power-monitor', 'daily'],
+                { queryParams: { year: this.currentDate.getFullYear(), month: month } });
         }
     }
 
@@ -83,8 +83,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         const year = normalizedYear.year();
         this.currentDate = new Date(year, 0, 1);
         datepicker.close();
-        this.router.navigate(['power-monitor', 'monthly',
-            { year: this.currentDate.getFullYear() }]);
+        this.router.navigate(['power-monitor', 'monthly'],
+            { queryParams: { year: this.currentDate.getFullYear() } });
         this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
@@ -98,7 +98,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
 
     async ngOnInit() {
         Chart.register(Annotation);
-        this.activatedRouter.params.subscribe(
+        this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
                 if (year) {
@@ -211,8 +211,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
         }
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['power-monitor', 'monthly',
-            { year: this.currentDate.getFullYear() }]);
+        this.router.navigate(['power-monitor', 'monthly'],
+            { queryParams: { year: this.currentDate.getFullYear() } });
         await this.refreshData();
     }
 

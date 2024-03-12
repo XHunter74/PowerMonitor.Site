@@ -49,7 +49,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   }
 
   async ngOnInit() {
-    this.activatedRouter.params.subscribe(
+    this.activatedRouter.queryParams.subscribe(
       params => {
         const year = params['year'];
         if (year) {
@@ -124,8 +124,8 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
     }
     this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures', 'monthly',
-      { year: this.currentDate.getFullYear() }]);
+    this.router.navigate(['power-failures', 'monthly'],
+      { queryParams: { year: this.currentDate.getFullYear() } });
     await this.refreshData();
   }
 
@@ -145,16 +145,16 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     const year = normalizedYear.year();
     this.currentDate = new Date(year, 0, 1);
     datepicker.close();
-    this.router.navigate(['power-failures', 'monthly',
-      { year: this.currentDate.getFullYear() }]);
+    this.router.navigate(['power-failures', 'monthly'],
+      { queryParams: { year: this.currentDate.getFullYear() } });
     this.currentDateControl.setValue(this.currentDate.toISOString());
     this.refreshData();
   }
 
   clickOnRowHandler(row: PowerFailureMonthlyModel) {
     if (row) {
-      this.router.navigate(['power-failures', 'daily',
-        { year: row.year, month: row.month }]);
+      this.router.navigate(['power-failures', 'daily'],
+        { queryParams: { year: row.year, month: row.month } });
     }
   }
 }

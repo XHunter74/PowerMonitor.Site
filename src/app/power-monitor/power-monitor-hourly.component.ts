@@ -77,7 +77,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     async ngOnInit() {
         Chart.register(Annotation);
-        this.activatedRouter.params.subscribe(
+        this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
                 const month = params['month'];
@@ -102,8 +102,8 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     async dateChanged(event: MatDatepickerInputEvent<Date>) {
         this.currentDate = new Date(event.value);
-        this.router.navigate(['power-monitor', 'hourly',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        this.router.navigate(['power-monitor', 'hourly'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
         await this.refreshData();
     }
 
@@ -218,8 +218,8 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             this.currentDate.setDate(this.currentDate.getDate() - 1);
         }
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['power-monitor', 'hourly',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        this.router.navigate(['power-monitor', 'hourly'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
         await this.refreshData();
     }
 

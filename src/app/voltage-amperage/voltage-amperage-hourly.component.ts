@@ -54,7 +54,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     }
 
     async ngOnInit() {
-        this.activatedRouter.params.subscribe(
+        this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
                 const month = params['month'];
@@ -75,8 +75,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     async dateChanged(event: MatDatepickerInputEvent<Date>) {
         this.currentDate = new Date(event.value);
-        this.router.navigate(['voltage-amperage', 'hourly',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        this.router.navigate(['voltage-amperage', 'hourly'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
         await this.refreshData();
     }
 
@@ -115,8 +115,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             this.currentDate.setDate(this.currentDate.getDate() - 1);
         }
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['voltage-amperage', 'hourly',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() }]);
+        this.router.navigate(['voltage-amperage', 'hourly'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
         await this.refreshData();
     }
 

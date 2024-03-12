@@ -74,8 +74,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
             const days = e.active['0'].index + 1;
-            this.router.navigate(['power-monitor', 'hourly',
-                { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: days }]);
+            this.router.navigate(['power-monitor', 'hourly'],
+                { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: days } });
         }
     }
 
@@ -84,8 +84,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         const year = normalizedMonth.year();
         this.currentDate = new Date(year, month, 1);
         datepicker.close();
-        this.router.navigate(['power-monitor', 'daily',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+        this.router.navigate(['power-monitor', 'daily'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
         this.currentDateControl.setValue(this.currentDate.toISOString());
         this.refreshData();
     }
@@ -99,7 +99,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     async ngOnInit() {
         Chart.register(Annotation);
-        this.activatedRouter.params.subscribe(
+        this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
                 const month = params['month'];
@@ -217,8 +217,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
         }
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['power-monitor', 'daily',
-            { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 }]);
+        this.router.navigate(['power-monitor', 'daily'],
+            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
         await this.refreshData();
     }
 
