@@ -1,15 +1,17 @@
-<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Down)" [disabled]="isAddMonthButtonDisabled(Direction.Down)">
+<button class="hourly__mat-button" mat-button (click)="addDay(Direction.Down)"
+    [disabled]="isAddDayButtonDisabled(Direction.Down)">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Up)" [disabled]="isAddMonthButtonDisabled(Direction.Up)">
+<button class="hourly__mat-button" mat-button (click)="addDay(Direction.Up)"
+    [disabled]="isAddDayButtonDisabled(Direction.Up)">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (click)="picker3.open()">
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+        (click)="picker3.open()" (dateChange)="dateChanged($event)">
     <mat-datepicker-toggle matSuffix [for]=" picker3">
     </mat-datepicker-toggle>
-    <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
-    </mat-datepicker>
+    <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
 <button class="hourly__mat-button" mat-button (click)="refreshData()">
     <mat-icon>refresh</mat-icon>
@@ -30,7 +32,6 @@
             <tr>
                 <td class="pr-2"><b>Max failure:</b> </td>
                 <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}}</td>
-                <td class="text-right">, {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
             </tr>
         </table>
     </div>
@@ -50,6 +51,6 @@
             <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{alternate: getRowIndex(row) % 2 == 0 }"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;let even = even" [ngClass]="{alternate: even}"></tr>
     </table>
 </div>
