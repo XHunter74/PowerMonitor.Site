@@ -1,0 +1,55 @@
+<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Down)" [disabled]="isAddMonthButtonDisabled(Direction.Down)">
+    <mat-icon>chevron_left</mat-icon>
+</button>
+<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Up)" [disabled]="isAddMonthButtonDisabled(Direction.Up)">
+    <mat-icon>chevron_right</mat-icon>
+</button>
+<mat-form-field>
+    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true" (click)="picker3.open()">
+    <mat-datepicker-toggle matSuffix [for]=" picker3">
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
+    </mat-datepicker>
+</mat-form-field>
+<button class="hourly__mat-button" mat-button (click)="refreshData()">
+    <mat-icon>refresh</mat-icon>
+</button>
+<div class="row">
+    <div class="col-12 col-md-6 mb-3">
+        <table class="d-inline-block" *ngIf="maxPowerFailure">
+            <tr>
+                <td class="pr-2"><b>Failure events:</b> </td>
+                <td class="text-right"> {{failureAmount}}</td>
+                <td class="text-right"></td>
+            </tr>
+            <tr>
+                <td class="pr-2"><b>Total failure:</b> </td>
+                <td class="text-right"> {{formatDuration(totalPowerFailure)}}</td>
+                <td class="text-right"></td>
+            </tr>
+            <tr>
+                <td class="pr-2"><b>Max failure:</b> </td>
+                <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}}</td>
+                <td class="text-right">, {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="table-responsive">
+    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
+        <ng-container matColumnDef="start">
+            <th *matHeaderCellDef mat-sort-header> Start </th>
+            <td *matCellDef="let element"> {{element.start | date: 'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="finish">
+            <th *matHeaderCellDef mat-sort-header> Finish </th>
+            <td *matCellDef="let element"> {{element.finish | date: 'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+            <th *matHeaderCellDef mat-sort-header> Duration </th>
+            <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{alternate: getRowIndex(row) % 2 == 0 }"></tr>
+    </table>
+</div>

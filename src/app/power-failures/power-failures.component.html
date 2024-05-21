@@ -1,11 +1,17 @@
 <nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
     <ng-container ngbNavItem [ngbNavItem]="1">
+        <a ngbNavLink>Hourly</a>
+        <ng-template ngbNavContent>
+            <app-power-failures-hourly></app-power-failures-hourly>
+        </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem [ngbNavItem]="2">
         <a ngbNavLink>Daily</a>
         <ng-template ngbNavContent>
             <app-power-failures-daily></app-power-failures-daily>
         </ng-template>
     </ng-container>
-    <ng-container ngbNavItem [ngbNavItem]="2">
+    <ng-container ngbNavItem [ngbNavItem]="3">
         <a ngbNavLink>Monthly</a>
         <ng-template ngbNavContent>
             <app-power-failures-monthly></app-power-failures-monthly>

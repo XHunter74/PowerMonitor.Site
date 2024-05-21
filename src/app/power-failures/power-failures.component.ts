@@ -16,11 +16,14 @@ export class PowerFailuresComponent implements OnInit, AfterViewChecked {
         private router: Router) {
         this.route.data.subscribe(d => {
             switch (d.name) {
-                case "daily":
+                case "hourly":
                     this.selectedTab = 1;
                     break;
-                case "monthly":
+                case "daily":
                     this.selectedTab = 2;
+                    break;
+                case "monthly":
+                    this.selectedTab = 3;
                     break;
             }
         });
@@ -36,9 +39,12 @@ export class PowerFailuresComponent implements OnInit, AfterViewChecked {
     onNavChange(changeEvent: NgbNavChangeEvent) {
         switch (changeEvent.nextId) {
             case 1:
-                this.router.navigate(['power-failures', 'daily']);
+                this.router.navigate(['power-failures', 'hourly']);
                 break;
             case 2:
+                this.router.navigate(['power-failures', 'daily']);
+                break;
+            case 3:
                 this.router.navigate(['power-failures', 'monthly']);
                 break;
         }

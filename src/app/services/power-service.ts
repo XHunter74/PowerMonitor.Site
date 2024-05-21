@@ -82,7 +82,7 @@ export class PowerService extends HttpService {
         return promise;
     }
 
-    async getHourlyPowerFailuresData(start: Date, finish: Date): Promise<IPowerFailureModel[]> {
+    async getPowerFailuresHourlyData(start: Date, finish: Date): Promise<IPowerFailureModel[]> {
         const startDate = getStringDate(start);
         const finishDate = getStringDate(finish);
         const params = new HttpParams()

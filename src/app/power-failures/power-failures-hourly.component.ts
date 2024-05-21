@@ -4,6 +4,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { IPowerFailureModel } from '../models/power-failure.model';
+import { daysInMonth } from '../utils';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
@@ -15,14 +16,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
-import { PowerFailureDailyModel } from '../models/power-failure-daily.model';
 
-const PowerFailuresSort = 'power-failures-sort-daily';
+const PowerFailuresSort = 'power-failures-sort-hourly';
 
 @Component({
-  selector: 'app-power-failures-daily',
-  templateUrl: './power-failures-daily.component.html',
-  styleUrls: ['./power-failures-daily.component.css'],
+  selector: 'app-power-failures-hourly',
+  templateUrl: './power-failures-hourly.component.html',
+  styleUrls: ['./power-failures-hourly.component.css'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
@@ -30,18 +30,19 @@ const PowerFailuresSort = 'power-failures-sort-daily';
 })
 
 
-export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
+export class PowerFailuresHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   Direction = Direction;
-
+  
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
   currentDateControl: UntypedFormControl = new UntypedFormControl();
-  displayedColumns: string[] = ['eventDate', 'duration', 'events'];
+  displayedColumns: string[] = ['start', 'finish', 'duration'];
   sortedData = new MatTableDataSource();
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
+  private rowsColor: any[] = [];
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -77,10 +78,8 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
       if (restoredSort.active && restoredSort.direction) {
         sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
         sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
-        if (sort.sortables.get(restoredSort.active) != undefined) {
-          (sort.sortables.get(restoredSort.active) as MatSortHeader)
-            ._setAnimationTransitionState({ toState: 'active' });
-        }
+        (sort.sortables.get(restoredSort.active) as MatSortHeader)
+          ._setAnimationTransitionState({ toState: 'active' });
       }
     }
   }
@@ -89,18 +88,33 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     setTimeout(async () => {
       this.showSpinner();
       try {
-        const powerData = await this.powerService.getPowerFailuresDailyData(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1);
+        const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+        const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
+          daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
+        const powerData = await this.powerService.getPowerFailuresHourlyData(startDate, finishDate);
         this.sortedData.data = powerData;
-        const maxPowerFailure = powerData
-          .find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
-        this.maxPowerFailure = {
-          start: maxPowerFailure.eventDate,
-          finish: maxPowerFailure.eventDate,
-          duration: maxPowerFailure.duration
-        };
+        this.maxPowerFailure =
+          powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
         this.totalPowerFailure = 0;
         this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
-        this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
+        this.failureAmount = powerData.length;
+        let previousDate;
+        let previousIdx = 0;
+        this.rowsColor = [];
+        for (const item of powerData) {
+          const itemDate = new Date(item.start);
+          if (!previousDate ||
+            previousDate.getTime() !== (new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate())).getTime()) {
+            previousDate = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+            previousIdx++;
+          }
+          const newItem = {
+            rowDate: previousDate,
+            idx: previousIdx
+          };
+          this.rowsColor.push(newItem);
+        }
+
         this.closeSpinner();
       } catch (e) {
         console.log(e.message);
@@ -165,10 +179,15 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     }
   }
 
-  clickOnRowHandler(row: PowerFailureDailyModel) {
-    if (row) {
-      this.router.navigate(['power-failures', 'hourly'],
-        { queryParams: { year: row.eventDate.getFullYear(), month: row.eventDate.getMonth() + 1, day: row.eventDate.getDate() } });
+  getRowIndex(row) {
+    if (this.rowsColor && this.rowsColor.length > 0) {
+      let rowDate = new Date(row.start);
+      rowDate = new Date(rowDate.getFullYear(), rowDate.getMonth(), rowDate.getDate());
+      const item = this.rowsColor.find(e => e.rowDate.getTime() === rowDate.getTime());
+      return item.idx;
+    } else {
+      return 1;
     }
   }
+
 }
