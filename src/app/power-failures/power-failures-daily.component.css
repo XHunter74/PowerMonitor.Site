@@ -3,9 +3,16 @@
         padding: 0;
         min-width: 40px;
     }
+
     .mat-form-field-infix {
         width: 100px;
     }
 }
 
-.alternate { background-color: #eee7e7 }
+.table-row {
+    cursor: pointer;
+}
+
+.alternate {
+    background-color: #eee7e7
+}

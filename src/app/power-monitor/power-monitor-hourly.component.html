@@ -27,8 +27,8 @@
                 <p class="mb-0"><b>Average Power: </b>{{formatNumber(powerAvg)}}, kW/h</p>
             </td>
         </tr>
-        <tr *ngIf="powerForecast > 0">
-            <td>
+        <tr style="min-height: 29px;">
+            <td *ngIf="powerForecast> 0">
                 <p class="mb-0"><b>Forecast Power: </b>{{formatNumber(powerForecast)}}, kW/day</p>
             </td>
         </tr>

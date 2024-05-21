@@ -75,8 +75,10 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       if (restoredSort.active && restoredSort.direction) {
         sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
         sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
-        (sort.sortables.get(restoredSort.active) as MatSortHeader)
-          ._setAnimationTransitionState({ toState: 'active' });
+        if (sort.sortables.get(restoredSort.active) != undefined) {
+          (sort.sortables.get(restoredSort.active) as MatSortHeader)
+            ._setAnimationTransitionState({ toState: 'active' });
+        }
       }
     }
   }
