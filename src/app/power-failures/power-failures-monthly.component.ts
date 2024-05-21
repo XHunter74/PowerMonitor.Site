@@ -15,6 +15,7 @@ import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { Direction } from '../models/app.enums';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -36,10 +37,10 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['month', 'duration', 'events'];
   sortedData = new MatTableDataSource();
-  private lastSort: string;
-  private lastSortDirection: string;
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
+
+  Direction = Direction;
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -118,7 +119,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   }
 
   async addYear(direction: string) {
-    if (direction === 'up') {
+    if (direction === Direction.Up) {
       this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
     } else {
       this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
@@ -132,7 +133,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   isAddYearButtonDisabled(direction: string): boolean {
     const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
       this.currentDate.getDate());
-    if (direction === 'up') {
+    if (direction === Direction.Up) {
       nextDate.setFullYear(nextDate.getFullYear() + 1);
       return nextDate.getFullYear() > new Date().getFullYear();
     } else {

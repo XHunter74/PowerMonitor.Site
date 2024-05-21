@@ -15,6 +15,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Direction } from '../models/app.enums';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -31,6 +32,8 @@ const PowerFailuresSort = 'power-failures-sort-daily';
 
 export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
+  Direction = Direction;
+  
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   currentDate: Date;
   currentDateControl: UntypedFormControl = new UntypedFormControl();
@@ -138,22 +141,20 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   }
 
   formatDuration(duration: number): string {
-    const sec_num = Math.floor(duration / 1000); // don't forget the second param
+    const sec_num = Math.floor(duration / 1000);
     const hours = Math.floor(sec_num / 3600);
     const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     const seconds = sec_num - (hours * 3600) - (minutes * 60);
-    let hoursS = hours.toString();
-    let minutesS = minutes.toString();
-    let secondsS = seconds.toString();
 
-    if (hours < 10) { hoursS = '0' + hoursS; }
-    if (minutes < 10) { minutesS = '0' + minutesS; }
-    if (seconds < 10) { secondsS = '0' + secondsS; }
-    return hoursS + 'h ' + minutesS + 'm ' + secondsS + 's';
+    const hoursS = hours.toString().padStart(2, '0');
+    const minutesS = minutes.toString().padStart(2, '0');
+    const secondsS = seconds.toString().padStart(2, '0');
+
+    return `${hoursS}h ${minutesS}m ${secondsS}s`;
   }
 
-  async addMonth(direction: string) {
-    if (direction === 'up') {
+  async addMonth(direction: Direction) {
+    if (direction === Direction.Up) {
       this.currentDate.setMonth(this.currentDate.getMonth() + 1);
     } else {
       this.currentDate.setMonth(this.currentDate.getMonth() - 1);
@@ -164,10 +165,10 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
     await this.refreshData();
   }
 
-  isAddMonthButtonDisabled(direction: string): boolean {
+  isAddMonthButtonDisabled(direction: Direction): boolean {
     const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
       this.currentDate.getDate());
-    if (direction === 'up') {
+    if (direction === Direction.Up) {
       nextDate.setMonth(nextDate.getMonth() + 1);
       const today = new Date();
       return (nextDate.getFullYear() * 12 + nextDate.getMonth()) > (today.getFullYear() * 12 + today.getMonth());

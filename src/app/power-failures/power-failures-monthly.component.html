@@ -1,7 +1,7 @@
-<button class="hourly__mat-button" mat-button (click)="addYear('down')" [disabled]="isAddYearButtonDisabled('down')">
+<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Down)" [disabled]="isAddYearButtonDisabled(Direction.Down)">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addYear('up')" [disabled]="isAddYearButtonDisabled('up')">
+<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Up)" [disabled]="isAddYearButtonDisabled(Direction.Up)">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
