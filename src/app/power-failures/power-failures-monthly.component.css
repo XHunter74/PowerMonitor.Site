@@ -3,6 +3,7 @@
         padding: 0;
         min-width: 40px;
     }
+
     .mat-form-field-infix {
         width: 100px;
     }
@@ -10,4 +11,8 @@
 
 .table-row {
     cursor: pointer;
+}
+
+.alternate {
+    background-color: #eee7e7
 }
