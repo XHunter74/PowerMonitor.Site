@@ -37,8 +37,8 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['month', 'duration', 'events'];
   sortedData = new MatTableDataSource();
-  maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
+  failureAmount: number;
 
   Direction = Direction;
 
@@ -89,6 +89,9 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       try {
         const powerData = await this.powerService.getPowerFailuresMonthlyData(this.currentDate.getFullYear());
         this.sortedData.data = powerData;
+        this.totalPowerFailure = 0;
+        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
+        this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();

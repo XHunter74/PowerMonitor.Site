@@ -1,7 +1,9 @@
-<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Down)" [disabled]="isAddYearButtonDisabled(Direction.Down)">
+<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Down)"
+    [disabled]="isAddYearButtonDisabled(Direction.Down)">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Up)" [disabled]="isAddYearButtonDisabled(Direction.Up)">
+<button class="hourly__mat-button" mat-button (click)="addYear(Direction.Up)"
+    [disabled]="isAddYearButtonDisabled(Direction.Up)">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
@@ -16,16 +18,16 @@
 </button>
 <div class="row">
     <div class="col-12 col-md-6 mb-3">
-        <table class="d-inline-block" *ngIf="maxPowerFailure">
+        <table class="d-inline-block">
+            <tr>
+                <td class="pr-2"><b>Failure events:</b> </td>
+                <td class="text-right"> {{failureAmount}}</td>
+                <td class="text-right"></td>
+            </tr>
             <tr>
                 <td class="pr-2"><b>Total failure:</b> </td>
                 <td class="text-right"> {{formatDuration(totalPowerFailure)}}</td>
                 <td class="text-right"></td>
-            </tr>
-            <tr>
-                <td class="pr-2"><b>Max failure:</b> </td>
-                <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}}</td>
-                <td class="text-right">, {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
             </tr>
         </table>
     </div>
@@ -45,8 +47,8 @@
             <td *matCellDef="let element"> {{element.events}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;let even = even" [ngClass]="{alternate: even}"
-            (click)="clickOnRowHandler(row)">
+        <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;let even = even"
+            [ngClass]="{alternate: even}" (click)="clickOnRowHandler(row)">
         </tr>
     </table>
 </div>
