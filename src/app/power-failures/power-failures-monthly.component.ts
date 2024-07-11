@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PowerService } from '../services/power-service';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
-import { IPowerFailureModel } from '../models/power-failure.model';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
