@@ -15,6 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Direction } from '../models/app.enums';
+import { AppUtils } from '../utils/app-utils';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -38,6 +39,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
+  formatDuration=AppUtils.formatDuration;
 
   Direction = Direction;
 
@@ -103,23 +105,6 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     if (sort) {
       localStorage.setItem(PowerFailuresSort, JSON.stringify(sort));
     }
-  }
-
-
-
-  formatDuration(duration: number): string {
-    const sec_num = Math.floor(duration / 1000); // don't forget the second param
-    const hours = Math.floor(sec_num / 3600);
-    const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    const seconds = sec_num - (hours * 3600) - (minutes * 60);
-    let hoursS = hours.toString();
-    let minutesS = minutes.toString();
-    let secondsS = seconds.toString();
-
-    if (hours < 10) { hoursS = '0' + hoursS; }
-    if (minutes < 10) { minutesS = '0' + minutesS; }
-    if (seconds < 10) { secondsS = '0' + secondsS; }
-    return hoursS + 'h ' + minutesS + 'm ' + secondsS + 's';
   }
 
   async addYear(direction: string) {

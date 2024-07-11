@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
+import { AppUtils } from '../utils/app-utils';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -34,6 +35,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
+  formatDuration=AppUtils.formatDuration;
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -113,19 +115,6 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
     this.currentDateControl.setValue(this.currentDate.toISOString());
     this.router.navigate(['power-failures/daily'], { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
     this.refreshData();
-  }
-
-  formatDuration(duration: number): string {
-    const sec_num = Math.floor(duration / 1000);
-    const hours = Math.floor(sec_num / 3600);
-    const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    const seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-    const hoursS = hours.toString().padStart(2, '0');
-    const minutesS = minutes.toString().padStart(2, '0');
-    const secondsS = seconds.toString().padStart(2, '0');
-
-    return `${hoursS}h ${minutesS}m ${secondsS}s`;
   }
 
   async addDay(direction: string) {
