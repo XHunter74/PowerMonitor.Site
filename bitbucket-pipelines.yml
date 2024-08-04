@@ -1,12 +1,20 @@
 image: node:18.19.0
 
+definitions:
+  caches:
+    node-modules-cache:
+      key:
+        files:
+          - package-lock.json
+      path: node_modules
+
 pipelines:
   branches:
     master:
       - step:
           name: Installation packages (Site)
           caches:
-            - node
+            - node-modules-cache
           script:
             - npm install --force
           artifacts:
@@ -14,7 +22,7 @@ pipelines:
       - step:
           name: Build (Site)
           caches:
-            - node
+            - node-modules-cache
           script:
             - npm run build-prod
           artifacts:
@@ -36,7 +44,7 @@ pipelines:
       - step:
           name: Commit new version (Site)
           caches:
-            - node
+            - node-modules-cache
           script:
             - appversion=`node app-version.js`
             - git add package.json
