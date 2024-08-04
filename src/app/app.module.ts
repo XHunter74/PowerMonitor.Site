@@ -42,6 +42,7 @@ import { UsersService } from './services/users-service';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -85,7 +86,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         NgChartsModule,
         AppMaterialModule,
         SocketIoModule,
-        AppRoutingModule
+        AppRoutingModule,
+        GoogleChartsModule,
     ],
     providers: [
         AuthGuard,
