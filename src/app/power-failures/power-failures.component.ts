@@ -25,6 +25,9 @@ export class PowerFailuresComponent implements OnInit, AfterViewChecked {
                 case "monthly":
                     this.selectedTab = 3;
                     break;
+                case "yearly":
+                    this.selectedTab = 4;
+                    break;
             }
         });
     }
@@ -46,6 +49,9 @@ export class PowerFailuresComponent implements OnInit, AfterViewChecked {
                 break;
             case 3:
                 this.router.navigate(['power-failures', 'monthly']);
+                break;
+            case 4:
+                this.router.navigate(['power-failures', 'yearly']);
                 break;
         }
     }

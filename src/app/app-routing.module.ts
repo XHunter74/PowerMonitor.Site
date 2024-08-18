@@ -24,6 +24,7 @@ const routes: Routes = [
     { path: 'power-failures/hourly', component: PowerFailuresComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'power-failures/daily', component: PowerFailuresComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
     { path: 'power-failures/monthly', component: PowerFailuresComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
+    { path: 'power-failures/yearly', component: PowerFailuresComponent, data: { name: 'yearly' }, canActivate: [AuthGuard] },
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },

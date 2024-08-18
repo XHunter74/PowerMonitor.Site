@@ -17,6 +17,12 @@
             <app-power-failures-monthly></app-power-failures-monthly>
         </ng-template>
     </ng-container>
+    <ng-container ngbNavItem [ngbNavItem]="4">
+        <a ngbNavLink>Yearly</a>
+        <ng-template ngbNavContent>
+            <app-power-failures-yearly></app-power-failures-yearly>
+        </ng-template>
+    </ng-container>
 </nav>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>

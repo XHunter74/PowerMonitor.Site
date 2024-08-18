@@ -32,6 +32,7 @@ import { ErrorDialogComponent } from './dialogs/error-dialog.component';
 import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
 import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
+import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
@@ -65,6 +66,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         PowerFailuresHourlyComponent,
         PowerFailuresDailyComponent,
         PowerFailuresMonthlyComponent,
+        PowerFailuresYearlyComponent,
         SiteSettingsComponent,
         SpinnerDialogComponent,
         HomeComponent,

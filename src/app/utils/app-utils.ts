@@ -1,16 +1,34 @@
 export class AppUtils {
     static formatDuration(duration: number): string {
-        const sec_num = Math.floor(duration / 1000); // don't forget the second param
+        let sec_num = Math.floor(duration / 1000);
         const hours = Math.floor(sec_num / 3600);
-        const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-        const seconds = sec_num - (hours * 3600) - (minutes * 60);
-        let hoursS = hours.toString();
-        let minutesS = minutes.toString();
-        let secondsS = seconds.toString();
+        sec_num -= hours * 3600;
+        const minutes = Math.floor(sec_num / 60);
+        sec_num -= minutes * 60;
+        const seconds = sec_num;
 
-        if (hours < 10) { hoursS = '0' + hoursS; }
-        if (minutes < 10) { minutesS = '0' + minutesS; }
-        if (seconds < 10) { secondsS = '0' + secondsS; }
+        const hoursS = hours.toString().padStart(2, '0');
+        const minutesS = minutes.toString().padStart(2, '0');
+        const secondsS = seconds.toString().padStart(2, '0');
+
         return hoursS + ':' + minutesS + ':' + secondsS;
+    }
+
+    static formatDurationWithDays(duration: number): string {
+        let sec_num = Math.floor(duration / 1000);
+        const days = Math.floor(sec_num / 24 / 3600);
+        sec_num -= days * 24 * 3600;
+        const hours = Math.floor(sec_num / 3600);
+        sec_num -= hours * 3600;
+        const minutes = Math.floor(sec_num / 60);
+        sec_num -= minutes * 60;
+        const seconds = sec_num;
+
+        const daysS = days > 0 ? days.toString() + 'd ' : '';
+        const hoursS = hours.toString().padStart(2, '0');
+        const minutesS = minutes.toString().padStart(2, '0');
+        const secondsS = seconds.toString().padStart(2, '0');
+
+        return daysS + hoursS + ':' + minutesS + ':' + secondsS;
     }
 }
