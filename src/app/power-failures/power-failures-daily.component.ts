@@ -43,7 +43,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration=AppUtils.formatDuration;
+  formatDuration = AppUtils.formatDuration;
 
   constructor(private powerService: PowerService,
     private router: Router,
@@ -95,11 +95,15 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
         this.sortedData.data = powerData;
         const maxPowerFailure = powerData
           .find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
-        this.maxPowerFailure = {
-          start: maxPowerFailure.eventDate,
-          finish: maxPowerFailure.eventDate,
-          duration: maxPowerFailure.duration
-        };
+        if (maxPowerFailure) {
+          this.maxPowerFailure = {
+            start: maxPowerFailure.eventDate,
+            finish: maxPowerFailure.eventDate,
+            duration: maxPowerFailure.duration
+          };
+        } else {
+          this.maxPowerFailure = null;
+        }
         this.totalPowerFailure = 0;
         this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
         this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
