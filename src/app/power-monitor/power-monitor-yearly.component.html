@@ -1,0 +1,10 @@
+<button class="hourly__mat-button" mat-button (click)="refreshData()">
+    <mat-icon>refresh</mat-icon>
+</button>
+<br />
+<div *ngIf="powerData">
+    <div style="display: block" class="mb-5">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" (chartClick)="chartClicked($event)"></canvas>
+    </div>
+</div>

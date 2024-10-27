@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
     { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
+    { path: 'power-monitor/yearly', component: PowerMonitorComponent, data: { name: 'yearly' }, canActivate: [AuthGuard] },
     { path: 'power-failures', component: PowerFailuresComponent, canActivate: [AuthGuard] },
     { path: 'power-failures/hourly', component: PowerFailuresComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'power-failures/daily', component: PowerFailuresComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },

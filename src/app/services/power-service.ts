@@ -4,6 +4,7 @@ import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
+import { IPowerDataYearlyModel } from '../models/power-data-yearly.model';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
@@ -75,6 +76,11 @@ export class PowerService extends HttpService {
             .set('finishDate', finishDate);
 
         const promise = this.get<IPowerDataMonthlyModel[]>('power/power-data-monthly', params);
+        return promise;
+    }
+
+    async getPowerDataYearly(): Promise<IPowerDataYearlyModel[]> {
+        const promise = this.get<IPowerDataMonthlyModel[]>('power/power-data-yearly');
         return promise;
     }
 

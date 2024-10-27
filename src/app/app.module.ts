@@ -16,6 +16,7 @@ import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
 import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
+import { PowerMonitorYearlyComponent } from './power-monitor/power-monitor-yearly.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
 import { APP_DATE_FORMATS } from './app-date-format';
@@ -59,6 +60,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         PowerMonitorHourlyComponent,
         PowerMonitorDailyComponent,
         PowerMonitorMonthlyComponent,
+        PowerMonitorYearlyComponent,
         VoltageAmperageComponent,
         VoltageAmperageHourlyComponent,
         VoltageAmperageDailyComponent,

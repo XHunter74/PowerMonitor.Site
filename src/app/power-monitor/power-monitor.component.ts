@@ -27,7 +27,9 @@ export class PowerMonitorComponent {
                 case "monthly":
                     this.selectedTab = 3;
                     break;
-
+                case "yearly":
+                    this.selectedTab = 4;
+                    break;
             }
         });
     }
@@ -42,6 +44,9 @@ export class PowerMonitorComponent {
                 break;
             case 3:
                 this.router.navigate(['power-monitor', 'monthly']);
+                break;
+            case 4:
+                this.router.navigate(['power-monitor', 'yearly']);
                 break;
         }
     }
