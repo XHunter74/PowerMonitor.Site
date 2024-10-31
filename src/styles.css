@@ -14,7 +14,7 @@
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: white!important;
+    background-color: white !important;
 }
 
 .alert-danger {
@@ -23,4 +23,10 @@
     background-color: white;
     border: none;
     color: red;
+}
+
+.tooltip .mdc-tooltip__surface {
+    font-size: 12px !important;
+    color: blue !important;
+    background: rgb(197, 197, 197) !important;
 }

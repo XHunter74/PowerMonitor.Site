@@ -1,9 +1,9 @@
 <button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Down)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Down)">
+    [disabled]="isAddMonthButtonDisabled(Direction.Down)" matTooltip="Back" matTooltipClass="tooltip">
     <mat-icon>chevron_left</mat-icon>
 </button>
 <button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Up)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Up)">
+    [disabled]="isAddMonthButtonDisabled(Direction.Up)" mat-button matTooltip="Forward" matTooltipClass="tooltip">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
@@ -14,7 +14,7 @@
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="Refresh" matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">

@@ -1,7 +1,8 @@
-<button class="hourly__mat-button" mat-button (click)="addNewRecord()">
+<button class="hourly__mat-button" mat-button (click)="addNewRecord()" matTooltip="Add new record"
+    matTooltipClass="tooltip">
     <mat-icon>add</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="refreshData()">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="Refresh" matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="table-responsive">
@@ -29,7 +30,8 @@
         <ng-container matColumnDef="buttons">
             <th *matHeaderCellDef></th>
             <td *matCellDef="let element">
-                <button *ngIf="element.id" class="hourly__mat-button" [disabled]="isDeleteButtonDisabled(element.id)" mat-button (click)=deleteRecord(element.id)>
+                <button *ngIf="element.id" class="hourly__mat-button" [disabled]="isDeleteButtonDisabled(element.id)"
+                    mat-button (click)=deleteRecord(element.id) matTooltip="Delete record" matTooltipClass="tooltip">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

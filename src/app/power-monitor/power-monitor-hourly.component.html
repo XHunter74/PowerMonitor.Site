@@ -1,8 +1,10 @@
 <!-- <div style="height: 100vh" (click)="checkChart()"> -->
-<button class="hourly__mat-button" mat-button (click)="addDay('down')" [disabled]="isAddDayButtonDisabled('down')">
+<button class="hourly__mat-button" mat-button (click)="addDay('down')" [disabled]="isAddDayButtonDisabled('down')"
+    matTooltip="Back" matTooltipClass="tooltip">
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addDay('up')" [disabled]="isAddDayButtonDisabled('up')">
+<button class="hourly__mat-button" mat-button (click)="addDay('up')" [disabled]="isAddDayButtonDisabled('up')"
+    mat-button matTooltip="Forward" matTooltipClass="tooltip">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
@@ -11,7 +13,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()">
+<button class="hourly__mat-button" mat-button matTooltip="Refresh" matTooltipClass="tooltip" (click)="refreshData()">
     <mat-icon>refresh</mat-icon>
 </button>
 <br />

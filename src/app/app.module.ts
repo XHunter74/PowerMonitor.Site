@@ -24,7 +24,6 @@ import { PowerFailuresComponent } from './power-failures/power-failures.componen
 import { SiteSettingsComponent } from './site-settings/site-settings.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
-import { HomeComponent } from './home-component/home.component';
 import { ProfileComponent } from './profile-component/profile.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
@@ -71,7 +70,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         PowerFailuresYearlyComponent,
         SiteSettingsComponent,
         SpinnerDialogComponent,
-        HomeComponent,
         ProfileComponent,
         ErrorDialogComponent,
         PowerConsumptionComponent,
