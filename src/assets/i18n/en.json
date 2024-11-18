@@ -1,1 +1,10 @@
-{}
+{
+    "MENU": {
+        "LIVE_DATA": "Live Data",
+        "POWER_MONITOR": "Power Monitor"
+    },
+    "LANGUAGE": {
+        "ENGLISH": "English",
+        "UKRAINIAN": "Ukrainian"
+    }
+}
