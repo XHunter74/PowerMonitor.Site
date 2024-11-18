@@ -6,5 +6,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3800/api/',
-  version: 'DEV'
+  version: 'DEV',
+  locales: ['en', 'uk'],
+  defaultLocale: 'en'
 };

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgChartsModule } from 'ng2-charts';
@@ -45,7 +45,9 @@ import { EditPowerConsumptionComponent } from './power-consumption/edit-power-co
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -90,6 +92,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         SocketIoModule,
         AppRoutingModule,
         GoogleChartsModule,
+        TranslateModule.forRoot(
+            {
+              defaultLanguage: environment.defaultLocale,
+              loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+              }
+            }
+          )
     ],
     providers: [
         AuthGuard,
@@ -100,7 +112,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         WebSocket,
         WebSocketService,
         { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+        { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true }
     ],
     bootstrap: [AppComponent]
 })
