@@ -1,24 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services-service';
 import { AuthService } from '../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ChangeLanguageDialogComponent } from '../dialogs/change-language-dialog/change-language-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent implements OnInit {
+export class NavMenuComponent implements OnInit, OnDestroy {
   isExpanded = false;
   isAPIOnline;
+  private timer;
 
   constructor(
     private readonly authService: AuthService,
     private readonly servicesService: ServicesService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    private dialog: MatDialog
   ) {
     this.checkApiState();
     this.startTimer();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
   }
 
   ngOnInit() {
@@ -49,9 +59,14 @@ export class NavMenuComponent implements OnInit {
   }
 
   startTimer() {
-    setInterval(async () => {
+    this.timer = setInterval(async () => {
       await this.checkApiState();
     }, 20000);
+  }
+
+  async changeLanguage() {
+    console.log('Change language');
+    await ChangeLanguageDialogComponent.show(this.dialog, 'Would you like to delete this record?');
   }
 
   private async checkApiState() {

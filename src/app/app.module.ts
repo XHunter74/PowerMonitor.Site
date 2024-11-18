@@ -36,6 +36,7 @@ import { PowerFailuresYearlyComponent } from './power-failures/power-failures-ye
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { ChangeLanguageDialogComponent } from './dialogs/change-language-dialog/change-language-dialog.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthService } from './services/auth.service';
 import { AppHttpInterceptor } from './services/http.interceptor';
@@ -79,6 +80,7 @@ import { environment } from '../environments/environment';
         EditPowerConsumptionComponent,
         DigitOnlyDirective,
         AutofocusDirective,
+        ChangeLanguageDialogComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

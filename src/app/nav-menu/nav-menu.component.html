@@ -5,7 +5,8 @@
             <a class='navbar-brand' *ngIf="apiState===1" style="color:#4189C7" [routerLink]='["/"]'>Power Monitor</a>
             <a class='navbar-brand' *ngIf="apiState===0" style="color:rgb(160, 157, 163)" [routerLink]='["/"]'>Power
                 Monitor</a>
-            <button type='button' class='navbar-toggler' data-toggle='collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
+            <button type='button' class='navbar-toggler' data-toggle='collapse' [attr.aria-expanded]='isExpanded'
+                (click)='toggle()'>
                 <span class='sr-only'>Toggle navigation</span>
                 <span class='navbar-toggler-icon'></span>
             </button>
@@ -13,9 +14,10 @@
         <div class='clearfix p-2'></div>
         <div id="navbarNav" class='navbar-collapse collapse p-0' [ngClass]='{ "show": isExpanded }'>
             <ul class='nav navbar-nav flex-column'>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'
+                    [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/online-data"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-tachometer-alt'></span> Live Data
+                        <span class='fas fa-tachometer-alt'></span> {{'MENU.LIVE_DATA' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
@@ -41,6 +43,11 @@
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/platform-info"]' class="nav-link" (click)='collapse()'>
                         <span class='fas fa-info-circle'></span> Platform Info
+                    </a>
+                </li>
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
+                    <a class="nav-link" (click)='changeLanguage()'>
+                        <span class='fas fa-info-circle'></span> Language
                     </a>
                 </li>
                 <!-- <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
