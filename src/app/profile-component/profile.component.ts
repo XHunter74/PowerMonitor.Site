@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { UsersService } from '../services/users-service';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

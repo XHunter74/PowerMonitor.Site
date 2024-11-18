@@ -5,7 +5,7 @@ import { CalibrationCoefficients } from '../models/calibration-coefficients.mode
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 
 @Component({
     selector: 'app-site-settings',

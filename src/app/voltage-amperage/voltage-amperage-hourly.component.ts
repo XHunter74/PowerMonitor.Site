@@ -5,7 +5,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../constants';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

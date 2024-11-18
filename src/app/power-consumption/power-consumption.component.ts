@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { PowerService } from '../services/power-service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
 import { PowerMeteringDto } from '../models/power-metering.dto';

@@ -28,7 +28,7 @@ import { ProfileComponent } from './profile-component/profile.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
-import { ErrorDialogComponent } from './dialogs/error-dialog.component';
+import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
 import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
 import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';

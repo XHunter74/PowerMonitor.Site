@@ -8,7 +8,7 @@ import { compare } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { Constants } from '../constants';

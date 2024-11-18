@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../constants';
 import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';

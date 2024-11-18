@@ -6,7 +6,7 @@ import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog.component';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../constants';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
