@@ -5,6 +5,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { environment } from '../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-platform-info',
@@ -16,8 +17,9 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
     siteVersion: string;
 
     constructor(private servicesService: ServicesService,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
         this.siteVersion = environment.version;
     }
 

@@ -11,6 +11,7 @@ import { ChartConfiguration, Chart } from 'chart.js';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-power-monitor-yearly',
@@ -49,10 +50,23 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
 
     constructor(private powerService: PowerService,
         private router: Router,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
+        this.translateWords();
+        translate.onLangChange.subscribe(async () => {
+            await this.translateWords();
+        });
     }
 
+    async translateWords() {
+        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
+        const data = [
+            { data: this.barChartData[0].data, label: chartLabel }
+        ];
+        this.barChartData = data;
+    }
+    
     async ngOnInit() {
         Chart.register(Annotation);
         await this.refreshData();

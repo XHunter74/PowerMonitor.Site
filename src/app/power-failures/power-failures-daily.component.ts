@@ -17,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
 import { PowerFailureDailyModel } from '../models/power-failure-daily.model';
 import { AppUtils } from '../utils/app-utils';
+import { TranslateService } from '@ngx-translate/core';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -48,8 +49,9 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   constructor(private powerService: PowerService,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    dialog: MatDialog) {
-    super(dialog);
+    dialog: MatDialog,
+    translate: TranslateService) {
+    super(dialog, translate);
   }
 
   async ngOnInit() {

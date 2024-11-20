@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
+import { TranslateService } from '@ngx-translate/core';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -39,15 +40,15 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration=AppUtils.formatDuration;
+  formatDuration = AppUtils.formatDuration;
 
   Direction = Direction;
 
   constructor(private powerService: PowerService,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    dialog: MatDialog) {
-    super(dialog);
+    dialog: MatDialog, translate: TranslateService) {
+    super(dialog, translate);
   }
 
   async ngOnInit() {

@@ -10,6 +10,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-voltage-amperage-daily',
@@ -24,8 +25,9 @@ export class VoltageAmperageDailyComponent extends AppBaseComponent implements O
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
         private router: Router,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
     }
 
     async ngOnInit() {

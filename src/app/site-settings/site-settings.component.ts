@@ -6,6 +6,7 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
 import { MatDialog } from '@angular/material/dialog';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-site-settings',
@@ -26,8 +27,9 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
     });
 
     constructor(private servicesService: ServicesService,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
     }
 
     ngOnInit(): void {

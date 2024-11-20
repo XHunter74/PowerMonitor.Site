@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
+import { TranslateService } from '@ngx-translate/core';
 
 const PowerFailuresSort = 'power-failures-sort-yearly';
 
@@ -33,8 +34,9 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
 
   constructor(private powerService: PowerService,
     private router: Router,
-    dialog: MatDialog) {
-    super(dialog);
+    dialog: MatDialog,
+    translate: TranslateService) {
+    super(dialog, translate);
   }
 
   async ngOnInit() {

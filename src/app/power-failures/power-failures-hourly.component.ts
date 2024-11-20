@@ -13,6 +13,7 @@ import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
+import { TranslateService } from '@ngx-translate/core';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -35,13 +36,14 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration=AppUtils.formatDuration;
+  formatDuration = AppUtils.formatDuration;
 
   constructor(private powerService: PowerService,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    dialog: MatDialog) {
-    super(dialog);
+    dialog: MatDialog,
+    translate: TranslateService) {
+    super(dialog, translate);
   }
 
   async ngOnInit() {

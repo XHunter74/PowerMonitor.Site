@@ -8,6 +8,7 @@ import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-power-consumption',
@@ -25,8 +26,9 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   constructor(
     dialog: MatDialog,
     private powerService: PowerService,
+    translate: TranslateService
   ) {
-    super(dialog);
+    super(dialog, translate);
   }
 
   async ngOnInit() {

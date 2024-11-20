@@ -15,6 +15,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -66,6 +67,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public barChartData: any[] = [
         { data: [], label: 'Power, kW/h' }
     ];
+
     currentDate: Date;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
     public powerForecast: number;
@@ -93,10 +95,23 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     constructor(private powerService: PowerService,
         private router: Router,
         private activatedRouter: ActivatedRoute,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
+        this.translateWords();
+        translate.onLangChange.subscribe(async () => {
+            await this.translateWords();
+        });
     }
 
+    async translateWords() {
+        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
+        const data = [
+            { data: this.barChartData[0].data, label: chartLabel }
+        ];
+        this.barChartData = data;
+    }
+    
     async ngOnInit() {
         Chart.register(Annotation);
         this.activatedRouter.queryParams.subscribe(

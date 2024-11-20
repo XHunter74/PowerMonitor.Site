@@ -16,6 +16,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -92,8 +93,24 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     constructor(private powerService: PowerService,
         private router: Router,
         private activatedRouter: ActivatedRoute,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
+        this.translateWords();
+        translate.onLangChange.subscribe(async () => {
+            await this.translateWords();
+        });
+    }
+
+    async translateWords() {
+        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
+        const data = [
+            { data: this.barChartData[0].data, label: chartLabel }
+        ];
+        this.barChartData = data;
+        this.barChartLabels = await Promise.all(Constants.shortMonthNames.map(async e => {
+            return await this.translate.get('MONTHS.' + e.toUpperCase()).toPromise();
+        }));
     }
 
     async ngOnInit() {
@@ -123,7 +140,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
                 const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
                 this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
-                this.prepareChart(this.powerData);
+                await this.prepareChart(this.powerData);
                 this.powerSum = 0;
                 this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
                 this.powerSum = Math.round(this.powerSum * 100) / 100;
@@ -181,7 +198,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         return powerAvg;
     }
 
-    prepareChart(data: IPowerDataMonthlyModel[]) {
+    async prepareChart(data: IPowerDataMonthlyModel[]) {
         let chartData: number[] = [];
         let chartLabels: string[] = [];
         if (data.length < 12) {
@@ -200,6 +217,9 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 return Constants.shortMonthNames[e.month - 1];
             });
         }
+        chartLabels = await Promise.all(chartLabels.map(async e => {
+            return await this.translate.get('MONTHS.' + e.toUpperCase()).toPromise();
+        }));
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
     }

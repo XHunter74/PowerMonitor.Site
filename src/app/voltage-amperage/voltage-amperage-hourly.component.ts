@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
@@ -35,8 +36,9 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     constructor(private powerService: PowerService,
         private activatedRouter: ActivatedRoute,
         private router: Router,
-        dialog: MatDialog) {
-        super(dialog);
+        dialog: MatDialog,
+        translate: TranslateService) {
+        super(dialog, translate);
     }
 
     restoreSort() {
