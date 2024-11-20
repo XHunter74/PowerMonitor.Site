@@ -17,5 +17,13 @@
     },
     "BUTTONS": {
         "SAVE": "Save"
+    },
+    "LIVE_DATA": {
+        "VOLTAGE": "Voltage",
+        "AMPERAGE": "Amperage",
+        "POWER": "Power",
+        "V": "V",
+        "A": "A",
+        "KW": "kW"
     }
 }

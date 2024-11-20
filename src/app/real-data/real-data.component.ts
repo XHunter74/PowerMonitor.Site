@@ -3,6 +3,7 @@ import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
 import { Subscription } from 'rxjs';
 import { interval } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -18,68 +19,109 @@ export class RealDataComponent implements OnInit, OnDestroy {
   private nominalVoltageMin = 207;
   private nominalVoltageMax = 253;
   private voltage = 230;
+  private amperage = 0;
+  private power = 0;
   private maxAmperage = 30;
   private nominalAmperageMax = 20;
   private maxPower = 8;
   private nominalPowerMax = 5;
 
-  voltageChart = {
-    type: "Gauge",
-    data: [
-      ["Voltage", { v: this.voltage, f: `${this.voltage} V` }],
-    ],
-    options: {
-      width: 200,
-      height: 200,
-      redFrom: 0,
-      redTo: this.nominalVoltageMin,
-      greenFrom: this.nominalVoltageMin,
-      greenTo: this.nominalVoltageMax,
-      yellowFrom: this.nominalVoltageMax,
-      yellowTo: this.maxVoltage,
-      min: 0,
-      max: this.maxVoltage,
-      yellowColor: '#DC3912'
-    },
-  };
-
-  amperageChart = {
-    type: "Gauge",
-    data: [
-      ["Amperage", { v: 0, f: '0 A' }],
-    ],
-    options: {
-      width: 200,
-      height: 200,
-      greenFrom: 0,
-      greenTo: this.nominalAmperageMax,
-      redFrom: this.nominalAmperageMax,
-      redTo: this.maxAmperage,
-      min: 0,
-      max: this.maxAmperage,
-    },
-  };
-
-  powerChart = {
-    type: "Gauge",
-    data: [
-      ["Power", { v: 0, f: '0 kW' }],
-    ],
-    options: {
-      width: 200,
-      height: 200,
-      greenFrom: 0,
-      greenTo: this.nominalPowerMax,
-      redFrom: this.nominalPowerMax,
-      redTo: this.maxPower,
-      min: 0,
-      max: this.maxPower,
-    },
-  };
+  voltageChart: any;
+  amperageChart: any;
+  powerChart: any;
 
   timerSub: Subscription;
 
-  constructor(private webSocketService: WebSocketService) {
+  voltageTranslation: string;
+  amperageTranslation: string;
+  powerTranslation: string;
+  vLabel: string;
+  aLabel: string;
+  kwLabel: string;
+
+  constructor(private webSocketService: WebSocketService,
+    private translate: TranslateService) {
+    this.initCharts();
+    translate.onLangChange.subscribe(async () => {
+      await this.processTranslations();
+    });
+  }
+  async processTranslations() {
+    await this.translateWords();
+    this.voltageChart.data = [
+      [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
+    ];
+    this.amperageChart.data = [
+      [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
+    ];
+    this.powerChart.data = [
+      [this.powerTranslation, { v: this.power, f: `${this.power} kW` }],
+    ];
+  }
+  async translateWords() {
+    this.voltageTranslation = await this.translate.get('LIVE_DATA.VOLTAGE').toPromise();
+    this.vLabel = await this.translate.get('LIVE_DATA.V').toPromise();
+    this.amperageTranslation = await this.translate.get('LIVE_DATA.AMPERAGE').toPromise();
+    this.aLabel = await this.translate.get('LIVE_DATA.A').toPromise();
+    this.powerTranslation = await this.translate.get('LIVE_DATA.POWER').toPromise();
+    this.kwLabel = await this.translate.get('LIVE_DATA.KW').toPromise();
+  }
+
+  async initCharts() {
+    await this.translateWords();
+    this.voltageChart = {
+      type: "Gauge",
+      data: [
+        [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
+      ],
+      options: {
+        width: 200,
+        height: 200,
+        redFrom: 0,
+        redTo: this.nominalVoltageMin,
+        greenFrom: this.nominalVoltageMin,
+        greenTo: this.nominalVoltageMax,
+        yellowFrom: this.nominalVoltageMax,
+        yellowTo: this.maxVoltage,
+        min: 0,
+        max: this.maxVoltage,
+        yellowColor: '#DC3912'
+      },
+    };
+
+    this.amperageChart = {
+      type: "Gauge",
+      data: [
+        [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
+      ],
+      options: {
+        width: 200,
+        height: 200,
+        greenFrom: 0,
+        greenTo: this.nominalAmperageMax,
+        redFrom: this.nominalAmperageMax,
+        redTo: this.maxAmperage,
+        min: 0,
+        max: this.maxAmperage,
+      },
+    };
+
+    this.powerChart = {
+      type: "Gauge",
+      data: [
+        [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
+      ],
+      options: {
+        width: 200,
+        height: 200,
+        greenFrom: 0,
+        greenTo: this.nominalPowerMax,
+        redFrom: this.nominalPowerMax,
+        redTo: this.maxPower,
+        min: 0,
+        max: this.maxPower,
+      },
+    };
   }
 
   ngOnInit(): void {
@@ -109,17 +151,17 @@ export class RealDataComponent implements OnInit, OnDestroy {
   }
 
   updateGaugeIndicators(data: ISensorsDataModel) {
-    const voltage = Math.round(data.voltage);
+    this.voltage = Math.round(data.voltage);
     this.voltageChart.data = [
-      ["Voltage", { v: voltage, f: `${voltage} V` }],
+      [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
     ];
-    const amperage = Math.round(data.amperage * 10) / 10;
+    this.amperage = Math.round(data.amperage * 10) / 10;
     this.amperageChart.data = [
-      ["Amperage", { v: amperage, f: `${amperage} A` }],
+      [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
     ];
-    const power = Math.round(data.power * 10) / 10;
+    this.power = Math.round(data.power * 10) / 10;
     this.powerChart.data = [
-      ["Power", { v: power, f: `${power} kW` }],
+      [this.powerTranslation, { v: this.power, f: `${this.power} kW` }],
     ];
   }
 
