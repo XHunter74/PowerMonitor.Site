@@ -1,7 +1,7 @@
 {
     "MENU": {
         "LIVE_DATA": "Живі дані",
-        "POWER_MONITOR": "Монітор потужності",
+        "POWER_MONITOR": "Монітор споживання",
         "VOLTAGE_AMPERAGE": "Напруга-Струм",
         "POWER_FAILURES": "Збої живлення",
         "POWER_CONSUMPTION": "Споживання енергії",
@@ -30,7 +30,7 @@
         "TOTAL_POWER": "Всього спожито",
         "AVERAGE_POWER": "Середнє споживання",
         "FORECAST_POWER": "Прогнозоване споживання",
-        "CHART_LABEL": "Спожито, кВт/год",
+        "CHART_LABEL": "Спожито, кВт*год",
         "KWH": "kW*год"
     },
     "COMMON": {

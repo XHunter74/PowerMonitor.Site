@@ -30,7 +30,7 @@
         "TOTAL_POWER": "Total Power",
         "AVERAGE_POWER": "Average Power",
         "FORECAST_POWER": "Forecast Power",
-        "CHART_LABEL": "Power, kW/h",
+        "CHART_LABEL": "Power, kW*h",
         "KWH": "kW*h"
     },
     "COMMON": {
