@@ -55,7 +55,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
       [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
     ];
     this.powerChart.data = [
-      [this.powerTranslation, { v: this.power, f: `${this.power} kW` }],
+      [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
     ];
   }
   async translateWords() {
@@ -161,7 +161,7 @@ export class RealDataComponent implements OnInit, OnDestroy {
     ];
     this.power = Math.round(data.power * 10) / 10;
     this.powerChart.data = [
-      [this.powerTranslation, { v: this.power, f: `${this.power} kW` }],
+      [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
     ];
   }
 
