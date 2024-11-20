@@ -65,8 +65,8 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   }
 
   async changeLanguage() {
-    console.log('Change language');
-    await ChangeLanguageDialogComponent.show(this.dialog, 'Would you like to delete this record?');
+    this.collapse();
+    await ChangeLanguageDialogComponent.show(this.dialog);
   }
 
   private async checkApiState() {

@@ -1,6 +1,21 @@
 {
     "MENU": {
-        "LIVE_DATA": "Дані в реальному часі",
-        "POWER_MONITOR": "Монітор потужності"
+        "LIVE_DATA": "Живі дані",
+        "POWER_MONITOR": "Монітор потужності",
+        "VOLTAGE_AMPERAGE": "Напруга-Струм",
+        "POWER_FAILURES": "Збої живлення",
+        "POWER_CONSUMPTION": "Споживання енергії",
+        "PLATFORM_INFO": "Інформація про платформу",
+        "LANGUAGE": "Мова",
+        "LOGIN": "Увійти",
+        "LOGOUT": "Вийти"
+    },
+    "LANGUAGE": {
+        "ENGLISH": "Англійська",
+        "UKRAINIAN": "Українська",
+        "CHANGE_LANGUAGE": "Змінити мову"
+    },
+    "BUTTONS": {
+        "SAVE": "Зберегти"
     }
 }

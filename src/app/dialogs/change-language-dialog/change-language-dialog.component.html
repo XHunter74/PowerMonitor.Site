@@ -1,0 +1,13 @@
+<div class="modal-header dialog-header">
+    <span class="dialog-header-text">{{'LANGUAGE.CHANGE_LANGUAGE' | translate}}</span>
+</div>
+<div class="modal-body modal-content">
+    <form role="form" [formGroup]="form" novalidate>
+        <ng-select [dropdownPosition]="'bottom'" bindValue="id" bindLabel="name" [clearable]="false"
+            [items]="languageList" [searchable]="false" [multiple]="false" formControlName="languages">
+        </ng-select>
+    </form>
+</div>
+<div class="modal-footer dialog-footer">
+    <button class="ok-button" mat-button [matDialogClose]="" (click)="saveLanguage()" tabindex="1">{{'BUTTONS.SAVE' | translate}}</button>
+</div>

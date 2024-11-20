@@ -4,14 +4,13 @@ import { LOCATION_INITIALIZED } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
-
-const AppLanguage = 'app-language';
+import { Constants } from './constants';
 
 export function appInitializerFactory(translate: TranslateService, injector: Injector) {
     return () => new Promise<any>((resolve: any) => {
         const locationInitialized = injector.get(LOCATION_INITIALIZED, Promise.resolve(null));
         locationInitialized.then(() => {
-            const langToSet = localStorage.getItem(AppLanguage) as string || 'en';
+            const langToSet = localStorage.getItem(Constants.AppLanguage) as string || 'en';
             translate.setDefaultLang(environment.defaultLocale);
             translate.use(langToSet).subscribe(() => {
                 console.info(`Successfully initialized '${langToSet}' language.'`);

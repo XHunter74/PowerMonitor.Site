@@ -1,10 +1,21 @@
 {
     "MENU": {
         "LIVE_DATA": "Live Data",
-        "POWER_MONITOR": "Power Monitor"
+        "POWER_MONITOR": "Power Monitor",
+        "VOLTAGE_AMPERAGE": "Voltage-Amperage",
+        "POWER_FAILURES": "Power Failures",
+        "POWER_CONSUMPTION": "Power Consumption",
+        "PLATFORM_INFO": "Platform Info",
+        "LANGUAGE": "Language",
+        "LOGIN": "Login",
+        "LOGOUT": "Logout"
     },
     "LANGUAGE": {
         "ENGLISH": "English",
-        "UKRAINIAN": "Ukrainian"
+        "UKRAINIAN": "Ukrainian",
+        "CHANGE_LANGUAGE": "Change Language"
+    },
+    "BUTTONS": {
+        "SAVE": "Save"
     }
 }

@@ -22,32 +22,32 @@
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/power-monitor"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-chart-bar'></span> Power Monitor
+                        <span class='fas fa-chart-bar'></span> {{'MENU.POWER_MONITOR' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/voltage-amperage/hourly"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-bolt'></span> Voltage-Amperage
+                        <span class='fas fa-bolt'></span> {{'MENU.VOLTAGE_AMPERAGE' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/power-failures"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-sort-amount-down'></span> Power Failures
+                        <span class='fas fa-sort-amount-down'></span> {{'MENU.POWER_FAILURES' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/power-consumption"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-chart-line'></span> Power Consumption
+                        <span class='fas fa-chart-line'></span> {{'MENU.POWER_CONSUMPTION' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/platform-info"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-info-circle'></span> Platform Info
+                        <span class='fas fa-info-circle'></span> {{'MENU.PLATFORM_INFO' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a class="nav-link" (click)='changeLanguage()'>
-                        <span class='fas fa-info-circle'></span> Language
+                        <span class='fas fa-globe'></span> {{'MENU.LANGUAGE' | translate}}
                     </a>
                 </li>
                 <!-- <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
@@ -62,12 +62,12 @@
         </li> -->
                 <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
-                        <span class="fas fa-sign-in-alt"></span> Login
+                        <span class="fas fa-sign-in-alt"></span> {{'MENU.LOGIN' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
                     <a class="nav-link" (click)='logout()'>
-                        <span class="fas fa-sign-out-alt"></span> Logout
+                        <span class="fas fa-sign-out-alt"></span> {{'MENU.LOGOUT' | translate}}
                     </a>
                 </li>
             </ul>

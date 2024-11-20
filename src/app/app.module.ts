@@ -49,75 +49,77 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
 import { environment } from '../environments/environment';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavMenuComponent,
-        RealDataComponent,
-        AppLoginComponent,
-        LoginModalComponent,
-        PlatformInfoComponent,
-        PowerMonitorComponent,
-        PowerMonitorHourlyComponent,
-        PowerMonitorDailyComponent,
-        PowerMonitorMonthlyComponent,
-        PowerMonitorYearlyComponent,
-        VoltageAmperageComponent,
-        VoltageAmperageHourlyComponent,
-        VoltageAmperageDailyComponent,
-        PowerFailuresComponent,
-        PowerFailuresHourlyComponent,
-        PowerFailuresDailyComponent,
-        PowerFailuresMonthlyComponent,
-        PowerFailuresYearlyComponent,
-        SiteSettingsComponent,
-        SpinnerDialogComponent,
-        ProfileComponent,
-        ErrorDialogComponent,
-        PowerConsumptionComponent,
-        QuestionDialogComponent,
-        EditPowerConsumptionComponent,
-        DigitOnlyDirective,
-        AutofocusDirective,
-        ChangeLanguageDialogComponent
-    ],
-    imports: [
-        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgbModule,
-        BrowserAnimationsModule,
-        NgChartsModule,
-        AppMaterialModule,
-        SocketIoModule,
-        AppRoutingModule,
-        GoogleChartsModule,
-        TranslateModule.forRoot(
-            {
-              defaultLanguage: environment.defaultLocale,
-              loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-              }
-            }
-          )
-    ],
-    providers: [
-        AuthGuard,
-        AuthService,
-        UsersService,
-        { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-        OpenGuard,
-        WebSocket,
-        WebSocketService,
-        { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-        { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true }
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    RealDataComponent,
+    AppLoginComponent,
+    LoginModalComponent,
+    PlatformInfoComponent,
+    PowerMonitorComponent,
+    PowerMonitorHourlyComponent,
+    PowerMonitorDailyComponent,
+    PowerMonitorMonthlyComponent,
+    PowerMonitorYearlyComponent,
+    VoltageAmperageComponent,
+    VoltageAmperageHourlyComponent,
+    VoltageAmperageDailyComponent,
+    PowerFailuresComponent,
+    PowerFailuresHourlyComponent,
+    PowerFailuresDailyComponent,
+    PowerFailuresMonthlyComponent,
+    PowerFailuresYearlyComponent,
+    SiteSettingsComponent,
+    SpinnerDialogComponent,
+    ProfileComponent,
+    ErrorDialogComponent,
+    PowerConsumptionComponent,
+    QuestionDialogComponent,
+    EditPowerConsumptionComponent,
+    DigitOnlyDirective,
+    AutofocusDirective,
+    ChangeLanguageDialogComponent
+  ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    NgChartsModule,
+    AppMaterialModule,
+    SocketIoModule,
+    AppRoutingModule,
+    GoogleChartsModule,
+    TranslateModule.forRoot(
+      {
+        defaultLanguage: environment.defaultLocale,
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      }
+    ),
+    NgSelectModule
+  ],
+  providers: [
+    AuthGuard,
+    AuthService,
+    UsersService,
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+    OpenGuard,
+    WebSocket,
+    WebSocketService,
+    { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+    { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

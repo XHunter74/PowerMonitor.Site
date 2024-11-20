@@ -1,0 +1,49 @@
+.dialog-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 240, 236);
+}
+
+.dialog-header-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.dialog-footer {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.ok-button {
+    color: white;
+    background-color: #4189C7;
+    width: 120px;
+}
+
+.modal-content {
+    background-color: var(--modalBackground);
+    padding: 30px;
+}
+
+.modal-content i {
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.modal-content ::ng-deep .ng-select {
+    width: 100%;
+}
+
+.modal-content ::ng-deep .ng-select .ng-select-container {
+    height: 38px !important;
+    border: 0.5px solid var(--DarkGray);
+    border-radius: 1px;
+}
+
+.modal-content ::ng-deep .ng-select .ng-select-container,
+.modal-content ::ng-deep .ng-select.ng-select-single .ng-select-container {
+    min-height: 38px;
+}
