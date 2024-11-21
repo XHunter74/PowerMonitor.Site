@@ -65,6 +65,14 @@
         "AMPERAGE_MIN": "Мін. струм, А",
         "AMPERAGE_AVG": "Середній струм, А"
     },
+    "POWER_CONSUMPTION": {
+        "FACTUAL": "Фактичне",
+        "MONITOR": "Монітор",
+        "DIFFERENCE": "Різниця",
+        "COEFFICIENT": "Коефіцієнт",
+        "ADD_NEW_RECORD": "Додати новий запис",
+        "DELETE_RECORD": "Видалити запис"
+    },
     "COMMON": {
         "HOURLY": "Погодинно",
         "DAILY": "По дням",

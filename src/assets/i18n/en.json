@@ -65,6 +65,14 @@
         "AMPERAGE_MIN": "Amperage Min, A",
         "AMPERAGE_AVG": "Amperage Avg, A"
     },
+    "POWER_CONSUMPTION": {
+        "FACTUAL": "Factual",
+        "MONITOR": "Monitor",
+        "DIFFERENCE": "Difference",
+        "COEFFICIENT": "Coefficient",
+        "ADD_NEW_RECORD": "Add new record",
+        "DELETE_RECORD": "Delete record"
+    },
     "COMMON": {
         "HOURLY": "Hourly",
         "DAILY": "Daily",
