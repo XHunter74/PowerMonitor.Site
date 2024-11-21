@@ -91,7 +91,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       try {
         const powerData = await this.powerService.getPowerFailuresMonthlyData(this.currentDate.getFullYear());
         powerData.forEach(async (element) => {
-          element.monthStr = await this.formatMonth(new Date(element.year, element.month));
+          element.monthStr = await this.formatMonth(new Date(element.year, element.month - 1));
         });
         this.sortedData.data = powerData;
         this.totalPowerFailure = 0;
