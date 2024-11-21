@@ -52,6 +52,19 @@
         "SYSTEM_UPTIME": "Час роботи системи",
         "SYSTEM_TIME": "Системний час"
     },
+    "VOLTAGE_AMPERAGE": {
+        "VOLTAGE": "Напруга",
+        "AMPERAGE": "Струм",
+        "V": "В",
+        "A": "А",
+        "LABEL_H": "г",
+        "VOLTAGE_MAX": "Макс. напруга, В",
+        "VOLTAGE_MIN": "Мін. напруга, В",
+        "VOLTAGE_AVG": "Середня напруга, В",
+        "AMPERAGE_MAX": "Макс. струм, А",
+        "AMPERAGE_MIN": "Мін. струм, А",
+        "AMPERAGE_AVG": "Середній струм, А"
+    },
     "COMMON": {
         "HOURLY": "Погодинно",
         "DAILY": "По дням",
@@ -66,7 +79,8 @@
         "DATE": "Дата",
         "EVENTS": "Кількість",
         "MONTH": "Місяць",
-        "YEAR": "Рік"
+        "YEAR": "Рік",
+        "HOUR": "Година"
     },
     "MONTHS": {
         "JAN": "Січ",

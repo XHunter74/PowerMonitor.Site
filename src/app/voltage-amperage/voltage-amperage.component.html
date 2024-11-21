@@ -1,6 +1,6 @@
 <nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
     <ng-container ngbNavItem [ngbNavItem]="1">
-        <a ngbNavLink>Hourly</a>
+        <a ngbNavLink>{{'COMMON.HOURLY' | translate}}</a>
         <ng-template ngbNavContent>
             <app-voltage-amperage-hourly></app-voltage-amperage-hourly>
         </ng-template>

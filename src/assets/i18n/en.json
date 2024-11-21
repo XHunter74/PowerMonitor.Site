@@ -52,6 +52,19 @@
         "SYSTEM_UPTIME": "System Uptime",
         "SYSTEM_TIME": "System Time"
     },
+    "VOLTAGE_AMPERAGE": {
+        "VOLTAGE": "Voltage",
+        "AMPERAGE": "Amperage",
+        "V": "V",
+        "A": "A",
+        "LABEL_H":"h",
+        "VOLTAGE_MAX": "Voltage Max, V",
+        "VOLTAGE_MIN": "Voltage Min, V",
+        "VOLTAGE_AVG": "Voltage Avg, V",
+        "AMPERAGE_MAX": "Amperage Max, A",
+        "AMPERAGE_MIN": "Amperage Min, A",
+        "AMPERAGE_AVG": "Amperage Avg, A"
+    },
     "COMMON": {
         "HOURLY": "Hourly",
         "DAILY": "Daily",
@@ -66,7 +79,8 @@
         "DATE": "Date",
         "EVENTS": "Events",
         "MONTH": "Month",
-        "YEAR": "Year"
+        "YEAR": "Year",
+        "HOUR": "Hour"
     },
     "MONTHS": {
         "JAN": "Jan",
