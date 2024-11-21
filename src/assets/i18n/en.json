@@ -33,6 +33,11 @@
         "CHART_LABEL": "Power, kW*h",
         "KWH": "kW*h"
     },
+    "POWER_FAILURES": {
+        "FAILURE_EVENTS": "Failure Events",
+        "TOTAL_FAILURES": "Total Failures",
+        "MAX_FAILURE": "Max Failure"
+    },
     "COMMON": {
         "HOURLY": "Hourly",
         "DAILY": "Daily",
@@ -40,7 +45,14 @@
         "YEARLY": "Yearly",
         "BACK": "Back",
         "FORWARD": "Forward",
-        "REFRESH": "Refresh"
+        "REFRESH": "Refresh",
+        "START": "Start",
+        "END": "End",
+        "DURATION": "Duration",
+        "DATE": "Date",
+        "EVENTS": "Events",
+        "MONTH": "Month",
+        "YEAR": "Year"
     },
     "MONTHS": {
         "JAN": "Jan",
@@ -54,6 +66,18 @@
         "SEP": "Sep",
         "OCT": "Oct",
         "NOV": "Nov",
-        "DEC": "Dec"
+        "DEC": "Dec",
+        "M0": "January",
+        "M1": "February",
+        "M2": "March",
+        "M3": "April",
+        "M4": "May",
+        "M5": "June",
+        "M6": "July",
+        "M7": "August",
+        "M8": "September",
+        "M9": "October",
+        "M10": "November",
+        "M11": "December"
     }
 }

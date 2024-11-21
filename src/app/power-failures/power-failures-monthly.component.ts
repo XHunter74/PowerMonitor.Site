@@ -90,6 +90,9 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       this.showSpinner();
       try {
         const powerData = await this.powerService.getPowerFailuresMonthlyData(this.currentDate.getFullYear());
+        powerData.forEach(async (element) => {
+          element.monthStr = await this.formatMonth(new Date(element.year, element.month));
+        });
         this.sortedData.data = powerData;
         this.totalPowerFailure = 0;
         this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
@@ -147,5 +150,10 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
       this.router.navigate(['power-failures', 'daily'],
         { queryParams: { year: row.year, month: row.month } });
     }
+  }
+
+  async formatMonth(date: Date): Promise<string> {
+    const month = await this.translate.get(`MONTHS.M${date.getMonth()}`).toPromise();
+    return `${month} ${date.getFullYear()}`;
   }
 }

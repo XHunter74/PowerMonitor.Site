@@ -1,16 +1,16 @@
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="Refresh" matTooltipClass="tooltip">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
     <div class="col-12 col-md-6 mb-3">
         <table class="d-inline-block">
             <tr>
-                <td class="pr-2"><b>Failure events:</b> </td>
+                <td class="pr-2"><b>{{'POWER_FAILURES.FAILURE_EVENTS' | translate}}:</b> </td>
                 <td class="text-right"> {{failureAmount}}</td>
                 <td class="text-right"></td>
             </tr>
             <tr>
-                <td class="pr-2"><b>Total failure:</b> </td>
+                <td class="pr-2"><b>{{'POWER_FAILURES.TOTAL_FAILURES' | translate}}:</b> </td>
                 <td class="text-right"> {{formatDurationWithDays(totalPowerFailure)}}</td>
                 <td class="text-right"></td>
             </tr>
@@ -20,15 +20,15 @@
 <div class="table-responsive">
     <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="year">
-            <th *matHeaderCellDef mat-sort-header> Year </th>
+            <th *matHeaderCellDef mat-sort-header> {{'COMMON.YEAR' | translate}} </th>
             <td *matCellDef="let element"> {{element.eventDate | date: 'yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="duration">
-            <th *matHeaderCellDef mat-sort-header> Duration </th>
+            <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
             <td *matCellDef="let element"> {{formatDurationWithDays(element.duration)}} </td>
         </ng-container>
         <ng-container matColumnDef="events">
-            <th *matHeaderCellDef mat-sort-header> Events </th>
+            <th *matHeaderCellDef mat-sort-header> {{'COMMON.EVENTS' | translate}} </th>
             <td *matCellDef="let element"> {{element.events}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
