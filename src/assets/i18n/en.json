@@ -38,6 +38,20 @@
         "TOTAL_FAILURES": "Total Failures",
         "MAX_FAILURE": "Max Failure"
     },
+    "PLATFORM_INFO": {
+        "SITE_VERSION": "Site Version",
+        "API_VERSION": "API Version",
+        "SERVER_MANUFACTURER": "Server Manufacturer",
+        "SERVER_MODEL": "Server Model",
+        "OS_PLATFORM": "OS Platform",
+        "OS": "OS",
+        "CPU_MANUFACTURER": "CPU Manufacturer",
+        "CPU_BRAND": "CPU Brand",
+        "CPU_SPEED": "CPU Speed",
+        "CPU_CORES": "CPU Cores",
+        "SYSTEM_UPTIME": "System Uptime",
+        "SYSTEM_TIME": "System Time"
+    },
     "COMMON": {
         "HOURLY": "Hourly",
         "DAILY": "Daily",

@@ -1,41 +1,41 @@
 <h1>Platform Information</h1>
 
 <ul>
-    <li>Site version: <strong>{{ siteVersion }}</strong></li>
+    <li>{{'PLATFORM_INFO.SITE_VERSION' | translate}}: <strong>{{ siteVersion }}</strong></li>
 </ul>
 <div *ngIf="sysInfo">
     <ul>
-        <li>API version: <strong>{{ sysInfo.version }}</strong></li>
+        <li>{{'PLATFORM_INFO.API_VERSION' | translate}}: <strong>{{ sysInfo.version }}</strong></li>
     </ul>
     <ul>
-        <li>Manufacturer: <strong>{{ sysInfo.manufacturer }}</strong></li>
+        <li>{{'PLATFORM_INFO.SERVER_MANUFACTURER' | translate}}: <strong>{{ sysInfo.manufacturer }}</strong></li>
     </ul>
     <ul>
-        <li>Model: <strong>{{ sysInfo.model }}</strong></li>
+        <li>{{'PLATFORM_INFO.SERVER_MODEL' | translate}}: <strong>{{ sysInfo.model }}</strong></li>
     </ul>
     <ul>
-        <li>OS Platform: <strong>{{ sysInfo.platform }}</strong></li>
+        <li>{{'PLATFORM_INFO.OS_PLATFORM' | translate}}: <strong>{{ sysInfo.platform }}</strong></li>
     </ul>
     <ul>
-        <li>OS: <strong>{{ sysInfo.distro }}</strong></li>
+        <li>{{'PLATFORM_INFO.OS' | translate}}: <strong>{{ sysInfo.distro }}</strong></li>
     </ul>
     <ul>
-        <li>CPU Manufacturer: <strong>{{ sysInfo.cpuManufacturer }}</strong></li>
+        <li>{{'PLATFORM_INFO.CPU_MANUFACTURER' | translate}}: <strong>{{ sysInfo.cpuManufacturer }}</strong></li>
     </ul>
     <ul>
-        <li>CPU Brand: <strong>{{ sysInfo.cpuBrand }}</strong></li>
+        <li>{{'PLATFORM_INFO.CPU_BRAND' | translate}}: <strong>{{ sysInfo.cpuBrand }}</strong></li>
     </ul>
     <ul>
-        <li>CPU Speed: <strong>{{ sysInfo.cpuSpeed }} GHz</strong></li>
+        <li>{{'PLATFORM_INFO.CPU_SPEED' | translate}}: <strong>{{ sysInfo.cpuSpeed }} GHz</strong></li>
     </ul>
     <ul>
-        <li>CPU Cores: <strong>{{ sysInfo.cpuCores }}</strong></li>
+        <li>{{'PLATFORM_INFO.CPU_CORES' | translate}}: <strong>{{ sysInfo.cpuCores }}</strong></li>
     </ul>
     <ul>
-        <li>System Uptime: <strong>{{ getSystemUptimeStr() }}</strong></li>
+        <li>{{'PLATFORM_INFO.SYSTEM_UPTIME' | translate}}: <strong>{{ getSystemUptimeStr() }}</strong></li>
     </ul>
     <ul>
-        <li>System Time: <strong>{{ getSystemDateTime() | date: 'dd.MM.yyyy HH:mm:ss'}}</strong></li>
+        <li>{{'PLATFORM_INFO.SYSTEM_TIME' | translate}}: <strong>{{ getSystemDateTime() | date: 'dd.MM.yyyy HH:mm:ss'}}</strong></li>
     </ul>
     <ul>
         <li>

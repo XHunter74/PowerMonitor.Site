@@ -38,6 +38,20 @@
         "TOTAL_FAILURES": "Час відключеннь",
         "MAX_FAILURE": "Макс. відключення"
     },
+    "PLATFORM_INFO": {
+        "SITE_VERSION": "Версія сайту",
+        "API_VERSION": "Версія API",
+        "SERVER_MANUFACTURER": "Виробник сервера",
+        "SERVER_MODEL": "Модель сервера",
+        "OS_PLATFORM": "Платформа ОС",
+        "OS": "ОС",
+        "CPU_MANUFACTURER": "Виробник ЦП",
+        "CPU_BRAND": "Бренд ЦП",
+        "CPU_SPEED": "Швидкість ЦП",
+        "CPU_CORES": "Ядра ЦП",
+        "SYSTEM_UPTIME": "Час роботи системи",
+        "SYSTEM_TIME": "Системний час"
+    },
     "COMMON": {
         "HOURLY": "Погодинно",
         "DAILY": "По дням",
