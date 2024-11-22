@@ -111,7 +111,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         ];
         this.barChartData = data;
     }
-    
+
     async ngOnInit() {
         Chart.register(Annotation);
         this.activatedRouter.queryParams.subscribe(
@@ -158,7 +158,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
             }
         });
     }

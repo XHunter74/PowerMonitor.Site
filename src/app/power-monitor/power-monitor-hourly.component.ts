@@ -146,7 +146,8 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+                setTimeout(async () => ErrorDialogComponent.show(this.dialog, errorText));
             }
         });
     }

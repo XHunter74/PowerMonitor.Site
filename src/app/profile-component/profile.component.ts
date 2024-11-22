@@ -3,6 +3,7 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
 import { UsersService } from '../services/users-service';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-profile',
@@ -19,7 +20,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         confirmPassword: new UntypedFormControl('')
     }, [this.checkPasswords]);
 
-    constructor(private usersService: UsersService, private dialog: MatDialog) { }
+    constructor(private usersService: UsersService,
+        private dialog: MatDialog, private translate: TranslateService) { }
 
     ngOnInit(): void {
     }
@@ -35,7 +37,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         } catch (err) {
             console.log(err);
-            ErrorDialogComponent.show(this.dialog, 'Something going wrong!');
+            const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
         }
     }
 

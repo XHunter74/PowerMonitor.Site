@@ -15,7 +15,7 @@ export class ErrorDialogComponent {
     }
     dialog.open(ErrorDialogComponent, {
       width: width,
-      height: '170px',
+      height: '180px',
       data: new ErrorDialogData(message)
     });
   }

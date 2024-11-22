@@ -98,7 +98,8 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
       } catch (e) {
         console.log(e.message);
         this.closeSpinner();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       }
     });
   }

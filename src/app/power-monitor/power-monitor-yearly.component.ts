@@ -66,7 +66,7 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
         ];
         this.barChartData = data;
     }
-    
+
     async ngOnInit() {
         Chart.register(Annotation);
         await this.refreshData();
@@ -82,7 +82,8 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
             }
         });
     }

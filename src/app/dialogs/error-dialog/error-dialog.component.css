@@ -1,7 +1,47 @@
-.modal-body {
-    margin-left: 10px;
+.modal-app-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.modal-footer {
-    margin-right: 10px;
+.modal-body {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.dialog-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 240, 236);
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.dialog-header-text {
+    font-weight: bold;
+    font-size: 18px;
+    max-height: 45px;
+}
+
+.modal-content {
+    background-color: var(--modalBackground);
+}
+
+.dialog-footer {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.ok-button {
+    color: white;
+    background-color: #4189C7;
+    width: 120px;
 }

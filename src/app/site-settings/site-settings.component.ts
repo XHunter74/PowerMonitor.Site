@@ -51,7 +51,8 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
         } catch (e) {
             this.closeSpinner();
             console.error(e);
-            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+            const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
         }
     }
 
@@ -64,7 +65,8 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
             await this.servicesService.setCalibrationCoefficients(calibrationCoefficients);
         } catch (e) {
             console.error(e);
-            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+            const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
         } finally {
             this.closeSpinner();
         }
@@ -80,7 +82,8 @@ export class SiteSettingsComponent extends AppBaseComponent implements OnInit, O
             await this.servicesService.uploadNewSketch(this.newSketch);
         } catch (e) {
             console.error(e);
-            setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+            const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+            setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
         } finally {
             this.dialogRef.close();
         }

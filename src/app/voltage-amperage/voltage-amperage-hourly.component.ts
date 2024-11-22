@@ -99,7 +99,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
             }
         });
     }

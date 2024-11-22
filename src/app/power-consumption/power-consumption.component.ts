@@ -50,7 +50,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
         this.closeSpinner();
       } catch (e) {
         this.closeSpinner();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       }
     });
   }
@@ -66,7 +67,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
         await this.refreshData();
       } catch (err) {
         console.log(err);
-        ErrorDialogComponent.show(this.dialog, `Could not delete this record because: '${err.error.message}'`);
+        const errorText = await this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').toPromise();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       }
     }
   }
@@ -90,7 +92,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
       } catch (err) {
         this.closeSpinner();
         console.log(err);
-        ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
+        const errorText = await this.translate.get('POWER_CONSUMPTION.ADD_ERROR').toPromise();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       }
     }
   }
@@ -109,7 +112,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
       } catch (err) {
         this.closeSpinner();
         console.log(err);
-        ErrorDialogComponent.show(this.dialog, `Could not add this record because: '${err.error.message}'`);
+        const errorText = await this.translate.get('POWER_CONSUMPTION.EDIT_ERROR').toPromise();
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       }
     }
   }

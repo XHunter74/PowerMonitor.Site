@@ -17,7 +17,8 @@
     },
     "BUTTONS": {
         "SAVE": "Save",
-        "CANCEL": "Cancel"
+        "CANCEL": "Cancel",
+        "OK": "Ok"
     },
     "LIVE_DATA": {
         "VOLTAGE": "Voltage",
@@ -74,7 +75,10 @@
         "ADD_NEW_RECORD": "Add new record",
         "DELETE_RECORD": "Delete record",
         "VALUE": "Value",
-        "DELETE_QUESTION": "Are you sure you want to delete this record?"
+        "DELETE_QUESTION": "Are you sure you want to delete this record?",
+        "DELETE_ERROR": "Could not delete this record",
+        "ADD_ERROR": "Could not add this record",
+        "EDIT_ERROR": "Could not edit this record"
     },
     "COMMON": {
         "HOURLY": "Hourly",
@@ -94,7 +98,8 @@
         "YEAR": "Year",
         "HOUR": "Hour",
         "YES": "Yes",
-        "NO": "No"
+        "NO": "No",
+        "ERROR": "Error"
     },
     "MONTHS": {
         "JAN": "Jan",
@@ -121,5 +126,8 @@
         "M9": "October",
         "M10": "November",
         "M11": "December"
+    },
+    "ERRORS":{
+        "COMMON": "Something going wrong."
     }
 }

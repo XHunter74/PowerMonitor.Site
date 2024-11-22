@@ -155,7 +155,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             } catch (e) {
                 this.closeSpinner();
                 console.log(e);
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, 'Something going wrong!'));
+                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
+                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
             }
         });
     }
