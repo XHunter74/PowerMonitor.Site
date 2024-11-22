@@ -40,11 +40,11 @@
     <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="start">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.START' | translate}} </th>
-            <td *matCellDef="let element"> {{element.start | date: 'dd.MM.yyyy HH:mm'}} </td>
+            <td *matCellDef="let element"> {{element.start | date: 'HH:mm'}} </td>
         </ng-container>
         <ng-container matColumnDef="finish">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.END' | translate}} </th>
-            <td *matCellDef="let element"> {{element.finish | date: 'dd.MM.yyyy HH:mm'}} </td>
+            <td *matCellDef="let element"> {{element.finish | date: 'HH:mm'}} </td>
         </ng-container>
         <ng-container matColumnDef="duration">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
