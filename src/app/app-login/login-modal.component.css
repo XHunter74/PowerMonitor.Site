@@ -1,23 +1,58 @@
-.image-view {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    height: auto;
-    max-height: 480px;
+.modal-app-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .modal-body {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
 }
 
-.footer-container {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
+.dialog-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 240, 236);
+    text-align: center;
+    font-weight: 600;
 }
 
-.login-form {
-    height: 260px;
+.dialog-header-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.modal-content {
+    background-color: var(--modalBackground);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.login-username {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.dialog-footer {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.ok-button {
+    color: white !important;
+    background-color: #4189C7;
+    width: 120px;
+}
+
+.cancel-button {
+    color: white !important;
+    background-color: #f7b3b3;
+    width: 120px;
 }

@@ -18,7 +18,8 @@
     "BUTTONS": {
         "SAVE": "Save",
         "CANCEL": "Cancel",
-        "OK": "Ok"
+        "OK": "Ok",
+        "LOGIN": "Login"
     },
     "LIVE_DATA": {
         "VOLTAGE": "Voltage",
@@ -59,7 +60,7 @@
         "AMPERAGE": "Amperage",
         "V": "V",
         "A": "A",
-        "LABEL_H":"h",
+        "LABEL_H": "h",
         "VOLTAGE_MAX": "Voltage Max, V",
         "VOLTAGE_MIN": "Voltage Min, V",
         "VOLTAGE_AVG": "Voltage Avg, V",
@@ -79,6 +80,13 @@
         "DELETE_ERROR": "Could not delete this record",
         "ADD_ERROR": "Could not add this record",
         "EDIT_ERROR": "Could not edit this record"
+    },
+    "LOGIN": {
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "AUTHENTICATION": "Authentication",
+        "PASSWORD_ERROR": "Password is required",
+        "USERNAME_ERROR": "Username is required"
     },
     "COMMON": {
         "HOURLY": "Hourly",
@@ -127,7 +135,7 @@
         "M10": "November",
         "M11": "December"
     },
-    "ERRORS":{
+    "ERRORS": {
         "COMMON": "Something going wrong."
     }
 }

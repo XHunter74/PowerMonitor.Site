@@ -32,13 +32,13 @@ export class LoginModalComponent implements OnInit {
 
   static show(dialog: MatDialog, width?: string) {
     if (!width) {
-      width = '500px';
+      width = '400px';
     }
     setTimeout(() => {
       dialog.open(LoginModalComponent,
         {
           width,
-          height: '280px',
+          height: '350px',
           hasBackdrop: false
         });
     });
