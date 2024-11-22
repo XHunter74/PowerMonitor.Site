@@ -16,7 +16,8 @@
         "CHANGE_LANGUAGE": "Change Language"
     },
     "BUTTONS": {
-        "SAVE": "Save"
+        "SAVE": "Save",
+        "CANCEL": "Cancel"
     },
     "LIVE_DATA": {
         "VOLTAGE": "Voltage",
@@ -71,7 +72,8 @@
         "DIFFERENCE": "Difference",
         "COEFFICIENT": "Coefficient",
         "ADD_NEW_RECORD": "Add new record",
-        "DELETE_RECORD": "Delete record"
+        "DELETE_RECORD": "Delete record",
+        "VALUE": "Value"
     },
     "COMMON": {
         "HOURLY": "Hourly",
@@ -85,6 +87,7 @@
         "END": "End",
         "DURATION": "Duration",
         "DATE": "Date",
+        "TIME": "Time",
         "EVENTS": "Events",
         "MONTH": "Month",
         "YEAR": "Year",

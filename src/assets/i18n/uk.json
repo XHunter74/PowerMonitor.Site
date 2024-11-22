@@ -16,7 +16,8 @@
         "CHANGE_LANGUAGE": "Змінити мову"
     },
     "BUTTONS": {
-        "SAVE": "Зберегти"
+        "SAVE": "Зберегти",
+        "CANCEL": "Скасувати"
     },
     "LIVE_DATA": {
         "VOLTAGE": "Напруга",
@@ -71,7 +72,8 @@
         "DIFFERENCE": "Різниця",
         "COEFFICIENT": "Коефіцієнт",
         "ADD_NEW_RECORD": "Додати новий запис",
-        "DELETE_RECORD": "Видалити запис"
+        "DELETE_RECORD": "Видалити запис",
+        "VALUE": "Показники"
     },
     "COMMON": {
         "HOURLY": "Погодинно",
@@ -85,6 +87,7 @@
         "END": "Кінець",
         "DURATION": "Тривалість",
         "DATE": "Дата",
+        "TIME": "Час",
         "EVENTS": "Кількість",
         "MONTH": "Місяць",
         "YEAR": "Рік",

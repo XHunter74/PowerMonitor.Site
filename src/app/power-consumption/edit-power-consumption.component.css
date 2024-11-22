@@ -1,21 +1,36 @@
-.row {
-    flex-wrap: nowrap;
+.dialog-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
     align-items: center;
-    margin-left: 10px;
-    margin-top: 10px;
-    width: 90%;
+    background-color: rgb(243, 240, 236);
 }
 
-.row>* {
-    width: auto;
+.dialog-header-text {
+    font-weight: bold;
+    font-size: 18px;
 }
 
-.timepicker {
-    margin-left: -12px;
+.modal-content {
+    background-color: var(--modalBackground);
+    padding: 30px;
 }
 
-.modal-footer {
-    margin-right: 20px;
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timepicker-group {
+    margin-top: -15px;
+}
+
+.dialog-footer {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 10px;
 }
 
 .edit-consumption-form {
@@ -23,9 +38,14 @@
     margin-right: 20px;
 }
 
-.footer-container {
-    position: absolute;
-    bottom: 10px;
-    left: 0px;
-    width: 100%;
+.ok-button {
+    color: white;
+    background-color: #4189C7;
+    width: 120px;
+}
+
+.cancel-button {
+    color: white;
+    background-color: #f7b3b3;
+    width: 120px;
 }
