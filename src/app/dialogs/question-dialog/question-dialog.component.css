@@ -1,3 +1,10 @@
+.modal-app-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .modal-body {
     margin-top: 10px;
     margin-bottom: 15px;
@@ -18,10 +25,14 @@
     font-size: 18px;
 }
 
+.modal-content {
+    background-color: var(--modalBackground);
+}
+
 .dialog-footer {
     align-items: center;
     justify-content: center;
-    margin-top: 35px;
+    margin-bottom: 10px;
     gap: 10px;
 }
 
