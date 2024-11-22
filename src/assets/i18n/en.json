@@ -73,7 +73,8 @@
         "COEFFICIENT": "Coefficient",
         "ADD_NEW_RECORD": "Add new record",
         "DELETE_RECORD": "Delete record",
-        "VALUE": "Value"
+        "VALUE": "Value",
+        "DELETE_QUESTION": "Are you sure you want to delete this record?"
     },
     "COMMON": {
         "HOURLY": "Hourly",
@@ -91,7 +92,9 @@
         "EVENTS": "Events",
         "MONTH": "Month",
         "YEAR": "Year",
-        "HOUR": "Hour"
+        "HOUR": "Hour",
+        "YES": "Yes",
+        "NO": "No"
     },
     "MONTHS": {
         "JAN": "Jan",

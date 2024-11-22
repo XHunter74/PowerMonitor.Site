@@ -4,3 +4,35 @@
     text-align: center;
     font-weight: 600;
 }
+
+.dialog-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 240, 236);
+}
+
+.dialog-header-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.dialog-footer {
+    align-items: center;
+    justify-content: center;
+    margin-top: 35px;
+    gap: 10px;
+}
+
+.ok-button {
+    color: white;
+    background-color: #4189C7;
+    width: 120px;
+}
+
+.cancel-button {
+    color: white;
+    background-color: #f7b3b3;
+    width: 120px;
+}

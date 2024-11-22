@@ -56,7 +56,10 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   }
 
   async deleteRecord(recordId: number) {
-    const dialogResult = await QuestionDialogComponent.show(this.dialog, 'Would you like to delete this record?');
+    const questionText = await this.translate.get('POWER_CONSUMPTION.DELETE_QUESTION').toPromise();
+    const yesText = await this.translate.get('COMMON.YES').toPromise();
+    const noText = await this.translate.get('COMMON.NO').toPromise();
+    const dialogResult = await QuestionDialogComponent.show(this.dialog, questionText, yesText, noText);
     if (dialogResult === 'positive') {
       try {
         await this.powerService.deletePowerMeteringRecord(recordId);
