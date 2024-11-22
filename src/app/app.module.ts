@@ -35,7 +35,6 @@ import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-m
 import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
-import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { ChangeLanguageDialogComponent } from './dialogs/change-language-dialog/change-language-dialog.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthService } from './services/auth.service';
@@ -50,6 +49,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
 import { environment } from '../environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-directive';
 
 @NgModule({
   declarations: [
@@ -79,9 +79,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PowerConsumptionComponent,
     QuestionDialogComponent,
     EditPowerConsumptionComponent,
-    DigitOnlyDirective,
     AutofocusDirective,
-    ChangeLanguageDialogComponent
+    ChangeLanguageDialogComponent,
+    DecimalNumbersOnlyDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
