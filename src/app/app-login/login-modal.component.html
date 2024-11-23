@@ -1,13 +1,14 @@
 <div class="modal-app-dialog">
     <div class="dialog-header">{{'LOGIN.AUTHENTICATION' | translate }}</div>
-    <div class="modal-body modal-content">
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="tryLogin()" autocomplete="on">
+    <form class="modal-form" [formGroup]="loginForm" (ngSubmit)="tryLogin()" autocomplete="on">
+        <div class="modal-content">
             <div class="form-group login-username">
                 <label for="userName">{{'LOGIN.USERNAME' | translate }}</label>
                 <div class="input-group">
-                    <input class="form-control" type="text" formControlName="userName" validateEmail ngbAutofocus>
+                    <input class="form-control" type="text" formControlName="userName" validateEmail ngbAutofocus autofocus="true">
                 </div>
-                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert alert-danger">
+                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+                    class="alert alert-danger alert-username">
                     <div *ngIf="userName.errors.required">
                         {{'LOGIN.USERNAME_ERROR' | translate }}
                     </div>
@@ -27,13 +28,10 @@
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
             </div>
-        </form>
-
-    </div>
-    <div class="modal-footer dialog-footer">
-        <button mat-button type="submit" class="ok-button" [disabled]="loginForm.invalid"
-            (click)="tryLogin()">{{'BUTTONS.LOGIN' | translate }}</button>
-        <button mat-button type="button" class="cancel-button" (click)="processCancel()">{{'BUTTONS.CANCEL' | translate
-            }}</button>
-    </div>
+        </div>
+        <div class="modal-footer dialog-footer">
+            <button mat-button type="submit" class="ok-button" [disabled]="loginForm.invalid"
+                (click)="tryLogin()">{{'BUTTONS.LOGIN' | translate }}</button>
+        </div>
+    </form>
 </div>

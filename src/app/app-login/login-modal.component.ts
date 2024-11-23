@@ -38,8 +38,9 @@ export class LoginModalComponent implements OnInit {
       dialog.open(LoginModalComponent,
         {
           width,
-          height: '350px',
-          hasBackdrop: false
+          height: '340px',
+          hasBackdrop: false,
+          disableClose: true
         });
     });
   }
