@@ -42,6 +42,7 @@
         "MAX_FAILURE": "Макс. відключення"
     },
     "PLATFORM_INFO": {
+        "TITLE": "Інформація про платформу",
         "SITE_VERSION": "Версія сайту",
         "API_VERSION": "Версія API",
         "SERVER_MANUFACTURER": "Виробник сервера",

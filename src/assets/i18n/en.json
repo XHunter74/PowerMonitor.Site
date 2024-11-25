@@ -42,6 +42,7 @@
         "MAX_FAILURE": "Max Failure"
     },
     "PLATFORM_INFO": {
+        "TITLE": "Platform Information",
         "SITE_VERSION": "Site Version",
         "API_VERSION": "API Version",
         "SERVER_MANUFACTURER": "Server Manufacturer",
