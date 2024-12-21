@@ -45,6 +45,7 @@
         "TITLE": "Platform Information",
         "SITE_VERSION": "Site Version",
         "API_VERSION": "API Version",
+        "BOARD_VERSION": "Board Version",
         "SERVER_MANUFACTURER": "Server Manufacturer",
         "SERVER_MODEL": "Server Model",
         "OS_PLATFORM": "OS Platform",

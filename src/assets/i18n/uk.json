@@ -45,6 +45,7 @@
         "TITLE": "Інформація про платформу",
         "SITE_VERSION": "Версія сайту",
         "API_VERSION": "Версія API",
+        "BOARD_VERSION": "Версія плати",
         "SERVER_MANUFACTURER": "Виробник сервера",
         "SERVER_MODEL": "Модель сервера",
         "OS_PLATFORM": "Платформа ОС",

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services-service';
 import { ISystemInfo } from '../models/sysinfo.model';
+import { IBoardInfoModel } from '../models/board-info.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { environment } from '../../environments/environment';
@@ -9,11 +10,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-platform-info',
-    templateUrl: './platform-info.component.html'
+    templateUrl: './platform-info.component.html',
+    styleUrls: ['./platform-info.component.css'],
 })
 export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     public sysInfo: ISystemInfo;
+    public boardInfo: IBoardInfoModel;
     siteVersion: string;
 
     constructor(private servicesService: ServicesService,
@@ -32,6 +35,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
             this.showSpinner();
             try {
                 this.sysInfo = await this.servicesService.getSystemInfo();
+                this.boardInfo = await this.servicesService.getBoardVersion();
                 this.closeSpinner();
             } catch (e) {
                 this.closeSpinner();
