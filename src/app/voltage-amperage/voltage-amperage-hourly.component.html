@@ -12,7 +12,8 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
+    matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
@@ -23,11 +24,13 @@
                     <b>{{'VOLTAGE_AMPERAGE.VOLTAGE' | translate}}:</b>
                 </td>
                 <td class="text-right">
-                    {{formatNumber(minVoltage.voltageMin)}}{{'VOLTAGE_AMPERAGE.V' | translate}}, {{minVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{minVoltage.voltageMin | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' | translate}},
+                    {{minVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
                 </td>
                 <td> - </td>
                 <td class="text-right">
-                    {{formatNumber(maxVoltage.voltageMax)}}{{'VOLTAGE_AMPERAGE.V' | translate}}, {{maxVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{maxVoltage.voltageMax | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' | translate}},
+                    {{maxVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
                 </td>
             </tr>
             <tr>
@@ -35,7 +38,8 @@
                     <b>{{'VOLTAGE_AMPERAGE.VOLTAGE' | translate}}, Δ:</b>
                 </td>
                 <td class="text-right">
-                    {{formatNumber(maxVoltage.voltageMax - minVoltage.voltageMin)}}{{'VOLTAGE_AMPERAGE.V' | translate}}
+                    {{(maxVoltage.voltageMax - minVoltage.voltageMin) | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' |
+                    translate}}
                 </td>
                 <td></td>
                 <td></td>
@@ -45,11 +49,13 @@
                     <b>{{'VOLTAGE_AMPERAGE.AMPERAGE' | translate}}:</b>
                 </td>
                 <td class="text-right">
-                    {{formatNumber(minAmperage.amperageMin)}}{{'VOLTAGE_AMPERAGE.A' | translate}}, {{minAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{minAmperage.amperageMin | number: '1.1-1'}}{{'VOLTAGE_AMPERAGE.A' | translate}},
+                    {{minAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
                 </td>
                 <td> - </td>
                 <td class="text-right">
-                    {{formatNumber(maxAmperage.amperageMax)}}{{'VOLTAGE_AMPERAGE.A' | translate}}, {{maxAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{maxAmperage.amperageMax | number: '1.1-1'}}{{'VOLTAGE_AMPERAGE.A' | translate}},
+                    {{maxAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
                 </td>
             </tr>
         </table>
@@ -67,27 +73,27 @@
         </ng-container>
         <ng-container matColumnDef="voltageMax">
             <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.voltageMax)}} </td>
+            <td *matCellDef="let element"> {{element.voltageMax | number: '1.0-0'}} </td>
         </ng-container>
         <ng-container matColumnDef="voltageMin">
             <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MIN' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.voltageMin)}} </td>
+            <td *matCellDef="let element"> {{element.voltageMin | number: '1.0-0'}} </td>
         </ng-container>
         <ng-container matColumnDef="voltageAvg">
             <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_AVG' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.voltageAvg)}} </td>
+            <td *matCellDef="let element"> {{element.voltageAvg | number: '1.0-0'}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageMax">
             <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.amperageMax)}} </td>
+            <td *matCellDef="let element"> {{element.amperageMax | number: '1.1-1'}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageMin">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.amperageMin)}} </td>
+            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_MIN' | translate}} </th>
+            <td *matCellDef="let element"> {{element.amperageMin | number: '1.1-1'}} </td>
         </ng-container>
         <ng-container matColumnDef="amperageAvg">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element"> {{formatNumber(element.amperageAvg)}} </td>
+            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_AVG' | translate}} </th>
+            <td *matCellDef="let element"> {{element.amperageAvg | number: '1.1-1'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
