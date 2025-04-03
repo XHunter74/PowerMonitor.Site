@@ -13,7 +13,8 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip" (click)="refreshData()">
+<button class="hourly__mat-button" mat-button matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip"
+    (click)="refreshData()">
     <mat-icon>refresh</mat-icon>
 </button>
 <br />
@@ -21,17 +22,20 @@
     <table>
         <tr>
             <td>
-                <p class="mb-0"><b>{{'POWER_MONITOR.TOTAL_POWER' | translate}}: </b>{{formatNumber(powerSum)}}, {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0"><b>{{'POWER_MONITOR.TOTAL_POWER' | translate}}: </b>{{formatNumber(powerSum)}},
+                    {{'POWER_MONITOR.KWH' | translate}}</p>
             </td>
         </tr>
         <tr *ngIf="powerAvg > 0">
             <td style="color: blue">
-                <p class="mb-0"><b>{{'POWER_MONITOR.AVERAGE_POWER' | translate}}: </b>{{formatNumber(powerAvg)}}, {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0"><b>{{'POWER_MONITOR.AVERAGE_POWER' | translate}}: </b>{{formatNumber(powerAvg)}},
+                    {{'POWER_MONITOR.KWH' | translate}}</p>
             </td>
         </tr>
-        <tr style="min-height: 29px;">
-            <td *ngIf="powerForecast> 0">
-                <p class="mb-0"><b>{{'POWER_MONITOR.FORECAST_POWER' | translate}}: </b>{{formatNumber(powerForecast)}}, {{'POWER_MONITOR.KWH' | translate}}</p>
+        <tr class="forecast-row">
+            <td *ngIf="powerForecast > 0">
+                <p class="mb-0"><b>{{'POWER_MONITOR.FORECAST_POWER' | translate}}: </b>{{formatNumber(powerForecast)}},
+                    {{'POWER_MONITOR.KWH' | translate}}</p>
             </td>
         </tr>
     </table>
