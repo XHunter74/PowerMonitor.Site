@@ -7,7 +7,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppMaterialModule } from './material-module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { RealDataComponent } from './real-data/real-data.component';
+import { LiveDataComponent } from './live-data/live-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AuthGuard, OpenGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
@@ -55,7 +55,7 @@ import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-d
   declarations: [
     AppComponent,
     NavMenuComponent,
-    RealDataComponent,
+    LiveDataComponent,
     AppLoginComponent,
     LoginModalComponent,
     PlatformInfoComponent,

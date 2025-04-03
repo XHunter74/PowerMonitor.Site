@@ -7,13 +7,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'app-real-data',
-  templateUrl: './real-data.component.html',
-  styleUrls: ['./real-data.component.css']
+  selector: 'app-live-data',
+  templateUrl: './live-data.component.html',
+  styleUrls: ['./live-data.component.css']
 })
 
 
-export class RealDataComponent implements OnInit, OnDestroy {
+export class LiveDataComponent implements OnInit, OnDestroy {
 
   private maxVoltage = 300;
   private nominalVoltageMin = 207;

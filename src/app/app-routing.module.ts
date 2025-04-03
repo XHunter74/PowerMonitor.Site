@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { AuthGuard } from './services/auth.guard';
-import { RealDataComponent } from './real-data/real-data.component';
+import { LiveDataComponent } from './live-data/live-data.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { SiteSettingsComponent } from './site-settings/site-settings.component';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
@@ -13,7 +13,7 @@ import { PowerConsumptionComponent } from './power-consumption/power-consumption
 
 const routes: Routes = [
     { path: '', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
-    { path: 'online-data', component: RealDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: 'online-data', component: LiveDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SiteSettingsComponent, canActivate: [AuthGuard] },
     { path: 'power-monitor', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
