@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadVoltageAmperage } from '../store/actions/voltage-amperage.actions';
 import { VoltageAmperageState } from '../store/reducers/voltage-amperage.reducer';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
@@ -30,7 +30,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
         'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
 
-    public currentDate: Date = new Date();
+    public currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
     maxVoltage: IVoltageAmperageModel;
     minVoltage: IVoltageAmperageModel;
@@ -38,6 +38,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     minAmperage: IVoltageAmperageModel;
 
     voltageAmperageState$: Observable<VoltageAmperageState>;
+    stateSubscription: Subscription;
 
     constructor(
         private store: Store<AppState>,
@@ -72,15 +73,24 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             const year = params['year'];
             const month = params['month'];
             const day = params['day'];
-            const date = year && month && day ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day)) : new Date();
-            this.store.dispatch(loadVoltageAmperage({ date }));
+            const date = year && month && day ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day)) :
+                new Date();
+            if (!this.currentDate) {
+                this.currentDate = date;
+                this.store.dispatch(loadVoltageAmperage({ date }));
+            }
         });
 
         this.sortedData.sort = this.sort;
         this.restoreSort();
-        this.voltageAmperageState$.subscribe(state => {
+        this.stateSubscription = this.voltageAmperageState$.subscribe(state => {
             this.processChangedState(state);
         })
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.stateSubscription.unsubscribe();
     }
 
     processChangedState(state: VoltageAmperageState) {
