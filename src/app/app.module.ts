@@ -53,7 +53,7 @@ import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-d
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { VoltageAmperageEffects } from './store/voltage-amperage.effects';
+import { VoltageAmperageEffects } from './store/effects/voltage-amperage.effects';
 
 @NgModule({
   declarations: [

@@ -12,8 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
-import { loadVoltageAmperage } from '../store/voltage-amperage.actions';
-import { VoltageAmperageState } from '../store/voltage-amperage.reducer';
+import { loadVoltageAmperage } from '../store/actions/voltage-amperage.actions';
+import { VoltageAmperageState } from '../store/reducers/voltage-amperage.reducer';
 import { Observable } from 'rxjs';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
@@ -108,8 +108,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 }
             });
         }
-        if (state.data) {
-            this.processReceivedData(state.data);
+        if (!state.loading && state.data) {
+            this.processReceivedData(state);
         }
     }
 
@@ -118,16 +118,12 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         this.store.dispatch(loadVoltageAmperage({ date }));
     }
 
-    processReceivedData(data: IVoltageAmperageModel[]) {
-        this.sortedData.data = data;
-        this.maxVoltage =
-            data.find(o => o.voltageMax === Math.max(...data.map(e => e.voltageMax)));
-        this.minVoltage =
-            data.find(o => o.voltageMin === Math.min(...data.map(e => e.voltageMin)));
-        this.maxAmperage =
-            data.find(o => o.amperageMax === Math.max(...data.map(e => e.amperageMax)));
-        this.minAmperage =
-            data.find(o => o.amperageMin === Math.min(...data.map(e => e.amperageMin)));
+    processReceivedData(state: VoltageAmperageState) {
+        this.sortedData.data = state.data;
+        this.maxVoltage = state.maxVoltage;
+        this.minVoltage = state.minVoltage;
+        this.maxAmperage = state.maxAmperage;
+        this.minAmperage = state.minAmperage;
     }
 
     sortData(sort: Sort): void {

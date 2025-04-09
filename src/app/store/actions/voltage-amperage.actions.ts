@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
+import { VoltageAmperageState } from '../reducers/voltage-amperage.reducer';
 
 export const loadVoltageAmperage = createAction(
     '[Voltage Amperage] Load Data',
@@ -8,7 +8,7 @@ export const loadVoltageAmperage = createAction(
 
 export const loadVoltageAmperageSuccess = createAction(
     '[Voltage Amperage] Load Data Success',
-    props<{ data: IVoltageAmperageModel[], date: Date }>()
+    props<{ data: VoltageAmperageState }>()
 );
 
 export const loadVoltageAmperageFailure = createAction(
