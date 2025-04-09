@@ -50,6 +50,8 @@ import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.facto
 import { environment } from '../environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-directive';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/reducers';
 
 @NgModule({
   declarations: [
@@ -105,7 +107,8 @@ import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-d
         }
       }
     ),
-    NgSelectModule
+    NgSelectModule,
+    StoreModule.forRoot(reducers),
   ],
   providers: [
     AuthGuard,
