@@ -1,9 +1,10 @@
 import { ActionReducerMap } from '@ngrx/store';
+import { voltageAmperageReducer, VoltageAmperageState } from './voltage-amperage.reducer';
 
 export interface AppState {
-  // Define your state properties here
+  voltageAmperage: VoltageAmperageState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  // Add your reducers here
+  voltageAmperage: voltageAmperageReducer,
 };

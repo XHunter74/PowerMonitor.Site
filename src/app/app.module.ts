@@ -52,6 +52,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-directive';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { VoltageAmperageEffects } from './store/voltage-amperage.effects';
 
 @NgModule({
   declarations: [
@@ -109,6 +111,7 @@ import { reducers } from './store/reducers';
     ),
     NgSelectModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([VoltageAmperageEffects]),
   ],
   providers: [
     AuthGuard,

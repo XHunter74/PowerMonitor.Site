@@ -34,6 +34,9 @@ export class AppBaseComponent implements OnDestroy {
         if (!message) {
             message = '';
         }
+        if (this.dialogRef) {
+            return;
+        }
         this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
             panelClass: 'transparent',
             disableClose: true,
@@ -45,8 +48,7 @@ export class AppBaseComponent implements OnDestroy {
     closeSpinner() {
         if (this.dialogRef) {
             this.dialogRef.close();
-        } else {
-            console.error('dialog is undefined');
+            this.dialogRef = null;
         }
     }
 }

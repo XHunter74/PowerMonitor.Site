@@ -47,7 +47,7 @@ export class PowerService extends HttpService {
         const params = new HttpParams()
             .set('startDate', startDate)
             .set('finishDate', startDate);
-
+        
         return this.getO<IVoltageAmperageModel[]>('power/voltage-amperage', params);
     }
 
