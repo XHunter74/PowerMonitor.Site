@@ -27,10 +27,6 @@ const initialState: VoltageAmperageState = {
 export const voltageAmperageReducer = createReducer(
     initialState,
     on(loadVoltageAmperage, (state) => ({ ...state, loading: true, error: null })),
-    on(loadVoltageAmperageSuccess, (_state, { data }) => {
-        const newState = { ...data };
-        newState.loading = false;
-        return newState;
-    }),
+    on(loadVoltageAmperageSuccess, (_state, { data }) => ({ ...data, loading: false })),
     on(loadVoltageAmperageFailure, (state, { error }) => ({ ...state, loading: false, error }))
 );
