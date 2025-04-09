@@ -12,6 +12,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
@@ -26,7 +27,9 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     sortedData = new MatTableDataSource();
     displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
         'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
-    public currentDate: Date;
+
+    currentDate$ = new BehaviorSubject(<Date>(new Date()));
+    public currentDate: Date = this.currentDate$.getValue();;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
     maxVoltage: IVoltageAmperageModel;
     minVoltage: IVoltageAmperageModel;
@@ -39,6 +42,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         dialog: MatDialog,
         translate: TranslateService) {
         super(dialog, translate);
+        this.refreshData = this.refreshData.bind(this);
     }
 
     restoreSort() {
@@ -49,13 +53,21 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             if (restoredSort.active && restoredSort.direction) {
                 sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
                 sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
-                (sort.sortables.get(restoredSort.active) as MatSortHeader)
-                    ._setAnimationTransitionState({ toState: 'active' });
+                const sortable = sort.sortables.get(restoredSort.active);
+                if (sortable) {
+                    (sortable as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
+                } 
             }
         }
     }
 
-    async ngOnInit() {
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.currentDate$.complete();
+        this.currentDate$.unsubscribe();
+    }
+
+    ngOnInit() {
         this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
@@ -63,46 +75,49 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 const day = params['day'];
                 if (year && month && day) {
                     // tslint:disable-next-line: radix
-                    this.currentDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                    this.currentDate$.next(new Date(parseInt(year), parseInt(month) - 1, parseInt(day)));
                 } else {
-                    this.currentDate = new Date();
+                    this.currentDate$.next(new Date());
                 }
             }
         );
         this.currentDateControl.setValue(this.currentDate.toISOString());
-        await this.refreshData();
         this.sortedData.sort = this.sort;
+        this.currentDate$.subscribe(this.refreshData);
         this.restoreSort();
     }
 
-    async dateChanged(event: MatDatepickerInputEvent<Date>) {
-        this.currentDate = new Date(event.value);
+    dateChanged(event: MatDatepickerInputEvent<Date>) {
+        this.currentDate$.next(new Date(event.value));
         this.router.navigate(['voltage-amperage', 'hourly'],
             { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
-        await this.refreshData();
     }
 
-    async refreshData() {
-        setTimeout(async () => {
-            this.showSpinner();
-            try {
-                const voltageData = await this.powerService.getVoltageAmperageData(this.currentDate, this.currentDate);
-                this.sortedData.data = voltageData;
-                this.maxVoltage =
-                    voltageData.find(o => o.voltageMax === Math.max.apply(null, voltageData.map(e => e.voltageMax)));
-                this.minVoltage =
-                    voltageData.find(o => o.voltageMin === Math.min.apply(null, voltageData.map(e => e.voltageMin)));
-                this.maxAmperage =
-                    voltageData.find(o => o.amperageMax === Math.max.apply(null, voltageData.map(e => e.amperageMax)));
-                this.minAmperage =
-                    voltageData.find(o => o.amperageMin === Math.min.apply(null, voltageData.map(e => e.amperageMin)));
-                this.closeSpinner();
-            } catch (e) {
-                this.closeSpinner();
-                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-            }
-        });
+    refreshData() {
+        var spinnerRef = this.showSpinner();
+        this.powerService.getVoltageAmperageDataNew(this.currentDate).pipe(
+            tap(voltageData => this.processReceivedData(voltageData)),
+            catchError(() => {
+                this.translate.get('ERRORS.COMMON')
+                    .subscribe(errorText => {
+                        ErrorDialogComponent.show(this.dialog, errorText);
+                    });
+                return of([]);
+            }),
+            finalize(() => spinnerRef.close())
+        ).subscribe();
+    }
+
+    processReceivedData(data: IVoltageAmperageModel[]) {
+        this.sortedData.data = data;
+        this.maxVoltage =
+            data.find(o => o.voltageMax === Math.max(...data.map(e => e.voltageMax)));
+        this.minVoltage =
+            data.find(o => o.voltageMin === Math.min(...data.map(e => e.voltageMin)));
+        this.maxAmperage =
+            data.find(o => o.amperageMax === Math.max(...data.map(e => e.amperageMax)));
+        this.minAmperage =
+            data.find(o => o.amperageMin === Math.min(...data.map(e => e.amperageMin)));
     }
 
     sortData(sort: Sort): void {
@@ -111,7 +126,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         }
     }
 
-    async addDay(direction: string) {
+    addDay(direction: string) {
         if (direction === 'up') {
             this.currentDate.setDate(this.currentDate.getDate() + 1);
         } else {
@@ -120,7 +135,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         this.currentDateControl.setValue(this.currentDate.toISOString());
         this.router.navigate(['voltage-amperage', 'hourly'],
             { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
-        await this.refreshData();
+        this.refreshData();
     }
 
     isAddDayButtonDisabled(direction: string): boolean {

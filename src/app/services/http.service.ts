@@ -3,6 +3,7 @@ import { Optional, SkipSelf } from '@angular/core';
 import { HeaderItem } from './header.item';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { catchError, Observable, throwError } from 'rxjs';
 
 export class HttpService {
 
@@ -24,6 +25,11 @@ export class HttpService {
     async get<T>(actionUrl: string, params?: HttpParams): Promise<T> {
         const headers = [];
         return await this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params);
+    }
+
+    getO<T>(actionUrl: string, params?: HttpParams): Observable<T> {
+        const headers = [];
+        return this.getExtO<T>(`${this.baseUrl}${actionUrl}`, headers, params);
     }
 
     async getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Promise<T> {
@@ -50,6 +56,23 @@ export class HttpService {
                 });
         });
         return promise;
+    }
+
+    getExtO<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Observable<T> {
+        let requestHeaders: HttpHeaders;
+        if (headers && headers.length > 0) {
+            requestHeaders = new HttpHeaders();
+            headers.forEach(e => {
+                requestHeaders = requestHeaders.append(e.name, e.value);
+            });
+        }
+
+        return this.http.get<T>(actionUrl, { params, headers: requestHeaders }).pipe(
+            catchError((e: HttpErrorResponse) => {
+                const error = this.handleError(this.authService, e);
+                return throwError(() => error);
+            })
+        );
     }
 
     async post<T>(actionUrl: string, body: any, params?: HttpParams) {

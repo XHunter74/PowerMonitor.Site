@@ -39,6 +39,7 @@ export class AppBaseComponent implements OnDestroy {
             disableClose: true,
             data: message
         });
+        return this.dialogRef;
     }
 
     closeSpinner() {

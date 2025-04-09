@@ -15,6 +15,7 @@ import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 import { PowerMeteringDto as PowerConsumptionDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -39,6 +40,15 @@ export class PowerService extends HttpService {
         const promise = this.get<IVoltageAmperageModel[]>('power/voltage-amperage', params);
 
         return promise;
+    }
+
+    getVoltageAmperageDataNew(date: Date): Observable<IVoltageAmperageModel[]> {
+        const startDate = getStringDate(date);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', startDate);
+
+        return this.getO<IVoltageAmperageModel[]>('power/voltage-amperage', params);
     }
 
     async getPowerDataStats(): Promise<IPowerDataStatsModel[]> {
