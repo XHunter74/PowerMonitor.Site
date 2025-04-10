@@ -15,7 +15,7 @@ import { IPowerDataStatsModel } from '../models/power-data-stats.model';
 import { PowerMeteringDto as PowerConsumptionDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 
 
@@ -104,23 +104,23 @@ export class PowerService extends HttpService {
         return this.getO<IPowerFailureModel[]>('power/power-availability', params);
     }
 
-    async getPowerFailuresDailyData(year: number, month: number): Promise<PowerFailureDailyModel[]> {
+    getPowerFailuresDailyData(year: number, month: number): Observable<PowerFailureDailyModel[]> {
         const params = new HttpParams()
             .set('year', year.toString())
             .set('month', month.toString());
 
-        let data = await this.get<PowerFailureDailyModel[]>('power/power-availability-daily', params);
-        data = data.map(e => {
-            const i = new PowerFailureDailyModel();
-            i.year = e.year;
-            i.month = e.month;
-            i.day = e.day;
-            i.eventDate = new Date(e.year, e.month - 1, e.day);
-            i.duration = e.duration;
-            i.events = e.events;
-            return i;
-        });
-        return data;
+        return this.getO<PowerFailureDailyModel[]>('power/power-availability-daily', params).pipe(
+            map(data => data.map(e => {
+                const i = new PowerFailureDailyModel();
+                i.year = e.year;
+                i.month = e.month;
+                i.day = e.day;
+                i.eventDate = new Date(e.year, e.month - 1, e.day);
+                i.duration = e.duration;
+                i.events = e.events;
+                return i;
+            }))
+        );
     }
 
     async getPowerFailuresMonthlyData(year: number): Promise<PowerFailureMonthlyModel[]> {

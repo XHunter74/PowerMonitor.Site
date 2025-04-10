@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PowerService } from '../services/power-service';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
@@ -18,6 +17,11 @@ import { Direction } from '../models/app.enums';
 import { PowerFailureDailyModel } from '../models/power-failure-daily.model';
 import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { FailuresDailyState } from '../store/reducers/power-failures.daily.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { loadDailyFailuresData } from '../store/actions/power-failures.daily.actions';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -37,7 +41,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   Direction = Direction;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  currentDate: Date;
+  currentDate: Date = null;
   currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['eventDate', 'duration', 'events'];
   sortedData = new MatTableDataSource();
@@ -45,8 +49,10 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   totalPowerFailure: number;
   failureAmount: number;
   formatDuration = AppUtils.formatDuration;
+  failuresDataState$: Observable<FailuresDailyState>;
+  stateSubscription: Subscription;
 
-  constructor(private powerService: PowerService,
+  constructor(private store: Store<AppState>,
     private router: Router,
     private activatedRouter: ActivatedRoute,
     dialog: MatDialog,
@@ -55,22 +61,61 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   }
 
   async ngOnInit() {
+    this.failuresDataState$ = this.store.select('powerFailuresDaily');
     this.activatedRouter.queryParams.subscribe(
       params => {
         const year = params['year'];
         const month = params['month'];
-        if (year && month) {
-          // tslint:disable-next-line: radix
-          this.currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-        } else {
-          this.currentDate = new Date();
+        const date = year && month ? new Date(parseInt(year), parseInt(month) - 1, 1) : new Date();
+        if (!this.currentDate) {
+          this.currentDate = date;
+          this.store.dispatch(loadDailyFailuresData({ date }));
         }
       }
     );
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    await this.refreshData();
     this.sortedData.sort = this.sort;
     this.restoreSort();
+    this.stateSubscription = this.failuresDataState$.subscribe(state => {
+      this.processChangedState(state);
+    })
+  }
+
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+    if (this.failuresDataState$) {
+      this.failuresDataState$ = null;
+    }
+  }
+
+  private processChangedState(state: FailuresDailyState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('ERRORS.COMMON')
+        .subscribe(errorText => {
+          ErrorDialogComponent.show(this.dialog, errorText);
+        });
+      return;
+    }
+    if (!state.loading && state.date) {
+      this.currentDate = state.date;
+      this.currentDateControl.setValue(this.currentDate.toISOString());
+      this.router.navigate(['power-failures/daily'],
+        { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
+    }
+    if (!state.loading && state.data) {
+      this.sortedData.data = state.data;
+      this.totalPowerFailure = state.totalPowerFailure;
+      this.failureAmount = state.failureAmount;
+      this.maxPowerFailure = state.maxPowerFailure;
+    }
   }
 
   restoreSort() {
@@ -90,33 +135,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   }
 
   async refreshData() {
-    setTimeout(async () => {
-      this.showSpinner();
-      try {
-        const powerData = await this.powerService.getPowerFailuresDailyData(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1);
-        this.sortedData.data = powerData;
-        const maxPowerFailure = powerData
-          .find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
-        if (maxPowerFailure) {
-          this.maxPowerFailure = {
-            start: maxPowerFailure.eventDate,
-            finish: maxPowerFailure.eventDate,
-            duration: maxPowerFailure.duration
-          };
-        } else {
-          this.maxPowerFailure = null;
-        }
-        this.totalPowerFailure = 0;
-        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
-        this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
-        this.closeSpinner();
-      } catch (e) {
-        console.log(e.message);
-        this.closeSpinner();
-        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    });
+    this.store.dispatch(loadDailyFailuresData({ date: this.currentDate }));
   }
 
   sortData(sort: Sort) {
@@ -128,23 +147,19 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     const month = normalizedMonth.month();
     const year = normalizedMonth.year();
-    this.currentDate = new Date(year, month, 1);
+    const date = new Date(year, month, 1);
     datepicker.close();
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures/daily'], { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
-    this.refreshData();
+    this.store.dispatch(loadDailyFailuresData({ date }));
   }
 
   async addMonth(direction: Direction) {
+    const date = new Date(this.currentDate);
     if (direction === Direction.Up) {
-      this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+      date.setMonth(date.getMonth() + 1);
     } else {
-      this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+      date.setMonth(date.getMonth() - 1);
     }
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures/daily'],
-      { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
-    await this.refreshData();
+    this.store.dispatch(loadDailyFailuresData({ date }));
   }
 
   isAddMonthButtonDisabled(direction: Direction): boolean {
