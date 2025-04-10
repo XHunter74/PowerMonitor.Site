@@ -1,28 +1,18 @@
 <nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
     <ng-container ngbNavItem [ngbNavItem]="1">
         <a ngbNavLink>{{ 'COMMON.HOURLY' | translate}}</a>
-        <ng-template ngbNavContent>
-            <app-power-failures-hourly></app-power-failures-hourly>
-        </ng-template>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="2">
         <a ngbNavLink>{{ 'COMMON.DAILY' | translate}}</a>
-        <ng-template ngbNavContent>
-            <app-power-failures-daily></app-power-failures-daily>
-        </ng-template>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="3">
         <a ngbNavLink>{{ 'COMMON.MONTHLY' | translate}}</a>
-        <ng-template ngbNavContent>
-            <app-power-failures-monthly></app-power-failures-monthly>
-        </ng-template>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="4">
         <a ngbNavLink>{{ 'COMMON.YEARLY' | translate}}</a>
-        <ng-template ngbNavContent>
-            <app-power-failures-yearly></app-power-failures-yearly>
-        </ng-template>
     </ng-container>
 </nav>
 
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<div class="mt-2">
+    <router-outlet></router-outlet>
+</div>

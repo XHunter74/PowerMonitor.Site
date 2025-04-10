@@ -14,6 +14,10 @@ import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourl
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
 import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
 import { PowerMonitorYearlyComponent } from './power-monitor/power-monitor-yearly.component';
+import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
+import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
+import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
+import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
 
 const routes: Routes = [
     { 
@@ -36,11 +40,18 @@ const routes: Routes = [
             { path: 'yearly', component: PowerMonitorYearlyComponent }
         ]
     },
-    { path: 'power-failures', component: PowerFailuresComponent, canActivate: [AuthGuard] },
-    { path: 'power-failures/hourly', component: PowerFailuresComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
-    { path: 'power-failures/daily', component: PowerFailuresComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
-    { path: 'power-failures/monthly', component: PowerFailuresComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
-    { path: 'power-failures/yearly', component: PowerFailuresComponent, data: { name: 'yearly' }, canActivate: [AuthGuard] },
+    {
+        path: 'power-failures', 
+        component: PowerFailuresComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
+            { path: 'hourly', component: PowerFailuresHourlyComponent },
+            { path: 'daily', component: PowerFailuresDailyComponent },
+            { path: 'monthly', component: PowerFailuresMonthlyComponent },
+            { path: 'yearly', component: PowerFailuresYearlyComponent }
+        ]
+    },
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
