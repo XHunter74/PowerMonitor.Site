@@ -99,11 +99,9 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     }
 
     processChangedState(state: VoltageAmperageState) {
-        console.log('Loading', state.loading);
         if (state.loading) {
             this.showSpinner();
         } else {
-            console.log('Spinner should be closed');
             this.closeSpinner();
         }
         if (state.error) {
@@ -119,7 +117,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             this.router.navigate(['voltage-amperage', 'hourly'], {
                 queryParams: {
                     year: this.currentDate.getFullYear(),
-                    month: this.currentDate.getMonth() + 1, 
+                    month: this.currentDate.getMonth() + 1,
                     day: this.currentDate.getDate()
                 }
             });
