@@ -1,13 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
-import { loadVoltageAmperageFailure } from '../actions/voltage-amperage.actions';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MonitorHourlyState } from '../reducers/power-monitor.hourly.reducer';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
-import { IPowerDataStatsModel } from '../../models/power-data-stats.model';
-import { IPowerDataHourlyModel } from '../../models/power-data-hourly.model';
 import { loadDailyMonitorData, loadDailyMonitorDataFailure, loadDailyMonitorDataSuccess } from '../actions/power-monitor.daily.actions';
 import { daysInMonth, isCurrentMonth } from '../../utils';
 
