@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { PowerService } from '../services/power-service';
 import { Router } from '@angular/router';
 import { IPowerDataYearlyModel } from '../models/power-data-yearly.model';
 import { YEAR_DATE_FORMATS } from '../app-date-format';
@@ -14,7 +13,6 @@ import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { MonitorYearlyState } from '../store/reducers/power-monitor.yearly.reducer';
 import { Observable, Subscription } from 'rxjs';
-import { MonitorHourlyState } from '../store/reducers/power-monitor.hourly.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadYearlyMonitorData } from '../store/actions/power-monitor.yearly.actions';

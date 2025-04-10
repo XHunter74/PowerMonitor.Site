@@ -10,17 +10,32 @@ import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.co
 import { ProfileComponent } from './profile-component/profile.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
+import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
+import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
+import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
+import { PowerMonitorYearlyComponent } from './power-monitor/power-monitor-yearly.component';
 
 const routes: Routes = [
-    { path: '', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
+    { 
+        path: '', 
+        redirectTo: 'power-monitor/hourly',
+        pathMatch: 'full'
+    },
     { path: 'online-data', component: LiveDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SiteSettingsComponent, canActivate: [AuthGuard] },
-    { path: 'power-monitor', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
-    { path: 'power-monitor/hourly', component: PowerMonitorComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
-    { path: 'power-monitor/daily', component: PowerMonitorComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
-    { path: 'power-monitor/monthly', component: PowerMonitorComponent, data: { name: 'monthly' }, canActivate: [AuthGuard] },
-    { path: 'power-monitor/yearly', component: PowerMonitorComponent, data: { name: 'yearly' }, canActivate: [AuthGuard] },
+    { 
+        path: 'power-monitor', 
+        component: PowerMonitorComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
+            { path: 'hourly', component: PowerMonitorHourlyComponent },
+            { path: 'daily', component: PowerMonitorDailyComponent },
+            { path: 'monthly', component: PowerMonitorMonthlyComponent },
+            { path: 'yearly', component: PowerMonitorYearlyComponent }
+        ]
+    },
     { path: 'power-failures', component: PowerFailuresComponent, canActivate: [AuthGuard] },
     { path: 'power-failures/hourly', component: PowerFailuresComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'power-failures/daily', component: PowerFailuresComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
