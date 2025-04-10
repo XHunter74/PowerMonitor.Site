@@ -16,6 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { MonitorDailyState } from '../store/reducers/power-monitor.daily.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { loadDailyMonitorData } from '../store/actions/power-monitor.daily.actions';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -68,9 +73,11 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         { data: [], label: 'Power, kW/h' }
     ];
 
-    currentDate: Date;
+    currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
     public powerForecast: number;
+    powerMonitorDataState$: Observable<MonitorDailyState>;
+    stateSubscription: Subscription;
 
     // events
     public chartClicked(e: any): void {
@@ -84,15 +91,13 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
         const month = normalizedMonth.month();
         const year = normalizedMonth.year();
-        this.currentDate = new Date(year, month, 1);
+        const date = new Date(year, month, 1);
         datepicker.close();
-        this.router.navigate(['power-monitor', 'daily'],
-            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        this.store.dispatch(loadDailyMonitorData({ date }));
     }
 
-    constructor(private powerService: PowerService,
+    constructor(
+        private store: Store<AppState>,
         private router: Router,
         private activatedRouter: ActivatedRoute,
         dialog: MatDialog,
@@ -100,104 +105,85 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         super(dialog, translate);
         this.translateWords();
         translate.onLangChange.subscribe(async () => {
-            await this.translateWords();
+            this.translateWords();
         });
     }
 
-    async translateWords() {
-        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
-        const data = [
-            { data: this.barChartData[0].data, label: chartLabel }
-        ];
-        this.barChartData = data;
+    translateWords() {
+        this.translate.get('POWER_MONITOR.CHART_LABEL')
+            .subscribe((chartLabel) => {
+                const data = [
+                    { data: this.barChartData[0].data, label: chartLabel }
+                ];
+                this.barChartData = data;
+            });
     }
 
-    async ngOnInit() {
+    ngOnInit() {
+        this.powerMonitorDataState$ = this.store.select('powerMonitorDaily');
         Chart.register(Annotation);
         this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
                 const month = params['month'];
-                if (year && month) {
-                    // tslint:disable-next-line: radix
-                    this.currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-                } else {
-                    this.currentDate = new Date();
+                const date = year && month ? new Date(parseInt(year), parseInt(month) - 1, 1) : new Date();
+                if (!this.currentDate) {
+                    this.currentDate = date;
+                    this.store.dispatch(loadDailyMonitorData({ date }));
                 }
             }
         );
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        await this.refreshData();
+        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+            this.processChangedState(state);
+        })
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        if (this.stateSubscription) {
+            this.stateSubscription.unsubscribe();
+        }
+        if (this.powerMonitorDataState$) {
+            this.powerMonitorDataState$ = null;
+        }
+    }
+
+    private processChangedState(state: MonitorDailyState) {
+        if (state.loading) {
+            this.showSpinner();
+        } else {
+            this.closeSpinner();
+        }
+        if (state.error) {
+            this.translate.get('ERRORS.COMMON')
+                .subscribe(errorText => {
+                    ErrorDialogComponent.show(this.dialog, errorText);
+                });
+            return;
+        }
+        if (!state.loading && state.date) {
+            this.currentDate = state.date;
+            this.currentDateControl.setValue(this.currentDate.toISOString());
+            this.router.navigate(['power-monitor', 'daily'],
+                { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
+        }
+        if (!state.loading && state.data) {
+            this.powerData = state.data;
+            this.prepareChart(this.currentDate, this.powerData);
+            this.powerSum = state.powerSum;
+            this.powerAvg = state.powerAvg;
+            this.powerForecast = state.forecast;
+            if (this.powerAvg > 0) {
+                this.annotation.value = this.powerAvg;
+                this.annotation.borderWidth = 1.5;
+            } else {
+                this.annotation.borderWidth = 0;
+            }
+        }
+    }
 
     async refreshData() {
-        if (this.currentDateControl.value !== this.currentDate.toISOString()) {
-            this.currentDateControl.setValue(this.currentDate.toISOString());
-        }
-        setTimeout(async () => {
-            this.showSpinner();
-            try {
-                const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-                const finishDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-                    daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1));
-                this.powerData = await this.powerService.getPowerDataDaily(startDate, finishDate);
-                this.prepareChart(this.currentDate, this.powerData);
-                this.powerSum = 0;
-                this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
-                this.powerSum = Math.round(this.powerSum * 100) / 100;
-                this.powerAvg = this.getAveragePower(this.powerData);
-                this.powerForecast = this.getPowerForecast();
-                if (this.powerAvg > 0) {
-                    this.annotation.value = this.powerAvg;
-                    this.annotation.borderWidth = 1.5;
-                } else {
-                    this.annotation.borderWidth = 0;
-                }
-                this.closeSpinner();
-            } catch (e) {
-                this.closeSpinner();
-                console.log(e);
-                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-            }
-        });
-    }
-
-    getPowerForecast(): number {
-        const currentDate = new Date();
-        if (this.currentDate.getMonth() === currentDate.getMonth() &&
-            this.currentDate.getFullYear() === currentDate.getFullYear()) {
-            const days = daysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1);
-            const forecastPower = this.powerAvg * days;
-            return forecastPower;
-        } else {
-            return null;
-        }
-    }
-
-    getAveragePower(powerData: IPowerDataDailyModel[]): number {
-        let powerAvg = 0;
-        if (powerData && powerData.length > 0) {
-            let days = powerData.length;
-            if (this.isCurrentMonth(this.currentDate)) {
-                days = days - 1;
-                const today = new Date();
-                const partOfDay = (today.getHours() + today.getMinutes() / 60) / 24;
-                days = days + partOfDay;
-            }
-            if (days > 0) {
-                powerAvg = this.powerSum / days;
-                powerAvg = Math.round(powerAvg * 100) / 100;
-            }
-        }
-        return powerAvg;
-    }
-    isCurrentMonth(currentDate: Date) {
-        const today = new Date();
-        const isCurrentMonthResult = currentDate.getFullYear() === today.getFullYear() &&
-            currentDate.getMonth() === today.getMonth();
-        return isCurrentMonthResult;
+        this.store.dispatch(loadDailyMonitorData({ date: this.currentDate }));
     }
 
     prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
@@ -227,15 +213,13 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     async addMonth(direction: string) {
+        let date = new Date(this.currentDate);
         if (direction === 'up') {
-            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+            date.setMonth(this.currentDate.getMonth() + 1);
         } else {
-            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+            date.setMonth(this.currentDate.getMonth() - 1);
         }
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['power-monitor', 'daily'],
-            { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
-        await this.refreshData();
+        this.store.dispatch(loadDailyMonitorData({ date }));
     }
 
     isAddMonthButtonDisabled(direction: string): boolean {

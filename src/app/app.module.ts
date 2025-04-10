@@ -55,6 +55,7 @@ import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { VoltageAmperageEffects } from './store/effects/voltage-amperage.effects';
 import { PowerMonitorHourlyEffects } from './store/effects/power-monitor.hourly.effects';
+import { PowerMonitorDailyEffects } from './store/effects/power-monitor.daily.effects';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,7 @@ import { PowerMonitorHourlyEffects } from './store/effects/power-monitor.hourly.
     ),
     NgSelectModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([VoltageAmperageEffects, PowerMonitorHourlyEffects]),
+    EffectsModule.forRoot([VoltageAmperageEffects, PowerMonitorHourlyEffects, PowerMonitorDailyEffects]),
   ],
   providers: [
     AuthGuard,

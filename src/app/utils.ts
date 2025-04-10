@@ -3,6 +3,13 @@ export function daysInMonth(year: number, month: number) {
     return days;
 }
 
+export function isCurrentMonth(currentDate: Date) {
+    const today = new Date();
+    const isCurrentMonthResult = currentDate.getFullYear() === today.getFullYear() &&
+        currentDate.getMonth() === today.getMonth();
+    return isCurrentMonthResult;
+}
+
 export function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
     return (a < b ? -1 : (a === b ? 0 : 1)) * (isAsc ? 1 : -1);
 }
