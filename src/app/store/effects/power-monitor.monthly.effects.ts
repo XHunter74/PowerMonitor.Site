@@ -22,7 +22,7 @@ export class PowerMonitorMonthlyEffects {
             mergeMap(({ date }) => {
                 const startDate = new Date(date.getFullYear(), 0, 1);
                 const finishDate = new Date(date.getFullYear(), 11, 31);
-                return this.powerService.getPowerDataMonthlyNew(startDate, finishDate).pipe(
+                return this.powerService.getPowerDataMonthly(startDate, finishDate).pipe(
                     mergeMap((data) => {
                         const newState = {} as MonitorMonthlyState;
                         newState.data = data;
