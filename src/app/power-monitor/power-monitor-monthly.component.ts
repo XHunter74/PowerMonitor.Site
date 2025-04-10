@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { PowerService } from '../services/power-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { Moment } from 'moment';
@@ -11,12 +9,16 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
 import { Constants } from '../constants';
-import { daysInMonth } from '../utils';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { MonitorMonthlyState } from '../store/reducers/power-monitor.monthly.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { loadMonthlyMonitorData } from '../store/actions/power-monitor.monthly.actions';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -70,6 +72,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     ];
     currentDate: Date;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
+    powerMonitorDataState$: Observable<MonitorMonthlyState>;
+    stateSubscription: Subscription;
 
     // events
     public chartClicked(e: any): void {
@@ -82,15 +86,13 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
 
     chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
         const year = normalizedYear.year();
-        this.currentDate = new Date(year, 0, 1);
+        const date = new Date(year, 0, 1);
         datepicker.close();
-        this.router.navigate(['power-monitor', 'monthly'],
-            { queryParams: { year: this.currentDate.getFullYear() } });
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.refreshData();
+        this.store.dispatch(loadMonthlyMonitorData({ date }));
     }
 
-    constructor(private powerService: PowerService,
+    constructor(
+        private store: Store<AppState>,
         private router: Router,
         private activatedRouter: ActivatedRoute,
         dialog: MatDialog,
@@ -98,108 +100,89 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         super(dialog, translate);
         this.translateWords();
         translate.onLangChange.subscribe(async () => {
-            await this.translateWords();
+            this.translateWords();
         });
     }
 
-    async translateWords() {
-        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
-        const data = [
-            { data: this.barChartData[0].data, label: chartLabel }
-        ];
-        this.barChartData = data;
-        this.barChartLabels = await Promise.all(Constants.shortMonthNames.map(async e => {
-            return await this.translate.get('MONTHS.' + e.toUpperCase()).toPromise();
-        }));
+    translateWords() {
+        this.translate.get('POWER_MONITOR.CHART_LABEL')
+            .subscribe((chartLabel) => {
+                const data = [
+                    { data: this.barChartData[0].data, label: chartLabel }
+                ];
+                this.barChartData = data;
+            });
+        this.translate.get('MONTHS').subscribe((months: { [key: string]: string }) => {
+            this.barChartLabels = Constants.shortMonthNames.map(e => months[e.toUpperCase()] || e);
+        });
     }
 
     async ngOnInit() {
+        this.powerMonitorDataState$ = this.store.select('powerMonitorMonthly');
         Chart.register(Annotation);
         this.activatedRouter.queryParams.subscribe(
             params => {
                 const year = params['year'];
-                if (year) {
-                    // tslint:disable-next-line: radix
-                    this.currentDate = new Date(parseInt(year), 0, 1);
-                } else {
-                    this.currentDate = new Date();
+                const date = year ? new Date(parseInt(year), 0, 1) : new Date();
+                if (!this.currentDate) {
+                    this.currentDate = date;
+                    this.store.dispatch(loadMonthlyMonitorData({ date }));
                 }
             }
         );
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        await this.refreshData();
+        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+            this.processChangedState(state);
+        })
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        if (this.stateSubscription) {
+            this.stateSubscription.unsubscribe();
+        }
+        if (this.powerMonitorDataState$) {
+            this.powerMonitorDataState$ = null;
+        }
+    }
+
+    private processChangedState(state: MonitorMonthlyState) {
+        if (state.loading) {
+            this.showSpinner();
+        } else {
+            this.closeSpinner();
+        }
+        if (state.error) {
+            this.translate.get('ERRORS.COMMON')
+                .subscribe(errorText => {
+                    ErrorDialogComponent.show(this.dialog, errorText);
+                });
+            return;
+        }
+        if (!state.loading && state.date) {
+            this.currentDate = state.date;
+            this.currentDateControl.setValue(this.currentDate.toISOString());
+            this.router.navigate(['power-monitor', 'monthly'],
+                { queryParams: { year: this.currentDate.getFullYear() } });
+        }
+        if (!state.loading && state.data) {
+            this.powerData = state.data;
+            this.prepareChart(this.powerData);
+            this.powerSum = state.powerSum;
+            this.powerAvg = state.powerAvg;
+            if (this.powerAvg > 0) {
+                this.annotation.value = this.powerAvg;
+                this.annotation.borderWidth = 1.5;
+            } else {
+                this.annotation.borderWidth = 0;
+            }
+        }
     }
 
     async refreshData() {
-        if (this.currentDateControl.value !== this.currentDate.toISOString()) {
-            this.currentDateControl.setValue(this.currentDate.toISOString());
-        }
-        setTimeout(async () => {
-            this.showSpinner();
-            try {
-                const startDate = new Date(this.currentDate.getFullYear(), 0, 1);
-                const finishDate = new Date(this.currentDate.getFullYear(), 11, 31);
-                this.powerData = await this.powerService.getPowerDataMonthly(startDate, finishDate);
-                await this.prepareChart(this.powerData);
-                this.powerSum = 0;
-                this.powerSum = this.powerData.reduce((a, b) => a + b.power, 0);
-                this.powerSum = Math.round(this.powerSum * 100) / 100;
-                this.powerAvg = this.getAveragePower(this.powerData);
-                if (this.powerAvg > 0) {
-                    this.annotation.value = this.powerAvg;
-                    this.annotation.borderWidth = 1.5;
-                } else {
-                    this.annotation.borderWidth = 0;
-                }
-                this.closeSpinner();
-            } catch (e) {
-                this.closeSpinner();
-                console.log(e);
-                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-            }
-        });
+        this.store.dispatch(loadMonthlyMonitorData({ date: this.currentDate }));
     }
 
-    getAveragePower(powerData: IPowerDataMonthlyModel[]): number {
-        let powerAvg = 0;
-        if (powerData && powerData.length > 1) {
-            const today = new Date();
-            let reduceSum = 0;
-            let powerSum = powerData
-                .filter(a => {
-                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1 ||
-                        a.year <= Constants.systemStartDate.getFullYear() &&
-                        a.month <= Constants.systemStartDate.getMonth() + 1;
-                    if (reduceSumInt) {
-                        reduceSum++;
-                    }
-                    return !reduceSumInt;
-                })
-                .reduce((a, b) => a + b.power, 0);
-            const powerSumCurrentMonth = powerData
-                .filter(a => {
-                    const reduceSumInt = a.year === today.getFullYear() && a.month === today.getMonth() + 1;
-                    return reduceSumInt;
-                })
-                .reduce((a, b) => a + b.power, 0);
-
-            if (reduceSum > 0) {
-                let months = powerData.length - reduceSum;
-                if (powerSumCurrentMonth && powerSumCurrentMonth > 0) {
-                    months = months + today.getDate() / daysInMonth(today.getFullYear(), today.getMonth());
-                    powerSum = powerSum + powerSumCurrentMonth;
-                }
-                powerAvg = powerSum / months;
-            } else {
-                powerAvg = powerSum / (powerData.length);
-            }
-            powerAvg = Math.round(powerAvg * 100) / 100;
-        }
-        return powerAvg;
-    }
-
-    async prepareChart(data: IPowerDataMonthlyModel[]) {
+    prepareChart(data: IPowerDataMonthlyModel[]) {
         let chartData: number[] = [];
         let chartLabels: string[] = [];
         if (data.length < 12) {
@@ -218,23 +201,21 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 return Constants.shortMonthNames[e.month - 1];
             });
         }
-        chartLabels = await Promise.all(chartLabels.map(async e => {
-            return await this.translate.get('MONTHS.' + e.toUpperCase()).toPromise();
-        }));
+        this.translate.get('MONTHS').subscribe((months: { [key: string]: string }) => {
+            chartLabels = chartLabels.map(e => months[e.toUpperCase()] || e);
+        });
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
     }
 
-    async addYear(direction: string) {
+    addYear(direction: string) {
+        const date = new Date(this.currentDate);
         if (direction === 'up') {
-            this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+            date.setFullYear(this.currentDate.getFullYear() + 1);
         } else {
-            this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+            date.setFullYear(this.currentDate.getFullYear() - 1);
         }
-        this.currentDateControl.setValue(this.currentDate.toISOString());
-        this.router.navigate(['power-monitor', 'monthly'],
-            { queryParams: { year: this.currentDate.getFullYear() } });
-        await this.refreshData();
+        this.store.dispatch(loadMonthlyMonitorData({ date }));
     }
 
     isAddYearButtonDisabled(direction: string): boolean {

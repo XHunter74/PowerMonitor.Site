@@ -85,6 +85,16 @@ export class PowerService extends HttpService {
         return promise;
     }
 
+    getPowerDataMonthlyNew(start: Date, finish: Date): Observable<IPowerDataMonthlyModel[]> {
+        const startDate = getStringDate(start);
+        const finishDate = getStringDate(finish);
+        const params = new HttpParams()
+            .set('startDate', startDate)
+            .set('finishDate', finishDate);
+
+        return this.getO<IPowerDataMonthlyModel[]>('power/power-data-monthly', params);
+    }
+
     async getPowerDataYearly(): Promise<IPowerDataYearlyModel[]> {
         const promise = this.get<IPowerDataMonthlyModel[]>('power/power-data-yearly');
         return promise;
