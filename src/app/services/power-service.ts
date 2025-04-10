@@ -51,27 +51,11 @@ export class PowerService extends HttpService {
         return this.getO<IVoltageAmperageModel[]>('power/voltage-amperage', params);
     }
 
-    async getPowerDataStats(): Promise<IPowerDataStatsModel[]> {
-        const promise = this.get<IPowerDataStatsModel[]>('power/power-data-stats');
-        return promise;
-    }
-
-    getPowerDataStatsNew(): Observable<IPowerDataStatsModel[]> {
+    getPowerDataStats(): Observable<IPowerDataStatsModel[]> {
         return this.getO<IPowerDataStatsModel[]>('power/power-data-stats');
     }
 
-    async getPowerDataHourly(start: Date, finish: Date): Promise<IPowerDataHourlyModel[]> {
-        const startDate = getStringDate(start);
-        const finishDate = getStringDate(finish);
-        const params = new HttpParams()
-            .set('startDate', startDate)
-            .set('finishDate', finishDate);
-
-        const promise = this.get<IPowerDataHourlyModel[]>('power/power-data-hourly', params);
-        return promise;
-    }
-
-    getPowerDataHourlyNew(date: Date): Observable<IPowerDataHourlyModel[]> {
+    getPowerDataHourly(date: Date): Observable<IPowerDataHourlyModel[]> {
         const startDate = getStringDate(date);
         const params = new HttpParams()
             .set('startDate', startDate)

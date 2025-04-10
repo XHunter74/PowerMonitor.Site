@@ -21,7 +21,7 @@ export class PowerMonitorHourlyEffects {
         this.actions$.pipe(
             ofType(loadHourlyMonitorData),
             mergeMap(({ date }) =>
-                this.powerService.getPowerDataHourlyNew(date).pipe(
+                this.powerService.getPowerDataHourly(date).pipe(
                     mergeMap((data) => {
                         const newState = {} as MonitorHourlyState;
                         newState.data = data;
@@ -37,7 +37,7 @@ export class PowerMonitorHourlyEffects {
                         if (date.getDate() === currentDate.getDate() &&
                             date.getMonth() === currentDate.getMonth() &&
                             date.getFullYear() === currentDate.getFullYear()) {
-                            return this.powerService.getPowerDataStatsNew().pipe(
+                            return this.powerService.getPowerDataStats().pipe(
                                 map((stats) => {
                                     const currentHour = currentDate.getHours();
                                     newState.forecast = this.getPowerForecast(currentHour, data, stats);
