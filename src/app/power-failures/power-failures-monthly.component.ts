@@ -17,6 +17,12 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { FailuresHourlyState } from '../store/reducers/power-failures.hourly.reducer';
+import { FailuresMonthlyState } from '../store/reducers/power-failures.monthly.reducer';
+import { AppState } from '../store/reducers';
+import { Store } from '@ngrx/store';
+import { loadMonthlyFailuresData } from '../store/actions/power-failures.monthly.actions';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -34,7 +40,7 @@ const PowerFailuresSort = 'power-failures-sort-monthly';
 export class PowerFailuresMonthlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  currentDate: Date;
+  currentDate: Date = null;
   currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['month', 'duration', 'events'];
   sortedData = new MatTableDataSource();
@@ -43,8 +49,11 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   formatDuration = AppUtils.formatDuration;
 
   Direction = Direction;
+  failuresDataState$: Observable<FailuresMonthlyState>;
+  stateSubscription: Subscription;
 
-  constructor(private powerService: PowerService,
+  constructor(
+    private store: Store<AppState>,
     private router: Router,
     private activatedRouter: ActivatedRoute,
     dialog: MatDialog, translate: TranslateService) {
@@ -52,21 +61,59 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   }
 
   async ngOnInit() {
+    this.failuresDataState$ = this.store.select('powerFailuresMonthly');
     this.activatedRouter.queryParams.subscribe(
       params => {
         const year = params['year'];
-        if (year) {
-          // tslint:disable-next-line: radix
-          this.currentDate = new Date(parseInt(year), 0, 1);
-        } else {
-          this.currentDate = new Date();
+        const date = year ? new Date(parseInt(year), 0, 1) : new Date();
+        if (!this.currentDate) {
+          this.currentDate = date;
+          this.store.dispatch(loadMonthlyFailuresData({ date }));
         }
       }
     );
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    await this.refreshData();
+
     this.sortedData.sort = this.sort;
     this.restoreSort();
+    this.stateSubscription = this.failuresDataState$.subscribe(state => {
+      this.processChangedState(state);
+    })
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+    if (this.failuresDataState$) {
+      this.failuresDataState$ = null;
+    }
+  }
+
+  private processChangedState(state: FailuresMonthlyState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('ERRORS.COMMON')
+        .subscribe(errorText => {
+          ErrorDialogComponent.show(this.dialog, errorText);
+        });
+      return;
+    }
+    if (!state.loading && state.date) {
+      this.currentDate = state.date;
+      this.currentDateControl.setValue(this.currentDate.toISOString());
+      this.router.navigate(['power-failures', 'monthly'],
+        { queryParams: { year: this.currentDate.getFullYear() } });
+    }
+    if (!state.loading && state.data) {
+      this.sortedData.data = state.data;
+      this.totalPowerFailure = state.totalPowerFailure;
+      this.failureAmount = state.failureAmount;
+    }
   }
 
   restoreSort() {
@@ -86,24 +133,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   }
 
   async refreshData() {
-    setTimeout(async () => {
-      this.showSpinner();
-      try {
-        const powerData = await this.powerService.getPowerFailuresMonthlyData(this.currentDate.getFullYear());
-        powerData.forEach(async (element) => {
-          element.monthStr = await this.formatMonth(new Date(element.year, element.month - 1));
-        });
-        this.sortedData.data = powerData;
-        this.totalPowerFailure = 0;
-        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
-        this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
-        this.closeSpinner();
-      } catch (e) {
-        this.closeSpinner();
-        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    });
+    this.store.dispatch(loadMonthlyFailuresData({ date: this.currentDate }));
   }
 
   sortData(sort: Sort) {
@@ -113,15 +143,13 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   }
 
   async addYear(direction: string) {
+    const date = new Date(this.currentDate);
     if (direction === Direction.Up) {
-      this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+      date.setFullYear(date.getFullYear() + 1);
     } else {
-      this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+      date.setFullYear(date.getFullYear() - 1);
     }
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures', 'monthly'],
-      { queryParams: { year: this.currentDate.getFullYear() } });
-    await this.refreshData();
+    this.store.dispatch(loadMonthlyFailuresData({ date }));
   }
 
   isAddYearButtonDisabled(direction: string): boolean {
@@ -138,12 +166,9 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
 
   chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
     const year = normalizedYear.year();
-    this.currentDate = new Date(year, 0, 1);
+    const date = new Date(year, 0, 1);
     datepicker.close();
-    this.router.navigate(['power-failures', 'monthly'],
-      { queryParams: { year: this.currentDate.getFullYear() } });
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.refreshData();
+    this.store.dispatch(loadMonthlyFailuresData({ date }));
   }
 
   clickOnRowHandler(row: PowerFailureMonthlyModel) {
