@@ -25,7 +25,7 @@ export class PowerMonitorDailyEffects {
                 const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
                 const finishDate = new Date(date.getFullYear(), date.getMonth(),
                     daysInMonth(date.getFullYear(), date.getMonth() + 1));
-                return this.powerService.getPowerDataDailyNew(startDate, finishDate).pipe(
+                return this.powerService.getPowerDataDaily(startDate, finishDate).pipe(
                     mergeMap((data) => {
                         const newState = {} as MonitorHourlyState;
                         newState.data = data;
