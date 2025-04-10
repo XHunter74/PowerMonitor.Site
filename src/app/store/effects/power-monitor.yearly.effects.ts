@@ -17,7 +17,7 @@ export class PowerMonitorYearlyEffects {
         this.actions$.pipe(
             ofType(loadYearlyMonitorData),
             mergeMap(({ data }) => {
-                return this.powerService.getPowerDataYearlyNew().pipe(
+                return this.powerService.getPowerDataYearly().pipe(
                     mergeMap((data) => {
                         const newState = {} as MonitorYearlyState;
                         newState.data = data;

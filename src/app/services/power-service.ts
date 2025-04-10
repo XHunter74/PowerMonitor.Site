@@ -85,12 +85,7 @@ export class PowerService extends HttpService {
         return this.getO<IPowerDataMonthlyModel[]>('power/power-data-monthly', params);
     }
 
-    async getPowerDataYearly(): Promise<IPowerDataYearlyModel[]> {
-        const promise = this.get<IPowerDataMonthlyModel[]>('power/power-data-yearly');
-        return promise;
-    }
-
-    getPowerDataYearlyNew(): Observable<IPowerDataYearlyModel[]> {
+    getPowerDataYearly(): Observable<IPowerDataYearlyModel[]> {
         return this.getO<IPowerDataMonthlyModel[]>('power/power-data-yearly');
     }
 
