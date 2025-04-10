@@ -6,6 +6,8 @@ import { MonitorMonthlyState, powerMonitorMonthlyReducer } from './reducers/powe
 import { MonitorYearlyState, powerMonitorYearlyReducer } from './reducers/power-monitor.yearly.reducer';
 import { FailuresHourlyState, powerFailuresHourlyReducer } from './reducers/power-failures.hourly.reducer';
 import { FailuresDailyState, powerFailuresDailyReducer } from './reducers/power-failures.daily.reducer';
+import { FailuresMonthlyState, powerFailuresMonthlyReducer } from './reducers/power-failures.monthly.reducer';
+import { FailuresYearlyState, powerFailuresYearlyReducer } from './reducers/power-failures.yearly.reducer';
 
 export interface AppState {
   voltageAmperage: VoltageAmperageState;
@@ -15,6 +17,8 @@ export interface AppState {
   powerMonitorYearly: MonitorYearlyState;
   powerFailuresHourly: FailuresHourlyState;
   powerFailuresDaily: FailuresDailyState
+  powerFailuresMonthly: FailuresMonthlyState
+  powerFailuresYearly: FailuresYearlyState
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -24,5 +28,7 @@ export const reducers: ActionReducerMap<AppState> = {
   powerMonitorMonthly: powerMonitorMonthlyReducer,
   powerMonitorYearly: powerMonitorYearlyReducer,
   powerFailuresHourly: powerFailuresHourlyReducer,
-  powerFailuresDaily: powerFailuresDailyReducer
+  powerFailuresDaily: powerFailuresDailyReducer,
+  powerFailuresMonthly: powerFailuresMonthlyReducer,
+  powerFailuresYearly: powerFailuresYearlyReducer
 };

@@ -123,34 +123,34 @@ export class PowerService extends HttpService {
         );
     }
 
-    async getPowerFailuresMonthlyData(year: number): Promise<PowerFailureMonthlyModel[]> {
+    getPowerFailuresMonthlyData(year: number): Observable<PowerFailureMonthlyModel[]> {
         const params = new HttpParams()
             .set('year', year.toString());
 
-        let data = await this.get<PowerFailureMonthlyModel[]>('power/power-availability-monthly', params);
-        data = data.map(e => {
-            const i = new PowerFailureMonthlyModel();
-            i.year = e.year;
-            i.month = e.month;
-            i.eventDate = new Date(e.year, e.month - 1, 1);
-            i.duration = e.duration;
-            i.events = e.events;
-            return i;
-        });
-        return data;
+        return this.getO<PowerFailureMonthlyModel[]>('power/power-availability-monthly', params).pipe(
+            map(data => data.map(e => {
+                const i = new PowerFailureMonthlyModel();
+                i.year = e.year;
+                i.month = e.month;
+                i.eventDate = new Date(e.year, e.month - 1, 1);
+                i.duration = e.duration;
+                i.events = e.events;
+                return i;
+            }))
+        );
     }
 
-    async getPowerFailuresYearlyData(): Promise<PowerFailureYearlyModel[]> {
-        let data = await this.get<PowerFailureYearlyModel[]>('power/power-availability-yearly');
-        data = data.map(e => {
-            const i = new PowerFailureMonthlyModel();
-            i.year = e.year;
-            i.eventDate = new Date(e.year, 0, 1);
-            i.duration = e.duration;
-            i.events = e.events;
-            return i;
-        });
-        return data;
+    getPowerFailuresYearlyData(): Observable<PowerFailureYearlyModel[]> {
+        return this.getO<PowerFailureYearlyModel[]>('power/power-availability-yearly').pipe(
+            map(data => data.map(e => {
+                const i = new PowerFailureMonthlyModel();
+                i.year = e.year;
+                i.eventDate = new Date(e.year, 0, 1);
+                i.duration = e.duration;
+                i.events = e.events;
+                return i;
+            }))
+        );
     }
 
     async getPowerConsumptionData(): Promise<PowerConsumptionDto[]> {
