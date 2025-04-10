@@ -12,6 +12,12 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDialog } from '@angular/material/dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
+import { MonitorYearlyState } from '../store/reducers/power-monitor.yearly.reducer';
+import { Observable, Subscription } from 'rxjs';
+import { MonitorHourlyState } from '../store/reducers/power-monitor.hourly.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { loadYearlyMonitorData } from '../store/actions/power-monitor.yearly.actions';
 
 @Component({
     selector: 'app-power-monitor-yearly',
@@ -48,7 +54,12 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
         }
     }
 
-    constructor(private powerService: PowerService,
+    powerMonitorDataState$: Observable<MonitorYearlyState>;
+    stateSubscription: Subscription;
+
+
+    constructor(
+        private store: Store<AppState>,
         private router: Router,
         dialog: MatDialog,
         translate: TranslateService) {
@@ -67,25 +78,46 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
         this.barChartData = data;
     }
 
-    async ngOnInit() {
+    ngOnInit() {
+        this.powerMonitorDataState$ = this.store.select('powerMonitorYearly');
         Chart.register(Annotation);
-        await this.refreshData();
+        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+            this.processChangedState(state);
+        })
+        this.store.dispatch(loadYearlyMonitorData({ data: null }));
     }
 
-    async refreshData() {
-        setTimeout(async () => {
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        if (this.stateSubscription) {
+            this.stateSubscription.unsubscribe();
+        }
+        if (this.powerMonitorDataState$) {
+            this.powerMonitorDataState$ = null;
+        }
+    }
+
+    private processChangedState(state: MonitorYearlyState) {
+        if (state.loading) {
             this.showSpinner();
-            try {
-                this.powerData = await this.powerService.getPowerDataYearly();
-                this.prepareChart(this.powerData);
-                this.closeSpinner();
-            } catch (e) {
-                this.closeSpinner();
-                console.log(e);
-                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-            }
-        });
+        } else {
+            this.closeSpinner();
+        }
+        if (state.error) {
+            this.translate.get('ERRORS.COMMON')
+                .subscribe(errorText => {
+                    ErrorDialogComponent.show(this.dialog, errorText);
+                });
+            return;
+        }
+        if (!state.loading && state.data) {
+            this.powerData = state.data;
+            this.prepareChart(this.powerData);
+        }
+    }
+
+    refreshData() {
+        this.store.dispatch(loadYearlyMonitorData({ data: null }));
     }
 
     prepareChart(data: IPowerDataYearlyModel[]) {

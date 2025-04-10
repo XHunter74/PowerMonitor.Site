@@ -35,22 +35,5 @@ export class PowerMonitorComponent implements OnInit {
             }
         });
     }
-
-    onNavChange(changeEvent: NgbNavChangeEvent) {
-        switch (changeEvent.nextId) {
-            // case 1:
-            //     this.router.navigate(['power-monitor', 'hourly']);
-            //     break;
-            // case 2:
-            //     this.router.navigate(['power-monitor', 'daily']);
-            //     break;
-            // case 3:
-            //     this.router.navigate(['power-monitor', 'monthly']);
-            //     break;
-            case 4:
-                this.router.navigate(['power-monitor', 'yearly']);
-                break;
-        }
-    }
 }
 

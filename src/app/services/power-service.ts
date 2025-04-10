@@ -90,6 +90,10 @@ export class PowerService extends HttpService {
         return promise;
     }
 
+    getPowerDataYearlyNew(): Observable<IPowerDataYearlyModel[]> {
+        return this.getO<IPowerDataMonthlyModel[]>('power/power-data-yearly');
+    }
+
     async getSensorsData(): Promise<ISensorsDataModel> {
         const promise = this.get<ISensorsDataModel>('power/sensors-data');
         return promise;
