@@ -90,7 +90,12 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
-        this.stateSubscription.unsubscribe();
+        if (this.stateSubscription) {
+            this.stateSubscription.unsubscribe();
+        }
+        if (this.voltageAmperageState$) {
+            this.voltageAmperageState$ = null;
+        }
     }
 
     processChangedState(state: VoltageAmperageState) {
@@ -114,7 +119,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             this.router.navigate(['voltage-amperage', 'hourly'], {
                 queryParams: {
                     year: this.currentDate.getFullYear(),
-                    month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate()
+                    month: this.currentDate.getMonth() + 1, 
+                    day: this.currentDate.getDate()
                 }
             });
         }

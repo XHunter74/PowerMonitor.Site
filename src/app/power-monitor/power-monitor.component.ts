@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,14 +7,16 @@ import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './power-monitor.component.html',
 
 })
-export class PowerMonitorComponent {
+export class PowerMonitorComponent implements OnInit {
     selectedTab: number;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private router: Router,) {
-        if (router.url === '/' || router.url.toLowerCase() === '/power-monitor') {
-            router.navigate(['power-monitor', 'hourly'])
+        private router: Router,) { }
+
+    ngOnInit(): void {
+        if (this.router.url === '/' || this.router.url.toLowerCase() === '/power-monitor') {
+            this.router.navigate(['power-monitor', 'hourly'])
         }
         this.activatedRoute.data.subscribe(d => {
             switch (d.name) {
