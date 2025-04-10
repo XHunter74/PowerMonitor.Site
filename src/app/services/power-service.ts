@@ -99,15 +99,14 @@ export class PowerService extends HttpService {
         return promise;
     }
 
-    async getPowerFailuresHourlyData(start: Date, finish: Date): Promise<IPowerFailureModel[]> {
+    getPowerFailuresHourlyData(start: Date, finish: Date): Observable<IPowerFailureModel[]> {
         const startDate = getStringDate(start);
         const finishDate = getStringDate(finish);
         const params = new HttpParams()
             .set('startDate', startDate)
             .set('finishDate', finishDate);
 
-        const promise = this.get<IPowerFailureModel[]>('power/power-availability', params);
-        return promise;
+        return this.getO<IPowerFailureModel[]>('power/power-availability', params);
     }
 
     async getPowerFailuresDailyData(year: number, month: number): Promise<PowerFailureDailyModel[]> {

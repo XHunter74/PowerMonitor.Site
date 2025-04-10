@@ -1,19 +1,22 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PowerService } from '../services/power-service';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Moment } from 'moment';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../constants';
-import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { FailuresHourlyState } from '../store/reducers/power-failures.hourly.reducer';
+import { AppState } from '../store/reducers';
+import { Store } from '@ngrx/store';
+import { loadHourlyFailuresData } from '../store/actions/power-failures.hourly.actions';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -29,7 +32,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   Direction = Direction;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  currentDate: Date;
+  currentDate: Date = null;
   currentDateControl: UntypedFormControl = new UntypedFormControl();
   displayedColumns: string[] = ['start', 'finish', 'duration'];
   sortedData = new MatTableDataSource();
@@ -37,8 +40,11 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   totalPowerFailure: number;
   failureAmount: number;
   formatDuration = AppUtils.formatDuration;
+  failuresDataState$: Observable<FailuresHourlyState>;
+  stateSubscription: Subscription;
 
-  constructor(private powerService: PowerService,
+  constructor(
+    private store: Store<AppState>,
     private router: Router,
     private activatedRouter: ActivatedRoute,
     dialog: MatDialog,
@@ -47,23 +53,68 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   }
 
   async ngOnInit() {
+    this.failuresDataState$ = this.store.select('powerFailuresHourly');
     this.activatedRouter.queryParams.subscribe(
       params => {
         const year = params['year'];
         const month = params['month'];
         const day = params['day'];
-        if (year && month && day) {
-          // tslint:disable-next-line: radix
-          this.currentDate = new Date(parseInt(year), parseInt(month) - 1, day);
-        } else {
-          this.currentDate = new Date();
+        const date = year && month && day ? new Date(parseInt(year), parseInt(month) - 1, day) : new Date();
+        if (!this.currentDate) {
+          this.currentDate = date;
+          this.store.dispatch(loadHourlyFailuresData({ date }));
         }
       }
     );
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    await this.refreshData();
+
     this.sortedData.sort = this.sort;
     this.restoreSort();
+    this.stateSubscription = this.failuresDataState$.subscribe(state => {
+      this.processChangedState(state);
+    })
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+    if (this.failuresDataState$) {
+      this.failuresDataState$ = null;
+    }
+  }
+
+  private processChangedState(state: FailuresHourlyState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('ERRORS.COMMON')
+        .subscribe(errorText => {
+          ErrorDialogComponent.show(this.dialog, errorText);
+        });
+      return;
+    }
+    if (!state.loading && state.date) {
+      this.currentDate = state.date;
+      this.currentDateControl.setValue(this.currentDate.toISOString());
+      this.router.navigate(['power-failures', 'hourly'],
+        {
+          queryParams: {
+            year: this.currentDate.getFullYear(),
+            month: this.currentDate.getMonth() + 1,
+            day: this.currentDate.getDate()
+          }
+        });
+    }
+    if (!state.loading && state.data) {
+      this.sortedData.data = state.data;
+      this.totalPowerFailure = state.totalPowerFailure;
+      this.failureAmount = state.failureAmount;
+      this.maxPowerFailure = state.maxPowerFailure;
+    }
   }
 
   restoreSort() {
@@ -83,25 +134,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   }
 
   async refreshData() {
-    setTimeout(async () => {
-      this.showSpinner();
-      try {
-        const powerData = await this.powerService.getPowerFailuresHourlyData(this.currentDate, this.currentDate);
-        this.sortedData.data = powerData;
-        this.maxPowerFailure =
-          powerData.find(o => o.duration === Math.max.apply(null, powerData.map(e => e.duration)));
-        this.totalPowerFailure = 0;
-        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
-        this.failureAmount = powerData.length;
-
-        this.closeSpinner();
-      } catch (e) {
-        console.log(e.message);
-        this.closeSpinner();
-        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    });
+    this.store.dispatch(loadHourlyFailuresData({ date: this.currentDate }));
   }
 
   sortData(sort: Sort) {
@@ -110,26 +143,14 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
     }
   }
 
-  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const month = normalizedMonth.month();
-    const year = normalizedMonth.year();
-    this.currentDate = new Date(year, month, 1);
-    datepicker.close();
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    this.router.navigate(['power-failures/daily'], { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
-    this.refreshData();
-  }
-
-  async addDay(direction: string) {
+  addDay(direction: string) {
+    const date = new Date(this.currentDate);
     if (direction === Direction.Up) {
-      this.currentDate.setDate(this.currentDate.getDate() + 1);
+      date.setDate(date.getDate() + 1);
     } else {
-      this.currentDate.setDate(this.currentDate.getDate() - 1);
+      date.setDate(date.getDate() - 1);
     }
-    this.currentDateControl.setValue(this.currentDate.toISOString());
-    await this.router.navigate(['power-failures', 'hourly'],
-      { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
-    await this.refreshData();
+    this.store.dispatch(loadHourlyFailuresData({ date }));
   }
 
   isAddDayButtonDisabled(direction: string): boolean {
@@ -144,11 +165,9 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
     }
   }
 
-  async dateChanged(event: MatDatepickerInputEvent<Date>) {
-    this.currentDate = new Date(event.value);
-    await this.router.navigate(['power-failures', 'hourly'],
-      { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: this.currentDate.getDate() } });
-    await this.refreshData();
+  dateChanged(event: MatDatepickerInputEvent<Date>) {
+    const date = new Date(event.value);
+    this.store.dispatch(loadHourlyFailuresData({ date }));
   }
 
 }
