@@ -140,17 +140,17 @@ export class PowerService extends HttpService {
         );
     }
 
-    async getPowerFailuresYearlyData(): Promise<PowerFailureYearlyModel[]> {
-        let data = await this.get<PowerFailureYearlyModel[]>('power/power-availability-yearly');
-        data = data.map(e => {
-            const i = new PowerFailureMonthlyModel();
-            i.year = e.year;
-            i.eventDate = new Date(e.year, 0, 1);
-            i.duration = e.duration;
-            i.events = e.events;
-            return i;
-        });
-        return data;
+    getPowerFailuresYearlyData(): Observable<PowerFailureYearlyModel[]> {
+        return this.getO<PowerFailureYearlyModel[]>('power/power-availability-yearly').pipe(
+            map(data => data.map(e => {
+                const i = new PowerFailureMonthlyModel();
+                i.year = e.year;
+                i.eventDate = new Date(e.year, 0, 1);
+                i.duration = e.duration;
+                i.events = e.events;
+                return i;
+            }))
+        );
     }
 
     async getPowerConsumptionData(): Promise<PowerConsumptionDto[]> {

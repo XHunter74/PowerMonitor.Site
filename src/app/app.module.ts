@@ -61,6 +61,7 @@ import { PowerMonitorYearlyEffects } from './store/effects/power-monitor.yearly.
 import { PowerFailuresHourlyEffects } from './store/effects/power-failures.hourly.effects';
 import { PowerFailuresDailyEffects } from './store/effects/power-failures.daily.effects';
 import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.monthly.effects';
+import { PowerFailuresYearlyEffects } from './store/effects/power-failures.yearly.effects';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,7 @@ import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.mont
     EffectsModule.forRoot([
       VoltageAmperageEffects, PowerMonitorHourlyEffects, PowerMonitorDailyEffects,
       PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
-      PowerFailuresDailyEffects, PowerFailuresMonthlyEffects]),
+      PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects]),
   ],
   providers: [
     AuthGuard,

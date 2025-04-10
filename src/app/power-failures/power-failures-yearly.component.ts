@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PowerService } from '../services/power-service';
 import { Router } from '@angular/router';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
@@ -10,6 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Direction } from '../models/app.enums';
 import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { FailuresYearlyState } from '../store/reducers/power-failures.yearly.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { loadYearlyFailuresData } from '../store/actions/power-failures.yearly.actions';
 
 const PowerFailuresSort = 'power-failures-sort-yearly';
 
@@ -31,8 +35,11 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
   formatDurationWithDays = AppUtils.formatDurationWithDays;
 
   Direction = Direction;
+  failuresDataState$: Observable<FailuresYearlyState>;
+  stateSubscription: Subscription;
 
-  constructor(private powerService: PowerService,
+  constructor(
+    private store: Store<AppState>,
     private router: Router,
     dialog: MatDialog,
     translate: TranslateService) {
@@ -40,9 +47,43 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
   }
 
   async ngOnInit() {
-    await this.refreshData();
+    this.failuresDataState$ = this.store.select('powerFailuresYearly');
     this.sortedData.sort = this.sort;
     this.restoreSort();
+    this.stateSubscription = this.failuresDataState$.subscribe(state => {
+      this.processChangedState(state);
+    });
+    this.store.dispatch(loadYearlyFailuresData({ data: null }));
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+    if (this.failuresDataState$) {
+      this.failuresDataState$ = null;
+    }
+  }
+
+  private processChangedState(state: FailuresYearlyState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('ERRORS.COMMON')
+        .subscribe(errorText => {
+          ErrorDialogComponent.show(this.dialog, errorText);
+        });
+      return;
+    }
+    if (!state.loading && state.data) {
+      this.sortedData.data = state.data;
+      this.totalPowerFailure = state.totalPowerFailure;
+      this.failureAmount = state.failureAmount;
+    }
   }
 
   restoreSort() {
@@ -62,22 +103,7 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
   }
 
   async refreshData() {
-    setTimeout(async () => {
-      this.showSpinner();
-      try {
-        this.sortedData.data = [];
-        const powerData = await this.powerService.getPowerFailuresYearlyData();
-        this.sortedData.data = powerData;
-        this.totalPowerFailure = 0;
-        this.totalPowerFailure = powerData.reduce((a, b) => a + b.duration, 0);
-        this.failureAmount = powerData.reduce((a, b) => a + b.events, 0);;
-        this.closeSpinner();
-      } catch (e) {
-        this.closeSpinner();
-        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    });
+    this.store.dispatch(loadYearlyFailuresData({ data: null }));
   }
 
   sortData(sort: Sort) {
