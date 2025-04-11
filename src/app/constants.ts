@@ -9,4 +9,6 @@ export class Constants {
     static healthApiKey = '5B463B74-0353-4EDB-BCFF-8868E46EBB3E';
     static ServiceName = 'PowerMonitor API';
     static AppLanguage = 'app-language'
+    static RequestTimeout = 5000;
+    static PingApiDelay = 20000;
 }

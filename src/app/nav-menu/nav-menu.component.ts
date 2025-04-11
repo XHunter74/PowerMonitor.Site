@@ -4,6 +4,7 @@ import { ServicesService } from '../services/services-service';
 import { AuthService } from '../services/auth.service';
 import { ChangeLanguageDialogComponent } from '../dialogs/change-language-dialog/change-language-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class NavMenuComponent implements OnInit, OnDestroy {
   isExpanded = false;
   isAPIOnline: boolean;
-  private timer: string | number | NodeJS.Timeout;
+  private timer;
 
   constructor(
     private readonly authService: AuthService,
@@ -57,9 +58,9 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   }
 
   startTimer() {
-    this.timer = setInterval(async () => {
-      await this.checkApiState();
-    }, 20000);
+    this.timer = setInterval(() => {
+      this.checkApiState();
+    }, Constants.PingApiDelay);
   }
 
   async changeLanguage() {
@@ -67,14 +68,16 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     await ChangeLanguageDialogComponent.show(this.dialog);
   }
 
-  private async checkApiState() {
-    try {
-      const state = await this.servicesService.pingApi();
-      this.isAPIOnline = state.response.toLowerCase() === 'pong';
-    } catch (e) {
-      console.error(e);
-      this.isAPIOnline = false;
-    }
+  private checkApiState() {
+    this.servicesService.pingApi().subscribe({
+      next: (state) => {
+        this.isAPIOnline = state.response.toLowerCase() === 'pong';
+      },
+      error: (e) => {
+        console.error(e);
+        this.isAPIOnline = false;
+      }
+    });
   }
 
   get apiState(): number {

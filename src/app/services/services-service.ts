@@ -6,6 +6,7 @@ import { CalibrationCoefficients } from '../models/calibration-coefficients.mode
 import { HttpService } from './http.service';
 import { HealthState } from '../models/health-state.model';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -24,9 +25,8 @@ export class ServicesService extends HttpService {
         return promise;
     }
 
-    async pingApi(): Promise<HealthState> {
-        const promise = this.post<HealthState>('services/ping', null);
-        return promise;
+    pingApi(): Observable<HealthState> {
+        return this.postO<HealthState>('services/ping', null);
     }
 
     async getBoardVersion(): Promise<IBoardInfoModel> {

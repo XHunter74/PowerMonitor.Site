@@ -3,7 +3,8 @@ import { Optional, SkipSelf } from '@angular/core';
 import { HeaderItem } from './header.item';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, timeout } from 'rxjs';
+import { Constants } from '../constants';
 
 export class HttpService {
 
@@ -69,9 +70,10 @@ export class HttpService {
 
         return this.http.get<T>(actionUrl, { params, headers: requestHeaders }).pipe(
             catchError((e: HttpErrorResponse) => {
-                const error = this.handleError(this.authService, e);
-                return throwError(() => error);
-            })
+            const error = this.handleError(this.authService, e);
+            return throwError(() => error);
+            }),
+            timeout(Constants.RequestTimeout)
         );
     }
 
@@ -97,6 +99,22 @@ export class HttpService {
                 });
         });
         return promise;
+    }
+
+    postO<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
+        let headers = new HttpHeaders();
+        if (!(body instanceof FormData)) {
+            headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+            });
+        }
+        return this.http.post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
+            catchError((e: HttpErrorResponse) => {
+                const error = this.handleError(this.authService, e);
+                return throwError(() => error);
+            }),
+            timeout(Constants.RequestTimeout)
+        );
     }
 
     async put<T>(actionUrl: string, body: any, params?: HttpParams) {

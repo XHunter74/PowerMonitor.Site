@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
-import { AuthGuard } from './services/auth.guard';
 import { LiveDataComponent } from './live-data/live-data.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { SiteSettingsComponent } from './site-settings/site-settings.component';
@@ -18,6 +17,7 @@ import { PowerFailuresDailyComponent } from './power-failures/power-failures-dai
 import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
 import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
     { 

@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LiveDataComponent } from './live-data/live-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
-import { AuthGuard, OpenGuard } from './services/auth.guard';
 import { AppLoginComponent } from './app-login/login.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
@@ -62,6 +61,7 @@ import { PowerFailuresHourlyEffects } from './store/effects/power-failures.hourl
 import { PowerFailuresDailyEffects } from './store/effects/power-failures.daily.effects';
 import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.monthly.effects';
 import { PowerFailuresYearlyEffects } from './store/effects/power-failures.yearly.effects';
+import { AuthGuard, OpenGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
