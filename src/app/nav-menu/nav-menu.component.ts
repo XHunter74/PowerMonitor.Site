@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services-service';
 import { AuthService } from '../services/auth.service';
-import { TranslateService } from '@ngx-translate/core';
 import { ChangeLanguageDialogComponent } from '../dialogs/change-language-dialog/change-language-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,14 +12,13 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NavMenuComponent implements OnInit, OnDestroy {
   isExpanded = false;
-  isAPIOnline;
-  private timer;
+  isAPIOnline: boolean;
+  private timer: string | number | NodeJS.Timeout;
 
   constructor(
     private readonly authService: AuthService,
     private readonly servicesService: ServicesService,
     private router: Router,
-    private translate: TranslateService,
     private dialog: MatDialog
   ) {
     this.checkApiState();
