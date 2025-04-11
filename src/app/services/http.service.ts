@@ -3,7 +3,7 @@ import { Optional, SkipSelf } from '@angular/core';
 import { HeaderItem } from './header.item';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
-import { catchError, Observable, throwError, timeout } from 'rxjs';
+import { catchError, Observable, retry, throwError, timeout } from 'rxjs';
 import { Constants } from '../constants';
 
 export class HttpService {
@@ -70,10 +70,11 @@ export class HttpService {
 
         return this.http.get<T>(actionUrl, { params, headers: requestHeaders }).pipe(
             catchError((e: HttpErrorResponse) => {
-            const error = this.handleError(this.authService, e);
-            return throwError(() => error);
+                const error = this.handleError(this.authService, e);
+                return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout)
+            timeout(Constants.RequestTimeout),
+            retry(Constants.RetryCount)
         );
     }
 
@@ -113,7 +114,8 @@ export class HttpService {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout)
+            timeout(Constants.RequestTimeout),
+            retry(Constants.RetryCount)
         );
     }
 

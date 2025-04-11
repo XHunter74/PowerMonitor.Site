@@ -11,4 +11,5 @@ export class Constants {
     static AppLanguage = 'app-language'
     static RequestTimeout = 5000;
     static PingApiDelay = 20000;
+    static RetryCount = 3;
 }
