@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadPowerConsumptionData, loadPowerConsumptionDataSuccess, loadPowerConsumptionDataFailure, deletePowerConsumptionData, deletePowerConsumptionDataSuccess, deletePowerConsumptionDataFailure } from '../actions/power-consumption.actions';
+import { loadPowerConsumptionData, loadPowerConsumptionDataSuccess, loadPowerConsumptionDataFailure, deletePowerConsumptionData, deletePowerConsumptionDataSuccess, deletePowerConsumptionDataFailure, addPowerConsumptionData, addPowerConsumptionDataFailure, addPowerConsumptionDataSuccess } from '../actions/power-consumption.actions';
 import { PowerMeteringDto } from '../../models/power-metering.dto';
 
 export interface PowerConsumptionState {
@@ -38,4 +38,21 @@ export const powerConsumptionDeleteReducer = createReducer(
     on(deletePowerConsumptionData, (state) => ({ ...state, loading: true, error: null })),
     on(deletePowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
     on(deletePowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
+);
+
+export interface PowerConsumptionAddState {
+    loading: boolean;
+    error: any;
+}
+
+const initialAddState: PowerConsumptionAddState = {
+    loading: false,
+    error: null,
+};
+
+export const powerConsumptionAddReducer = createReducer(
+    initialDeleteState,
+    on(addPowerConsumptionData, (state) => ({ ...state, loading: true, error: null })),
+    on(addPowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
+    on(addPowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
 );

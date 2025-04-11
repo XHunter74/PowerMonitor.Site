@@ -81,7 +81,10 @@
         "DELETE_QUESTION": "Are you sure you want to delete this record?",
         "DELETE_ERROR": "Could not delete this record",
         "ADD_ERROR": "Could not add this record",
-        "EDIT_ERROR": "Could not edit this record"
+        "EDIT_ERROR": "Could not edit this record",
+        "DELETING": "Deleting...",
+        "ADDING": "Adding...",
+        "EDITING": "Editing..."
     },
     "LOGIN": {
         "USERNAME": "Username",

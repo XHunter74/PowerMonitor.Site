@@ -18,7 +18,7 @@ export class PowerConsumptionDeleteEffects {
             ofType(deletePowerConsumptionData),
             mergeMap(({ recordId }) =>
                 this.powerService.deletePowerMeteringRecord(recordId).pipe(
-                    mergeMap((data) => {
+                    mergeMap(() => {
                         const newState = {} as PowerConsumptionDeleteState;
                         
                         return of(deletePowerConsumptionDataSuccess({ data: newState }));
@@ -28,7 +28,4 @@ export class PowerConsumptionDeleteEffects {
             )
         )
     );
-    
-    // Do NOT create an additional effect that loads data after delete
-    // That should be handled by the component
 }

@@ -9,11 +9,11 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { PowerConsumptionDeleteState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
+import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
-import { deletePowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
+import { addPowerConsumptionData, deletePowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
 
 @Component({
   selector: 'app-power-consumption',
@@ -31,6 +31,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   stateSubscription: Subscription;
   powerConsumptionDeleteState$: Observable<PowerConsumptionDeleteState>;
   deleteStateSubscription: Subscription;
+  powerConsumptionAddState$: Observable<PowerConsumptionAddState>;
+  addStateSubscription: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -44,11 +46,15 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   async ngOnInit() {
     this.powerConsumptionDataState$ = this.store.select('powerConsumption');
     this.powerConsumptionDeleteState$ = this.store.select('powerConsumptionDelete');
+    this.powerConsumptionAddState$ = this.store.select('powerConsumptionAdd');
     this.stateSubscription = this.powerConsumptionDataState$.subscribe(state => {
       this.processChangedState(state);
     });
     this.deleteStateSubscription = this.powerConsumptionDeleteState$.subscribe(state => {
       this.processChangedDeleteState(state);
+    });
+    this.addStateSubscription = this.powerConsumptionAddState$.subscribe(state => {
+      this.processChangedAddState(state);
     });
     this.store.dispatch(loadPowerConsumptionData({ data: {} }));
   }
@@ -71,12 +77,34 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
   private processChangedDeleteState(state: PowerConsumptionDeleteState) {
     if (state.loading) {
-      this.showSpinner();
+      this.translate.get('POWER_CONSUMPTION.DELETING').subscribe(text => {
+        this.showSpinner(text);
+      });
     } else {
       this.closeSpinner();
     }
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').subscribe(errorText => {
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+      });
+      return;
+    }
+
+    if (!state.loading) {
+      this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+    }
+  }
+
+  private processChangedAddState(state: PowerConsumptionAddState) {
+    if (state.loading) {
+      this.translate.get('POWER_CONSUMPTION.ADDING').subscribe(text => {
+        this.showSpinner(text);
+      });
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('POWER_CONSUMPTION.ADD_ERROR').subscribe(errorText => {
         setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       });
       return;
@@ -135,20 +163,10 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     }
     const dialogResult = await EditPowerConsumptionComponent.show(this.dialog, data);
     if (dialogResult) {
-      try {
-        this.showSpinner('Saving...');
-        const newRecord = new NewPowerMeteringDto();
-        newRecord.eventDate = dialogResult.eventDate;
-        newRecord.value = dialogResult.factualData;
-        await this.powerService.addPowerMeteringRecord(newRecord);
-        this.closeSpinner();
-        await this.refreshData();
-      } catch (err) {
-        this.closeSpinner();
-        console.log(err);
-        const errorText = await this.translate.get('POWER_CONSUMPTION.ADD_ERROR').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
+      const newRecord = new NewPowerMeteringDto();
+      newRecord.eventDate = dialogResult.eventDate;
+      newRecord.value = dialogResult.factualData;
+      this.store.dispatch(addPowerConsumptionData({ newRecord }));
     }
   }
 
