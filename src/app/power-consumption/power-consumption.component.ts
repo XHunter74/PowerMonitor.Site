@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { PowerService } from '../services/power-service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
 import { PowerMeteringDto } from '../models/power-metering.dto';
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
@@ -9,11 +8,11 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
+import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
-import { addPowerConsumptionData, deletePowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
+import { addPowerConsumptionData, deletePowerConsumptionData, editPowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
 
 @Component({
   selector: 'app-power-consumption',
@@ -33,11 +32,12 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   deleteStateSubscription: Subscription;
   powerConsumptionAddState$: Observable<PowerConsumptionAddState>;
   addStateSubscription: Subscription;
+  powerConsumptionEditState$: Observable<PowerConsumptionEditState>;
+  editStateSubscription: Subscription;
 
   constructor(
     private store: Store<AppState>,
     dialog: MatDialog,
-    private powerService: PowerService,
     translate: TranslateService
   ) {
     super(dialog, translate);
@@ -47,15 +47,30 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     this.powerConsumptionDataState$ = this.store.select('powerConsumption');
     this.powerConsumptionDeleteState$ = this.store.select('powerConsumptionDelete');
     this.powerConsumptionAddState$ = this.store.select('powerConsumptionAdd');
+    this.powerConsumptionEditState$ = this.store.select('powerConsumptionEdit');
+
     this.stateSubscription = this.powerConsumptionDataState$.subscribe(state => {
       this.processChangedState(state);
     });
+
     this.deleteStateSubscription = this.powerConsumptionDeleteState$.subscribe(state => {
-      this.processChangedDeleteState(state);
+      if (state && ((state.loading || state.error) || (!state.loading && state.operationComplete))) {
+        this.processChangedDeleteState(state);
+      }
     });
+
     this.addStateSubscription = this.powerConsumptionAddState$.subscribe(state => {
-      this.processChangedAddState(state);
+      if (state && ((state.loading || state.error) || (!state.loading && state.operationComplete))) {
+        this.processChangedAddState(state);
+      }
     });
+
+    this.editStateSubscription = this.powerConsumptionEditState$.subscribe(state => {
+      if (state && ((state.loading || state.error) || (!state.loading && state.operationComplete))) {
+        this.processChangedEditState(state);
+      }
+    });
+
     this.store.dispatch(loadPowerConsumptionData({ data: {} }));
   }
 
@@ -73,6 +88,18 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     if (this.powerConsumptionDeleteState$) {
       this.powerConsumptionDeleteState$ = null;
     }
+    if (this.addStateSubscription) {
+      this.addStateSubscription.unsubscribe();
+    }
+    if (this.powerConsumptionAddState$) {
+      this.powerConsumptionAddState$ = null;
+    }
+    if (this.editStateSubscription) {
+      this.editStateSubscription.unsubscribe();
+    }
+    if (this.powerConsumptionEditState$) {
+      this.powerConsumptionEditState$ = null;
+    }
   }
 
   private processChangedDeleteState(state: PowerConsumptionDeleteState) {
@@ -82,16 +109,16 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
       });
     } else {
       this.closeSpinner();
+
+      if (!state.error && state.operationComplete) {
+        this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+      }
     }
+
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').subscribe(errorText => {
         setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       });
-      return;
-    }
-
-    if (!state.loading) {
-      this.store.dispatch(loadPowerConsumptionData({ data: {} }));
     }
   }
 
@@ -102,16 +129,36 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
       });
     } else {
       this.closeSpinner();
+
+      if (!state.error && state.operationComplete) {
+        this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+      }
     }
+
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.ADD_ERROR').subscribe(errorText => {
         setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
       });
-      return;
+    }
+  }
+
+  private processChangedEditState(state: PowerConsumptionEditState) {
+    if (state.loading) {
+      this.translate.get('POWER_CONSUMPTION.EDITING').subscribe(text => {
+        this.showSpinner(text);
+      });
+    } else {
+      this.closeSpinner();
+
+      if (!state.error && state.operationComplete) {
+        this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+      }
     }
 
-    if (!state.loading) {
-      this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+    if (state.error) {
+      this.translate.get('POWER_CONSUMPTION.EDIT_ERROR').subscribe(errorText => {
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+      });
     }
   }
 
@@ -173,20 +220,10 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   async editRecord(record: PowerMeteringDto) {
     const dialogResult = await EditPowerConsumptionComponent.show(this.dialog, record);
     if (dialogResult) {
-      try {
-        this.showSpinner('Saving...');
-        const newRecord = new NewPowerMeteringDto();
-        newRecord.eventDate = dialogResult.eventDate;
-        newRecord.value = dialogResult.factualData;
-        await this.powerService.editPowerMeteringRecord(dialogResult.id, newRecord);
-        this.closeSpinner();
-        await this.refreshData();
-      } catch (err) {
-        this.closeSpinner();
-        console.log(err);
-        const errorText = await this.translate.get('POWER_CONSUMPTION.EDIT_ERROR').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
+      const newRecord = new NewPowerMeteringDto();
+      newRecord.eventDate = dialogResult.eventDate;
+      newRecord.value = dialogResult.factualData;
+      this.store.dispatch(editPowerConsumptionData({ id: dialogResult.id, newRecord }));
     }
   }
 

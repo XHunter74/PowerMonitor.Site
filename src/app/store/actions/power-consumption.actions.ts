@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionState } from '../reducers/power-consumption.reducer';
+import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState } from '../reducers/power-consumption.reducer';
 import { NewPowerMeteringDto } from '../../models/new-power-metering.dto';
 
 export const loadPowerConsumptionData = createAction(
@@ -44,5 +44,20 @@ export const addPowerConsumptionDataSuccess = createAction(
 
 export const addPowerConsumptionDataFailure = createAction(
     '[Power Consumption] Add Data Failure',
+    props<{ error: any }>()
+);
+
+export const editPowerConsumptionData = createAction(
+    '[Power Consumption] Edit Data',
+    props<{ id:number, newRecord: NewPowerMeteringDto }>()
+);
+
+export const editPowerConsumptionDataSuccess = createAction(
+    '[Power Consumption] Edit Data Success',
+    props<{ data: PowerConsumptionEditState }>()
+);
+
+export const editPowerConsumptionDataFailure = createAction(
+    '[Power Consumption] Edit Data Failure',
     props<{ error: any }>()
 );

@@ -16,6 +16,7 @@ import { PowerMeteringDto as PowerConsumptionDto } from '../models/power-meterin
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { AuthService } from './auth.service';
 import { map, Observable } from 'rxjs';
+import { getStringDate } from '../utils';
 
 
 
@@ -169,23 +170,16 @@ export class PowerService extends HttpService {
 
     deletePowerMeteringRecord(recordId: number): Observable<void> {
         const actionUrl = `power-consumption/energy-data/${recordId}`;
-        return this.deleteO(actionUrl);
+        return this.delete(actionUrl);
     }
 
     addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Observable<PowerConsumptionDto> {
         return this.postO<PowerConsumptionDto>('power-consumption/energy-data', newRecord);
     }
 
-    async editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Promise<PowerConsumptionDto> {
+    editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Observable<PowerConsumptionDto> {
         const actionUrl = `power-consumption/energy-data/${recordId}`;
-        const createdRecord = await this.put<PowerConsumptionDto>(actionUrl, newRecord);
-        return createdRecord;
+        return this.put<PowerConsumptionDto>(actionUrl, newRecord);
     }
 
-}
-
-function getStringDate(val: Date) {
-    const dateStr = val.getFullYear().toString() + '-' + (val.getMonth() + 1).toString() +
-        '-' + val.getDate().toString();
-    return dateStr;
 }

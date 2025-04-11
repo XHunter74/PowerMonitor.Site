@@ -19,7 +19,9 @@ export class PowerConsumptionDeleteEffects {
             mergeMap(({ recordId }) =>
                 this.powerService.deletePowerMeteringRecord(recordId).pipe(
                     mergeMap(() => {
-                        const newState = {} as PowerConsumptionDeleteState;
+                        const newState = {
+                            operationComplete: true
+                        } as PowerConsumptionDeleteState;
                         
                         return of(deletePowerConsumptionDataSuccess({ data: newState }));
                     }),

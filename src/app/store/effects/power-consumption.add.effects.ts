@@ -19,7 +19,9 @@ export class PowerConsumptionAddEffects {
             mergeMap(({ newRecord }) =>
                 this.powerService.addPowerMeteringRecord(newRecord).pipe(
                     mergeMap(() => {
-                        const newState = {} as PowerConsumptionAddState;
+                        const newState = {
+                            operationComplete: true
+                        } as PowerConsumptionAddState;
 
                         return of(addPowerConsumptionDataSuccess({ data: newState }));
                     }),

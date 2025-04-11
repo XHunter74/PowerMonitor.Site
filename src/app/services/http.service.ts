@@ -119,49 +119,21 @@ export class HttpService {
         );
     }
 
-    async put<T>(actionUrl: string, body: any, params?: HttpParams) {
+    put<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
-        const promise = new Promise<T>((resolve, reject) => {
-            this.http
-                .put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
-                .toPromise()
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(e => {
-                    const error = this.handleError(this.authService, e);
-                    if (error) {
-                        reject(error);
-                    }
-                });
-        });
-        return promise;
+        return this.http.put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
+            catchError((e: HttpErrorResponse) => {
+                const error = this.handleError(this.authService, e);
+                return throwError(() => error);
+            }),
+            timeout(Constants.RequestTimeout),
+            retry(Constants.RetryCount)
+        );
     }
 
-    async delete(actionUrl: string, body?: any, params?: HttpParams) {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-        });
-        const promise = new Promise((resolve, reject) => {
-            this.http
-                .delete(`${this.baseUrl}${actionUrl}`, { headers, params })
-                .toPromise()
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(e => {
-                    const error = this.handleError(this.authService, e);
-                    if (error) {
-                        reject(error);
-                    }
-                });
-        });
-        return promise;
-    }
-
-    deleteO(actionUrl: string, body?: any, params?: HttpParams): Observable<any> {
+    delete(actionUrl: string, body?: any, params?: HttpParams): Observable<any> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });

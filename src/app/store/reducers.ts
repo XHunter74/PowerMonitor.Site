@@ -8,7 +8,7 @@ import { FailuresHourlyState, powerFailuresHourlyReducer } from './reducers/powe
 import { FailuresDailyState, powerFailuresDailyReducer } from './reducers/power-failures.daily.reducer';
 import { FailuresMonthlyState, powerFailuresMonthlyReducer } from './reducers/power-failures.monthly.reducer';
 import { FailuresYearlyState, powerFailuresYearlyReducer } from './reducers/power-failures.yearly.reducer';
-import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionState, powerConsumptionAddReducer, powerConsumptionDeleteReducer, powerConsumptionReducer } from './reducers/power-consumption.reducer';
+import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState, powerConsumptionAddReducer, powerConsumptionDeleteReducer, powerConsumptionEditReducer, powerConsumptionReducer } from './reducers/power-consumption.reducer';
 
 export interface AppState {
   voltageAmperage: VoltageAmperageState;
@@ -23,6 +23,7 @@ export interface AppState {
   powerConsumption: PowerConsumptionState;
   powerConsumptionDelete: PowerConsumptionDeleteState;
   powerConsumptionAdd: PowerConsumptionAddState;
+  powerConsumptionEdit: PowerConsumptionEditState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -38,4 +39,5 @@ export const reducers: ActionReducerMap<AppState> = {
   powerConsumption: powerConsumptionReducer,
   powerConsumptionDelete: powerConsumptionDeleteReducer,
   powerConsumptionAdd: powerConsumptionAddReducer,
+  powerConsumptionEdit: powerConsumptionEditReducer,
 };
