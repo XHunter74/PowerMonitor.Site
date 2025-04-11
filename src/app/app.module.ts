@@ -38,7 +38,7 @@ import { QuestionDialogComponent } from './dialogs/question-dialog/question-dial
 import { ChangeLanguageDialogComponent } from './dialogs/change-language-dialog/change-language-dialog.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthService } from './services/auth.service';
-import { AppHttpInterceptor } from './services/http.interceptor';
+import { AppHttpInterceptor } from './interceptors/http.interceptor';
 import { UsersService } from './services/users-service';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
