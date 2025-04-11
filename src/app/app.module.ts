@@ -63,6 +63,7 @@ import { PowerFailuresDailyEffects } from './store/effects/power-failures.daily.
 import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.monthly.effects';
 import { PowerFailuresYearlyEffects } from './store/effects/power-failures.yearly.effects';
 import { PowerConsumptionEffects } from './store/effects/power-consumption.effects';
+import { PowerConsumptionDeleteEffects } from './store/effects/power-consumption.delete.effects';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,7 @@ import { PowerConsumptionEffects } from './store/effects/power-consumption.effec
       VoltageAmperageEffects, PowerMonitorHourlyEffects, PowerMonitorDailyEffects,
       PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
       PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
-      PowerConsumptionEffects]),
+      PowerConsumptionEffects, PowerConsumptionDeleteEffects]),
   ],
   providers: [
     AuthGuard,

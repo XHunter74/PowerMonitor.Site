@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PowerConsumptionState } from '../reducers/power-consumption.reducer';
+import { PowerConsumptionDeleteState, PowerConsumptionState } from '../reducers/power-consumption.reducer';
 
 export const loadPowerConsumptionData = createAction(
     '[Power Consumption] Load Data',
@@ -13,5 +13,20 @@ export const loadPowerConsumptionDataSuccess = createAction(
 
 export const loadPowerConsumptionDataFailure = createAction(
     '[Power Consumption] Load Data Failure',
+    props<{ error: any }>()
+);
+
+export const deletePowerConsumptionData = createAction(
+    '[Power Consumption] Delete Data',
+    props<{ recordId: number }>()
+);
+
+export const deletePowerConsumptionDataSuccess = createAction(
+    '[Power Consumption] Delete Data Success',
+    props<{ data: PowerConsumptionDeleteState }>()
+);
+
+export const deletePowerConsumptionDataFailure = createAction(
+    '[Power Consumption] Delete Data Failure',
     props<{ error: any }>()
 );

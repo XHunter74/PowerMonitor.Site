@@ -9,11 +9,11 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
+import { PowerConsumptionDeleteState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
-import { loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
+import { deletePowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
 
 @Component({
   selector: 'app-power-consumption',
@@ -29,6 +29,8 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   minId = -1;
   powerConsumptionDataState$: Observable<PowerConsumptionState>;
   stateSubscription: Subscription;
+  powerConsumptionDeleteState$: Observable<PowerConsumptionDeleteState>;
+  deleteStateSubscription: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -41,8 +43,12 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
   async ngOnInit() {
     this.powerConsumptionDataState$ = this.store.select('powerConsumption');
+    this.powerConsumptionDeleteState$ = this.store.select('powerConsumptionDelete');
     this.stateSubscription = this.powerConsumptionDataState$.subscribe(state => {
       this.processChangedState(state);
+    });
+    this.deleteStateSubscription = this.powerConsumptionDeleteState$.subscribe(state => {
+      this.processChangedDeleteState(state);
     });
     this.store.dispatch(loadPowerConsumptionData({ data: {} }));
   }
@@ -54,6 +60,30 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     }
     if (this.powerConsumptionDataState$) {
       this.powerConsumptionDataState$ = null;
+    }
+    if (this.deleteStateSubscription) {
+      this.deleteStateSubscription.unsubscribe();
+    }
+    if (this.powerConsumptionDeleteState$) {
+      this.powerConsumptionDeleteState$ = null;
+    }
+  }
+
+  private processChangedDeleteState(state: PowerConsumptionDeleteState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').subscribe(errorText => {
+        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+      });
+      return;
+    }
+
+    if (!state.loading) {
+      this.store.dispatch(loadPowerConsumptionData({ data: {} }));
     }
   }
 
@@ -82,21 +112,19 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
     this.store.dispatch(loadPowerConsumptionData({ data: {} }));
   }
 
-  async deleteRecord(recordId: number) {
-    const questionText = await this.translate.get('POWER_CONSUMPTION.DELETE_QUESTION').toPromise();
-    const yesText = await this.translate.get('COMMON.YES').toPromise();
-    const noText = await this.translate.get('COMMON.NO').toPromise();
-    const dialogResult = await QuestionDialogComponent.show(this.dialog, questionText, yesText, noText);
-    if (dialogResult === 'positive') {
-      try {
-        await this.powerService.deletePowerMeteringRecord(recordId);
-        await this.refreshData();
-      } catch (err) {
-        console.log(err);
-        const errorText = await this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    }
+  deleteRecord(recordId: number) {
+    this.translate.get(['POWER_CONSUMPTION.DELETE_QUESTION', 'COMMON.YES', 'COMMON.NO'])
+      .subscribe(translations => {
+        const questionText = translations['POWER_CONSUMPTION.DELETE_QUESTION'];
+        const yesText = translations['COMMON.YES'];
+        const noText = translations['COMMON.NO'];
+
+        QuestionDialogComponent.show(this.dialog, questionText, yesText, noText).then(dialogResult => {
+          if (dialogResult === 'positive') {
+            this.store.dispatch(deletePowerConsumptionData({ recordId }));
+          }
+        });
+      });
   }
 
   async addNewRecord() {

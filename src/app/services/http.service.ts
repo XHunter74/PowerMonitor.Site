@@ -161,6 +161,20 @@ export class HttpService {
         return promise;
     }
 
+    deleteO(actionUrl: string, body?: any, params?: HttpParams): Observable<any> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+        });
+        return this.http.delete(`${this.baseUrl}${actionUrl}`, { headers, params }).pipe(
+            catchError((e: HttpErrorResponse) => {
+                const error = this.handleError(this.authService, e);
+                return throwError(() => error);
+            }),
+            timeout(Constants.RequestTimeout),
+            retry(Constants.RetryCount)
+        );
+    }
+
     handleError(authService: AuthService, error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             console.error('An error occurred:', error.error.message);

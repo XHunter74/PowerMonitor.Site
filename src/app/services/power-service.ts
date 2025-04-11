@@ -167,9 +167,9 @@ export class PowerService extends HttpService {
         );
     }
 
-    async deletePowerMeteringRecord(recordId: number) {
+    deletePowerMeteringRecord(recordId: number): Observable<void> {
         const actionUrl = `power-consumption/energy-data/${recordId}`;
-        await this.delete(actionUrl);
+        return this.deleteO(actionUrl);
     }
 
     async addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Promise<PowerConsumptionDto> {
