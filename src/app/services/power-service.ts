@@ -153,15 +153,18 @@ export class PowerService extends HttpService {
         );
     }
 
-    async getPowerConsumptionData(): Promise<PowerConsumptionDto[]> {
-        const result = await this.get<PowerConsumptionDto[]>('power-consumption/energy-data');
-        if (!result) {
-            return [];
-        }
-        result.forEach(e => {
-            e.eventDate = new Date(e.eventDate);
-        });
-        return result;
+    getPowerConsumptionData(): Observable<PowerConsumptionDto[]> {
+        return this.getO<PowerConsumptionDto[]>('power-consumption/energy-data').pipe(
+            map(result => {
+                if (!result) {
+                    return [];
+                }
+                return result.map(e => {
+                    e.eventDate = new Date(e.eventDate);
+                    return e;
+                });
+            })
+        );
     }
 
     async deletePowerMeteringRecord(recordId: number) {

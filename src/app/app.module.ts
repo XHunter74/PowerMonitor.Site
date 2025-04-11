@@ -49,6 +49,7 @@ import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.facto
 import { environment } from '../environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DecimalNumbersOnlyDirective } from './directives/decimal-numbers-only-directive';
+import { AuthGuard, OpenGuard } from './guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
@@ -61,7 +62,7 @@ import { PowerFailuresHourlyEffects } from './store/effects/power-failures.hourl
 import { PowerFailuresDailyEffects } from './store/effects/power-failures.daily.effects';
 import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.monthly.effects';
 import { PowerFailuresYearlyEffects } from './store/effects/power-failures.yearly.effects';
-import { AuthGuard, OpenGuard } from './guards/auth.guard';
+import { PowerConsumptionEffects } from './store/effects/power-consumption.effects';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { AuthGuard, OpenGuard } from './guards/auth.guard';
     EffectsModule.forRoot([
       VoltageAmperageEffects, PowerMonitorHourlyEffects, PowerMonitorDailyEffects,
       PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
-      PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects]),
+      PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
+      PowerConsumptionEffects]),
   ],
   providers: [
     AuthGuard,

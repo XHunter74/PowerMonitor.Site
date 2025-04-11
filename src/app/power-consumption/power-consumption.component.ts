@@ -9,6 +9,11 @@ import { EditPowerConsumptionComponent } from './edit-power-consumption.componen
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
+import { PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from '../store/reducers';
+import { Store } from '@ngrx/store';
+import { loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
 
 @Component({
   selector: 'app-power-consumption',
@@ -22,8 +27,11 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   displayedColumns: string[] = ['eventDate', 'factualData', 'monitorData', 'difference', 'coefficient', 'buttons'];
   sortedData = new MatTableDataSource();
   minId = -1;
+  powerConsumptionDataState$: Observable<PowerConsumptionState>;
+  stateSubscription: Subscription;
 
   constructor(
+    private store: Store<AppState>,
     dialog: MatDialog,
     private powerService: PowerService,
     translate: TranslateService
@@ -32,28 +40,46 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
   }
 
   async ngOnInit() {
-    await this.refreshData();
+    this.powerConsumptionDataState$ = this.store.select('powerConsumption');
+    this.stateSubscription = this.powerConsumptionDataState$.subscribe(state => {
+      this.processChangedState(state);
+    });
+    this.store.dispatch(loadPowerConsumptionData({ data: {} }));
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+    if (this.powerConsumptionDataState$) {
+      this.powerConsumptionDataState$ = null;
+    }
+  }
+
+  private processChangedState(state: PowerConsumptionState) {
+    if (state.loading) {
+      this.showSpinner();
+    } else {
+      this.closeSpinner();
+    }
+    if (state.error) {
+      this.translate.get('ERRORS.COMMON')
+        .subscribe(errorText => {
+          ErrorDialogComponent.show(this.dialog, errorText);
+        });
+      return;
+    }
+    if (!state.loading && state.data) {
+      this.sortedData.data = state.data;
+      if (state.minItem) {
+        this.minId = state.minItem.id;
+      }
+    }
   }
 
   async refreshData() {
-    setTimeout(async () => {
-      this.showSpinner();
-      try {
-        const powerData = await this.powerService.getPowerConsumptionData();
-        const minItem = powerData.reduce((prev, curr) => {
-          return prev.id < curr.id ? prev : curr;
-        });
-        if (minItem !== null) {
-          this.minId = minItem.id;
-        }
-        this.sortedData.data = powerData;
-        this.closeSpinner();
-      } catch (e) {
-        this.closeSpinner();
-        const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-      }
-    });
+    this.store.dispatch(loadPowerConsumptionData({ data: {} }));
   }
 
   async deleteRecord(recordId: number) {
