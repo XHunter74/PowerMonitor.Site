@@ -7,7 +7,7 @@ import { YEAR_DATE_FORMATS } from '../app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { ChartConfiguration, Chart } from 'chart.js';
+import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
 import { Constants } from '../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,6 +51,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
             content: 'Average'
         }
     };
+
     public barChartOptions: ChartConfiguration<'bar'>['options'] = {
         responsive: true,
         maintainAspectRatio: true,
@@ -59,6 +60,14 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 annotations: [
                     this.annotation
                 ]
+            }
+        },
+        onHover: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
+            const target = (event.native as MouseEvent).target as HTMLElement;
+            if (elements.length > 0) {
+                target.style.cursor = 'pointer';
+            } else {
+                target.style.cursor = 'default';
             }
         }
     };
