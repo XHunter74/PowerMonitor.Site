@@ -3,7 +3,7 @@
     "node": "18"
   },
   "name": "powermonitor.site",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
