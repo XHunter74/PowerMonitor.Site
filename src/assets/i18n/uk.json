@@ -142,5 +142,9 @@
     },
     "ERRORS": {
         "COMMON": "Щось пішло не так."
+    },
+    "UPDATE": {
+        "NEW_VERSION_AVAILABLE": "Доступна нова версія PowerMonitor",
+        "UPDATE": "Update"
     }
 }

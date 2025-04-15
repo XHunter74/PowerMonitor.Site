@@ -142,5 +142,9 @@
     },
     "ERRORS": {
         "COMMON": "Something going wrong."
+    },
+    "UPDATE": {
+        "NEW_VERSION_AVAILABLE": "A new version of PowerMonitor is available",
+        "UPDATE": "Update"
     }
 }

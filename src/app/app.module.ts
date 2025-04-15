@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule, isDevMode } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,6 +66,8 @@ import { PowerConsumptionEffects } from './store/effects/power-consumption.effec
 import { PowerConsumptionDeleteEffects } from './store/effects/power-consumption.delete.effects';
 import { PowerConsumptionAddEffects } from './store/effects/power-consumption.add.effects';
 import { PowerConsumptionEditEffects } from './store/effects/power-consumption.edit.effects';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { UpdateService } from './services/update.service';
 
 @NgModule({
   declarations: [
@@ -129,6 +131,12 @@ import { PowerConsumptionEditEffects } from './store/effects/power-consumption.e
       PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
       PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
       PowerConsumptionEditEffects]),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     AuthGuard,
@@ -140,10 +148,15 @@ import { PowerConsumptionEditEffects } from './store/effects/power-consumption.e
     WebSocketService,
     { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-    { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true }
+    { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true },
+    UpdateService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    private updateService: UpdateService
+  ) { }
+}
 
 

@@ -25,8 +25,9 @@
                             "zone.js"
                         ],
                         "assets": [
-                            "src/assets/favicon.png",
-                            "src/assets"
+                          "src/assets/favicon.png",
+                          "src/assets",
+                          "src/manifest.webmanifest"
                         ],
                         "styles": [
                             "src/styles.css"
@@ -39,7 +40,9 @@
                             "chartjs-plugin-annotation",
                             "moment",
                             "popper"
-                        ]
+                        ],
+                        "serviceWorker": true,
+                        "ngswConfigPath": "ngsw-config.json"
                     },
                     "configurations": {
                         "production": {
