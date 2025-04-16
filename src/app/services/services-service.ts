@@ -20,18 +20,16 @@ export class ServicesService extends HttpService {
         super(http, parentModule, authService);
     }
 
-    async getSystemInfo(): Promise<ISystemInfo> {
-        const promise = this.get<ISystemInfo>('services/sysinfo');
-        return promise;
+    getSystemInfo(): Observable<ISystemInfo> {
+        return this.getO<ISystemInfo>('services/sysinfo');
     }
 
     pingApi(): Observable<HealthState> {
         return this.postO<HealthState>('services/ping', null);
     }
 
-    async getBoardVersion(): Promise<IBoardInfoModel> {
-        const promise = this.get<IBoardInfoModel>('services/board-build-date');
-        return promise;
+    getBoardVersion(): Observable<IBoardInfoModel> {
+        return this.getO<IBoardInfoModel>('services/board-build-date');
     }
 
     async uploadNewSketch(newSketch: File): Promise<string> {

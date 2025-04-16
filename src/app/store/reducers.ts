@@ -9,6 +9,7 @@ import { FailuresDailyState, powerFailuresDailyReducer } from './reducers/power-
 import { FailuresMonthlyState, powerFailuresMonthlyReducer } from './reducers/power-failures.monthly.reducer';
 import { FailuresYearlyState, powerFailuresYearlyReducer } from './reducers/power-failures.yearly.reducer';
 import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState, powerConsumptionAddReducer, powerConsumptionDeleteReducer, powerConsumptionEditReducer, powerConsumptionReducer } from './reducers/power-consumption.reducer';
+import { platformInfoReducer, PlatformInfoState } from './reducers/platform-info.reducer';
 
 export interface AppState {
   voltageAmperage: VoltageAmperageState;
@@ -24,6 +25,7 @@ export interface AppState {
   powerConsumptionDelete: PowerConsumptionDeleteState;
   powerConsumptionAdd: PowerConsumptionAddState;
   powerConsumptionEdit: PowerConsumptionEditState;
+  platformInfo: PlatformInfoState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -40,4 +42,5 @@ export const reducers: ActionReducerMap<AppState> = {
   powerConsumptionDelete: powerConsumptionDeleteReducer,
   powerConsumptionAdd: powerConsumptionAddReducer,
   powerConsumptionEdit: powerConsumptionEditReducer,
+  platformInfo: platformInfoReducer,
 };

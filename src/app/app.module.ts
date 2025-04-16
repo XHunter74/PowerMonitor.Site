@@ -67,6 +67,7 @@ import { PowerConsumptionAddEffects } from './store/effects/power-consumption.ad
 import { PowerConsumptionEditEffects } from './store/effects/power-consumption.edit.effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
+import { PlatformInfoEffects } from './store/effects/platform-info.effects';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,7 @@ import { UpdateService } from './services/update.service';
       PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
       PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
       PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
-      PowerConsumptionEditEffects]),
+      PowerConsumptionEditEffects, PlatformInfoEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

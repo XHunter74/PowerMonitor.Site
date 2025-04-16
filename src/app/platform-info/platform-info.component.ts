@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicesService } from '../services/services-service';
-import { ISystemInfo } from '../models/sysinfo.model';
-import { IBoardInfoModel } from '../models/board-info.model';
+import { Store } from '@ngrx/store';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { environment } from '../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { AppState } from '../store/reducers';
+import { loadPlatformInfo } from '../store/actions/platform-info.actions';
+import { PlatformInfoState } from '../store/reducers/platform-info.reducer';
+import { Observable, Subscription } from 'rxjs';
+import { IBoardInfoModel } from '../models/board-info.model';
+import { ISystemInfo } from '../models/sysinfo.model';
 
 @Component({
     selector: 'app-platform-info',
@@ -15,34 +19,55 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
+    public platformInfoState$: Observable<PlatformInfoState>;
+    stateSubscription: Subscription;
+    siteVersion: string;
     public sysInfo: ISystemInfo;
     public boardInfo: IBoardInfoModel;
-    siteVersion: string;
 
-    constructor(private servicesService: ServicesService,
+    constructor(
+        private store: Store<AppState>,
         dialog: MatDialog,
-        translate: TranslateService) {
+        translate: TranslateService
+    ) {
         super(dialog, translate);
         this.siteVersion = environment.version;
     }
 
     ngOnInit(): void {
-        this.refreshData();
+        this.platformInfoState$ = this.store.select('platformInfo');
+        this.stateSubscription = this.platformInfoState$.subscribe(state => {
+            this.processChangedState(state);
+        })
+        this.store.dispatch(loadPlatformInfo());
     }
 
-    async refreshData() {
-        setTimeout(async () => {
+    ngOnDestroy(): void {
+        if (this.stateSubscription) {
+            this.stateSubscription.unsubscribe();
+        }
+        if (this.platformInfoState$) {
+            this.platformInfoState$ = null;
+        }
+    }
+
+    private processChangedState(state: PlatformInfoState) {
+        if (state.loading) {
             this.showSpinner();
-            try {
-                this.sysInfo = await this.servicesService.getSystemInfo();
-                this.boardInfo = await this.servicesService.getBoardVersion();
-                this.closeSpinner();
-            } catch (e) {
-                this.closeSpinner();
-                const errorText = await this.translate.get('ERRORS.COMMON').toPromise();
-                setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
-            }
-        });
+        } else {
+            this.closeSpinner();
+        }
+        if (state.error) {
+            this.translate.get('ERRORS.COMMON')
+                .subscribe(errorText => {
+                    ErrorDialogComponent.show(this.dialog, errorText);
+                });
+            return;
+        }
+        if (!state.loading && state.sysInfo && state.boardInfo) {
+            this.sysInfo = state.sysInfo;
+            this.boardInfo = state.boardInfo;
+        }
     }
 
     getSystemUptimeStr() {
