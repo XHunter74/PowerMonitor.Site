@@ -62,7 +62,24 @@ export class UpdateService {
 
     private activateUpdate(): void {
         this.swUpdate.activateUpdate().then(() => {
-            document.location.reload();
+            console.log('Update activated, reloading application...');
+            
+            // Clear any cached application data
+            if (window.caches) {
+                window.caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => {
+                        console.log('Clearing cache:', cacheName);
+                        window.caches.delete(cacheName);
+                    });
+                });
+            }
+            
+            // Force a hard reload to ensure clean application state
+            window.location.reload();
+        }).catch(err => {
+            console.error('Failed to activate update:', err);
+            // Fallback to regular reload if activation fails
+            window.location.reload();
         });
     }
 }
