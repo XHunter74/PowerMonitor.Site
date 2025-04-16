@@ -19,11 +19,20 @@ export class AuthService {
     logout() {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('refresh_token');
+        localStorage.removeItem('token_expires_in');
         this.isSignedInSubject.next(false);
     }
 
     processLogin(userToken: UserTokenDto) {
         localStorage.setItem('auth_token', userToken.token);
         localStorage.setItem('refresh_token', userToken.refreshToken);
+        
+        // Store token expiration time
+        if (userToken.expiresIn) {
+            const expirationTime = Date.now() + (userToken.expiresIn * 1000);
+            localStorage.setItem('token_expires_in', expirationTime.toString());
+        }
+        
+        this.isSignedInSubject.next(true);
     }
 }
