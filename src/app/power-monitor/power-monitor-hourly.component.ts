@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ViewEncapsu
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
-import { StringUtils } from '../utils';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
@@ -16,6 +15,7 @@ import { MonitorHourlyState } from '../store/reducers/power-monitor.hourly.reduc
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadHourlyMonitorData } from '../store/actions/power-monitor.hourly.actions';
+import { formatNumber } from '../utils';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -207,7 +207,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     }
 
     public formatNumber(value: number): string {
-        return StringUtils.formatNumber(value);
+        return formatNumber(value);
     }
 
     addDay(direction: string) {

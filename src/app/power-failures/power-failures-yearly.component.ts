@@ -7,13 +7,13 @@ import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Direction } from '../models/app.enums';
-import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { FailuresYearlyState } from '../store/reducers/power-failures.yearly.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadYearlyFailuresData } from '../store/actions/power-failures.yearly.actions';
+import { formatDuration, formatDurationWithDays } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-yearly';
 
@@ -31,8 +31,8 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = AppUtils.formatDuration;
-  formatDurationWithDays = AppUtils.formatDurationWithDays;
+  formatDuration = formatDuration;
+  formatDurationWithDays = formatDurationWithDays;
 
   Direction = Direction;
   failuresDataState$: Observable<FailuresYearlyState>;

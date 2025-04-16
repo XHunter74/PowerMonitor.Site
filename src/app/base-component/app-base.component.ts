@@ -1,9 +1,9 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
-import { StringUtils } from '../utils';
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
+import { formatNumber } from '../utils';
 
 @Component({
     template: ''
@@ -27,7 +27,7 @@ export class AppBaseComponent implements OnDestroy {
     }
 
     public formatNumber(value: number): string {
-        return StringUtils.formatNumber(value);
+        return formatNumber(value);
     }
 
     showSpinner(message?: string) {

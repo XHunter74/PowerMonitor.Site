@@ -10,13 +10,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
-import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { FailuresHourlyState } from '../store/reducers/power-failures.hourly.reducer';
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadHourlyFailuresData } from '../store/actions/power-failures.hourly.actions';
+import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -39,7 +39,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = AppUtils.formatDuration;
+  formatDuration = formatDuration;
   failuresDataState$: Observable<FailuresHourlyState>;
   stateSubscription: Subscription;
 

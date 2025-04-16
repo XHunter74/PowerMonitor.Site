@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PowerService } from '../services/power-service';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
@@ -15,14 +14,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Direction } from '../models/app.enums';
-import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { FailuresHourlyState } from '../store/reducers/power-failures.hourly.reducer';
 import { FailuresMonthlyState } from '../store/reducers/power-failures.monthly.reducer';
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadMonthlyFailuresData } from '../store/actions/power-failures.monthly.actions';
+import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -46,7 +44,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = AppUtils.formatDuration;
+  formatDuration = formatDuration;
 
   Direction = Direction;
   failuresDataState$: Observable<FailuresMonthlyState>;

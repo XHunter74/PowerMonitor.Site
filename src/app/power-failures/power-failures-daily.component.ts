@@ -15,13 +15,13 @@ import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../models/app.enums';
 import { PowerFailureDailyModel } from '../models/power-failure-daily.model';
-import { AppUtils } from '../utils/app-utils';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { FailuresDailyState } from '../store/reducers/power-failures.daily.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadDailyFailuresData } from '../store/actions/power-failures.daily.actions';
+import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -48,7 +48,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = AppUtils.formatDuration;
+  formatDuration = formatDuration;
   failuresDataState$: Observable<FailuresDailyState>;
   stateSubscription: Subscription;
 
