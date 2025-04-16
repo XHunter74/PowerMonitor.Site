@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { UserTokenDto } from '../models/user-token.dto';
+import { Constants } from '../constants';
 
 @Injectable()
 export class AuthService {
@@ -12,27 +13,27 @@ export class AuthService {
     }
 
     isSignedIn(): boolean {
-        const loggedIn = !!localStorage.getItem('auth_token');
+        const loggedIn = !!localStorage.getItem(Constants.AuthToken);
         return loggedIn;
     }
 
     logout() {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('token_expires_in');
+        localStorage.removeItem(Constants.AuthToken);
+        localStorage.removeItem(Constants.RefreshToken);
+        localStorage.removeItem(Constants.TokenExpiresIn);
         this.isSignedInSubject.next(false);
     }
 
     processLogin(userToken: UserTokenDto) {
-        localStorage.setItem('auth_token', userToken.token);
-        localStorage.setItem('refresh_token', userToken.refreshToken);
-        
+        localStorage.setItem(Constants.AuthToken, userToken.token);
+        localStorage.setItem(Constants.RefreshToken, userToken.refreshToken);
+
         // Store token expiration time
         if (userToken.expiresIn) {
             const expirationTime = Date.now() + (userToken.expiresIn * 1000);
-            localStorage.setItem('token_expires_in', expirationTime.toString());
+            localStorage.setItem(Constants.TokenExpiresIn, expirationTime.toString());
         }
-        
+
         this.isSignedInSubject.next(true);
     }
 }

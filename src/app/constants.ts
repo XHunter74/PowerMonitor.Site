@@ -12,4 +12,7 @@ export class Constants {
     static RequestTimeout = 5000;
     static PingApiDelay = 20000;
     static RetryCount = 3;
+    static RefreshToken = 'refresh_token';
+    static TokenExpiresIn = 'token_expires_in';
+    static AuthToken = 'auth_token';
 }

@@ -7,6 +7,7 @@ import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operato
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users-service';
 import { UserTokenDto } from '../models/user-token.dto';
+import { Constants } from '../constants';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
@@ -15,20 +16,20 @@ export class AppHttpInterceptor implements HttpInterceptor {
 
   // Used to queue requests while refreshing token
   private tokenRefreshSubject = new BehaviorSubject<string | null>(null);
-  
+
   // Store the token expiration timestamp
   private tokenExpirationTime: number = 0;
-  
+
   // Threshold before expiration to trigger refresh (in milliseconds)
   private readonly REFRESH_THRESHOLD = 5 * 60 * 1000; // 5 minutes
 
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService
-  ) { 
+  ) {
     // Initialize expiration time from existing token (if any)
     this.updateTokenExpirationTime();
-    
+
     // Set up periodic token check
     this.setupTokenRefreshTimer();
   }
@@ -54,10 +55,10 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (!this.authService.isSignedIn()) {
           return;
         }
-        
+
         const currentTime = Date.now();
         const timeUntilExpiry = this.tokenExpirationTime - currentTime;
-        
+
         // If token will expire soon and we're not already refreshing, refresh it
         if (timeUntilExpiry > 0 && timeUntilExpiry < this.REFRESH_THRESHOLD && !this.isRefreshingToken) {
           const refreshToken = this.getRefreshToken();
@@ -73,7 +74,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
    */
   private refreshTokenSilently(refreshToken: string): void {
     this.isRefreshingToken = true;
-    
+
     from(this.usersService.refreshToken(refreshToken))
       .pipe(
         tap((token: UserTokenDto) => {
@@ -91,7 +92,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
       )
       .subscribe();
   }
-  
+
   /**
    * Stores token expiration time for proactive refresh
    */
@@ -149,14 +150,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
    * Gets the current auth token from storage
    */
   private getAuthToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem(Constants.AuthToken);
   }
 
   /**
    * Gets the current refresh token from storage
    */
   private getRefreshToken(): string | null {
-    return localStorage.getItem('refresh_token');
+    return localStorage.getItem(Constants.RefreshToken);
   }
 
   /**
