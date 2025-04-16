@@ -20,7 +20,6 @@ import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.co
 import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
-import { SiteSettingsComponent } from './site-settings/site-settings.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
 import { ProfileComponent } from './profile-component/profile.component';
@@ -90,7 +89,6 @@ import { UpdateService } from './services/update.service';
     PowerFailuresDailyComponent,
     PowerFailuresMonthlyComponent,
     PowerFailuresYearlyComponent,
-    SiteSettingsComponent,
     SpinnerDialogComponent,
     ProfileComponent,
     ErrorDialogComponent,

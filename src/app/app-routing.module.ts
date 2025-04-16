@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { LiveDataComponent } from './live-data/live-data.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
-import { SiteSettingsComponent } from './site-settings/site-settings.component';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { ProfileComponent } from './profile-component/profile.component';
@@ -27,7 +26,6 @@ const routes: Routes = [
     },
     { path: 'online-data', component: LiveDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
-    { path: 'settings', component: SiteSettingsComponent, canActivate: [AuthGuard] },
     { 
         path: 'power-monitor', 
         component: PowerMonitorComponent,
