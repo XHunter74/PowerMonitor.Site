@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 import { loadHourlyMonitorData, loadHourlyMonitorDataFailure, loadHourlyMonitorDataSuccess } from '../actions/power-monitor.hourly.actions';
 import { MonitorHourlyState } from '../reducers/power-monitor.hourly.reducer';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
@@ -19,38 +19,53 @@ export class PowerMonitorHourlyEffects {
     loadPowerMonitorHourlyData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadHourlyMonitorData),
-            mergeMap(({ date }) =>
-                this.powerService.getPowerDataHourly(date).pipe(
-                    mergeMap((data) => {
-                        const newState = {} as MonitorHourlyState;
-                        newState.data = data;
-                        newState.date = date;
-                        let powerSum = 0;
-                        powerSum = data.reduce((a, b) => a + b.power, 0);
-                        powerSum = Math.round(powerSum * 100) / 100;
-                        newState.powerSum = powerSum;
-
-                        newState.powerAvg = this.getAveragePower(date, powerSum, data);
-
-                        const currentDate = new Date();
-                        if (date.getDate() === currentDate.getDate() &&
-                            date.getMonth() === currentDate.getMonth() &&
-                            date.getFullYear() === currentDate.getFullYear()) {
-                            return this.powerService.getPowerDataStats().pipe(
-                                map((stats) => {
-                                    const currentHour = currentDate.getHours();
-                                    newState.forecast = this.getPowerForecast(currentHour, data, stats);
-                                    return loadHourlyMonitorDataSuccess({ data: newState });
-                                })
-                            );
-                        }
-                        return of(loadHourlyMonitorDataSuccess({ data: newState }));
-                    }),
-                    catchError((error) => of(loadHourlyMonitorDataFailure({ error })))
-                )
-            )
+            switchMap(({ date }) => {
+                const hourlyData$ = this.powerService.getPowerDataHourly(date);
+                const currentDate = new Date();
+                const isCurrentDay = date.getDate() === currentDate.getDate() &&
+                    date.getMonth() === currentDate.getMonth() &&
+                    date.getFullYear() === currentDate.getFullYear();
+                
+                // If it's the current day, we'll need stats data too
+                if (isCurrentDay) {
+                    const statsData$ = this.powerService.getPowerDataStats();
+                    return combineLatest([hourlyData$, statsData$]).pipe(
+                        map(([data, stats]) => {
+                            const newState = this.createHourlyState(date, data);
+                            const currentHour = currentDate.getHours();
+                            newState.forecast = this.getPowerForecast(currentHour, data, stats);
+                            return loadHourlyMonitorDataSuccess({ data: newState });
+                        })
+                    );
+                } else {
+                    // For past days, we only need hourly data
+                    return hourlyData$.pipe(
+                        map(data => {
+                            const newState = this.createHourlyState(date, data);
+                            return loadHourlyMonitorDataSuccess({ data: newState });
+                        })
+                    );
+                }
+            }),
+            catchError((error) => of(loadHourlyMonitorDataFailure({ error })))
         )
     );
+
+    /**
+     * Creates the hourly state object with calculated values
+     */
+    private createHourlyState(date: Date, data: IPowerDataHourlyModel[]): MonitorHourlyState {
+        const newState = {} as MonitorHourlyState;
+        newState.data = data;
+        newState.date = date;
+        
+        let powerSum = data.reduce((a, b) => a + b.power, 0);
+        powerSum = Math.round(powerSum * 100) / 100;
+        newState.powerSum = powerSum;
+        newState.powerAvg = this.getAveragePower(date, powerSum, data);
+        
+        return newState;
+    }
 
     getPowerForecast(currentHour: number, powerData: IPowerDataHourlyModel[], powerDataStats: IPowerDataStatsModel[]): number {
         let result = 0;
