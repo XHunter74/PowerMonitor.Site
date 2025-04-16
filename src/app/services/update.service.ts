@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
     providedIn: 'root'
 })
 export class UpdateService {
-    private readonly checkInterval = 10 * 60 * 1000; // Check every 10 minutes
+    private readonly checkInterval = 5 * 60 * 1000; // Check every 10 minutes
 
     constructor(
         private swUpdate: SwUpdate,
@@ -51,7 +51,7 @@ export class UpdateService {
             const updateText = this.translate.instant('UPDATE.UPDATE');
 
             this.snackBar.open(message, updateText, {
-                duration: 30000, // Show for 30 seconds
+                duration: 60000, // Show for 30 seconds
                 horizontalPosition: 'center',
                 verticalPosition: 'bottom',
             }).onAction().subscribe(() => {
