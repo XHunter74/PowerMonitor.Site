@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -30,8 +29,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./power-failures/power-failures.module').then(m => m.PowerFailuresModule)
     },
-    { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
-    { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
+    {
+        path: 'voltage-amperage/hourly',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./voltage-amperage/voltage-amperage.module').then(m => m.VoltageAmperageModule)
+    },
     {
         path: 'power-consumption',
         canActivate: [AuthGuard],

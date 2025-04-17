@@ -45,9 +45,6 @@ import { UpdateService } from './services/update.service';
     NavMenuComponent,
     AppLoginComponent,
     LoginModalComponent,
-    VoltageAmperageComponent,
-    VoltageAmperageHourlyComponent,
-    VoltageAmperageDailyComponent,
     SpinnerDialogComponent,
     ErrorDialogComponent,
     QuestionDialogComponent,
@@ -77,8 +74,7 @@ import { UpdateService } from './services/update.service';
     ),
     NgSelectModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([
-      VoltageAmperageEffects]),
+    EffectsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
