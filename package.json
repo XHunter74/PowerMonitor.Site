@@ -37,7 +37,7 @@
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
     "@popperjs/core": "^2.11.8",
-    "angular-google-charts": "2.2.3",
+    "angular-google-charts": "16.0.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "chartjs-plugin-annotation": "^3.0.1",
