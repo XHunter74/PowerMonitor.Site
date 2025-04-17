@@ -11,8 +11,6 @@ import { AppLoginComponent } from './app-login/login.component';
 import { APP_DATE_FORMATS } from './app-date-format';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
-import { SocketIoModule } from 'ngx-socket-io';
-import { WebSocket, WebSocketService } from './services/websocket.service';
 import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
@@ -49,7 +47,6 @@ import { UpdateService } from './services/update.service';
     NgbModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    SocketIoModule,
     AppRoutingModule,
     TranslateModule.forRoot(
       {
@@ -77,8 +74,6 @@ import { UpdateService } from './services/update.service';
     UsersService,
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     OpenGuard,
-    WebSocket,
-    WebSocketService,
     { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
     { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true },
