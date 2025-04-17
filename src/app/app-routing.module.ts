@@ -1,16 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { LiveDataComponent } from './live-data/live-data.component';
-import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
-import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
-import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
-import { PowerMonitorMonthlyComponent } from './power-monitor/power-monitor-monthly.component';
-import { PowerMonitorYearlyComponent } from './power-monitor/power-monitor-yearly.component';
 import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
 import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
 import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
