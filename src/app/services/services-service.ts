@@ -1,5 +1,5 @@
 import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ISystemInfo } from '../models/sysinfo.model';
 import { IBoardInfoModel } from '../models/board-info.model';
 import { CalibrationCoefficients } from '../models/calibration-coefficients.model';
@@ -21,7 +21,9 @@ export class ServicesService extends HttpService {
     }
 
     getSystemInfo(): Observable<ISystemInfo> {
-        return this.getO<ISystemInfo>('services/sysinfo');
+        const params = new HttpParams()
+            .set('_ts', new Date().getTime().toString())
+        return this.getO<ISystemInfo>('services/sysinfo', params);
     }
 
     pingApi(): Observable<HealthState> {
@@ -29,7 +31,9 @@ export class ServicesService extends HttpService {
     }
 
     getBoardVersion(): Observable<IBoardInfoModel> {
-        return this.getO<IBoardInfoModel>('services/board-build-date');
+        const params = new HttpParams()
+            .set('_ts', new Date().getTime().toString())
+        return this.getO<IBoardInfoModel>('services/board-build-date', params);
     }
 
     async uploadNewSketch(newSketch: File): Promise<string> {
@@ -40,7 +44,9 @@ export class ServicesService extends HttpService {
     }
 
     async getCalibrationCoefficients(): Promise<CalibrationCoefficients> {
-        const promise = this.get<CalibrationCoefficients>('services/calibration-coefficients');
+        const params = new HttpParams()
+            .set('_ts', new Date().getTime().toString())
+        const promise = this.get<CalibrationCoefficients>('services/calibration-coefficients', params);
         return promise;
     }
 
