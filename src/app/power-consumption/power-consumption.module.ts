@@ -10,6 +10,10 @@ import { PowerConsumptionEffects } from '../store/effects/power-consumption.effe
 import { PowerConsumptionDeleteEffects } from '../store/effects/power-consumption.delete.effects';
 import { PowerConsumptionAddEffects } from '../store/effects/power-consumption.add.effects';
 import { PowerConsumptionEditEffects } from '../store/effects/power-consumption.edit.effects';
+import { DecimalNumbersOnlyDirective } from '../directives/decimal-numbers-only-directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AutofocusDirective } from '../directives/autofocus.directive';
 
 
 const routes: Routes = [
@@ -22,14 +26,19 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         PowerConsumptionComponent,
-        EditPowerConsumptionComponent
+        EditPowerConsumptionComponent,
+        DecimalNumbersOnlyDirective,
+        AutofocusDirective
     ],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
         AppMaterialModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
         TranslateModule.forChild(),
-        EffectsModule.forFeature([PowerConsumptionEffects, PowerConsumptionDeleteEffects, 
+        EffectsModule.forFeature([PowerConsumptionEffects, PowerConsumptionDeleteEffects,
             PowerConsumptionAddEffects,
             PowerConsumptionEditEffects])
     ],
