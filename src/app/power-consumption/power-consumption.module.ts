@@ -13,6 +13,7 @@ import { PowerConsumptionEditEffects } from '../store/effects/power-consumption.
 import { DecimalNumbersOnlyDirective } from '../directives/decimal-numbers-only-directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutofocusDirective } from '../directives/autofocus.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -34,6 +35,8 @@ const routes: Routes = [
         CommonModule,
         AppMaterialModule,
         NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
         TranslateModule.forChild(),
         EffectsModule.forFeature([PowerConsumptionEffects, PowerConsumptionDeleteEffects,
             PowerConsumptionAddEffects,
