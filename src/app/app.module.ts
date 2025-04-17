@@ -22,7 +22,6 @@ import { APP_DATE_FORMATS } from './app-date-format';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
-import { ProfileComponent } from './profile-component/profile.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
@@ -91,7 +90,6 @@ import { PlatformInfoEffects } from './store/effects/platform-info.effects';
     PowerFailuresMonthlyComponent,
     PowerFailuresYearlyComponent,
     SpinnerDialogComponent,
-    ProfileComponent,
     ErrorDialogComponent,
     PowerConsumptionComponent,
     QuestionDialogComponent,

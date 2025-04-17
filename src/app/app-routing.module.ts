@@ -5,7 +5,6 @@ import { LiveDataComponent } from './live-data/live-data.component';
 import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
-import { ProfileComponent } from './profile-component/profile.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
 import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
@@ -52,7 +51,6 @@ const routes: Routes = [
     },
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },
-    { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'power-consumption', component: PowerConsumptionComponent, canActivate: [AuthGuard] },
     { path: 'app-login', component: AppLoginComponent },
     { path: '**', component: AppLoginComponent },
