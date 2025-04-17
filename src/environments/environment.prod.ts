@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.powermonitor.my-home.live/api/',
-  version: '2.0.17',
+  version: '2.0.18',
   locales: ['en', 'uk'],
   defaultLocale: 'en'
 };
