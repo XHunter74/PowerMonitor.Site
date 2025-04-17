@@ -80,8 +80,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
     { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true },
-    UpdateService,
-    provideClientHydration()
+    UpdateService
   ],
   bootstrap: [AppComponent]
 })
