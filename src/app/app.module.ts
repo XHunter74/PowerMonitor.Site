@@ -29,6 +29,7 @@ import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,8 @@ import { UpdateService } from './services/update.service';
     BrowserAnimationsModule,
     AppMaterialModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: environment.defaultLocale,

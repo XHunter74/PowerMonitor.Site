@@ -12,7 +12,6 @@ import { PowerConsumptionAddEffects } from '../store/effects/power-consumption.a
 import { PowerConsumptionEditEffects } from '../store/effects/power-consumption.edit.effects';
 import { DecimalNumbersOnlyDirective } from '../directives/decimal-numbers-only-directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutofocusDirective } from '../directives/autofocus.directive';
 
 
@@ -35,8 +34,6 @@ const routes: Routes = [
         CommonModule,
         AppMaterialModule,
         NgbModule,
-        FormsModule,
-        ReactiveFormsModule,
         TranslateModule.forChild(),
         EffectsModule.forFeature([PowerConsumptionEffects, PowerConsumptionDeleteEffects,
             PowerConsumptionAddEffects,
