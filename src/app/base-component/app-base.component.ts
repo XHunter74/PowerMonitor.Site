@@ -14,6 +14,9 @@ export class AppBaseComponent implements OnDestroy {
     protected dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
     constructor(protected dialog: MatDialog, protected translate: TranslateService) {
+        if (!this.translate.currentLang) {
+            this.translate.use('en'); // Set a default language, e.g., 'en'
+        }
         this.dateAdapter.setLocale(this.translate.currentLang);
         this.translate.onLangChange.subscribe(() => {
             this.dateAdapter.setLocale(this.translate.currentLang);

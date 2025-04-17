@@ -24,7 +24,11 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     { path: 'online-data', component: LiveDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-    { path: 'platform-info', component: PlatformInfoComponent, canActivate: [AuthGuard] },
+    {
+        path: 'platform-info',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./platform-info/platform-info.module').then(m => m.PlatformInfoModule)
+    },
     { 
         path: 'power-monitor', 
         component: PowerMonitorComponent,

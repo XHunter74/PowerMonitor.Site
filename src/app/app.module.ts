@@ -10,7 +10,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LiveDataComponent } from './live-data/live-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AppLoginComponent } from './app-login/login.component';
-import { PlatformInfoComponent } from './platform-info/platform-info.component';
 import { PowerMonitorComponent } from './power-monitor/power-monitor.component';
 import { PowerMonitorHourlyComponent } from './power-monitor/power-monitor-hourly.component';
 import { PowerMonitorDailyComponent } from './power-monitor/power-monitor-daily.component';
@@ -66,7 +65,6 @@ import { PowerConsumptionAddEffects } from './store/effects/power-consumption.ad
 import { PowerConsumptionEditEffects } from './store/effects/power-consumption.edit.effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
-import { PlatformInfoEffects } from './store/effects/platform-info.effects';
 
 @NgModule({
   declarations: [
@@ -75,7 +73,6 @@ import { PlatformInfoEffects } from './store/effects/platform-info.effects';
     LiveDataComponent,
     AppLoginComponent,
     LoginModalComponent,
-    PlatformInfoComponent,
     PowerMonitorComponent,
     PowerMonitorHourlyComponent,
     PowerMonitorDailyComponent,
@@ -127,7 +124,7 @@ import { PlatformInfoEffects } from './store/effects/platform-info.effects';
       PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
       PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
       PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
-      PowerConsumptionEditEffects, PlatformInfoEffects]),
+      PowerConsumptionEditEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
