@@ -24,8 +24,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthService } from './services/auth.service';
 import { AppHttpInterceptor } from './interceptors/http.interceptor';
 import { UsersService } from './services/users-service';
-import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
-import { EditPowerConsumptionComponent } from './power-consumption/edit-power-consumption.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -38,10 +36,6 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { VoltageAmperageEffects } from './store/effects/voltage-amperage.effects';
-import { PowerConsumptionEffects } from './store/effects/power-consumption.effects';
-import { PowerConsumptionDeleteEffects } from './store/effects/power-consumption.delete.effects';
-import { PowerConsumptionAddEffects } from './store/effects/power-consumption.add.effects';
-import { PowerConsumptionEditEffects } from './store/effects/power-consumption.edit.effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
 
@@ -56,9 +50,7 @@ import { UpdateService } from './services/update.service';
     VoltageAmperageDailyComponent,
     SpinnerDialogComponent,
     ErrorDialogComponent,
-    PowerConsumptionComponent,
     QuestionDialogComponent,
-    EditPowerConsumptionComponent,
     AutofocusDirective,
     ChangeLanguageDialogComponent,
     DecimalNumbersOnlyDirective
@@ -86,9 +78,7 @@ import { UpdateService } from './services/update.service';
     NgSelectModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      VoltageAmperageEffects,
-      PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
-      PowerConsumptionEditEffects]),
+      VoltageAmperageEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
