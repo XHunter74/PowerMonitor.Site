@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { PowerConsumptionComponent } from './power-consumption/power-consumption.component';
-import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
-import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
-import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
-import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -33,15 +28,8 @@ const routes: Routes = [
     },
     {
         path: 'power-failures',
-        component: PowerFailuresComponent,
         canActivate: [AuthGuard],
-        children: [
-            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
-            { path: 'hourly', component: PowerFailuresHourlyComponent },
-            { path: 'daily', component: PowerFailuresDailyComponent },
-            { path: 'monthly', component: PowerFailuresMonthlyComponent },
-            { path: 'yearly', component: PowerFailuresYearlyComponent }
-        ]
+        loadChildren: () => import('./power-failures/power-failures.module').then(m => m.PowerFailuresModule)
     },
     { path: 'voltage-amperage/hourly', component: VoltageAmperageComponent, data: { name: 'hourly' }, canActivate: [AuthGuard] },
     { path: 'voltage-amperage/daily', component: VoltageAmperageComponent, data: { name: 'daily' }, canActivate: [AuthGuard] },

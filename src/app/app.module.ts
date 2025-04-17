@@ -11,17 +11,12 @@ import { AppLoginComponent } from './app-login/login.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { VoltageAmperageHourlyComponent } from './voltage-amperage/voltage-amperage-hourly.component';
 import { APP_DATE_FORMATS } from './app-date-format';
-import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocket, WebSocketService } from './services/websocket.service';
 import { VoltageAmperageDailyComponent } from './voltage-amperage/voltage-amperage-daily.component';
 import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
-import { PowerFailuresHourlyComponent } from './power-failures/power-failures-hourly.component';
-import { PowerFailuresDailyComponent } from './power-failures/power-failures-daily.component';
-import { PowerFailuresMonthlyComponent } from './power-failures/power-failures-monthly.component';
-import { PowerFailuresYearlyComponent } from './power-failures/power-failures-yearly.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuestionDialogComponent } from './dialogs/question-dialog/question-dialog.component';
 import { ChangeLanguageDialogComponent } from './dialogs/change-language-dialog/change-language-dialog.component';
@@ -43,10 +38,6 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { VoltageAmperageEffects } from './store/effects/voltage-amperage.effects';
-import { PowerFailuresHourlyEffects } from './store/effects/power-failures.hourly.effects';
-import { PowerFailuresDailyEffects } from './store/effects/power-failures.daily.effects';
-import { PowerFailuresMonthlyEffects } from './store/effects/power-failures.monthly.effects';
-import { PowerFailuresYearlyEffects } from './store/effects/power-failures.yearly.effects';
 import { PowerConsumptionEffects } from './store/effects/power-consumption.effects';
 import { PowerConsumptionDeleteEffects } from './store/effects/power-consumption.delete.effects';
 import { PowerConsumptionAddEffects } from './store/effects/power-consumption.add.effects';
@@ -63,11 +54,6 @@ import { UpdateService } from './services/update.service';
     VoltageAmperageComponent,
     VoltageAmperageHourlyComponent,
     VoltageAmperageDailyComponent,
-    PowerFailuresComponent,
-    PowerFailuresHourlyComponent,
-    PowerFailuresDailyComponent,
-    PowerFailuresMonthlyComponent,
-    PowerFailuresYearlyComponent,
     SpinnerDialogComponent,
     ErrorDialogComponent,
     PowerConsumptionComponent,
@@ -100,8 +86,7 @@ import { UpdateService } from './services/update.service';
     NgSelectModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      VoltageAmperageEffects, PowerFailuresHourlyEffects,
-      PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
+      VoltageAmperageEffects,
       PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
       PowerConsumptionEditEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
