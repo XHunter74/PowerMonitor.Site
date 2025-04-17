@@ -93,7 +93,10 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
 
   private processChangedState(state: FailuresDailyState) {
     if (state.loading) {
-      this.showSpinner();
+      this.translate.get('COMMON.LOADING')
+        .subscribe(text => {
+          this.showSpinner(text);
+        });
     } else {
       this.closeSpinner();
     }

@@ -131,7 +131,10 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     private processChangedState(state: MonitorHourlyState) {
         if (state.loading) {
-            this.showSpinner();
+            this.translate.get('COMMON.LOADING')
+                .subscribe(text => {
+                    this.showSpinner(text);
+                });
         } else {
             this.closeSpinner();
         }

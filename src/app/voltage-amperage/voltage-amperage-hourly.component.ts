@@ -100,7 +100,10 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     processChangedState(state: VoltageAmperageState) {
         if (state.loading) {
-            this.showSpinner();
+            this.translate.get('COMMON.LOADING')
+                .subscribe(text => {
+                    this.showSpinner(text);
+                });
         } else {
             this.closeSpinner();
         }

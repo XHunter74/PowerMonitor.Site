@@ -158,7 +158,10 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     private processChangedState(state: MonitorDailyState) {
         if (state.loading) {
-            this.showSpinner();
+            this.translate.get('COMMON.LOADING')
+                .subscribe(text => {
+                    this.showSpinner(text);
+                });
         } else {
             this.closeSpinner();
         }

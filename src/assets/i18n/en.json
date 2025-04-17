@@ -112,7 +112,8 @@
         "HOUR": "Hour",
         "YES": "Yes",
         "NO": "No",
-        "ERROR": "Error"
+        "ERROR": "Error",
+        "LOADING": "Loading"
     },
     "MONTHS": {
         "JAN": "Jan",

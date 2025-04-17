@@ -164,7 +164,10 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
   private processChangedState(state: PowerConsumptionState) {
     if (state.loading) {
-      this.showSpinner();
+      this.translate.get('COMMON.LOADING')
+        .subscribe(text => {
+          this.showSpinner(text);
+        });
     } else {
       this.closeSpinner();
     }

@@ -90,7 +90,10 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
 
   private processChangedState(state: FailuresMonthlyState) {
     if (state.loading) {
-      this.showSpinner();
+      this.translate.get('COMMON.LOADING')
+        .subscribe(text => {
+          this.showSpinner(text);
+        });
     } else {
       this.closeSpinner();
     }

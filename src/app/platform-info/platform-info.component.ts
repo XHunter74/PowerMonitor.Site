@@ -53,7 +53,10 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     private processChangedState(state: PlatformInfoState) {
         if (state.loading) {
-            this.showSpinner();
+            this.translate.get('COMMON.LOADING')
+                .subscribe(text => {
+                    this.showSpinner(text);
+                });
         } else {
             this.closeSpinner();
         }
