@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -46,6 +46,7 @@ export class LiveDataComponent implements OnInit, OnDestroy {
       await this.processTranslations();
     });
   }
+
   async processTranslations() {
     await this.translateWords();
     this.voltageChart.data = [
@@ -58,13 +59,14 @@ export class LiveDataComponent implements OnInit, OnDestroy {
       [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
     ];
   }
+
   async translateWords() {
-    this.voltageTranslation = await this.translate.get('LIVE_DATA.VOLTAGE').toPromise();
-    this.vLabel = await this.translate.get('LIVE_DATA.V').toPromise();
-    this.amperageTranslation = await this.translate.get('LIVE_DATA.AMPERAGE').toPromise();
-    this.aLabel = await this.translate.get('LIVE_DATA.A').toPromise();
-    this.powerTranslation = await this.translate.get('LIVE_DATA.POWER').toPromise();
-    this.kwLabel = await this.translate.get('LIVE_DATA.KW').toPromise();
+    this.voltageTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.VOLTAGE'));
+    this.vLabel = await firstValueFrom(this.translate.get('LIVE_DATA.V'));
+    this.amperageTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.AMPERAGE'));
+    this.aLabel = await firstValueFrom(this.translate.get('LIVE_DATA.A'));
+    this.powerTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.POWER'));
+    this.kwLabel = await firstValueFrom(this.translate.get('LIVE_DATA.KW'));
   }
 
   async initCharts() {
