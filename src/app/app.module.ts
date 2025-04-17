@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { APP_INITIALIZER, Injector, NgModule, isDevMode } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -99,7 +99,7 @@ import { PlatformInfoEffects } from './store/effects/platform-info.effects';
     DecimalNumbersOnlyDirective
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -146,7 +146,8 @@ import { PlatformInfoEffects } from './store/effects/platform-info.effects';
     { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
     { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true },
-    UpdateService
+    UpdateService,
+    provideClientHydration()
   ],
   bootstrap: [AppComponent]
 })
