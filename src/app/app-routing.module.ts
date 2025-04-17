@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LiveDataComponent } from './live-data/live-data.component';
 import { PowerFailuresComponent } from './power-failures/power-failures.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
 import { AppLoginComponent } from './app-login/login.component';
@@ -12,24 +11,28 @@ import { PowerFailuresYearlyComponent } from './power-failures/power-failures-ye
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-    { 
-        path: '', 
+    {
+        path: '',
         redirectTo: 'power-monitor/hourly',
         pathMatch: 'full'
     },
-    { path: 'online-data', component: LiveDataComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    {
+        path: 'online-data',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./live-data/live-data.module').then(m => m.LiveDataModule)
+    },
     {
         path: 'platform-info',
         canActivate: [AuthGuard],
         loadChildren: () => import('./platform-info/platform-info.module').then(m => m.PlatformInfoModule)
     },
-    { 
+    {
         path: 'power-monitor',
         canActivate: [AuthGuard],
         loadChildren: () => import('./power-monitor/power-monitor.module').then(m => m.PowerMonitorModule)
     },
     {
-        path: 'power-failures', 
+        path: 'power-failures',
         component: PowerFailuresComponent,
         canActivate: [AuthGuard],
         children: [

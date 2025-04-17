@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './material-module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { LiveDataComponent } from './live-data/live-data.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { VoltageAmperageComponent } from './voltage-amperage/voltage-amperage.component';
@@ -59,7 +58,6 @@ import { UpdateService } from './services/update.service';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    LiveDataComponent,
     AppLoginComponent,
     LoginModalComponent,
     VoltageAmperageComponent,
