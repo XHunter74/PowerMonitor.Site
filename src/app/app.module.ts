@@ -73,11 +73,6 @@ import { UpdateService } from './services/update.service';
     LiveDataComponent,
     AppLoginComponent,
     LoginModalComponent,
-    PowerMonitorComponent,
-    PowerMonitorHourlyComponent,
-    PowerMonitorDailyComponent,
-    PowerMonitorMonthlyComponent,
-    PowerMonitorYearlyComponent,
     VoltageAmperageComponent,
     VoltageAmperageHourlyComponent,
     VoltageAmperageDailyComponent,
@@ -102,11 +97,9 @@ import { UpdateService } from './services/update.service';
     ReactiveFormsModule,
     NgbModule,
     BrowserAnimationsModule,
-    NgChartsModule,
     AppMaterialModule,
     SocketIoModule,
     AppRoutingModule,
-    GoogleChartsModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: environment.defaultLocale,
@@ -120,8 +113,7 @@ import { UpdateService } from './services/update.service';
     NgSelectModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      VoltageAmperageEffects, PowerMonitorHourlyEffects, PowerMonitorDailyEffects,
-      PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects, PowerFailuresHourlyEffects,
+      VoltageAmperageEffects, PowerFailuresHourlyEffects,
       PowerFailuresDailyEffects, PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects,
       PowerConsumptionEffects, PowerConsumptionDeleteEffects, PowerConsumptionAddEffects,
       PowerConsumptionEditEffects]),

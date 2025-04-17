@@ -30,16 +30,9 @@ const routes: Routes = [
         loadChildren: () => import('./platform-info/platform-info.module').then(m => m.PlatformInfoModule)
     },
     { 
-        path: 'power-monitor', 
-        component: PowerMonitorComponent,
+        path: 'power-monitor',
         canActivate: [AuthGuard],
-        children: [
-            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
-            { path: 'hourly', component: PowerMonitorHourlyComponent },
-            { path: 'daily', component: PowerMonitorDailyComponent },
-            { path: 'monthly', component: PowerMonitorMonthlyComponent },
-            { path: 'yearly', component: PowerMonitorYearlyComponent }
-        ]
+        loadChildren: () => import('./power-monitor/power-monitor.module').then(m => m.PowerMonitorModule)
     },
     {
         path: 'power-failures', 
