@@ -1,6 +1,6 @@
-var replace = require('replace-in-file');
-var package = require("./package.json");
-var buildVersion = package.version;
+import { sync } from 'replace-in-file';
+import { version } from "./package.json";
+var buildVersion = version;
 const options = {
     files: 'src/environments/environment.prod.ts',
     from: /version: '(.*)'/g,
@@ -9,7 +9,7 @@ const options = {
 };
 
 try {
-    let changedFiles = replace.sync(options);
+    let changedFiles = sync(options);
     if (changedFiles == 0) {
         throw "Please make sure that file '" + options.files + "' has \"version: ''\"";
     }
