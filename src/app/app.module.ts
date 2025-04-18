@@ -30,6 +30,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import 'moment/locale/uk';
 
 @NgModule({
   declarations: [
