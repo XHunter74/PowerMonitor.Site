@@ -1,8 +1,15 @@
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 380px) {
+    .hourly__mat-button {
+        min-width: 40px;
+        margin-left: -10px;
+    }
+}
 
-.hourly__mat-button {
-    min-width: 40px;
-    margin-left: -5px;
+@media screen and (min-width: 381px) {
+    .hourly__mat-button {
+        min-width: 40px;
+        margin-left: -5px;
+    }
 }
 
 .mat-form-field-infix {
