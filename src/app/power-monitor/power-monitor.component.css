@@ -1,14 +1,26 @@
-@media screen and (max-width: 768px) {
-    .hourly__mat-button {
-        padding: 0;
-        min-width: 40px;
-    }
+@media screen and (max-width: 768px) {}
 
-    .mat-form-field-infix {
-        width: 100px;
-    }
+.hourly__mat-button {
+    min-width: 40px;
+    margin-left: -5px;
+}
+
+.mat-form-field-infix {
+    width: 100px;
 }
 
 .forecast-row {
     height: 29px;
+}
+
+.info-container {
+    margin-top: -5px;
+}
+
+.refresh-button {
+    margin-left: 5px;
+}
+
+.chart-container {
+    margin-top: 15px;
 }

@@ -1,35 +1,42 @@
-<button class="hourly__mat-button" mat-button (click)="addYear('down')" [disabled]="isAddYearButtonDisabled('down')"
-    matTooltip="{{'COMMON.BACK' | translate}}" matTooltipClass="tooltip">
-    <mat-icon>chevron_left</mat-icon>
-</button>
-<button class="hourly__mat-button" mat-button (click)="addYear('up')" [disabled]="isAddYearButtonDisabled('up')"
-    mat-button matTooltip="{{'COMMON.FORWARD' | translate}}" matTooltipClass="tooltip">
-    <mat-icon>chevron_right</mat-icon>
-</button>
-<mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (click)="picker3.open()">
-    <mat-datepicker-toggle matSuffix [for]=" picker3"></mat-datepicker-toggle>
-    <mat-datepicker #picker3 startView="multi-year" (yearSelected)="chosenYearHandler($event, picker3)">
-    </mat-datepicker>
-</mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip">
-    <mat-icon>refresh</mat-icon>
-</button>
-<br />
-<div *ngIf="powerData">
+<div class="buttons-container">
+    <button class="hourly__mat-button" mat-button (click)="addYear('down')" [disabled]="isAddYearButtonDisabled('down')"
+        matTooltip="{{'COMMON.BACK' | translate}}" matTooltipClass="tooltip">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button class="hourly__mat-button" mat-button (click)="addYear('up')" [disabled]="isAddYearButtonDisabled('up')"
+        mat-button matTooltip="{{'COMMON.FORWARD' | translate}}" matTooltipClass="tooltip">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
+            (click)="picker3.open()">
+        <mat-datepicker-toggle matSuffix [for]=" picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3 startView="multi-year" (yearSelected)="chosenYearHandler($event, picker3)">
+        </mat-datepicker>
+    </mat-form-field>
+    <button class="refresh-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
+        matTooltipClass="tooltip">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>
+<div *ngIf="powerData" class="info-container">
     <table>
         <tr>
             <td>
-                <p class="mb-0"><b>{{'POWER_MONITOR.TOTAL_POWER' | translate}}: </b>{{formatNumber(powerSum)}}, {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0"><b>{{'POWER_MONITOR.TOTAL_POWER' | translate}}: </b>{{formatNumber(powerSum)}},
+                    {{'POWER_MONITOR.KWH' | translate}}</p>
             </td>
         </tr>
         <tr *ngIf="powerAvg > 0">
             <td style="color: blue">
-                <p class="mb-0"><b>{{'POWER_MONITOR.AVERAGE_POWER' | translate}}: </b>{{formatNumber(powerAvg)}}, {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0"><b>{{'POWER_MONITOR.AVERAGE_POWER' | translate}}: </b>{{formatNumber(powerAvg)}},
+                    {{'POWER_MONITOR.KWH' | translate}}</p>
             </td>
         </tr>
     </table>
+</div>
+<div *ngIf="powerData" class="chart-container">
+
     <div style="display: block" class="mb-5">
         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
             [legend]="barChartLegend" (chartClick)="chartClicked($event)"></canvas>
