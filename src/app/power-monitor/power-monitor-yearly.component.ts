@@ -117,6 +117,7 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner();
             return;
         }
         if (!state.loading && state.data) {

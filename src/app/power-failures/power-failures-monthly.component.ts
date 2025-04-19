@@ -102,6 +102,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
         .subscribe(errorText => {
           ErrorDialogComponent.show(this.dialog, errorText);
         });
+      this.closeSpinner();
       return;
     }
     if (!state.loading && state.date) {

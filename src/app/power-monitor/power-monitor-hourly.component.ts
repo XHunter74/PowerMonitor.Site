@@ -138,13 +138,16 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         } else {
             this.closeSpinner();
         }
+
         if (state.error) {
             this.translate.get('ERRORS.COMMON')
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner(); 
             return;
         }
+
         if (!state.loading && state.date) {
             this.currentDate = state.date;
             this.currentDateControl.setValue(this.currentDate.toISOString());
@@ -156,6 +159,7 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 }
             });
         }
+
         if (!state.loading && state.data) {
             this.powerData = state.data;
             this.prepareChart(this.powerData);

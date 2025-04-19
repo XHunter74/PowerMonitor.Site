@@ -98,6 +98,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
         .subscribe(errorText => {
           ErrorDialogComponent.show(this.dialog, errorText);
         });
+      this.closeSpinner();
       return;
     }
     if (!state.loading && state.date) {

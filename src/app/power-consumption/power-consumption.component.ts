@@ -117,8 +117,9 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.DELETE_ERROR').subscribe(errorText => {
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+        ErrorDialogComponent.show(this.dialog, errorText);
       });
+      this.closeSpinner();
     }
   }
 
@@ -137,8 +138,9 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.ADD_ERROR').subscribe(errorText => {
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+        ErrorDialogComponent.show(this.dialog, errorText);
       });
+      this.closeSpinner();
     }
   }
 
@@ -157,8 +159,9 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
 
     if (state.error) {
       this.translate.get('POWER_CONSUMPTION.EDIT_ERROR').subscribe(errorText => {
-        setTimeout(() => ErrorDialogComponent.show(this.dialog, errorText));
+        ErrorDialogComponent.show(this.dialog, errorText);
       });
+      this.closeSpinner();
     }
   }
 
@@ -176,6 +179,7 @@ export class PowerConsumptionComponent extends AppBaseComponent implements OnIni
         .subscribe(errorText => {
           ErrorDialogComponent.show(this.dialog, errorText);
         });
+      this.closeSpinner();
       return;
     }
     if (!state.loading && state.data) {

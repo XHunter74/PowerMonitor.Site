@@ -168,6 +168,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner();
             return;
         }
         if (!state.loading && state.date) {

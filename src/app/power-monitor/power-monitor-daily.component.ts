@@ -170,6 +170,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner();
             return;
         }
         if (!state.loading && state.date) {

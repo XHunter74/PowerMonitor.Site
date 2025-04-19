@@ -112,6 +112,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner();
             return;
         }
         if (state.date) {

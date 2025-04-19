@@ -65,6 +65,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
                 .subscribe(errorText => {
                     ErrorDialogComponent.show(this.dialog, errorText);
                 });
+            this.closeSpinner();
             return;
         }
         if (!state.loading && state.sysInfo && state.boardInfo) {
