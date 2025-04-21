@@ -19,7 +19,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
   private tokenExpirationTime: number = 0;
 
   // Threshold before expiration to trigger refresh (in milliseconds)
-  private readonly REFRESH_THRESHOLD = 5 * 60 * 1000; // 5 minutes
+  private readonly REFRESH_THRESHOLD = 60 * 1000; // 1 minute
 
   constructor(
     private readonly authService: AuthService,
