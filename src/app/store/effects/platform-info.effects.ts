@@ -2,29 +2,32 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ServicesService } from '../../services/services-service';
 import { loadPlatformInfo, loadPlatformInfoSuccess, loadPlatformInfoFailure } from '../actions/platform-info.actions';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 
 @Injectable()
 export class PlatformInfoEffects {
 
     private actions$ = inject(Actions);
 
-    constructor(private servicesService: ServicesService) {}
+    constructor(private servicesService: ServicesService) { }
 
     loadPlatformInfo$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadPlatformInfo),
-            mergeMap(() =>
-                this.servicesService.getSystemInfo().pipe(
-                    mergeMap((sysInfo) =>
-                        this.servicesService.getBoardVersion().pipe(
-                            map((boardInfo) => loadPlatformInfoSuccess({ sysInfo, boardInfo }))
-                        )
-                    ),
+            switchMap(() =>
+                combineLatest([
+                    this.servicesService.getSystemInfo(),
+                    this.servicesService.getBoardVersion()
+                ]).pipe(
+                    map(([sysInfo, boardInfo]) => loadPlatformInfoSuccess({ sysInfo, boardInfo })),
                     catchError((error) => of(loadPlatformInfoFailure({ error })))
                 )
-            )
+            ),
+            catchError((error) => {
+                console.error('Unexpected error in loadPlatformInfo$:', error);
+                return of(loadPlatformInfoFailure({ error }));
+            })
         )
     );
 }
