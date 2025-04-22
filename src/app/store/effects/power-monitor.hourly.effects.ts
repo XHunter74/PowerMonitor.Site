@@ -35,6 +35,10 @@ export class PowerMonitorHourlyEffects {
                             const currentHour = currentDate.getHours();
                             newState.forecast = this.getPowerForecast(currentHour, data, stats);
                             return loadHourlyMonitorDataSuccess({ data: newState });
+                        }),
+                        catchError((error) => {
+                            console.error('Error in combineLatest for current day:', error);
+                            return of(loadHourlyMonitorDataFailure({ error }));
                         })
                     );
                 } else {
@@ -43,11 +47,18 @@ export class PowerMonitorHourlyEffects {
                         map(data => {
                             const newState = this.createHourlyState(date, data);
                             return loadHourlyMonitorDataSuccess({ data: newState });
+                        }),
+                        catchError((error) => {
+                            console.error('Error in hourlyData$ for past days:', error);
+                            return of(loadHourlyMonitorDataFailure({ error }));
                         })
                     );
                 }
             }),
-            catchError((error) => of(loadHourlyMonitorDataFailure({ error })))
+            catchError((error) => {
+                console.error('Unexpected error in loadPowerMonitorHourlyData$:', error);
+                return of(loadHourlyMonitorDataFailure({ error }));
+            })
         )
     );
 
