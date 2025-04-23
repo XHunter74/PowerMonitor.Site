@@ -10,4 +10,4 @@ This project is a Power Monitoring application built with Angular. It provides r
 - **Error Handling**: Displays user-friendly error messages for system issues.
 - **Localization**: Supports multiple languages for a global audience.
 
-Copyright (c) 2025 Serhiy Krasovskyy xhunter74@gmail.com"
+Copyright (c) 2025 Serhiy Krasovskyy xhunter74@gmail.com
