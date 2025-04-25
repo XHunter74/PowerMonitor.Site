@@ -34,14 +34,11 @@ export class LoginModalComponent implements OnInit {
     if (!width) {
       width = '400px';
     }
-    setTimeout(() => {
-      dialog.open(LoginModalComponent,
-        {
-          width,
-          height: '340px',
-          hasBackdrop: false,
-          disableClose: true
-        });
+    dialog.open(LoginModalComponent, {
+      width,
+      height: '340px',
+      hasBackdrop: false,
+      disableClose: true
     });
   }
 
