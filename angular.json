@@ -23,7 +23,8 @@
                         "tsConfig": "src/tsconfig.app.json",
                         "progress": true,
                         "polyfills": [
-                            "zone.js"
+                            "zone.js",
+                            "@angular/localize/init"
                         ],
                         "assets": [
                           "src/assets/favicon.png",
