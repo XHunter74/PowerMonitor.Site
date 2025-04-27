@@ -13,7 +13,7 @@ import { FailuresYearlyState } from '../store/reducers/power-failures.yearly.red
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadYearlyFailuresData } from '../store/actions/power-failures.yearly.actions';
-import { formatDuration, formatDurationWithDays } from '../utils';
+import { formatDurationWithDays } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-yearly';
 
@@ -31,7 +31,6 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = formatDuration;
   formatDurationWithDays = formatDurationWithDays;
 
   Direction = Direction;
