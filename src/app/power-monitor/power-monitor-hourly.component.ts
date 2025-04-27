@@ -15,7 +15,6 @@ import { MonitorHourlyState } from '../store/reducers/power-monitor.hourly.reduc
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadHourlyMonitorData } from '../store/actions/power-monitor.hourly.actions';
-import { formatNumber } from '../utils';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -211,10 +210,6 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         }
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
-    }
-
-    public formatNumber(value: number): string {
-        return formatNumber(value);
     }
 
     addDay(direction: string) {

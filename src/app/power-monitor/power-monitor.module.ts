@@ -15,6 +15,7 @@ import { PowerMonitorYearlyComponent } from './power-monitor-yearly.component';
 import { AppMaterialModule } from '../material-module';
 import { NgChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormatNumberPipe } from '../pipes/format-number.pipe';
 
 const routes: Routes = [
   {
@@ -36,7 +37,9 @@ const routes: Routes = [
     PowerMonitorHourlyComponent,
     PowerMonitorDailyComponent,
     PowerMonitorMonthlyComponent,
-    PowerMonitorYearlyComponent],
+    PowerMonitorYearlyComponent,
+    FormatNumberPipe
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
-import { formatNumber } from '../utils';
 
 @Component({
     template: ''
@@ -27,10 +26,6 @@ export class AppBaseComponent implements OnDestroy {
         if (this.dialogRef) {
             this.dialogRef.close();
         }
-    }
-
-    public formatNumber(value: number): string {
-        return formatNumber(value);
     }
 
     showSpinner(message?: string) {
