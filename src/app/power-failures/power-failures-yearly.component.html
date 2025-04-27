@@ -1,4 +1,5 @@
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
+    matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
@@ -11,7 +12,7 @@
             </tr>
             <tr>
                 <td class="pr-2"><b>{{'POWER_FAILURES.TOTAL_FAILURES' | translate}}:</b> </td>
-                <td class="text-right"> {{formatDurationWithDays(totalPowerFailure)}}</td>
+                <td class="text-right"> {{totalPowerFailure | formatDurationWithDays}}</td>
                 <td class="text-right"></td>
             </tr>
         </table>
@@ -25,7 +26,7 @@
         </ng-container>
         <ng-container matColumnDef="duration">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element"> {{formatDurationWithDays(element.duration)}} </td>
+            <td *matCellDef="let element"> {{element.duration | formatDurationWithDays}} </td>
         </ng-container>
         <ng-container matColumnDef="events">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.EVENTS' | translate}} </th>

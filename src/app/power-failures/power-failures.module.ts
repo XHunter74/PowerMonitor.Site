@@ -15,6 +15,7 @@ import { PowerFailuresDailyEffects } from '../store/effects/power-failures.daily
 import { PowerFailuresMonthlyEffects } from '../store/effects/power-failures.monthly.effects';
 import { PowerFailuresYearlyEffects } from '../store/effects/power-failures.yearly.effects';
 import { FormatDurationPipe } from '../pipes/format-duration.pipe';
+import { FormatDurationWithDaysPipe } from '../pipes/format-duration-with-days.pipe';
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
     PowerFailuresDailyComponent,
     PowerFailuresMonthlyComponent,
     PowerFailuresYearlyComponent,
-    FormatDurationPipe
+    FormatDurationPipe,
+    FormatDurationWithDaysPipe
   ],
   imports: [
     RouterModule.forChild(routes),
