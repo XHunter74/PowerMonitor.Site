@@ -1,9 +1,11 @@
 <button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Down)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Down)" matTooltip="{{'COMMON.BACK' | translate}}" matTooltipClass="tooltip">
+    [disabled]="isAddMonthButtonDisabled(Direction.Down)" matTooltip="{{'COMMON.BACK' | translate}}"
+    matTooltipClass="tooltip">
     <mat-icon>chevron_left</mat-icon>
 </button>
 <button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Up)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Up)" mat-button matTooltip="{{'COMMON.FORWARD' | translate}}" matTooltipClass="tooltip">
+    [disabled]="isAddMonthButtonDisabled(Direction.Up)" mat-button matTooltip="{{'COMMON.FORWARD' | translate}}"
+    matTooltipClass="tooltip">
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
@@ -14,7 +16,8 @@
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip">
+<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
+    matTooltipClass="tooltip">
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
@@ -27,12 +30,12 @@
             </tr>
             <tr>
                 <td class="pr-2"><b>{{'POWER_FAILURES.TOTAL_FAILURES' | translate}}:</b> </td>
-                <td class="text-right"> {{formatDuration(totalPowerFailure)}}</td>
+                <td class="text-right"> {{totalPowerFailure | formatDuration}}</td>
                 <td class="text-right"></td>
             </tr>
             <tr>
                 <td class="pr-2"><b>{{'POWER_FAILURES.MAX_FAILURE' | translate}}:</b> </td>
-                <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}},</td>
+                <td class="text-right"> {{maxPowerFailure.duration | formatDuration}},</td>
                 <td class="text-right"> {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
             </tr>
         </table>
@@ -46,7 +49,7 @@
         </ng-container>
         <ng-container matColumnDef="duration">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
+            <td *matCellDef="let element"> {{element.duration | formatDuration}} </td>
         </ng-container>
         <ng-container matColumnDef="events">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.EVENTS' | translate}} </th>

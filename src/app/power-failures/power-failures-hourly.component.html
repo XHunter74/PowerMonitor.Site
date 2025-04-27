@@ -26,12 +26,12 @@
             </tr>
             <tr>
                 <td class="pr-2"><b>{{'POWER_FAILURES.TOTAL_FAILURES' | translate}}:</b> </td>
-                <td class="text-right"> {{formatDuration(totalPowerFailure)}}</td>
+                <td class="text-right"> {{totalPowerFailure | formatDuration}}</td>
                 <td class="text-right"></td>
             </tr>
             <tr>
                 <td class="pr-2"><b>{{'POWER_FAILURES.MAX_FAILURE' | translate}}:</b> </td>
-                <td class="text-right"> {{formatDuration(maxPowerFailure.duration)}}</td>
+                <td class="text-right"> {{maxPowerFailure.duration | formatDuration}}</td>
             </tr>
         </table>
     </div>
@@ -48,7 +48,7 @@
         </ng-container>
         <ng-container matColumnDef="duration">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element"> {{formatDuration(element.duration)}} </td>
+            <td *matCellDef="let element"> {{element.duration | formatDuration}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;let even = even" [ngClass]="{alternate: even}"></tr>

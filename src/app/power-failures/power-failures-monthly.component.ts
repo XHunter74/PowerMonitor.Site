@@ -20,7 +20,6 @@ import { FailuresMonthlyState } from '../store/reducers/power-failures.monthly.r
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadMonthlyFailuresData } from '../store/actions/power-failures.monthly.actions';
-import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -44,7 +43,6 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
   sortedData = new MatTableDataSource();
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = formatDuration;
 
   Direction = Direction;
   failuresDataState$: Observable<FailuresMonthlyState>;

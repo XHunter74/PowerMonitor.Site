@@ -16,7 +16,6 @@ import { FailuresHourlyState } from '../store/reducers/power-failures.hourly.red
 import { AppState } from '../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadHourlyFailuresData } from '../store/actions/power-failures.hourly.actions';
-import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -39,7 +38,6 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = formatDuration;
   failuresDataState$: Observable<FailuresHourlyState>;
   stateSubscription: Subscription;
 

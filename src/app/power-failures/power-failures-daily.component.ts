@@ -21,7 +21,6 @@ import { FailuresDailyState } from '../store/reducers/power-failures.daily.reduc
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { loadDailyFailuresData } from '../store/actions/power-failures.daily.actions';
-import { formatDuration } from '../utils';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -48,7 +47,6 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
   maxPowerFailure: IPowerFailureModel;
   totalPowerFailure: number;
   failureAmount: number;
-  formatDuration = formatDuration;
   failuresDataState$: Observable<FailuresDailyState>;
   stateSubscription: Subscription;
 

@@ -3,21 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { PowerMonitorHourlyEffects } from '../store/effects/power-monitor.hourly.effects';
-import { PowerMonitorDailyEffects } from '../store/effects/power-monitor.daily.effects';
-import { PowerMonitorMonthlyEffects } from '../store/effects/power-monitor.monthly.effects';
-import { PowerMonitorYearlyEffects } from '../store/effects/power-monitor.yearly.effects';
 import { AppMaterialModule } from '../material-module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {PowerFailuresComponent} from './power-failures.component';
+import { PowerFailuresComponent } from './power-failures.component';
 import { PowerFailuresHourlyComponent } from './power-failures-hourly.component';
 import { PowerFailuresDailyComponent } from './power-failures-daily.component';
 import { PowerFailuresMonthlyComponent } from './power-failures-monthly.component';
 import { PowerFailuresYearlyComponent } from './power-failures-yearly.component';
-import {PowerFailuresHourlyEffects} from '../store/effects/power-failures.hourly.effects';
+import { PowerFailuresHourlyEffects } from '../store/effects/power-failures.hourly.effects';
 import { PowerFailuresDailyEffects } from '../store/effects/power-failures.daily.effects';
 import { PowerFailuresMonthlyEffects } from '../store/effects/power-failures.monthly.effects';
 import { PowerFailuresYearlyEffects } from '../store/effects/power-failures.yearly.effects';
+import { FormatDurationPipe } from '../pipes/format-duration.pipe';
 
 const routes: Routes = [
   {
@@ -39,7 +36,9 @@ const routes: Routes = [
     PowerFailuresHourlyComponent,
     PowerFailuresDailyComponent,
     PowerFailuresMonthlyComponent,
-    PowerFailuresYearlyComponent],
+    PowerFailuresYearlyComponent,
+    FormatDurationPipe
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
