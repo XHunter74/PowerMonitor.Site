@@ -31,3 +31,11 @@
     color: blue !important;
     background: rgb(197, 197, 197) !important;
 }
+
+th.right-align .mat-sort-header-container {
+    justify-content: flex-end !important;
+}
+
+th.right-align .mat-sort-header-content {
+    margin-left: auto !important;
+}
