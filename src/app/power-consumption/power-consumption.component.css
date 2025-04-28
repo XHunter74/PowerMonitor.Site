@@ -8,3 +8,12 @@
         width: 100px;
     }
 }
+
+.numeric-text {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.right-align {
+    text-align: right;
+}

@@ -19,7 +19,7 @@ const PowerFailuresSort = 'power-failures-sort-yearly';
 @Component({
   selector: 'app-power-failures-yearly',
   templateUrl: './power-failures-yearly.component.html',
-  styleUrls: ['./power-failures-yearly.component.css']
+  styleUrls: ['./power-failures.components.css']
 })
 
 

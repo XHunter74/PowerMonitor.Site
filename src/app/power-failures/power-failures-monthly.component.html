@@ -39,15 +39,15 @@
     <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="month">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.MONTH' | translate}} </th>
-            <td *matCellDef="let element"> {{element.monthStr}} </td>
+            <td *matCellDef="let element" class="numeric-text"> {{element.monthStr}} </td>
         </ng-container>
         <ng-container matColumnDef="duration">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element"> {{element.duration | formatDuration}} </td>
+            <td *matCellDef="let element" class="numeric-text"> {{element.duration | formatDuration}} </td>
         </ng-container>
         <ng-container matColumnDef="events">
             <th *matHeaderCellDef mat-sort-header> {{'COMMON.EVENTS' | translate}} </th>
-            <td *matCellDef="let element"> {{element.events}} </td>
+            <td *matCellDef="let element" class="numeric-text"> {{element.events}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;let even = even"

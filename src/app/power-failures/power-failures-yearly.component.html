@@ -21,16 +21,16 @@
 <div class="table-responsive">
     <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="year">
-            <th *matHeaderCellDef mat-sort-header> {{'COMMON.YEAR' | translate}} </th>
-            <td *matCellDef="let element"> {{element.eventDate | date: 'yyyy'}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.YEAR' | translate}} </th>
+            <td *matCellDef="let element" class="numeric-text"> {{element.eventDate | date: 'yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="duration">
-            <th *matHeaderCellDef mat-sort-header> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element"> {{element.duration | formatDurationWithDays}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.DURATION' | translate}} </th>
+            <td *matCellDef="let element" class="numeric-text"> {{element.duration | formatDurationWithDays}} </td>
         </ng-container>
         <ng-container matColumnDef="events">
-            <th *matHeaderCellDef mat-sort-header> {{'COMMON.EVENTS' | translate}} </th>
-            <td *matCellDef="let element"> {{element.events}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.EVENTS' | translate}} </th>
+            <td *matCellDef="let element" class="numeric-text"> {{element.events}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;let even = even"

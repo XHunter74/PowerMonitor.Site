@@ -27,7 +27,7 @@ const PowerFailuresSort = 'power-failures-sort-daily';
 @Component({
   selector: 'app-power-failures-daily',
   templateUrl: './power-failures-daily.component.html',
-  styleUrls: ['./power-failures-daily.component.css'],
+  styleUrls: ['./power-failures.components.css'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }

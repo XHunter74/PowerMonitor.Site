@@ -26,7 +26,7 @@ const PowerFailuresSort = 'power-failures-sort-monthly';
 @Component({
   selector: 'app-power-failures-monthly',
   templateUrl: './power-failures-monthly.component.html',
-  styleUrls: ['./power-failures-monthly.component.css'],
+  styleUrls: ['./power-failures.components.css'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS }
