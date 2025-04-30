@@ -32,10 +32,7 @@ jobs:
         git config --global user.name "Serhiy Krasovskyy"
 
     - name: Build project
-      run: |
-        npm version patch --no-git-tag-version
-        node ./replace.build.mjs
-        ng build --configuration production
+      run: npm run build-prod
 
     - name: Deploy to Firebase
       uses: w9jds/firebase-action@v13.0.1
