@@ -44,8 +44,6 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
     };
 
     public barChartLabels: string[] = [];
-    public barChartType = 'bar';
-    public barChartLegend = true;
 
     public barChartData: any[] = [
         { data: [], label: 'Power, kW/h' }

@@ -73,8 +73,6 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     };
 
     public barChartLabels: string[] = [];
-    public barChartType = 'bar';
-    public barChartLegend = true;
 
     public barChartData: any[] = [
         { data: [], label: 'Power, kW/h' }
