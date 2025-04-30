@@ -1,5 +1,10 @@
 # PowerMonitor
 
+![Version](https://img.shields.io/badge/version-2.0.43-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
+
 This project is a Power Monitoring application built with Angular. It provides real-time and historical data on power consumption, failures, and system information.
 
 ## Features
