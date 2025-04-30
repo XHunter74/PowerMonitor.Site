@@ -4,6 +4,7 @@ import { WebSocketService } from '../services/websocket.service';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -42,88 +43,93 @@ export class LiveDataComponent implements OnInit, OnDestroy {
   constructor(private webSocketService: WebSocketService,
     private translate: TranslateService) {
     this.initCharts();
-    translate.onLangChange.subscribe(async () => {
-      await this.processTranslations();
+    translate.onLangChange.subscribe(() => {
+      this.processTranslations();
     });
   }
 
-  async processTranslations() {
-    await this.translateWords();
-    this.voltageChart.data = [
-      [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
-    ];
-    this.amperageChart.data = [
-      [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
-    ];
-    this.powerChart.data = [
-      [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
-    ];
-  }
-
-  async translateWords() {
-    this.voltageTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.VOLTAGE'));
-    this.vLabel = await firstValueFrom(this.translate.get('LIVE_DATA.V'));
-    this.amperageTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.AMPERAGE'));
-    this.aLabel = await firstValueFrom(this.translate.get('LIVE_DATA.A'));
-    this.powerTranslation = await firstValueFrom(this.translate.get('LIVE_DATA.POWER'));
-    this.kwLabel = await firstValueFrom(this.translate.get('LIVE_DATA.KW'));
-  }
-
-  async initCharts() {
-    await this.translateWords();
-    this.voltageChart = {
-      type: "Gauge",
-      data: [
+  processTranslations() {
+    this.translateWords().subscribe(() => {
+      this.voltageChart.data = [
         [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
-      ],
-      options: {
-        width: 200,
-        height: 200,
-        redFrom: 0,
-        redTo: this.nominalVoltageMin,
-        greenFrom: this.nominalVoltageMin,
-        greenTo: this.nominalVoltageMax,
-        yellowFrom: this.nominalVoltageMax,
-        yellowTo: this.maxVoltage,
-        min: 0,
-        max: this.maxVoltage,
-        yellowColor: '#DC3912'
-      },
-    };
-
-    this.amperageChart = {
-      type: "Gauge",
-      data: [
+      ];
+      this.amperageChart.data = [
         [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
-      ],
-      options: {
-        width: 200,
-        height: 200,
-        greenFrom: 0,
-        greenTo: this.nominalAmperageMax,
-        redFrom: this.nominalAmperageMax,
-        redTo: this.maxAmperage,
-        min: 0,
-        max: this.maxAmperage,
-      },
-    };
-
-    this.powerChart = {
-      type: "Gauge",
-      data: [
+      ];
+      this.powerChart.data = [
         [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
-      ],
-      options: {
-        width: 200,
-        height: 200,
-        greenFrom: 0,
-        greenTo: this.nominalPowerMax,
-        redFrom: this.nominalPowerMax,
-        redTo: this.maxPower,
-        min: 0,
-        max: this.maxPower,
-      },
-    };
+      ];
+    });
+  }
+
+  translateWords() {
+    return this.translate.get(["LIVE_DATA.VOLTAGE", "LIVE_DATA.V", "LIVE_DATA.AMPERAGE", "LIVE_DATA.A", "LIVE_DATA.POWER", "LIVE_DATA.KW"])
+      .pipe(tap(translations => {
+        this.voltageTranslation = translations["LIVE_DATA.VOLTAGE"];
+        this.vLabel = translations["LIVE_DATA.V"];
+        this.amperageTranslation = translations["LIVE_DATA.AMPERAGE"];
+        this.aLabel = translations["LIVE_DATA.A"];
+        this.powerTranslation = translations["LIVE_DATA.POWER"];
+        this.kwLabel = translations["LIVE_DATA.KW"];
+      }));
+  }
+
+  initCharts() {
+    this.translateWords().subscribe(() => {
+      this.voltageChart = {
+        type: "Gauge",
+        data: [
+          [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
+        ],
+        options: {
+          width: 200,
+          height: 200,
+          redFrom: 0,
+          redTo: this.nominalVoltageMin,
+          greenFrom: this.nominalVoltageMin,
+          greenTo: this.nominalVoltageMax,
+          yellowFrom: this.nominalVoltageMax,
+          yellowTo: this.maxVoltage,
+          min: 0,
+          max: this.maxVoltage,
+          yellowColor: '#DC3912'
+        },
+      };
+
+      this.amperageChart = {
+        type: "Gauge",
+        data: [
+          [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
+        ],
+        options: {
+          width: 200,
+          height: 200,
+          greenFrom: 0,
+          greenTo: this.nominalAmperageMax,
+          redFrom: this.nominalAmperageMax,
+          redTo: this.maxAmperage,
+          min: 0,
+          max: this.maxAmperage,
+        },
+      };
+
+      this.powerChart = {
+        type: "Gauge",
+        data: [
+          [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
+        ],
+        options: {
+          width: 200,
+          height: 200,
+          greenFrom: 0,
+          greenTo: this.nominalPowerMax,
+          redFrom: this.nominalPowerMax,
+          redTo: this.maxPower,
+          min: 0,
+          max: this.maxPower,
+        },
+      };
+    });
   }
 
   ngOnInit(): void {
