@@ -1,0 +1,61 @@
+name: Deploy PowerMonitor Site
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./PowerMonitor.Site
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # needed to push tags later
+
+    - name: Use Node.js 18
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: PowerMonitor.Site/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('PowerMonitor.Site/package-lock.json') }}
+
+    - name: Install dependencies
+      run: npm install --force
+
+    - name: Build project
+      run: npm run build-prod
+
+    - name: Deploy to Firebase
+      uses: w9jds/firebase-action@v13.0.1
+      with:
+        args: deploy --project ${{ secrets.PROJECT_ID }}
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    - name: Commit and tag version
+      run: |
+        appversion=$(node app-version.js)
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add package.json
+        git add package-lock.json
+        git add src/environments/environment.prod.ts
+
+        git commit -m "[skip ci] Updated Powermonitor site version to $appversion." || echo "No changes to commit"
+        git tag -a v$appversion -m "Site version $appversion"
+        git push origin master --follow-tags
