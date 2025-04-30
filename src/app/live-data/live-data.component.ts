@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs/operators';
+import { ChartsConstants } from '../constants';
+import { ChartsBuilder } from './charts-builder';
 
 
 @Component({
@@ -16,16 +18,9 @@ import { tap } from 'rxjs/operators';
 
 export class LiveDataComponent implements OnInit, OnDestroy {
 
-  private maxVoltage = 300;
-  private nominalVoltageMin = 207;
-  private nominalVoltageMax = 253;
-  private voltage = 230;
-  private amperage = 0;
-  private power = 0;
-  private maxAmperage = 30;
-  private nominalAmperageMax = 20;
-  private maxPower = 8;
-  private nominalPowerMax = 5;
+  private voltage = ChartsConstants.voltageChart.defaultVoltage;
+  private amperage = ChartsConstants.amperageChart.defaultAmperage;
+  private power = ChartsConstants.powerChart.defaultPower;
 
   voltageChart: any;
   amperageChart: any;
@@ -39,12 +34,18 @@ export class LiveDataComponent implements OnInit, OnDestroy {
   vLabel: string;
   aLabel: string;
   kwLabel: string;
+  sensorsData$: Observable<ISensorsDataModel>;
+  dataSubscription: Subscription;
 
   constructor(private webSocketService: WebSocketService,
     private translate: TranslateService) {
     this.initCharts();
     translate.onLangChange.subscribe(() => {
       this.processTranslations();
+    });
+    this.sensorsData$ = this.webSocketService.getSensorsData();
+    this.dataSubscription = this.sensorsData$.subscribe((data: ISensorsDataModel) => {
+      this.updateGaugeIndicators(data);
     });
   }
 
@@ -76,59 +77,14 @@ export class LiveDataComponent implements OnInit, OnDestroy {
 
   initCharts() {
     this.translateWords().subscribe(() => {
-      this.voltageChart = {
-        type: "Gauge",
-        data: [
-          [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
-        ],
-        options: {
-          width: 200,
-          height: 200,
-          redFrom: 0,
-          redTo: this.nominalVoltageMin,
-          greenFrom: this.nominalVoltageMin,
-          greenTo: this.nominalVoltageMax,
-          yellowFrom: this.nominalVoltageMax,
-          yellowTo: this.maxVoltage,
-          min: 0,
-          max: this.maxVoltage,
-          yellowColor: '#DC3912'
-        },
-      };
+      this.voltageChart = ChartsBuilder
+        .buildVoltageChart(this.voltageTranslation, this.voltage, this.vLabel);
 
-      this.amperageChart = {
-        type: "Gauge",
-        data: [
-          [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
-        ],
-        options: {
-          width: 200,
-          height: 200,
-          greenFrom: 0,
-          greenTo: this.nominalAmperageMax,
-          redFrom: this.nominalAmperageMax,
-          redTo: this.maxAmperage,
-          min: 0,
-          max: this.maxAmperage,
-        },
-      };
+      this.amperageChart = ChartsBuilder
+        .buildAmperageChart(this.amperageTranslation, this.amperage, this.aLabel);
 
-      this.powerChart = {
-        type: "Gauge",
-        data: [
-          [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
-        ],
-        options: {
-          width: 200,
-          height: 200,
-          greenFrom: 0,
-          greenTo: this.nominalPowerMax,
-          redFrom: this.nominalPowerMax,
-          redTo: this.maxPower,
-          min: 0,
-          max: this.maxPower,
-        },
-      };
+      this.powerChart = ChartsBuilder
+        .buildPowerChart(this.powerTranslation, this.power, this.kwLabel);
     });
   }
 
@@ -146,16 +102,18 @@ export class LiveDataComponent implements OnInit, OnDestroy {
     if (!this.webSocketService.isConnected) {
       this.webSocketService.openServer();
       this.webSocketService.sendMessage('sensors-data');
-      this.webSocketService.getSensorsData()
-        .subscribe((data: ISensorsDataModel) => {
-          this.updateGaugeIndicators(data);
-        });
     }
   }
 
   ngOnDestroy(): void {
     this.webSocketService.closeSensorsData();
     this.timerSub.unsubscribe();
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe();
+    }
+    if (this.sensorsData$) {
+      this.sensorsData$ = null;
+    }
   }
 
   updateGaugeIndicators(data: ISensorsDataModel) {
