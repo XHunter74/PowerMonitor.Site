@@ -14,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./PowerMonitor.Site
+        working-directory: PowerMonitor.Site
 
     steps:
     - name: Checkout repo
