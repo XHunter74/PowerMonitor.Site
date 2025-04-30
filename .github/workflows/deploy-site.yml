@@ -32,6 +32,11 @@ jobs:
     - name: Install dependencies
       run: npm install --force
 
+    - name: Setup Git identity
+      run: |
+        git config --global user.email "xhunter74@gmail.com"
+        git config --global user.name "Serhiy Krasovskyy"
+
     - name: Build project
       run: npm run build-prod
 
