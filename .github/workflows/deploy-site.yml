@@ -51,6 +51,4 @@ jobs:
 
         git commit -m "[skip ci] Updated Powermonitor site version to $appversion." || echo "No changes to commit"
 
-        git tag -a v$appversion -m "Site version $appversion"
-        
         git push origin master --tags
