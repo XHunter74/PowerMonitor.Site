@@ -36,7 +36,7 @@ jobs:
 
     - name: Write service account key to file
       run: |
-        echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > "${{ github.workspace }}/firebase-key.json"
+        echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}' > "${{ github.workspace }}/firebase-key.json"
       shell: bash
     
     - name: Deploy to Firebase with service account
