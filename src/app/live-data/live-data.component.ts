@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { WebSocketService } from '../services/websocket.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs/operators';
-import { ChartsConstants } from '../constants';
+import { ChartsConstants, Constants } from '../constants';
 import { ChartsBuilder } from './charts-builder';
 
 
@@ -34,7 +34,6 @@ export class LiveDataComponent implements OnInit, OnDestroy {
   vLabel: string;
   aLabel: string;
   kwLabel: string;
-  sensorsData$: Observable<ISensorsDataModel>;
   dataSubscription: Subscription;
 
   constructor(private webSocketService: WebSocketService,
@@ -43,8 +42,7 @@ export class LiveDataComponent implements OnInit, OnDestroy {
     translate.onLangChange.subscribe(() => {
       this.processTranslations();
     });
-    this.sensorsData$ = this.webSocketService.getSensorsData();
-    this.dataSubscription = this.sensorsData$.subscribe((data: ISensorsDataModel) => {
+    this.dataSubscription = this.webSocketService.sensorsData().subscribe((data: ISensorsDataModel) => {
       this.updateGaugeIndicators(data);
     });
   }
@@ -90,18 +88,13 @@ export class LiveDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initSocketConnection();
-    this.timerSub = interval(1000).subscribe(() => {
-      if (!this.webSocketService.isConnected) {
-        this.initSocketConnection();
-      }
-    }
-    );
+    this.timerSub = interval(Constants.CheckSocketConnectionInterval)
+      .subscribe(() => { this.initSocketConnection(); });
   }
 
   initSocketConnection() {
     if (!this.webSocketService.isConnected) {
-      this.webSocketService.openServer();
-      this.webSocketService.sendMessage('sensors-data');
+      this.webSocketService.startGettingSensorsData();
     }
   }
 
@@ -111,21 +104,18 @@ export class LiveDataComponent implements OnInit, OnDestroy {
     if (this.dataSubscription) {
       this.dataSubscription.unsubscribe();
     }
-    if (this.sensorsData$) {
-      this.sensorsData$ = null;
-    }
   }
 
   updateGaugeIndicators(data: ISensorsDataModel) {
-    this.voltage = Math.round(data.voltage);
+    this.voltage = data.voltage;
+    this.amperage = data.amperage;
+    this.power = data.power;
     this.voltageChart.data = [
       [this.voltageTranslation, { v: this.voltage, f: `${this.voltage} ${this.vLabel}` }],
     ];
-    this.amperage = Math.round(data.amperage * 10) / 10;
     this.amperageChart.data = [
       [this.amperageTranslation, { v: this.amperage, f: `${this.amperage} ${this.aLabel}` }],
     ];
-    this.power = Math.round(data.power * 10) / 10;
     this.powerChart.data = [
       [this.powerTranslation, { v: this.power, f: `${this.power} ${this.kwLabel}` }],
     ];

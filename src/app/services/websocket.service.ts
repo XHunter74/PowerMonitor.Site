@@ -17,7 +17,7 @@ export class WebSocket extends Socket {
 @Injectable()
 export class WebSocketService {
 
-    private socket;
+    private socket: WebSocket;
 
     constructor(private webSocket: WebSocket) {
     }
@@ -26,13 +26,22 @@ export class WebSocketService {
         this.webSocket.emit(message, data);
     }
 
+    startGettingSensorsData() {
+        if (!this.isConnected) {
+            this.openServer();
+        }
+        this.sendMessage('sensors-data');
+    }
+
     openServer() {
         this.socket = this.webSocket.connect();
     }
 
-    getSensorsData(): Observable<ISensorsDataModel> {
+    sensorsData(): Observable<ISensorsDataModel> {
         var data = this.webSocket.fromEvent('sensors-data')
             .pipe(map((data: ISensorsDataModel) => {
+                data.voltage = Math.round(data.voltage);
+                data.amperage = Math.round(data.amperage * 10) / 10;
                 data.power = Math.round(data.voltage * data.amperage / 1000 * 10) / 10;
                 return data;
             }));

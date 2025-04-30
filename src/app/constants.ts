@@ -11,6 +11,7 @@ export class Constants {
     static RefreshToken = 'refresh_token';
     static TokenExpiresIn = 'token_expires_in';
     static AuthToken = 'auth_token';
+    static CheckSocketConnectionInterval = 1000;
 }
 
 export class ChartsConstants {
