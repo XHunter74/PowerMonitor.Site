@@ -18,13 +18,13 @@ jobs:
       with:
         fetch-depth: 0  # needed to push tags later
 
-    - name: Use Node.js 18
+    - name: Use Node.js 20
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 20
 
     - name: Install dependencies
-      run: npm install --force
+      run: npm install
 
     - name: Setup Git identity
       run: |
