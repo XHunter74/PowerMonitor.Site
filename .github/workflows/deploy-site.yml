@@ -23,12 +23,6 @@ jobs:
       with:
         node-version: 18
 
-    - name: Cache node_modules
-      uses: actions/cache@v3
-      with:
-        path: PowerMonitor.Site/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('PowerMonitor.Site/package-lock.json') }}
-
     - name: Install dependencies
       run: npm install --force
 

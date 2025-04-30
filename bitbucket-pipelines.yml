@@ -51,5 +51,4 @@ pipelines:
             - git add package-lock.json
             - git add src/environments/environment.prod.ts
             - git commit -m "[skip ci] Updated Powermonitor site version to $appversion."
-            - git tag -a v$appversion -m "Site version $appversion"
             - git push origin master --tags
