@@ -3,7 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { YEAR_DATE_FORMATS } from '../app-date-format';
+import { YEAR_DATE_FORMATS } from '../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../constants';

@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MONTH_DATE_FORMATS } from '../app-date-format';
+import { MONTH_DATE_FORMATS } from '../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
