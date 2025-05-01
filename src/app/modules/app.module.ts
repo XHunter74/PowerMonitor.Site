@@ -20,7 +20,7 @@ import { AppHttpInterceptor } from '../interceptors/http.interceptor';
 import { UsersService } from '../services/users-service';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { appInitializerFactory, HttpLoaderFactory } from '../app-initialize.factory';
+import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
 import { environment } from '../../environments/environment';
 import { AuthGuard, OpenGuard } from '../guards/auth.guard';
 import { StoreModule } from '@ngrx/store';

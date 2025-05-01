@@ -3,8 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from '../environments/environment';
-import { Constants } from './constants';
+import { environment } from '../../environments/environment';
+import { Constants } from '../constants';
 
 export function appInitializerFactory(translate: TranslateService, injector: Injector) {
     return () => new Promise<any>((resolve: any) => {
@@ -12,12 +12,16 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
         locationInitialized.then(() => {
             const langToSet = localStorage.getItem(Constants.AppLanguage) as string || 'en';
             translate.setDefaultLang(environment.defaultLocale);
-            translate.use(langToSet).subscribe(() => {
-                console.info(`Successfully initialized '${langToSet}' language.'`);
-            }, err => {
-                console.error(`Problem with '${langToSet}' language initialization.'`);
-            }, () => {
-                resolve(null);
+            translate.use(langToSet).subscribe({
+                next: () => {
+                    console.info(`Successfully initialized '${langToSet}' language.'`);
+                },
+                error: err => {
+                    console.error(`Problem with '${langToSet}' language initialization.'`);
+                },
+                complete: () => {
+                    resolve(null);
+                }
             });
         });
     });
