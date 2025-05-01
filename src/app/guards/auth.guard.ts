@@ -11,7 +11,7 @@ export class AuthGuard  {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (!this.authService.isSignedIn()) {
+    if (!this.authService.isSignedIn) {
       this.router.navigate(['/app-login'], { queryParams: { returnUrl: state.url } });
       return false;
     }

@@ -50,7 +50,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   }
 
   isLoggedIn() {
-    return this.authService.isSignedIn();
+    return this.authService.isSignedIn;
   }
 
   logout() {
