@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppLoginComponent } from './app-login/login.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AppLoginComponent } from '../components/app-login/login.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     {
@@ -12,32 +12,32 @@ const routes: Routes = [
     {
         path: 'online-data',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/live-data.module').then(m => m.LiveDataModule)
+        loadChildren: () => import('./live-data.module').then(m => m.LiveDataModule)
     },
     {
         path: 'platform-info',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/platform-info.module').then(m => m.PlatformInfoModule)
+        loadChildren: () => import('./platform-info.module').then(m => m.PlatformInfoModule)
     },
     {
         path: 'power-monitor',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/power-monitor.module').then(m => m.PowerMonitorModule)
+        loadChildren: () => import('./power-monitor.module').then(m => m.PowerMonitorModule)
     },
     {
         path: 'power-failures',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/power-failures.module').then(m => m.PowerFailuresModule)
+        loadChildren: () => import('./power-failures.module').then(m => m.PowerFailuresModule)
     },
     {
         path: 'voltage-amperage/hourly',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/voltage-amperage.module').then(m => m.VoltageAmperageModule)
+        loadChildren: () => import('./voltage-amperage.module').then(m => m.VoltageAmperageModule)
     },
     {
         path: 'power-consumption',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/power-consumption.module').then(m => m.PowerConsumptionModule)
+        loadChildren: () => import('./power-consumption.module').then(m => m.PowerConsumptionModule)
     },
     { path: 'app-login', component: AppLoginComponent },
     { path: '**', component: AppLoginComponent },

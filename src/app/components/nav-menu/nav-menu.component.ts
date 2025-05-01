@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServicesService } from '../services/services-service';
-import { AuthService } from '../services/auth.service';
-import { ChangeLanguageDialogComponent } from '../dialogs/change-language-dialog/change-language-dialog.component';
+import { ServicesService } from '../../services/services-service';
+import { AuthService } from '../../services/auth.service';
+import { ChangeLanguageDialogComponent } from '../../dialogs/change-language-dialog/change-language-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Constants } from '../constants';
+import { Constants } from '../../constants';
 
 @Component({
   selector: 'app-nav-menu',

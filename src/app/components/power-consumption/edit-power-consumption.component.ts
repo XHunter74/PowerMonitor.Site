@@ -1,5 +1,5 @@
 import { Component, Optional, Inject, OnInit } from '@angular/core';
-import { PowerMeteringDto } from '../models/power-metering.dto';
+import { PowerMeteringDto } from '../../models/power-metering.dto';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 

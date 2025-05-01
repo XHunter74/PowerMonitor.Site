@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { environment } from '../../environments/environment';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
+import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { AppState } from '../store/reducers';
-import { loadPlatformInfo } from '../store/actions/platform-info.actions';
-import { PlatformInfoState } from '../store/reducers/platform-info.reducer';
+import { AppState } from '../../store/reducers';
+import { loadPlatformInfo } from '../../store/actions/platform-info.actions';
+import { PlatformInfoState } from '../../store/reducers/platform-info.reducer';
 import { Observable, Subscription } from 'rxjs';
-import { IBoardInfoModel } from '../models/board-info.model';
-import { ISystemInfo } from '../models/sysinfo.model';
+import { IBoardInfoModel } from '../../models/board-info.model';
+import { ISystemInfo } from '../../models/sysinfo.model';
 
 @Component({
     selector: 'app-platform-info',

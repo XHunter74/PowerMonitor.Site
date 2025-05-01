@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { IPowerDataYearlyModel } from '../models/power-data-yearly.model';
-import { YEAR_DATE_FORMATS } from '../adapters/app-date-format';
+import { IPowerDataYearlyModel } from '../../models/power-data-yearly.model';
+import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
-import { MonitorYearlyState } from '../store/reducers/power-monitor.yearly.reducer';
+import { MonitorYearlyState } from '../../store/reducers/power-monitor.yearly.reducer';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadYearlyMonitorData } from '../store/actions/power-monitor.yearly.actions';
+import { AppState } from '../../store/reducers';
+import { loadYearlyMonitorData } from '../../store/actions/power-monitor.yearly.actions';
 
 @Component({
     selector: 'app-power-monitor-yearly',

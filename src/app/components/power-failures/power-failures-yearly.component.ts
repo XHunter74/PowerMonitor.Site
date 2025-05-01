@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
+import { PowerFailureMonthlyModel } from '../../models/power-failure-monthly.model';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Direction } from '../models/app.enums';
+import { Direction } from '../../models/app.enums';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { FailuresYearlyState } from '../store/reducers/power-failures.yearly.reducer';
+import { FailuresYearlyState } from '../../store/reducers/power-failures.yearly.reducer';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadYearlyFailuresData } from '../store/actions/power-failures.yearly.actions';
+import { AppState } from '../../store/reducers';
+import { loadYearlyFailuresData } from '../../store/actions/power-failures.yearly.actions';
 
 const PowerFailuresSort = 'power-failures-sort-yearly';
 

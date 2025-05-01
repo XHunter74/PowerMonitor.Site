@@ -1,24 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
+import { IPowerDataMonthlyModel } from '../../models/power-data-monthly.model';
 import { Moment } from 'moment';
 import { UntypedFormControl } from '@angular/forms';
-import { YEAR_DATE_FORMATS } from '../adapters/app-date-format';
+import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
-import { Constants } from '../constants';
+import { Constants } from '../../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { MonitorMonthlyState } from '../store/reducers/power-monitor.monthly.reducer';
+import { MonitorMonthlyState } from '../../store/reducers/power-monitor.monthly.reducer';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadMonthlyMonitorData } from '../store/actions/power-monitor.monthly.actions';
+import { AppState } from '../../store/reducers';
+import { loadMonthlyMonitorData } from '../../store/actions/power-monitor.monthly.actions';
 
 @Component({
     selector: 'app-power-monitor-monthly',

@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ViewEncapsulation } from '@angular/core';
-import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
+import { IPowerDataHourlyModel } from '../../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
-import { Constants } from '../constants';
+import { Constants } from '../../constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { MonitorHourlyState } from '../store/reducers/power-monitor.hourly.reducer';
+import { MonitorHourlyState } from '../../store/reducers/power-monitor.hourly.reducer';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadHourlyMonitorData } from '../store/actions/power-monitor.hourly.actions';
+import { AppState } from '../../store/reducers';
+import { loadHourlyMonitorData } from '../../store/actions/power-monitor.hourly.actions';
 
 @Component({
     selector: 'app-power-monitor-hourly',

@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { PowerService } from '../services/power-service';
-import { daysInMonth } from '../utils';
-import { IPowerDataDailyModel } from '../models/power-data-daily.model';
+import { daysInMonth } from '../../utils';
+import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MONTH_DATE_FORMATS } from '../adapters/app-date-format';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
+import { MONTH_DATE_FORMATS } from '../../adapters/app-date-format';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
-import { Constants } from '../constants';
+import { Constants } from '../../constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { default as Annotation } from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { MonitorDailyState } from '../store/reducers/power-monitor.daily.reducer';
+import { MonitorDailyState } from '../../store/reducers/power-monitor.daily.reducer';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadDailyMonitorData } from '../store/actions/power-monitor.daily.actions';
+import { AppState } from '../../store/reducers';
+import { loadDailyMonitorData } from '../../store/actions/power-monitor.daily.actions';
 
 @Component({
     selector: 'app-power-monitor-daily',

@@ -1,4 +1,4 @@
-import { ChartsConstants } from '../constants';
+import { ChartsConstants } from '../../constants';
 
 export class ChartsBuilder {
 

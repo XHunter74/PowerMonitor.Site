@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppBaseComponent } from '../base-component/app-base.component';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
-import { PowerMeteringDto } from '../models/power-metering.dto';
-import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
+import { AppBaseComponent } from '../../base-component/app-base.component';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
+import { QuestionDialogComponent } from '../../dialogs/question-dialog/question-dialog.component';
+import { PowerMeteringDto } from '../../models/power-metering.dto';
+import { NewPowerMeteringDto } from '../../models/new-power-metering.dto';
 import { EditPowerConsumptionComponent } from './edit-power-consumption.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState } from '../store/reducers/power-consumption.reducer';
+import { PowerConsumptionAddState, PowerConsumptionDeleteState, PowerConsumptionEditState, PowerConsumptionState } from '../../store/reducers/power-consumption.reducer';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../store/reducers';
+import { AppState } from '../../store/reducers';
 import { Store } from '@ngrx/store';
-import { addPowerConsumptionData, deletePowerConsumptionData, editPowerConsumptionData, loadPowerConsumptionData } from '../store/actions/power-consumption.actions';
+import { addPowerConsumptionData, deletePowerConsumptionData, editPowerConsumptionData, loadPowerConsumptionData } from '../../store/actions/power-consumption.actions';
 
 @Component({
   selector: 'app-power-consumption',

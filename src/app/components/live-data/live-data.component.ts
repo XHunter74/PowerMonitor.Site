@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ISensorsDataModel } from '../models/sensors-data.model';
-import { WebSocketService } from '../services/websocket.service';
+import { ISensorsDataModel } from '../../models/sensors-data.model';
+import { WebSocketService } from '../../services/websocket.service';
 import { Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs/operators';
-import { ChartsConstants, Constants } from '../constants';
+import { ChartsConstants, Constants } from '../../constants';
 import { ChartsBuilder } from './charts-builder';
 
 

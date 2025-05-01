@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppBaseComponent } from '../base-component/app-base.component';
+import { AppBaseComponent } from '../../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
-import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../constants';
+import { IVoltageAmperageModel } from '../../models/voltage-amperage.model';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
+import { Constants } from '../../constants';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { loadVoltageAmperage } from '../store/actions/voltage-amperage.actions';
-import { VoltageAmperageState } from '../store/reducers/voltage-amperage.reducer';
+import { AppState } from '../../store/reducers';
+import { loadVoltageAmperage } from '../../store/actions/voltage-amperage.actions';
+import { VoltageAmperageState } from '../../store/reducers/voltage-amperage.reducer';
 import { Observable, Subscription } from 'rxjs';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
