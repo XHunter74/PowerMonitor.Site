@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginModalComponent } from './app-login/login-modal.component';
 import { AppLoginComponent } from './app-login/login.component';
 import { APP_DATE_FORMATS } from './app-date-format';
-import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { SpinnerDialogComponent } from './dialogs/spinner-dialog/spinner-dialog.component';
 import { AppDateAdapter } from './app-date.adapter';
 import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
