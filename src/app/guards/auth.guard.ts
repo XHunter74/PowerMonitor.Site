@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UsersService } from '../services/users-service';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class AuthGuard  {
+export class AuthGuard {
   constructor(
     private readonly authService: AuthService,
     private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(state: RouterStateSnapshot) {
 
     if (!this.authService.isSignedIn) {
       this.router.navigate(['/app-login'], { queryParams: { returnUrl: state.url } });
@@ -21,10 +20,9 @@ export class AuthGuard  {
 }
 
 @Injectable()
-export class OpenGuard  {
-  constructor(private userService: UsersService, private router: Router) { }
+export class OpenGuard {
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(state: RouterStateSnapshot) {
     localStorage.setItem('last_url', state.url);
     return true;
   }
