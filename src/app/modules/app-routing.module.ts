@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLoginComponent } from '../components/app-login/login.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { RoleGuard } from '../guards/role.guard';
+import { Constants } from '../constants';
 
 const routes: Routes = [
     {
@@ -26,18 +28,21 @@ const routes: Routes = [
     },
     {
         path: 'power-failures',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./power-failures.module').then(m => m.PowerFailuresModule)
+        canActivate: [AuthGuard, RoleGuard],
+        loadChildren: () => import('./power-failures.module').then(m => m.PowerFailuresModule),
+        data: { role: Constants.AdminRole }
     },
     {
         path: 'voltage-amperage/hourly',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./voltage-amperage.module').then(m => m.VoltageAmperageModule)
+        canActivate: [AuthGuard, RoleGuard],
+        loadChildren: () => import('./voltage-amperage.module').then(m => m.VoltageAmperageModule),
+        data: { role: Constants.AdminRole }
     },
     {
         path: 'power-consumption',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./power-consumption.module').then(m => m.PowerConsumptionModule)
+        canActivate: [AuthGuard, RoleGuard],
+        loadChildren: () => import('./power-consumption.module').then(m => m.PowerConsumptionModule),
+        data: { role: Constants.AdminRole }
     },
     { path: 'app-login', component: AppLoginComponent },
     { path: '**', component: AppLoginComponent },

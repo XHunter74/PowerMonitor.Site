@@ -53,6 +53,10 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     return this.authService.isSignedIn;
   }
 
+  isAdmin() {
+    return this.authService.userRole && this.authService.userRole.toLowerCase() === Constants.AdminRole;
+  }
+
   logout() {
     this.authService.logout();
   }

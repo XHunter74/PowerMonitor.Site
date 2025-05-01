@@ -31,6 +31,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from '../services/update.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import 'moment/locale/uk';
+import { RoleGuard } from '../guards/role.guard';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import 'moment/locale/uk';
   ],
   providers: [
     AuthGuard,
+    RoleGuard,
     AuthService,
     UsersService,
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
