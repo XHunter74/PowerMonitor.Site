@@ -75,7 +75,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   private checkApiState() {
     this.servicesService.pingApi().subscribe({
       next: (state) => {
-        this.isAPIOnline = state.response.toLowerCase() === 'pong';
+        this.isAPIOnline = state.response.toLowerCase() === Constants.PongResponse;
       },
       error: (e) => {
         console.error(e);

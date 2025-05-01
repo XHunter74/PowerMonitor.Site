@@ -13,6 +13,7 @@ export class Constants {
     static AuthToken = 'auth_token';
     static CheckSocketConnectionInterval = 1000;
     static AdminRole = 'admin';
+    static PongResponse = 'pong';
 }
 
 export class ChartsConstants {
