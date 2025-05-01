@@ -7,11 +7,11 @@ import { PowerMonitorHourlyEffects } from '../store/effects/power-monitor.hourly
 import { PowerMonitorDailyEffects } from '../store/effects/power-monitor.daily.effects';
 import { PowerMonitorMonthlyEffects } from '../store/effects/power-monitor.monthly.effects';
 import { PowerMonitorYearlyEffects } from '../store/effects/power-monitor.yearly.effects';
-import { PowerMonitorComponent } from './power-monitor.component';
-import { PowerMonitorHourlyComponent } from './power-monitor-hourly.component';
-import { PowerMonitorDailyComponent } from './power-monitor-daily.component';
-import { PowerMonitorMonthlyComponent } from './power-monitor-monthly.component';
-import { PowerMonitorYearlyComponent } from './power-monitor-yearly.component';
+import { PowerMonitorComponent } from '../power-monitor/power-monitor.component';
+import { PowerMonitorHourlyComponent } from '../power-monitor/power-monitor-hourly.component';
+import { PowerMonitorDailyComponent } from '../power-monitor/power-monitor-daily.component';
+import { PowerMonitorMonthlyComponent } from '../power-monitor/power-monitor-monthly.component';
+import { PowerMonitorYearlyComponent } from '../power-monitor/power-monitor-yearly.component';
 import { AppMaterialModule } from '../material-module';
 import { NgChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';

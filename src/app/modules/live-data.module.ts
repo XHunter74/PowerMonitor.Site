@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { LiveDataComponent } from './live-data.component';
+import { LiveDataComponent } from '../live-data/live-data.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocketService, WebSocket } from '../services/websocket.service';

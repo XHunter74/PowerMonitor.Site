@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppMaterialModule } from '../material-module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VoltageAmperageEffects } from '../store/effects/voltage-amperage.effects';
-import { VoltageAmperageHourlyComponent } from './voltage-amperage-hourly.component';
+import { VoltageAmperageHourlyComponent } from '../voltage-amperage/voltage-amperage-hourly.component';
 
 const routes: Routes = [
     {
