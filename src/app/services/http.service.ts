@@ -23,12 +23,12 @@ export class HttpService {
 
     }
 
-    get<T>(actionUrl: string, params?: HttpParams): Observable<T> {
+    get<T>(actionUrl: string, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
         const headers = [];
-        return this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params);
+        return this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params, shouldRetry);
     }
 
-    getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Observable<T> {
+    getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
         let requestHeaders: HttpHeaders;
         if (headers && headers.length > 0) {
             requestHeaders = new HttpHeaders();
@@ -37,59 +37,74 @@ export class HttpService {
             });
         }
 
-        return this.http.get<T>(actionUrl, { params, headers: requestHeaders }).pipe(
+        let request = this.http.get<T>(actionUrl, { params, headers: requestHeaders }).pipe(
             catchError((e: HttpErrorResponse) => {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout),
-            retry(Constants.RetryCount)
+            timeout(Constants.RequestTimeout)
         );
+        if (shouldRetry) {
+            request = request.pipe(retry(Constants.RetryCount));
+        }
+        return request;
     }
 
-    post<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
+    post<T>(actionUrl: string, body: any, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
         let headers = new HttpHeaders();
         if (!(body instanceof FormData)) {
             headers = new HttpHeaders({
                 'Content-Type': 'application/json',
             });
         }
-        return this.http.post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
-            catchError((e: HttpErrorResponse) => {
-                const error = this.handleError(this.authService, e);
-                return throwError(() => error);
-            }),
-            timeout(Constants.RequestTimeout),
-            retry(Constants.RetryCount)
-        );
+        let request = this.http.post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
+            .pipe(
+                catchError((e: HttpErrorResponse) => {
+                    const error = this.handleError(this.authService, e);
+                    return throwError(() => error);
+                }),
+                timeout(Constants.RequestTimeout)
+            );
+
+        if (shouldRetry) {
+            request = request.pipe(retry(Constants.RetryCount));
+        }
+
+        return request;
     }
 
-    put<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
+    put<T>(actionUrl: string, body: any, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
-        return this.http.put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
+        let request = this.http.put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
             catchError((e: HttpErrorResponse) => {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout),
-            retry(Constants.RetryCount)
+            timeout(Constants.RequestTimeout)
         );
+        if (shouldRetry) {
+            request = request.pipe(retry(Constants.RetryCount));
+        }
+        return request;
     }
 
-    delete(actionUrl: string, body?: any, params?: HttpParams): Observable<any> {
+    delete(actionUrl: string, body?: any, params?: HttpParams, shouldRetry: boolean = true): Observable<any> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
-        return this.http.delete(`${this.baseUrl}${actionUrl}`, { headers, params }).pipe(
+        let request = this.http.delete(`${this.baseUrl}${actionUrl}`, { headers, params }).pipe(
             catchError((e: HttpErrorResponse) => {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout),
-            retry(Constants.RetryCount)
+            timeout(Constants.RequestTimeout)
         );
+        if (shouldRetry) {
+            request = request.pipe(retry(Constants.RetryCount));
+        }
+        return request;
     }
 
     handleError(authService: AuthService, error: HttpErrorResponse) {
