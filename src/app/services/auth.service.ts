@@ -67,27 +67,21 @@ export class AuthService {
 
     public get tokenExpiresIn(): number | null {
         if (!this.tokenExpiresInInt) {
-            const expiresInStr = localStorage.getItem(Constants.TokenExpiresIn);
-            this.tokenExpiresInInt = expiresInStr ? parseInt(expiresInStr, 10) : null;
+            if (this.authToken) {
+                var jwtToken = this.decodeToken(this.authToken);
+                if (jwtToken && jwtToken.exp) {
+                    this.tokenExpiresInInt = jwtToken.exp * 1000;
+                }
+            }
         }
         return this.tokenExpiresInInt;
     }
-
-    private set tokenExpiresIn(expiresIn: number | null) {
-        this.tokenExpiresInInt = expiresIn;
-        if (expiresIn) {
-            localStorage.setItem(Constants.TokenExpiresIn, expiresIn.toString());
-        } else {
-            localStorage.removeItem(Constants.TokenExpiresIn);
-        }
-    }
-
 
     public logout() {
         this.jwtToken = null;
         this.authToken = null;
         this.refreshToken = null;
-        this.tokenExpiresIn = null;
+        this.tokenExpiresInInt = null;
         this.isSignedInSubject.next(false);
     }
 
@@ -96,12 +90,7 @@ export class AuthService {
         if (jwtToken) {
             this.authToken = userToken.token;
             this.refreshToken = userToken.refreshToken;
-
-            // Store token expiration time
-            if (userToken.expiresIn) {
-                const expirationTime = Date.now() + (userToken.expiresIn * 1000);
-                this.tokenExpiresIn = expirationTime;
-            }
+            this.tokenExpiresInInt = jwtToken.exp * 1000;
 
             this.isSignedInSubject.next(true);
         }
