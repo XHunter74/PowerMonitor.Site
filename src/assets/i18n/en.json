@@ -142,7 +142,8 @@
         "M11": "December"
     },
     "ERRORS": {
-        "COMMON": "Something going wrong."
+        "COMMON": "Something going wrong.",
+        "AUTHENTICATION": "Incorrect username or password"
     },
     "UPDATE": {
         "NEW_VERSION_AVAILABLE": "A new version of PowerMonitor is available",

@@ -142,7 +142,8 @@
         "M11": "Грудень"
     },
     "ERRORS": {
-        "COMMON": "Щось пішло не так."
+        "COMMON": "Щось пішло не так.",
+        "AUTHENTICATION": "Перевірте ім'я користувача та пароль."
     },
     "UPDATE": {
         "NEW_VERSION_AVAILABLE": "Доступна нова версія PowerMonitor",

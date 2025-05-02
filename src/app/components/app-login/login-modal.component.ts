@@ -4,6 +4,8 @@ import { Validators } from '@angular/forms';
 import { UsersService } from '../../services/users-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-modal-component',
@@ -13,7 +15,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 export class LoginModalComponent implements OnInit {
 
-  errors: string;
   returnUrl: string;
 
   loginForm = new UntypedFormGroup({
@@ -27,7 +28,9 @@ export class LoginModalComponent implements OnInit {
     private readonly dialogRef: MatDialogRef<LoginModalComponent>,
     private usersService: UsersService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) { }
 
   static show(dialog: MatDialog, width?: string) {
@@ -51,7 +54,6 @@ export class LoginModalComponent implements OnInit {
   }
 
   tryLogin() {
-    this.errors = '';
     console.log('Try to login...');
     const userName = this.loginForm.get('userName').value;
     const userPassword = this.loginForm.get('password').value;
@@ -63,8 +65,11 @@ export class LoginModalComponent implements OnInit {
         this.router.navigateByUrl(this.returnUrl);
       },
       error: (err) => {
-        console.log('Unauthorized');
-        this.errors = err.error.message;
+        console.log('Unauthorized: ', err.message);
+        this.translate.get('ERRORS.AUTHENTICATION')
+          .subscribe(errorText => {
+            ErrorDialogComponent.show(this.dialog, errorText);
+          });
       }
     });
   }
