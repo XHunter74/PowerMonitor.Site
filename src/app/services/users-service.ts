@@ -24,7 +24,7 @@ export class UsersService extends HttpService {
       username: userName,
       password: password
     };
-    return this.post<UserTokenDto>('auth/login', user).pipe(
+    return this.post<UserTokenDto>('auth/login', user, null, false).pipe(
       tap(token => this.authService.processLogin(token))
     );
   }
