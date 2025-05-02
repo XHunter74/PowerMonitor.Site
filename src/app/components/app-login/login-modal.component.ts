@@ -50,21 +50,23 @@ export class LoginModalComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || localStorage.getItem('last_url') || '/';
   }
 
-  async tryLogin() {
+  tryLogin() {
     this.errors = '';
     console.log('Try to login...');
     const userName = this.loginForm.get('userName').value;
     const userPassword = this.loginForm.get('password').value;
-    try {
-      await this.usersService.login(userName, userPassword);
-      console.log('Authorized');
-      this.dialogRef.close('Close click');
-      console.log('Return URL=', this.returnUrl);
-      this.router.navigateByUrl(this.returnUrl);
-    } catch (err) {
-      console.log('Unauthorized');
-      this.errors = err.error.message;
-    }
+    this.usersService.login(userName, userPassword).subscribe({
+      next: () => {
+        console.log('Authorized');
+        this.dialogRef.close('Close click');
+        console.log('Return URL=', this.returnUrl);
+        this.router.navigateByUrl(this.returnUrl);
+      },
+      error: (err) => {
+        console.log('Unauthorized');
+        this.errors = err.error.message;
+      }
+    });
   }
 
   processCancel() {

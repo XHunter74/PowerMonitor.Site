@@ -17,7 +17,7 @@ export class VoltageAmperageEffects {
         this.actions$.pipe(
             ofType(loadVoltageAmperage),
             mergeMap(({ date }) =>
-                this.powerService.getVoltageAmperageDataNew(date).pipe(
+                this.powerService.getVoltageAmperageData(date).pipe(
                     map((data) => {
                         const newState = {} as VoltageAmperageState;
                         newState.data = data;

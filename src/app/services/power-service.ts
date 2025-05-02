@@ -31,33 +31,20 @@ export class PowerService extends HttpService {
         super(http, parentModule, authService);
     }
 
-    async getVoltageAmperageData(start: Date, finish: Date): Promise<IVoltageAmperageModel[]> {
-        const startDate = getStringDate(start);
-        const finishDate = getStringDate(finish);
-        const params = new HttpParams()
-            .set('startDate', startDate)
-            .set('finishDate', finishDate)
-            .set('_ts', new Date().getTime().toString());
-
-        const promise = this.get<IVoltageAmperageModel[]>('power/voltage-amperage', params);
-
-        return promise;
-    }
-
-    getVoltageAmperageDataNew(date: Date): Observable<IVoltageAmperageModel[]> {
+    getVoltageAmperageData(date: Date): Observable<IVoltageAmperageModel[]> {
         const startDate = getStringDate(date);
         const params = new HttpParams()
             .set('startDate', startDate)
             .set('finishDate', startDate)
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<IVoltageAmperageModel[]>('power/voltage-amperage', params);
+        return this.get<IVoltageAmperageModel[]>('power/voltage-amperage', params);
     }
 
     getPowerDataStats(): Observable<IPowerDataStatsModel[]> {
         const params = new HttpParams()
             .set('_ts', new Date().getTime().toString());
-        return this.getO<IPowerDataStatsModel[]>('power/power-data-stats', params);
+        return this.get<IPowerDataStatsModel[]>('power/power-data-stats', params);
     }
 
     getPowerDataHourly(date: Date): Observable<IPowerDataHourlyModel[]> {
@@ -67,7 +54,7 @@ export class PowerService extends HttpService {
             .set('finishDate', startDate)
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<IPowerDataHourlyModel[]>('power/power-data-hourly', params);
+        return this.get<IPowerDataHourlyModel[]>('power/power-data-hourly', params);
     }
 
     getPowerDataDaily(start: Date, finish: Date): Observable<IPowerDataDailyModel[]> {
@@ -78,7 +65,7 @@ export class PowerService extends HttpService {
             .set('finishDate', finishDate)
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<IPowerDataDailyModel[]>('power/power-data-daily', params);
+        return this.get<IPowerDataDailyModel[]>('power/power-data-daily', params);
     }
 
 
@@ -90,20 +77,13 @@ export class PowerService extends HttpService {
             .set('finishDate', finishDate)
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<IPowerDataMonthlyModel[]>('power/power-data-monthly', params);
+        return this.get<IPowerDataMonthlyModel[]>('power/power-data-monthly', params);
     }
 
     getPowerDataYearly(): Observable<IPowerDataYearlyModel[]> {
         const params = new HttpParams()
             .set('_ts', new Date().getTime().toString());
-        return this.getO<IPowerDataYearlyModel[]>('power/power-data-yearly', params);
-    }
-
-    async getSensorsData(): Promise<ISensorsDataModel> {
-        const params = new HttpParams()
-            .set('_ts', new Date().getTime().toString());
-        const promise = this.get<ISensorsDataModel>('power/sensors-data', params);
-        return promise;
+        return this.get<IPowerDataYearlyModel[]>('power/power-data-yearly', params);
     }
 
     getPowerFailuresHourlyData(start: Date, finish: Date): Observable<IPowerFailureModel[]> {
@@ -114,7 +94,7 @@ export class PowerService extends HttpService {
             .set('finishDate', finishDate)
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<IPowerFailureModel[]>('power/power-availability', params);
+        return this.get<IPowerFailureModel[]>('power/power-availability', params);
     }
 
     getPowerFailuresDailyData(year: number, month: number): Observable<PowerFailureDailyModel[]> {
@@ -123,7 +103,7 @@ export class PowerService extends HttpService {
             .set('month', month.toString())
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<PowerFailureDailyModel[]>('power/power-availability-daily', params).pipe(
+        return this.get<PowerFailureDailyModel[]>('power/power-availability-daily', params).pipe(
             map(data => data.map(e => {
                 const i = new PowerFailureDailyModel();
                 i.year = e.year;
@@ -142,7 +122,7 @@ export class PowerService extends HttpService {
             .set('year', year.toString())
             .set('_ts', new Date().getTime().toString());
 
-        return this.getO<PowerFailureMonthlyModel[]>('power/power-availability-monthly', params).pipe(
+        return this.get<PowerFailureMonthlyModel[]>('power/power-availability-monthly', params).pipe(
             map(data => data.map(e => {
                 const i = new PowerFailureMonthlyModel();
                 i.year = e.year;
@@ -158,7 +138,7 @@ export class PowerService extends HttpService {
     getPowerFailuresYearlyData(): Observable<PowerFailureYearlyModel[]> {
         const params = new HttpParams()
             .set('_ts', new Date().getTime().toString());
-        return this.getO<PowerFailureYearlyModel[]>('power/power-availability-yearly', params)
+        return this.get<PowerFailureYearlyModel[]>('power/power-availability-yearly', params)
             .pipe(
                 map(data => data.map(e => {
                     const i = new PowerFailureMonthlyModel();
@@ -174,7 +154,7 @@ export class PowerService extends HttpService {
     getPowerConsumptionData(): Observable<PowerConsumptionDto[]> {
         const params = new HttpParams()
             .set('_ts', new Date().getTime().toString());
-        return this.getO<PowerConsumptionDto[]>('power-consumption/energy-data', params)
+        return this.get<PowerConsumptionDto[]>('power-consumption/energy-data', params)
             .pipe(
                 map(result => {
                     if (!result) {
@@ -194,7 +174,7 @@ export class PowerService extends HttpService {
     }
 
     addPowerMeteringRecord(newRecord: NewPowerMeteringDto): Observable<PowerConsumptionDto> {
-        return this.postO<PowerConsumptionDto>('power-consumption/energy-data', newRecord);
+        return this.post<PowerConsumptionDto>('power-consumption/energy-data', newRecord);
     }
 
     editPowerMeteringRecord(recordId: number, newRecord: NewPowerMeteringDto): Observable<PowerConsumptionDto> {

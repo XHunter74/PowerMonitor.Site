@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { HttpService } from './http.service';
 import { UserTokenDto } from '../models/user-token.dto';
+import { Observable, tap } from 'rxjs';
 
 
 
@@ -18,27 +19,24 @@ export class UsersService extends HttpService {
     super(http, parentModule, authService);
   }
 
-  async login(userName: string, password: string) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
+  login(userName: string, password: string): Observable<UserTokenDto> {
     const user = {
       username: userName,
       password: password
     };
-    const token = await this.post<UserTokenDto>('auth/login', user);
-    this.authService.processLogin(token);
+    return this.post<UserTokenDto>('auth/login', user).pipe(
+      tap(token => this.authService.processLogin(token))
+    );
   }
 
-  async changePassword(newPassword: string) {
+  changePassword(newPassword: string): Observable<UserTokenDto> {
     const passwordModel = {
       newPassword: newPassword
     };
-    await this.post<UserTokenDto>('auth/change-password', passwordModel);
+    return this.post<UserTokenDto>('auth/change-password', passwordModel);
   }
 
-  refreshToken(token: string) {
+  refreshToken(token: string): Observable<UserTokenDto> {
     const actionUrl = `auth/refresh-token?token=${token}`;
     return this.post<UserTokenDto>(actionUrl, null);
   }

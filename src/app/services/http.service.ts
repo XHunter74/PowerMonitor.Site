@@ -23,43 +23,12 @@ export class HttpService {
 
     }
 
-    async get<T>(actionUrl: string, params?: HttpParams): Promise<T> {
+    get<T>(actionUrl: string, params?: HttpParams): Observable<T> {
         const headers = [];
-        return await this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params);
+        return this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params);
     }
 
-    getO<T>(actionUrl: string, params?: HttpParams): Observable<T> {
-        const headers = [];
-        return this.getExtO<T>(`${this.baseUrl}${actionUrl}`, headers, params);
-    }
-
-    async getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Promise<T> {
-        let requestHeaders: HttpHeaders;
-        if (headers && headers.length > 0) {
-            requestHeaders = new HttpHeaders();
-            headers.forEach(e => {
-                requestHeaders = requestHeaders.append(e.name, e.value);
-            });
-        }
-
-        const promise = new Promise<T>((resolve, reject) => {
-            this.http
-                .get<T>(actionUrl, { params, headers: requestHeaders })
-                .toPromise()
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(e => {
-                    const error = this.handleError(this.authService, e);
-                    if (error) {
-                        reject(error);
-                    }
-                });
-        });
-        return promise;
-    }
-
-    getExtO<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Observable<T> {
+    getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams): Observable<T> {
         let requestHeaders: HttpHeaders;
         if (headers && headers.length > 0) {
             requestHeaders = new HttpHeaders();
@@ -78,31 +47,7 @@ export class HttpService {
         );
     }
 
-    async post<T>(actionUrl: string, body: any, params?: HttpParams) {
-        let headers = new HttpHeaders();
-        if (!(body instanceof FormData)) {
-            headers = new HttpHeaders({
-                'Content-Type': 'application/json',
-            });
-        }
-        const promise = new Promise<T>((resolve, reject) => {
-            this.http
-                .post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
-                .toPromise()
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(e => {
-                    const error = this.handleError(this.authService, e);
-                    if (error) {
-                        reject(error);
-                    }
-                });
-        });
-        return promise;
-    }
-
-    postO<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
+    post<T>(actionUrl: string, body: any, params?: HttpParams): Observable<T> {
         let headers = new HttpHeaders();
         if (!(body instanceof FormData)) {
             headers = new HttpHeaders({

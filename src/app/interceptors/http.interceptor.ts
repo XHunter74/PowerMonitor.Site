@@ -55,7 +55,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
   private refreshTokenSilently(refreshToken: string): void {
     this.isRefreshingToken = true;
 
-    from(this.usersService.refreshToken(refreshToken))
+    this.usersService.refreshToken(refreshToken)
       .pipe(
         tap((token: UserTokenDto) => {
           this.authService.processLogin(token);
@@ -142,7 +142,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     this.isRefreshingToken = true;
     this.tokenRefreshSubject.next(null);
 
-    return from(this.usersService.refreshToken(refreshToken)).pipe(
+    return this.usersService.refreshToken(refreshToken).pipe(
       switchMap(token => {
         // Process the successful token refresh
         this.authService.processLogin(token);
