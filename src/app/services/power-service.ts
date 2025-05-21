@@ -51,7 +51,7 @@ export class PowerService extends HttpService {
         const params = new HttpParams()
             .set('_ts', new Date().getTime().toString())
             .set('month', month.toString())
-            .set('dayOfWeek', dayOfWeek.toString());
+            .set('day-of-week', dayOfWeek.toString());
         return this.get<IPowerDataStatsModel[]>('power/power-data-stats', params);
     }
 
