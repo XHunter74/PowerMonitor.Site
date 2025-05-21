@@ -42,8 +42,16 @@ export class PowerService extends HttpService {
     }
 
     getPowerDataStats(): Observable<IPowerDataStatsModel[]> {
+        const now = new Date();
+        const month = now.getMonth() + 1;
+        let dayOfWeek = now.getDay();
+        if (dayOfWeek === 0) {
+            dayOfWeek = 7;
+        }
         const params = new HttpParams()
-            .set('_ts', new Date().getTime().toString());
+            .set('_ts', new Date().getTime().toString())
+            .set('month', month.toString())
+            .set('dayOfWeek', dayOfWeek.toString());
         return this.get<IPowerDataStatsModel[]>('power/power-data-stats', params);
     }
 
