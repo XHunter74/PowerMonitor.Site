@@ -70,7 +70,10 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
         }
         if (!state.loading && state.sysInfo && state.boardInfo) {
             this.sysInfo = state.sysInfo;
-            this.boardInfo = state.boardInfo;
+            this.boardInfo = {
+                ...state.boardInfo,
+                buildDate: new Date(state.boardInfo.buildDate)
+            };
         }
     }
 
