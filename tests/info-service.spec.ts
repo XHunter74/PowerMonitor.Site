@@ -21,7 +21,7 @@ describe('InfoService', () => {
     http.get.mockReturnValue(of({}));
     service.getSystemInfo().subscribe(result => {
       expect(http.get).toHaveBeenCalledWith(
-        expect.stringContaining('services/sysinfo'),
+        expect.stringContaining('info/sysinfo'),
         expect.objectContaining({ params: expect.any(Object) })
       );
       done();
@@ -32,7 +32,7 @@ describe('InfoService', () => {
     http.post.mockReturnValue(of({}));
     service.pingApi().subscribe(result => {
       expect(http.post).toHaveBeenCalledWith(
-        expect.stringContaining('services/ping'),
+        expect.stringContaining('info/ping'),
         null,
         expect.any(Object)
       );
@@ -44,7 +44,7 @@ describe('InfoService', () => {
     http.get.mockReturnValue(of({}));
     service.getBoardVersion().subscribe(result => {
       expect(http.get).toHaveBeenCalledWith(
-        expect.stringContaining('services/board-build-date'),
+        expect.stringContaining('info/board-build-date'),
         expect.objectContaining({ params: expect.any(Object) })
       );
       done();

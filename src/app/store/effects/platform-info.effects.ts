@@ -10,15 +10,15 @@ export class PlatformInfoEffects {
 
     private actions$ = inject(Actions);
 
-    constructor(private servicesService: InfoService) { }
+    constructor(private infoService: InfoService) { }
 
     loadPlatformInfo$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadPlatformInfo),
             switchMap(() =>
                 combineLatest([
-                    this.servicesService.getSystemInfo(),
-                    this.servicesService.getBoardVersion()
+                    this.infoService.getSystemInfo(),
+                    this.infoService.getBoardVersion()
                 ]).pipe(
                     map(([sysInfo, boardInfo]) => loadPlatformInfoSuccess({ sysInfo, boardInfo })),
                     catchError((error) => of(loadPlatformInfoFailure({ error })))

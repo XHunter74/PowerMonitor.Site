@@ -18,7 +18,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly servicesService: InfoService,
+    private readonly infoService: InfoService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -73,7 +73,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   }
 
   private checkApiState() {
-    this.servicesService.pingApi().subscribe({
+    this.infoService.pingApi().subscribe({
       next: (state) => {
         this.isAPIOnline = state.response.toLowerCase() === Constants.PongResponse;
       },
