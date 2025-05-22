@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServicesService } from '../../services/services-service';
+import { InfoService } from '../../services/info-service';
 import { AuthService } from '../../services/auth.service';
 import { ChangeLanguageDialogComponent } from '../../dialogs/change-language-dialog/change-language-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly servicesService: ServicesService,
+    private readonly servicesService: InfoService,
     private router: Router,
     private dialog: MatDialog
   ) {

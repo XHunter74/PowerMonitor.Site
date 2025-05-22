@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ServicesService } from '../../services/services-service';
+import { InfoService } from '../../services/info-service';
 import { loadPlatformInfo, loadPlatformInfoSuccess, loadPlatformInfoFailure } from '../actions/platform-info.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
@@ -10,7 +10,7 @@ export class PlatformInfoEffects {
 
     private actions$ = inject(Actions);
 
-    constructor(private servicesService: ServicesService) { }
+    constructor(private servicesService: InfoService) { }
 
     loadPlatformInfo$ = createEffect(() =>
         this.actions$.pipe(

@@ -1,10 +1,10 @@
-import { ServicesService } from '../src/app/services/services-service';
+import { InfoService } from '../src/app/services/info-service';
 import { AuthService } from '../src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
-describe('ServicesService', () => {
-  let service: ServicesService;
+describe('InfoService', () => {
+  let service: InfoService;
   let http: any;
   let authService: any;
 
@@ -14,7 +14,7 @@ describe('ServicesService', () => {
       post: jest.fn(),
     };
     authService = {};
-    service = new ServicesService(http as unknown as HttpClient, authService as AuthService, null as any);
+    service = new InfoService(http as unknown as HttpClient, authService as AuthService, null as any);
   });
 
   it('should call http.get for getSystemInfo', (done) => {
