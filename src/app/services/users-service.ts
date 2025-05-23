@@ -1,5 +1,5 @@
-import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, Optional, SkipSelf } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { HttpService } from './http.service';
 import { UserTokenDto } from '../models/user-token.dto';

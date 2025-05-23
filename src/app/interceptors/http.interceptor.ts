@@ -6,7 +6,7 @@ import {
     HttpEvent,
     HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject, of, from, timer } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, timer } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users-service';
@@ -169,7 +169,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 // Retry the original request with the new token
                 return next.handle(this.addTokenToRequest(request, newToken));
             }),
-            catchError((error) => {
+            catchError(() => {
                 // Handle failed token refresh
                 this.authService.logout();
                 this.tokenRefreshSubject.next(null);

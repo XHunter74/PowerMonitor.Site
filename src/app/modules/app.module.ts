@@ -1,4 +1,4 @@
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, Injector, NgModule, isDevMode } from '@angular/core';
 import {
     HTTP_INTERCEPTORS,

@@ -59,7 +59,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
                 annotations: [this.annotation],
             },
         },
-        onHover: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
+        onHover: (event: ChartEvent, elements: ActiveElement[]) => {
             const target = (event.native as MouseEvent).target as HTMLElement;
             if (elements.length > 0) {
                 target.style.cursor = 'pointer';

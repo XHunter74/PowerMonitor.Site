@@ -17,7 +17,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
                     next: () => {
                         console.info(`Successfully initialized '${langToSet}' language.'`);
                     },
-                    error: (err) => {
+                    error: () => {
                         console.error(`Problem with '${langToSet}' language initialization.'`);
                     },
                     complete: () => {

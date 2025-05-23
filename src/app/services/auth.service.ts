@@ -66,7 +66,7 @@ export class AuthService {
     public get tokenExpiresIn(): number | null {
         if (!this.tokenExpiresInInt) {
             if (this.authToken) {
-                var jwtToken = this.decodeToken(this.authToken);
+                const jwtToken = this.decodeToken(this.authToken);
                 if (jwtToken && jwtToken.exp) {
                     this.tokenExpiresInInt = jwtToken.exp * 1000;
                 }
@@ -84,7 +84,7 @@ export class AuthService {
     }
 
     public processLogin(userToken: UserTokenDto) {
-        var jwtToken = this.decodeToken(userToken.token);
+        const jwtToken = this.decodeToken(userToken.token);
         if (jwtToken) {
             this.authToken = userToken.token;
             this.refreshToken = userToken.refreshToken;

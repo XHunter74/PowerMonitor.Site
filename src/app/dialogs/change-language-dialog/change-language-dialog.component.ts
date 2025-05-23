@@ -43,7 +43,7 @@ export class ChangeLanguageDialogComponent implements OnInit {
     }
 
     getLanguagesSelectObj() {
-        let obj: any[] = [];
+        const obj: any[] = [];
         const items = environment.locales;
         items.forEach((el) => {
             const name = this.matchLangName(el);

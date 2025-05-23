@@ -59,7 +59,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 annotations: [this.annotation],
             },
         },
-        onHover: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
+        onHover: (event: ChartEvent, elements: ActiveElement[]) => {
             const target = (event.native as MouseEvent).target as HTMLElement;
             if (elements.length > 0) {
                 target.style.cursor = 'pointer';
@@ -221,7 +221,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     async addMonth(direction: string) {
-        let date = new Date(this.currentDate);
+        const date = new Date(this.currentDate);
         if (direction === 'up') {
             date.setMonth(this.currentDate.getMonth() + 1);
         } else {

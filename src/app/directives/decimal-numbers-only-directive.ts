@@ -27,7 +27,7 @@ export class DecimalNumbersOnlyDirective {
         if (this.specialKeys.indexOf(event.key) !== -1) {
             return;
         }
-        let current: string = this.el.nativeElement.value;
+        const current: string = this.el.nativeElement.value;
         const position = this.el.nativeElement.selectionStart;
         const next: string = [
             current.slice(0, position),
@@ -40,8 +40,8 @@ export class DecimalNumbersOnlyDirective {
     }
 
     @HostListener('input', ['$event'])
-    onInput(event: InputEvent) {
-        let current: string = this.el.nativeElement.value;
+    onInput() {
+        const current: string = this.el.nativeElement.value;
         if (current && !String(current).match(this.regex)) {
             this.el.nativeElement.value = current.slice(0, -1);
         }

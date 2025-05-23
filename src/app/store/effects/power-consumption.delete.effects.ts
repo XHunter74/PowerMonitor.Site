@@ -7,9 +7,6 @@ import {
     deletePowerConsumptionData,
     deletePowerConsumptionDataFailure,
     deletePowerConsumptionDataSuccess,
-    loadPowerConsumptionData,
-    loadPowerConsumptionDataFailure,
-    loadPowerConsumptionDataSuccess,
 } from '../actions/power-consumption.actions';
 import { PowerConsumptionDeleteState } from '../reducers/power-consumption.reducer';
 

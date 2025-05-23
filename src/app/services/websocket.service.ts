@@ -34,7 +34,7 @@ export class WebSocketService {
     }
 
     sensorsData(): Observable<ISensorsDataModel> {
-        var data = this.webSocket.fromEvent('sensors-data').pipe(
+        const data = this.webSocket.fromEvent('sensors-data').pipe(
             map((data: ISensorsDataModel) => {
                 data.voltage = Math.round(data.voltage);
                 data.amperage = Math.round(data.amperage * 10) / 10;

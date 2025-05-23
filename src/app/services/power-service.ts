@@ -1,11 +1,10 @@
-import { Injectable, Inject, Optional, SkipSelf } from '@angular/core';
+import { Injectable, Optional, SkipSelf } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { IVoltageAmperageModel } from '../models/voltage-amperage.model';
 import { IPowerDataHourlyModel } from '../models/power-data-hourly.model';
 import { IPowerDataDailyModel } from '../models/power-data-daily.model';
 import { IPowerDataMonthlyModel } from '../models/power-data-monthly.model';
 import { IPowerDataYearlyModel } from '../models/power-data-yearly.model';
-import { ISensorsDataModel } from '../models/sensors-data.model';
 import { IPowerFailureModel } from '../models/power-failure.model';
 import { PowerFailureMonthlyModel } from '../models/power-failure-monthly.model';
 import { PowerFailureYearlyModel } from '../models/power-failure-yearly.model';

@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { FailuresYearlyState } from '../reducers/power-failures.yearly.reducer';
 import {
     loadYearlyFailuresData,
@@ -15,15 +14,12 @@ import {
 export class PowerFailuresYearlyEffects {
     private actions$ = inject(Actions);
 
-    constructor(
-        private powerService: PowerService,
-        private translate: TranslateService,
-    ) {}
+    constructor(private powerService: PowerService) {}
 
     loadPowerMonitorYearlyData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadYearlyFailuresData),
-            mergeMap(({ data }) =>
+            mergeMap(({}) =>
                 this.powerService.getPowerFailuresYearlyData().pipe(
                     mergeMap((data) => {
                         const newState = {} as FailuresYearlyState;

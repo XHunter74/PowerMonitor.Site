@@ -32,7 +32,7 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
     public barChartOptions: ChartConfiguration<'bar'>['options'] = {
         responsive: true,
         maintainAspectRatio: true,
-        onHover: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
+        onHover: (event: ChartEvent, elements: ActiveElement[]) => {
             const target = (event.native as MouseEvent).target as HTMLElement;
             if (elements.length > 0) {
                 target.style.cursor = 'pointer';
