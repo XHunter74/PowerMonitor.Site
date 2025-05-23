@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppLoginComponent } from '../../../src/app/components/app-login/login.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginModalComponent } from '../../../src/app/components/app-login/login-modal.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 jest.mock('../../../src/app/components/app-login/login-modal.component', () => ({
