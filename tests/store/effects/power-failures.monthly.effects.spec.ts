@@ -11,7 +11,11 @@ describe('PowerFailuresMonthlyEffects', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [
+                HttpClientTestingModule,
+                // Add TranslateModule to provide TranslateService and TranslateStore
+                require('@ngx-translate/core').TranslateModule.forRoot(),
+            ],
             providers: [
                 PowerFailuresMonthlyEffects,
                 provideMockActions(() => actions$),
