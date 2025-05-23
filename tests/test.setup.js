@@ -17,3 +17,21 @@ global.console = {
 };
 
 TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+
+// Mock the Web Animations API for Angular Material in Jest/JSDOM
+if (!Element.prototype.animate) {
+    Element.prototype.animate = function () {
+        return {
+            play: () => { },
+            pause: () => { },
+            finish: () => { },
+            cancel: () => { },
+            reverse: () => { },
+            addEventListener: () => { },
+            removeEventListener: () => { },
+            onfinish: null,
+            currentTime: 0,
+            playState: 'finished',
+        };
+    };
+}
