@@ -1,6 +1,8 @@
 const esModules = ['@angular', 'zone', 'dayjs'];
 
 module.exports = {
+    preset: 'jest-preset-angular',
+    setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
     testEnvironment: 'jsdom',
     extensionsToTreatAsEsm: ['.ts'],
     moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
@@ -18,4 +20,26 @@ module.exports = {
     testPathIgnorePatterns: ['./src/test.ts'],
     testRunner: 'jest-circus/runner',
     setupFilesAfterEnv: ['./tests/test.setup.js'],
+
+    collectCoverageFrom: [
+        'src/app/**/*.ts',
+        '!src/app/**/*.module.ts',      // skip NgModules
+        '!src/app/**/*.routing.ts',     // skip routing
+        '!src/app/main.ts',             // entrypoint
+        '!src/app/**/*.spec.ts'         // skip test files
+    ],
+
+    coverageDirectory: '<rootDir>/coverage',
+    coverageReporters: ['html', 'lcov', 'text'],
+
+    // optional: enforce minimum thresholds
+    coverageThreshold: {
+        global: {
+            branches: 80,
+            functions: 80,
+            lines: 80,
+            statements: 80
+        }
+    }
+
 };
