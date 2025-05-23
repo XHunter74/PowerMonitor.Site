@@ -1,4 +1,11 @@
 {
+    "eslint.validate": [
+        "typescript",
+        "html"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
     "cSpell.words": [
         "Datepicker",
         "Paginator",
