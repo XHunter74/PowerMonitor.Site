@@ -26,16 +26,19 @@ jobs:
             - name: Install dependencies
               run: npm install
 
-            - name: Setup Git identity
-              run: |
-                  git config --global user.email "xhunter74@gmail.com"
-                  git config --global user.name "Serhiy Krasovskyy"
+            - name: Lint code
+              run: npm run lint
 
             - name: Build project
               run: npm run build-prod
 
             - name: Run tests
               run: npm run test
+
+            - name: Setup Git identity
+              run: |
+                  git config --global user.email "xhunter74@gmail.com"
+                  git config --global user.name "Serhiy Krasovskyy"
 
             - name: Check for changes in src folder
               id: src-changes
