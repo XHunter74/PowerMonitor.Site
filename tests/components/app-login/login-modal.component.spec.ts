@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginModalComponent } from '../../../src/app/components/app-login/login-modal.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, of, Operator } from 'rxjs';
+import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
