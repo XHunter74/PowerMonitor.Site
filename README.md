@@ -1,6 +1,6 @@
 # PowerMonitor
 
-![Version](https://img.shields.io/github/package-json/v/xhunter74/PowerMonitor.API?path=package.json&color=blue)
+![Version](https://img.shields.io/github/package-json/v/xhunter74/PowerMonitor.Site?path=package.json&color=blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
