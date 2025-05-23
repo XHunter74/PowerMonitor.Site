@@ -1,5 +1,5 @@
-import { PowerService } from '../src/app/services/power-service';
-import { AuthService } from '../src/app/services/auth.service';
+import { PowerService } from '../../src/app/services/power-service';
+import { AuthService } from '../../src/app/services/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 

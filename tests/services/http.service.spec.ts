@@ -1,6 +1,6 @@
-import { HttpService } from '../src/app/services/http.service';
+import { HttpService } from '../../src/app/services/http.service';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../src/app/services/auth.service';
+import { AuthService } from '../../src/app/services/auth.service';
 import { of, throwError } from 'rxjs';
 
 const mockHttpClient = () => ({
