@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { daysInMonth } from '../../utils';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,11 +27,10 @@ import { loadDailyMonitorData } from '../../store/actions/power-monitor.daily.ac
     styleUrls: ['./power-monitor.component.css'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS }
-    ]
+        { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS },
+    ],
 })
-export class PowerMonitorDailyComponent extends AppBaseComponent implements OnInit {
-
+export class PowerMonitorDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
     public powerAvg: number;
@@ -49,18 +48,16 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             enabled: false,
             fontColor: 'blue',
             backgroundColor: 'white',
-            content: 'Average'
-        }
+            content: 'Average',
+        },
     };
     public barChartOptions: ChartConfiguration<'bar'>['options'] = {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
             annotation: {
-                annotations: [
-                    this.annotation
-                ]
-            }
+                annotations: [this.annotation],
+            },
         },
         onHover: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
             const target = (event.native as MouseEvent).target as HTMLElement;
@@ -69,14 +66,12 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             } else {
                 target.style.cursor = 'default';
             }
-        }
+        },
     };
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [
-        { data: [], label: 'Power, kW/h' }
-    ];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
 
     currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
@@ -88,8 +83,13 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
             const days = e.active['0'].index + 1;
-            this.router.navigate(['power-monitor', 'hourly'],
-                { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1, day: days } });
+            this.router.navigate(['power-monitor', 'hourly'], {
+                queryParams: {
+                    year: this.currentDate.getFullYear(),
+                    month: this.currentDate.getMonth() + 1,
+                    day: days,
+                },
+            });
         }
     }
 
@@ -106,7 +106,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         private router: Router,
         private activatedRouter: ActivatedRoute,
         dialog: MatDialog,
-        translate: TranslateService) {
+        translate: TranslateService,
+    ) {
         super(dialog, translate);
         this.translateWords();
         translate.onLangChange.subscribe(async () => {
@@ -115,32 +116,28 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     translateWords() {
-        this.translate.get('POWER_MONITOR.CHART_LABEL')
-            .subscribe((chartLabel) => {
-                const data = [
-                    { data: this.barChartData[0].data, label: chartLabel }
-                ];
-                this.barChartData = data;
-            });
+        this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((chartLabel) => {
+            const data = [{ data: this.barChartData[0].data, label: chartLabel }];
+            this.barChartData = data;
+        });
     }
 
     ngOnInit() {
         this.powerMonitorDataState$ = this.store.select('powerMonitorDaily');
         Chart.register(Annotation);
-        this.activatedRouter.queryParams.subscribe(
-            params => {
-                const year = params['year'];
-                const month = params['month'];
-                const date = year && month ? new Date(parseInt(year), parseInt(month) - 1, 1) : new Date();
-                if (!this.currentDate) {
-                    this.currentDate = date;
-                    this.store.dispatch(loadDailyMonitorData({ date }));
-                }
+        this.activatedRouter.queryParams.subscribe((params) => {
+            const year = params['year'];
+            const month = params['month'];
+            const date =
+                year && month ? new Date(parseInt(year), parseInt(month) - 1, 1) : new Date();
+            if (!this.currentDate) {
+                this.currentDate = date;
+                this.store.dispatch(loadDailyMonitorData({ date }));
             }
-        );
-        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+        });
+        this.stateSubscription = this.powerMonitorDataState$.subscribe((state) => {
             this.processChangedState(state);
-        })
+        });
     }
 
     ngOnDestroy(): void {
@@ -155,26 +152,28 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     private processChangedState(state: MonitorDailyState) {
         if (state.loading) {
-            this.translate.get('COMMON.LOADING')
-                .subscribe(text => {
-                    this.showSpinner(text);
-                });
+            this.translate.get('COMMON.LOADING').subscribe((text) => {
+                this.showSpinner(text);
+            });
         } else {
             this.closeSpinner();
         }
         if (state.error) {
-            this.translate.get('ERRORS.COMMON')
-                .subscribe(errorText => {
-                    ErrorDialogComponent.show(this.dialog, errorText);
-                });
+            this.translate.get('ERRORS.COMMON').subscribe((errorText) => {
+                ErrorDialogComponent.show(this.dialog, errorText);
+            });
             this.closeSpinner();
             return;
         }
         if (!state.loading && state.date) {
             this.currentDate = state.date;
             this.currentDateControl.setValue(this.currentDate.toISOString());
-            this.router.navigate(['power-monitor', 'daily'],
-                { queryParams: { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth() + 1 } });
+            this.router.navigate(['power-monitor', 'daily'], {
+                queryParams: {
+                    year: this.currentDate.getFullYear(),
+                    month: this.currentDate.getMonth() + 1,
+                },
+            });
         }
         if (!state.loading && state.data) {
             this.powerData = state.data;
@@ -209,10 +208,10 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
                 chartData[day - 1] = record.power;
             }
         } else {
-            chartData = data.map(e => {
+            chartData = data.map((e) => {
                 return e.power;
             });
-            chartLabels = data.map(e => {
+            chartLabels = data.map((e) => {
                 const day = new Date(e.created).getDate();
                 return day.toString();
             });
@@ -232,18 +231,24 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     }
 
     isAddMonthButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-            this.currentDate.getDate());
+        const nextDate = new Date(
+            this.currentDate.getFullYear(),
+            this.currentDate.getMonth(),
+            this.currentDate.getDate(),
+        );
         if (direction === 'up') {
             nextDate.setMonth(nextDate.getMonth() + 1);
             const today = new Date();
-            return (nextDate.getFullYear() * 12 + nextDate.getMonth()) > (today.getFullYear() * 12 + today.getMonth());
+            return (
+                nextDate.getFullYear() * 12 + nextDate.getMonth() >
+                today.getFullYear() * 12 + today.getMonth()
+            );
         } else {
             nextDate.setMonth(nextDate.getMonth() - 1);
-            return nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
-                nextDate.getMonth() < Constants.systemStartDate.getMonth();
+            return (
+                nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
+                nextDate.getMonth() < Constants.systemStartDate.getMonth()
+            );
         }
     }
-
 }
-

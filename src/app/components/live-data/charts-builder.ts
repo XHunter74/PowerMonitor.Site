@@ -1,13 +1,10 @@
 import { ChartsConstants } from '../../constants';
 
 export class ChartsBuilder {
-
     public static buildVoltageChart(label: string, defaultVoltage: number, voltageLabel: string) {
         return {
-            type: "Gauge",
-            data: [
-                [label, { v: defaultVoltage, f: `${defaultVoltage} ${voltageLabel}` }],
-            ],
+            type: 'Gauge',
+            data: [[label, { v: defaultVoltage, f: `${defaultVoltage} ${voltageLabel}` }]],
             options: {
                 width: 200,
                 height: 200,
@@ -19,17 +16,19 @@ export class ChartsBuilder {
                 yellowTo: ChartsConstants.voltageChart.maxVoltage,
                 min: 0,
                 max: ChartsConstants.voltageChart.maxVoltage,
-                yellowColor: '#DC3912'
+                yellowColor: '#DC3912',
             },
         };
     }
 
-    public static buildAmperageChart(label: string, defaultAmperage: number, amperageLabel: string) {
+    public static buildAmperageChart(
+        label: string,
+        defaultAmperage: number,
+        amperageLabel: string,
+    ) {
         return {
-            type: "Gauge",
-            data: [
-                [label, { v: defaultAmperage, f: `${defaultAmperage} ${amperageLabel}` }],
-            ],
+            type: 'Gauge',
+            data: [[label, { v: defaultAmperage, f: `${defaultAmperage} ${amperageLabel}` }]],
             options: {
                 width: 200,
                 height: 200,
@@ -45,10 +44,8 @@ export class ChartsBuilder {
 
     public static buildPowerChart(label: string, defaultPower: number, powerLabel: string) {
         return {
-            type: "Gauge",
-            data: [
-                [label, { v: defaultPower, f: `${defaultPower} ${powerLabel}` }],
-            ],
+            type: 'Gauge',
+            data: [[label, { v: defaultPower, f: `${defaultPower} ${powerLabel}` }]],
             options: {
                 width: 200,
                 height: 200,

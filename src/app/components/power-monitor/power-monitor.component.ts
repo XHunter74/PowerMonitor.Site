@@ -11,13 +11,13 @@ export class PowerMonitorComponent implements OnInit, OnDestroy {
     selectedTab: number = 1;
     private routerSubscription: Subscription;
 
-    constructor(private router: Router) { }
+    constructor(private router: Router) {}
 
     ngOnInit(): void {
         this.updateSelectedTab();
 
         this.routerSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
+            .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.updateSelectedTab();
             });
@@ -59,4 +59,3 @@ export class PowerMonitorComponent implements OnInit, OnDestroy {
         }
     }
 }
-

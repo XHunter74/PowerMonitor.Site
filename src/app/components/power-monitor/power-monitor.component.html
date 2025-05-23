@@ -1,15 +1,21 @@
-<nav ngbNav #nav="ngbNav" [(activeId)]="selectedTab" class="nav-tabs" (navChange)="onNavChange($event)">
+<nav
+    ngbNav
+    #nav="ngbNav"
+    [(activeId)]="selectedTab"
+    class="nav-tabs"
+    (navChange)="onNavChange($event)"
+>
     <ng-container ngbNavItem [ngbNavItem]="1">
-        <a ngbNavLink>{{'COMMON.HOURLY' | translate}}</a>
+        <a ngbNavLink>{{ 'COMMON.HOURLY' | translate }}</a>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="2">
-        <a ngbNavLink>{{'COMMON.DAILY' | translate}}</a>
+        <a ngbNavLink>{{ 'COMMON.DAILY' | translate }}</a>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="3">
-        <a ngbNavLink>{{'COMMON.MONTHLY' | translate}}</a>
+        <a ngbNavLink>{{ 'COMMON.MONTHLY' | translate }}</a>
     </ng-container>
     <ng-container ngbNavItem [ngbNavItem]="4">
-        <a ngbNavLink>{{'COMMON.YEARLY' | translate}}</a>
+        <a ngbNavLink>{{ 'COMMON.YEARLY' | translate }}</a>
     </ng-container>
 </nav>
 

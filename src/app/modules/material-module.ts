@@ -8,28 +8,26 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  exports: [
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTooltipModule
-  ]
+    exports: [
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        MatTableModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
+    ],
 })
-export class AppMaterialModule { }
-
-
+export class AppMaterialModule {}

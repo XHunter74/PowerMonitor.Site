@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
-import { loadDailyMonitorData, loadDailyMonitorDataFailure, loadDailyMonitorDataSuccess } from '../actions/power-monitor.daily.actions';
+import {
+    loadDailyMonitorData,
+    loadDailyMonitorDataFailure,
+    loadDailyMonitorDataSuccess,
+} from '../actions/power-monitor.daily.actions';
 
 export interface MonitorDailyState {
     data: IPowerDataDailyModel[];
@@ -26,5 +30,5 @@ export const powerMonitorDailyReducer = createReducer(
     initialState,
     on(loadDailyMonitorData, (state) => ({ ...state, loading: true, error: null })),
     on(loadDailyMonitorDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
-    on(loadDailyMonitorDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
+    on(loadDailyMonitorDataFailure, (state, { error }) => ({ ...state, loading: false, error })),
 );

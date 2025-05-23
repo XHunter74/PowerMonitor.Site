@@ -1,53 +1,92 @@
-<h1 class="platform-info-title">{{'PLATFORM_INFO.TITLE' | translate}}</h1>
+<h1 class="platform-info-title">{{ 'PLATFORM_INFO.TITLE' | translate }}</h1>
 <div *ngIf="sysInfo">
     <ul>
-        <li>{{'PLATFORM_INFO.SITE_VERSION' | translate}}: <strong>{{ siteVersion }}</strong></li>
+        <li>
+            {{ 'PLATFORM_INFO.SITE_VERSION' | translate }}: <strong>{{ siteVersion }}</strong>
+        </li>
     </ul>
     <ul *ngIf="sysInfo">
-        <li>{{'PLATFORM_INFO.API_VERSION' | translate}}: <strong>{{ sysInfo.version }}</strong></li>
+        <li>
+            {{ 'PLATFORM_INFO.API_VERSION' | translate }}: <strong>{{ sysInfo.version }}</strong>
+        </li>
     </ul>
     <ul *ngIf="boardInfo">
-        <li>{{'PLATFORM_INFO.BOARD_VERSION' | translate}}: <strong>{{ boardInfo.version }},
-                {{boardInfo.buildDate | date: "yyyy-MM-dd HH:mm"}}</strong>
+        <li>
+            {{ 'PLATFORM_INFO.BOARD_VERSION' | translate }}:
+            <strong
+                >{{ boardInfo.version }},
+                {{ boardInfo.buildDate | date: 'yyyy-MM-dd HH:mm' }}</strong
+            >
         </li>
     </ul>
     <div *ngIf="sysInfo">
         <ul>
-            <li>{{'PLATFORM_INFO.SERVER_MANUFACTURER' | translate}}: <strong>{{ sysInfo.manufacturer }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.SERVER_MANUFACTURER' | translate }}:
+                <strong>{{ sysInfo.manufacturer }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.SERVER_MODEL' | translate}}: <strong>{{ sysInfo.model }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.SERVER_MODEL' | translate }}: <strong>{{ sysInfo.model }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.OS_PLATFORM' | translate}}: <strong>{{ sysInfo.platform }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.OS_PLATFORM' | translate }}:
+                <strong>{{ sysInfo.platform }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.OS' | translate}}: <strong>{{ sysInfo.distro }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.OS' | translate }}: <strong>{{ sysInfo.distro }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.CPU_MANUFACTURER' | translate}}: <strong>{{ sysInfo.cpuManufacturer }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.CPU_MANUFACTURER' | translate }}:
+                <strong>{{ sysInfo.cpuManufacturer }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.CPU_BRAND' | translate}}: <strong>{{ sysInfo.cpuBrand }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.CPU_BRAND' | translate }}: <strong>{{ sysInfo.cpuBrand }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.CPU_SPEED' | translate}}: <strong>{{ sysInfo.cpuSpeed }} GHz</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.CPU_SPEED' | translate }}:
+                <strong>{{ sysInfo.cpuSpeed }} GHz</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.CPU_CORES' | translate}}: <strong>{{ sysInfo.cpuCores }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.CPU_CORES' | translate }}: <strong>{{ sysInfo.cpuCores }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.SYSTEM_UPTIME' | translate}}: <strong>{{ getSystemUptimeStr() }}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.SYSTEM_UPTIME' | translate }}:
+                <strong>{{ getSystemUptimeStr() }}</strong>
+            </li>
         </ul>
         <ul>
-            <li>{{'PLATFORM_INFO.SYSTEM_TIME' | translate}}: <strong>{{ getSystemDateTime() | date: 'dd.MM.yyyy
-                    HH:mm:ss'}}</strong></li>
+            <li>
+                {{ 'PLATFORM_INFO.SYSTEM_TIME' | translate }}:
+                <strong>{{
+                    getSystemDateTime()
+                        | date
+                            : 'dd.MM.yyyy
+                    HH:mm:ss'
+                }}</strong>
+            </li>
         </ul>
     </div>
     <ul>
         <li>
-            Site icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
-                href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            Site icon made by
+            <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from
+            <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         </li>
     </ul>
 </div>

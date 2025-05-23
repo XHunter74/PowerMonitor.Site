@@ -1,10 +1,11 @@
 <div *ngIf="data" class="modal-app-dialog">
-    <div class="dialog-header">{{'COMMON.ERROR' | translate }}</div>
+    <div class="dialog-header">{{ 'COMMON.ERROR' | translate }}</div>
     <div class="modal-body modal-content">
-        <h5>{{data.errorMessage}}</h5>
+        <h5>{{ data.errorMessage }}</h5>
     </div>
     <div class="modal-footer dialog-footer">
-        <button class="ok-button" mat-button [matDialogClose]="'positive'" tabindex="2">{{'BUTTONS.OK' | translate
-            }}</button>
+        <button class="ok-button" mat-button [matDialogClose]="'positive'" tabindex="2">
+            {{ 'BUTTONS.OK' | translate }}
+        </button>
     </div>
 </div>

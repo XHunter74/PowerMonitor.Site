@@ -18,37 +18,41 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormatNumberPipe } from '../pipes/format-number.pipe';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PowerMonitorComponent,
-    children: [
-      { path: '', redirectTo: 'hourly', pathMatch: 'full' },
-      { path: 'hourly', component: PowerMonitorHourlyComponent },
-      { path: 'daily', component: PowerMonitorDailyComponent },
-      { path: 'monthly', component: PowerMonitorMonthlyComponent },
-      { path: 'yearly', component: PowerMonitorYearlyComponent }
-    ]
-  }
+    {
+        path: '',
+        component: PowerMonitorComponent,
+        children: [
+            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
+            { path: 'hourly', component: PowerMonitorHourlyComponent },
+            { path: 'daily', component: PowerMonitorDailyComponent },
+            { path: 'monthly', component: PowerMonitorMonthlyComponent },
+            { path: 'yearly', component: PowerMonitorYearlyComponent },
+        ],
+    },
 ];
 
 @NgModule({
-  declarations: [
-    PowerMonitorComponent,
-    PowerMonitorHourlyComponent,
-    PowerMonitorDailyComponent,
-    PowerMonitorMonthlyComponent,
-    PowerMonitorYearlyComponent,
-    FormatNumberPipe
-  ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    AppMaterialModule,
-    NgChartsModule,
-    NgbModule,
-    TranslateModule.forChild(),
-    EffectsModule.forFeature([PowerMonitorHourlyEffects, PowerMonitorDailyEffects,
-      PowerMonitorMonthlyEffects, PowerMonitorYearlyEffects])
-  ],
+    declarations: [
+        PowerMonitorComponent,
+        PowerMonitorHourlyComponent,
+        PowerMonitorDailyComponent,
+        PowerMonitorMonthlyComponent,
+        PowerMonitorYearlyComponent,
+        FormatNumberPipe,
+    ],
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        AppMaterialModule,
+        NgChartsModule,
+        NgbModule,
+        TranslateModule.forChild(),
+        EffectsModule.forFeature([
+            PowerMonitorHourlyEffects,
+            PowerMonitorDailyEffects,
+            PowerMonitorMonthlyEffects,
+            PowerMonitorYearlyEffects,
+        ]),
+    ],
 })
-export class PowerMonitorModule { }
+export class PowerMonitorModule {}

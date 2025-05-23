@@ -1,6 +1,11 @@
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { APP_INITIALIZER, Injector, NgModule, isDevMode } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    HttpClient,
+    provideHttpClient,
+    withInterceptorsFromDi,
+} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './material-module';
@@ -34,61 +39,62 @@ import 'moment/locale/uk';
 import { RoleGuard } from '../guards/role.guard';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    AppLoginComponent,
-    LoginModalComponent,
-    SpinnerDialogComponent,
-    ErrorDialogComponent,
-    QuestionDialogComponent,
-    ChangeLanguageDialogComponent,
-  ],
-  bootstrap: [AppComponent],
-  imports: [
-    BrowserModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    AppMaterialModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forRoot({
-      defaultLanguage: environment.defaultLocale,
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    NgSelectModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
-  ],
-  providers: [
-    AuthGuard,
-    RoleGuard,
-    AuthService,
-    UsersService,
-    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-    OpenGuard,
-    { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-    { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [TranslateService, Injector], multi: true },
-    UpdateService,
-    provideHttpClient(withInterceptorsFromDi())
-  ]
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        AppLoginComponent,
+        LoginModalComponent,
+        SpinnerDialogComponent,
+        ErrorDialogComponent,
+        QuestionDialogComponent,
+        ChangeLanguageDialogComponent,
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        AppMaterialModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+            defaultLanguage: environment.defaultLocale,
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        NgSelectModule,
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot(),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000',
+        }),
+    ],
+    providers: [
+        AuthGuard,
+        RoleGuard,
+        AuthService,
+        UsersService,
+        { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+        OpenGuard,
+        { provide: DateAdapter, useClass: AppDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializerFactory,
+            deps: [TranslateService, Injector],
+            multi: true,
+        },
+        UpdateService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ],
 })
 export class AppModule {
-  constructor(
-    private updateService: UpdateService
-  ) { }
+    constructor(private updateService: UpdateService) {}
 }
-
-

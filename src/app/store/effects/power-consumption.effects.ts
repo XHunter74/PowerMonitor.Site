@@ -3,20 +3,23 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { loadPowerConsumptionData, loadPowerConsumptionDataFailure, loadPowerConsumptionDataSuccess } from '../actions/power-consumption.actions';
+import {
+    loadPowerConsumptionData,
+    loadPowerConsumptionDataFailure,
+    loadPowerConsumptionDataSuccess,
+} from '../actions/power-consumption.actions';
 import { PowerConsumptionState } from '../reducers/power-consumption.reducer';
 
 @Injectable()
 export class PowerConsumptionEffects {
-
     private actions$ = inject(Actions);
 
-    constructor(private powerService: PowerService) { }
+    constructor(private powerService: PowerService) {}
 
     loadPowerConsumptionData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadPowerConsumptionData),
-            mergeMap(({ }) =>
+            mergeMap(({}) =>
                 this.powerService.getPowerConsumptionData().pipe(
                     mergeMap((data) => {
                         const newState = {} as PowerConsumptionState;
@@ -28,9 +31,9 @@ export class PowerConsumptionEffects {
 
                         return of(loadPowerConsumptionDataSuccess({ data: newState }));
                     }),
-                    catchError((error) => of(loadPowerConsumptionDataFailure({ error })))
-                )
-            )
-        )
+                    catchError((error) => of(loadPowerConsumptionDataFailure({ error }))),
+                ),
+            ),
+        ),
     );
 }

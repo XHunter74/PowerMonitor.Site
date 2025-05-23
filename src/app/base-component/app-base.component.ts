@@ -5,14 +5,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
 
 @Component({
-    template: ''
+    template: '',
 })
 export class AppBaseComponent implements OnDestroy {
-
     private readonly dateAdapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
     protected dialogRef: MatDialogRef<SpinnerDialogComponent>;
 
-    constructor(protected dialog: MatDialog, protected translate: TranslateService) {
+    constructor(
+        protected dialog: MatDialog,
+        protected translate: TranslateService,
+    ) {
         if (!this.translate.currentLang) {
             this.translate.use('en'); // Set a default language, e.g., 'en'
         }
@@ -38,7 +40,7 @@ export class AppBaseComponent implements OnDestroy {
         this.dialogRef = this.dialog.open(SpinnerDialogComponent, {
             panelClass: 'transparent',
             disableClose: true,
-            data: message
+            data: message,
         });
         return this.dialogRef;
     }

@@ -1,63 +1,106 @@
-<div class='main-nav'>
-    <nav class='navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column'>
+<div class="main-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column">
         <div class="navbar-header p-0">
-            <a class='navbar-brand' *ngIf="apiState===2" style="color:white" [routerLink]='["/"]'>Power Monitor</a>
-            <a class='navbar-brand' *ngIf="apiState===1" style="color:#4189C7" [routerLink]='["/"]'>Power Monitor</a>
-            <a class='navbar-brand' *ngIf="apiState===0" style="color:rgb(160, 157, 163)" [routerLink]='["/"]'>Power
-                Monitor</a>
-            <button type='button' class='navbar-toggler' data-toggle='collapse' [attr.aria-expanded]='isExpanded'
-                (click)='toggle()'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='navbar-toggler-icon'></span>
+            <a class="navbar-brand" *ngIf="apiState === 2" style="color: white" [routerLink]="['/']"
+                >Power Monitor</a
+            >
+            <a
+                class="navbar-brand"
+                *ngIf="apiState === 1"
+                style="color: #4189c7"
+                [routerLink]="['/']"
+                >Power Monitor</a
+            >
+            <a
+                class="navbar-brand"
+                *ngIf="apiState === 0"
+                style="color: rgb(160, 157, 163)"
+                [routerLink]="['/']"
+                >Power Monitor</a
+            >
+            <button
+                type="button"
+                class="navbar-toggler"
+                data-toggle="collapse"
+                [attr.aria-expanded]="isExpanded"
+                (click)="toggle()"
+            >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-        <div class='clearfix p-2'></div>
-        <div id="navbarNav" class='navbar-collapse collapse p-0' [ngClass]='{ "show": isExpanded }'>
-            <ul class='nav navbar-nav flex-column'>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'
-                    [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/online-data"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-tachometer-alt'></span> {{'MENU.LIVE_DATA' | translate}}
+        <div class="clearfix p-2"></div>
+        <div id="navbarNav" class="navbar-collapse collapse p-0" [ngClass]="{ show: isExpanded }">
+            <ul class="nav navbar-nav flex-column">
+                <li
+                    *ngIf="isLoggedIn()"
+                    class="nav-item"
+                    [routerLinkActive]="['link-active']"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                >
+                    <a [routerLink]="['/online-data']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-tachometer-alt"></span>
+                        {{ 'MENU.LIVE_DATA' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/power-monitor"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-chart-bar'></span> {{'MENU.POWER_MONITOR' | translate}}
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/power-monitor']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-chart-bar"></span>
+                        {{ 'MENU.POWER_MONITOR' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn() && isAdmin()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/voltage-amperage/hourly"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-bolt'></span> {{'MENU.VOLTAGE_AMPERAGE' | translate}}
+                <li
+                    *ngIf="isLoggedIn() && isAdmin()"
+                    class="nav-item"
+                    [routerLinkActive]="['link-active']"
+                >
+                    <a
+                        [routerLink]="['/voltage-amperage/hourly']"
+                        class="nav-link"
+                        (click)="collapse()"
+                    >
+                        <span class="fas fa-bolt"></span> {{ 'MENU.VOLTAGE_AMPERAGE' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn() && isAdmin()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/power-failures"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-sort-amount-down'></span> {{'MENU.POWER_FAILURES' | translate}}
+                <li
+                    *ngIf="isLoggedIn() && isAdmin()"
+                    class="nav-item"
+                    [routerLinkActive]="['link-active']"
+                >
+                    <a [routerLink]="['/power-failures']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-sort-amount-down"></span>
+                        {{ 'MENU.POWER_FAILURES' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn() && isAdmin()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/power-consumption"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-chart-line'></span> {{'MENU.POWER_CONSUMPTION' | translate}}
+                <li
+                    *ngIf="isLoggedIn() && isAdmin()"
+                    class="nav-item"
+                    [routerLinkActive]="['link-active']"
+                >
+                    <a [routerLink]="['/power-consumption']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-chart-line"></span>
+                        {{ 'MENU.POWER_CONSUMPTION' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/platform-info"]' class="nav-link" (click)='collapse()'>
-                        <span class='fas fa-info-circle'></span> {{'MENU.PLATFORM_INFO' | translate}}
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/platform-info']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-info-circle"></span>
+                        {{ 'MENU.PLATFORM_INFO' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a class="nav-link" (click)='changeLanguage()'>
-                        <span class='fas fa-globe'></span> {{'MENU.LANGUAGE' | translate}}
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                    <a class="nav-link" (click)="changeLanguage()">
+                        <span class="fas fa-globe"></span> {{ 'MENU.LANGUAGE' | translate }}
                     </a>
                 </li>
-                <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/app-login"]' class="nav-link" (click)='collapse()'>
-                        <span class="fas fa-sign-in-alt"></span> {{'MENU.LOGIN' | translate}}
+                <li *ngIf="!isLoggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/app-login']" class="nav-link" (click)="collapse()">
+                        <span class="fas fa-sign-in-alt"></span> {{ 'MENU.LOGIN' | translate }}
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]='["link-active"]'>
-                    <a class="nav-link" (click)='logout()'>
-                        <span class="fas fa-sign-out-alt"></span> {{'MENU.LOGOUT' | translate}}
+                <li *ngIf="isLoggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                    <a class="nav-link" (click)="logout()">
+                        <span class="fas fa-sign-out-alt"></span> {{ 'MENU.LOGOUT' | translate }}
                     </a>
                 </li>
             </ul>

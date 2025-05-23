@@ -1,12 +1,10 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot } from "@angular/router";
-import { AuthService } from "../services/auth.service";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class RoleGuard {
-    constructor(
-        private readonly authService: AuthService
-    ) { }
+    constructor(private readonly authService: AuthService) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         const requiredRole = route.data['role'] as string;

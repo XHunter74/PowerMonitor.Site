@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { PowerFailureMonthlyModel } from '../../models/power-failure-monthly.model';
-import { loadMonthlyFailuresData, loadMonthlyFailuresDataSuccess, loadMonthlyFailuresDataFailure } from '../actions/power-failures.monthly.actions';
+import {
+    loadMonthlyFailuresData,
+    loadMonthlyFailuresDataSuccess,
+    loadMonthlyFailuresDataFailure,
+} from '../actions/power-failures.monthly.actions';
 
 export interface FailuresMonthlyState {
     data: PowerFailureMonthlyModel[];
@@ -24,5 +28,5 @@ export const powerFailuresMonthlyReducer = createReducer(
     initialState,
     on(loadMonthlyFailuresData, (state) => ({ ...state, loading: true, error: null })),
     on(loadMonthlyFailuresDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
-    on(loadMonthlyFailuresDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
+    on(loadMonthlyFailuresDataFailure, (state, { error }) => ({ ...state, loading: false, error })),
 );

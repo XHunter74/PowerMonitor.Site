@@ -5,12 +5,16 @@ import { QuestionDialogDataDto } from '../../models/question-dialog-data.dto';
 @Component({
     selector: 'app-dialog',
     templateUrl: './question-dialog.component.html',
-    styleUrls: ['./question-dialog.component.css']
+    styleUrls: ['./question-dialog.component.css'],
 })
 export class QuestionDialogComponent {
-
-    static async show(dialog: MatDialog, question: string,
-        positiveButton?: string, negativeButton?: string, width?: string): Promise<string> {
+    static async show(
+        dialog: MatDialog,
+        question: string,
+        positiveButton?: string,
+        negativeButton?: string,
+        width?: string,
+    ): Promise<string> {
         if (!width) {
             width = '500px';
         }
@@ -23,12 +27,11 @@ export class QuestionDialogComponent {
         const dialogRef = dialog.open(QuestionDialogComponent, {
             width,
             height: '170px',
-            data: new QuestionDialogDataDto(question, positiveButton, negativeButton)
+            data: new QuestionDialogDataDto(question, positiveButton, negativeButton),
         });
         const dialogResult = await dialogRef.afterClosed().toPromise();
         return dialogResult;
     }
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: QuestionDialogDataDto) { }
-
+    constructor(@Inject(MAT_DIALOG_DATA) public data: QuestionDialogDataDto) {}
 }

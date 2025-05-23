@@ -11,13 +11,11 @@ const routes: Routes = [
     {
         path: '',
         component: LiveDataComponent,
-    }
+    },
 ];
 
 @NgModule({
-    declarations: [
-        LiveDataComponent,
-    ],
+    declarations: [LiveDataComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
@@ -25,9 +23,6 @@ const routes: Routes = [
         TranslateModule.forChild(),
         SocketIoModule,
     ],
-    providers: [
-        WebSocket,
-        WebSocketService,
-    ],
+    providers: [WebSocket, WebSocketService],
 })
-export class LiveDataModule { }
+export class LiveDataModule {}

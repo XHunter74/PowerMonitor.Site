@@ -8,10 +8,9 @@ import { Constants } from '../../constants';
 @Component({
     selector: 'app-dialog',
     templateUrl: './change-language-dialog.component.html',
-    styleUrls: ['./change-language-dialog.component.css']
+    styleUrls: ['./change-language-dialog.component.css'],
 })
 export class ChangeLanguageDialogComponent implements OnInit {
-
     languageList: any;
     form: UntypedFormGroup;
 
@@ -24,10 +23,12 @@ export class ChangeLanguageDialogComponent implements OnInit {
         return dialogResult;
     }
 
-    constructor(@Inject(TranslateService) private translate: TranslateService,
-        private fb: UntypedFormBuilder) {
+    constructor(
+        @Inject(TranslateService) private translate: TranslateService,
+        private fb: UntypedFormBuilder,
+    ) {
         this.form = this.fb.group({
-            languages: []
+            languages: [],
         });
     }
 
@@ -44,7 +45,7 @@ export class ChangeLanguageDialogComponent implements OnInit {
     getLanguagesSelectObj() {
         let obj: any[] = [];
         const items = environment.locales;
-        items.forEach(el => {
+        items.forEach((el) => {
             const name = this.matchLangName(el);
             obj.push({ id: el, name: name });
         });
@@ -56,9 +57,12 @@ export class ChangeLanguageDialogComponent implements OnInit {
         const uk = this.translate.instant('LANGUAGE.UKRAINIAN');
         if (en && uk) {
             switch (lang) {
-                case 'en': return en;
-                case 'uk': return uk;
-                default: return '---';
+                case 'en':
+                    return en;
+                case 'uk':
+                    return uk;
+                default:
+                    return '---';
             }
         }
     }

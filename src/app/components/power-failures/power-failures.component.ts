@@ -5,21 +5,20 @@ import { filter, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-power-failures',
-    templateUrl: './power-failures.component.html'
+    templateUrl: './power-failures.component.html',
 })
 export class PowerFailuresComponent implements OnInit, OnDestroy {
     selectedTab: number = 1;
 
     private routerSubscription: Subscription;
 
-    constructor(private router: Router) { }
-
+    constructor(private router: Router) {}
 
     ngOnInit(): void {
         this.updateSelectedTab();
 
         this.routerSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
+            .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.updateSelectedTab();
             });
@@ -61,4 +60,3 @@ export class PowerFailuresComponent implements OnInit, OnDestroy {
         }
     }
 }
-

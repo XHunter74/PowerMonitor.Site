@@ -1,62 +1,110 @@
-<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Down)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Down)" matTooltip="{{'COMMON.BACK' | translate}}"
-    matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="addMonth(Direction.Down)"
+    [disabled]="isAddMonthButtonDisabled(Direction.Down)"
+    matTooltip="{{ 'COMMON.BACK' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addMonth(Direction.Up)"
-    [disabled]="isAddMonthButtonDisabled(Direction.Up)" mat-button matTooltip="{{'COMMON.FORWARD' | translate}}"
-    matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="addMonth(Direction.Up)"
+    [disabled]="isAddMonthButtonDisabled(Direction.Up)"
+    mat-button
+    matTooltip="{{ 'COMMON.FORWARD' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (click)="picker3.open()">
-    <mat-datepicker-toggle matSuffix [for]=" picker3">
-    </mat-datepicker-toggle>
+    <input
+        matInput
+        [matDatepicker]="picker3"
+        placeholder=""
+        [value]="currentDateControl.value"
+        [readonly]="true"
+        (click)="picker3.open()"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker3"> </mat-datepicker-toggle>
     <mat-datepicker #picker3 startView="year" (monthSelected)="chosenMonthHandler($event, picker3)">
     </mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
-    matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="refreshData()"
+    matTooltip="{{ 'COMMON.REFRESH' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
     <div class="col-12 col-md-6 mb-3">
         <table class="d-inline-block" *ngIf="maxPowerFailure">
             <tr>
-                <td class="pr-2"><b>{{'POWER_FAILURES.FAILURE_EVENTS' | translate}}:</b> </td>
-                <td class="text-right"> {{failureAmount}}</td>
+                <td class="pr-2">
+                    <b>{{ 'POWER_FAILURES.FAILURE_EVENTS' | translate }}:</b>
+                </td>
+                <td class="text-right">{{ failureAmount }}</td>
                 <td class="text-right"></td>
             </tr>
             <tr>
-                <td class="pr-2"><b>{{'POWER_FAILURES.TOTAL_FAILURES' | translate}}:</b> </td>
-                <td class="text-right"> {{totalPowerFailure | formatDuration}}</td>
+                <td class="pr-2">
+                    <b>{{ 'POWER_FAILURES.TOTAL_FAILURES' | translate }}:</b>
+                </td>
+                <td class="text-right">{{ totalPowerFailure | formatDuration }}</td>
                 <td class="text-right"></td>
             </tr>
             <tr>
-                <td class="pr-2"><b>{{'POWER_FAILURES.MAX_FAILURE' | translate}}:</b> </td>
-                <td class="text-right"> {{maxPowerFailure.duration | formatDuration}},</td>
-                <td class="text-right"> {{maxPowerFailure.start | date: 'dd.MM.yyyy'}}</td>
+                <td class="pr-2">
+                    <b>{{ 'POWER_FAILURES.MAX_FAILURE' | translate }}:</b>
+                </td>
+                <td class="text-right">{{ maxPowerFailure.duration | formatDuration }},</td>
+                <td class="text-right">{{ maxPowerFailure.start | date: 'dd.MM.yyyy' }}</td>
             </tr>
         </table>
     </div>
 </div>
 <div class="table-responsive">
-    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
+    <table
+        mat-table
+        [dataSource]="sortedData"
+        class="table custom-table"
+        matSort
+        (matSortChange)="sortData($event)"
+    >
         <ng-container matColumnDef="eventDate">
-            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.DATE' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.eventDate | date: 'dd.MM.yyyy'}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align">
+                {{ 'COMMON.DATE' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.eventDate | date: 'dd.MM.yyyy' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="duration">
-            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.DURATION' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.duration | formatDuration}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align">
+                {{ 'COMMON.DURATION' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.duration | formatDuration }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="events">
-            <th *matHeaderCellDef mat-sort-header class="right-align"> {{'COMMON.EVENTS' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.events}} </td>
+            <th *matHeaderCellDef mat-sort-header class="right-align">
+                {{ 'COMMON.EVENTS' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.events }}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;let even = even"
-            [ngClass]="{alternate: even}" (click)="clickOnRowHandler(row)"></tr>
+        <tr
+            class="table-row"
+            mat-row
+            *matRowDef="let row; columns: displayedColumns; let even = even"
+            [ngClass]="{ alternate: even }"
+            (click)="clickOnRowHandler(row)"
+        ></tr>
     </table>
 </div>

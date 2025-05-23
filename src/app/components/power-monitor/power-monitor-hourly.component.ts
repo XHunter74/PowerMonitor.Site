@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    AfterViewChecked,
+    ViewEncapsulation,
+    OnDestroy,
+} from '@angular/core';
 import { IPowerDataHourlyModel } from '../../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
@@ -20,10 +28,12 @@ import { loadHourlyMonitorData } from '../../store/actions/power-monitor.hourly.
     selector: 'app-power-monitor-hourly',
     templateUrl: './power-monitor-hourly.component.html',
     styleUrls: ['./power-monitor.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
-export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnInit, AfterViewChecked {
-
+export class PowerMonitorHourlyComponent
+    extends AppBaseComponent
+    implements OnInit, AfterViewChecked, OnDestroy
+{
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
     public powerAvg: number;
@@ -41,26 +51,22 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
             enabled: false,
             fontColor: 'blue',
             backgroundColor: 'white',
-            content: 'Average'
-        }
+            content: 'Average',
+        },
     };
     public barChartOptions: ChartConfiguration<'bar'>['options'] = {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
             annotation: {
-                annotations: [
-                    this.annotation
-                ]
-            }
-        }
+                annotations: [this.annotation],
+            },
+        },
     };
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [
-        { data: [], label: 'Power, kW/h' }
-    ];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
 
     currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
@@ -77,7 +83,8 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         private activatedRouter: ActivatedRoute,
         private router: Router,
         dialog: MatDialog,
-        translate: TranslateService) {
+        translate: TranslateService,
+    ) {
         super(dialog, translate);
         this.translateWords();
         translate.onLangChange.subscribe(() => {
@@ -85,35 +92,31 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         });
     }
     translateWords() {
-        this.translate.get('POWER_MONITOR.CHART_LABEL')
-            .subscribe((text) => {
-                const data = [
-                    { data: this.barChartData[0].data, label: text }
-                ];
-                this.barChartData = data;
-            });
+        this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((text) => {
+            const data = [{ data: this.barChartData[0].data, label: text }];
+            this.barChartData = data;
+        });
     }
 
     ngOnInit() {
         this.powerMonitorDataState$ = this.store.select('powerMonitorHourly');
         Chart.register(Annotation);
-        this.activatedRouter.queryParams
-            .subscribe(
-                params => {
-                    const year = params['year'];
-                    const month = params['month'];
-                    const day = params['day'];
-                    const date = year && month && day ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day)) :
-                        new Date();
-                    if (!this.currentDate) {
-                        this.currentDate = date;
-                        this.store.dispatch(loadHourlyMonitorData({ date }));
-                    }
-                }
-            );
-        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+        this.activatedRouter.queryParams.subscribe((params) => {
+            const year = params['year'];
+            const month = params['month'];
+            const day = params['day'];
+            const date =
+                year && month && day
+                    ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+                    : new Date();
+            if (!this.currentDate) {
+                this.currentDate = date;
+                this.store.dispatch(loadHourlyMonitorData({ date }));
+            }
+        });
+        this.stateSubscription = this.powerMonitorDataState$.subscribe((state) => {
             this.processChangedState(state);
-        })
+        });
     }
 
     ngOnDestroy(): void {
@@ -128,20 +131,18 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
 
     private processChangedState(state: MonitorHourlyState) {
         if (state.loading) {
-            this.translate.get('COMMON.LOADING')
-                .subscribe(text => {
-                    this.showSpinner(text);
-                });
+            this.translate.get('COMMON.LOADING').subscribe((text) => {
+                this.showSpinner(text);
+            });
         } else {
             this.closeSpinner();
         }
 
         if (state.error) {
-            this.translate.get('ERRORS.COMMON')
-                .subscribe(errorText => {
-                    ErrorDialogComponent.show(this.dialog, errorText);
-                });
-            this.closeSpinner(); 
+            this.translate.get('ERRORS.COMMON').subscribe((errorText) => {
+                ErrorDialogComponent.show(this.dialog, errorText);
+            });
+            this.closeSpinner();
             return;
         }
 
@@ -152,8 +153,8 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
                 queryParams: {
                     year: this.currentDate.getFullYear(),
                     month: this.currentDate.getMonth() + 1,
-                    day: this.currentDate.getDate()
-                }
+                    day: this.currentDate.getDate(),
+                },
             });
         }
 
@@ -193,16 +194,16 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         if (data.length < 24) {
             for (let i = 0; i < 24; i++) {
                 chartData.push(0);
-                chartLabels.push((i).toString());
+                chartLabels.push(i.toString());
             }
             for (const record of data) {
                 chartData[record.hours] = record.power;
             }
         } else {
-            chartData = data.map(e => {
+            chartData = data.map((e) => {
                 return e.power;
             });
-            chartLabels = data.map(e => {
+            chartLabels = data.map((e) => {
                 return e.hours.toString();
             });
         }
@@ -221,8 +222,11 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
     }
 
     isAddDayButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-            this.currentDate.getDate());
+        const nextDate = new Date(
+            this.currentDate.getFullYear(),
+            this.currentDate.getMonth(),
+            this.currentDate.getDate(),
+        );
         if (direction === 'up') {
             nextDate.setDate(nextDate.getDate() + 1);
             return nextDate > new Date();
@@ -238,4 +242,3 @@ export class PowerMonitorHourlyComponent extends AppBaseComponent implements OnI
         }
     }
 }
-

@@ -8,21 +8,14 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
     templateUrl: './edit-power-consumption.component.html',
     styleUrls: ['./edit-power-consumption.component.css'],
 })
-
-
 export class EditPowerConsumptionComponent implements OnInit {
-
     data: PowerMeteringDto;
-    eventTime: { hour: number; minute: number; };
+    eventTime: { hour: number; minute: number };
     recordForm = new UntypedFormGroup({
-        eventDateField: new UntypedFormControl('',
-            [Validators.required]),
-        eventTimeField: new UntypedFormControl('',
-            [Validators.required]),
-        factualDataField: new UntypedFormControl('',
-            [Validators.required])
+        eventDateField: new UntypedFormControl('', [Validators.required]),
+        eventTimeField: new UntypedFormControl('', [Validators.required]),
+        factualDataField: new UntypedFormControl('', [Validators.required]),
     });
-
 
     constructor(
         @Optional() @Inject(MAT_DIALOG_DATA) public componentData: PowerMeteringDto,
@@ -33,7 +26,10 @@ export class EditPowerConsumptionComponent implements OnInit {
             componentData.eventDate = new Date();
         }
         this.data = componentData;
-        this.eventTime = { hour: this.data.eventDate.getHours(), minute: this.data.eventDate.getMinutes() };
+        this.eventTime = {
+            hour: this.data.eventDate.getHours(),
+            minute: this.data.eventDate.getMinutes(),
+        };
     }
 
     static async show(dialog: MatDialog, data?: PowerMeteringDto): Promise<PowerMeteringDto> {
@@ -41,7 +37,7 @@ export class EditPowerConsumptionComponent implements OnInit {
             width: '400px',
             maxHeight: '700px',
             height: '430px',
-            data
+            data,
         });
         const dialogData = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
         return dialogData;
@@ -62,7 +58,7 @@ export class EditPowerConsumptionComponent implements OnInit {
         } catch {
             eventDate = this.eventDateField.value;
         }
-        const eventTime = this.eventTimeField.value as { hour: number, minute: number };
+        const eventTime = this.eventTimeField.value as { hour: number; minute: number };
         eventDate.setHours(eventTime.hour);
         eventDate.setMinutes(eventTime.minute);
         this.data.eventDate = eventDate;
@@ -71,7 +67,13 @@ export class EditPowerConsumptionComponent implements OnInit {
         this.dialogRef.close(this.data);
     }
 
-    get eventDateField() { return this.recordForm.get('eventDateField'); }
-    get eventTimeField() { return this.recordForm.get('eventTimeField'); }
-    get factualDataField() { return this.recordForm.get('factualDataField'); }
+    get eventDateField() {
+        return this.recordForm.get('eventDateField');
+    }
+    get eventTimeField() {
+        return this.recordForm.get('eventTimeField');
+    }
+    get factualDataField() {
+        return this.recordForm.get('factualDataField');
+    }
 }

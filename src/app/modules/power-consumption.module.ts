@@ -15,12 +15,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutofocusDirective } from '../directives/autofocus.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 const routes: Routes = [
     {
         path: '',
         component: PowerConsumptionComponent,
-    }
+    },
 ];
 
 @NgModule({
@@ -28,7 +27,7 @@ const routes: Routes = [
         PowerConsumptionComponent,
         EditPowerConsumptionComponent,
         DecimalNumbersOnlyDirective,
-        AutofocusDirective
+        AutofocusDirective,
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -38,9 +37,12 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
-        EffectsModule.forFeature([PowerConsumptionEffects, PowerConsumptionDeleteEffects,
+        EffectsModule.forFeature([
+            PowerConsumptionEffects,
+            PowerConsumptionDeleteEffects,
             PowerConsumptionAddEffects,
-            PowerConsumptionEditEffects])
+            PowerConsumptionEditEffects,
+        ]),
     ],
 })
-export class PowerConsumptionModule { }
+export class PowerConsumptionModule {}

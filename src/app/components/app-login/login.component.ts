@@ -1,20 +1,15 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { LoginModalComponent } from './login-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+    selector: 'app-login',
+    templateUrl: './login.component.html',
 })
-export class AppLoginComponent implements OnInit, AfterViewInit {
+export class AppLoginComponent implements AfterViewInit {
+    constructor(private matDialog: MatDialog) {}
 
-  constructor(private matDialog: MatDialog) { }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-    LoginModalComponent.show(this.matDialog);
-  }
+    ngAfterViewInit(): void {
+        LoginModalComponent.show(this.matDialog);
+    }
 }
-

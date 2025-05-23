@@ -18,37 +18,41 @@ import { FormatDurationPipe } from '../pipes/format-duration.pipe';
 import { FormatDurationWithDaysPipe } from '../pipes/format-duration-with-days.pipe';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PowerFailuresComponent,
-    children: [
-      { path: '', redirectTo: 'hourly', pathMatch: 'full' },
-      { path: 'hourly', component: PowerFailuresHourlyComponent },
-      { path: 'daily', component: PowerFailuresDailyComponent },
-      { path: 'monthly', component: PowerFailuresMonthlyComponent },
-      { path: 'yearly', component: PowerFailuresYearlyComponent }
-    ]
-  }
+    {
+        path: '',
+        component: PowerFailuresComponent,
+        children: [
+            { path: '', redirectTo: 'hourly', pathMatch: 'full' },
+            { path: 'hourly', component: PowerFailuresHourlyComponent },
+            { path: 'daily', component: PowerFailuresDailyComponent },
+            { path: 'monthly', component: PowerFailuresMonthlyComponent },
+            { path: 'yearly', component: PowerFailuresYearlyComponent },
+        ],
+    },
 ];
 
 @NgModule({
-  declarations: [
-    PowerFailuresComponent,
-    PowerFailuresHourlyComponent,
-    PowerFailuresDailyComponent,
-    PowerFailuresMonthlyComponent,
-    PowerFailuresYearlyComponent,
-    FormatDurationPipe,
-    FormatDurationWithDaysPipe
-  ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    AppMaterialModule,
-    NgbModule,
-    TranslateModule.forChild(),
-    EffectsModule.forFeature([PowerFailuresHourlyEffects, PowerFailuresDailyEffects,
-      PowerFailuresMonthlyEffects, PowerFailuresYearlyEffects])
-  ],
+    declarations: [
+        PowerFailuresComponent,
+        PowerFailuresHourlyComponent,
+        PowerFailuresDailyComponent,
+        PowerFailuresMonthlyComponent,
+        PowerFailuresYearlyComponent,
+        FormatDurationPipe,
+        FormatDurationWithDaysPipe,
+    ],
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        AppMaterialModule,
+        NgbModule,
+        TranslateModule.forChild(),
+        EffectsModule.forFeature([
+            PowerFailuresHourlyEffects,
+            PowerFailuresDailyEffects,
+            PowerFailuresMonthlyEffects,
+            PowerFailuresYearlyEffects,
+        ]),
+    ],
 })
-export class PowerFailuresModule { }
+export class PowerFailuresModule {}

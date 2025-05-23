@@ -1,31 +1,49 @@
 <div class="modal-header dialog-header">
-    <span class="dialog-header-text">{{'POWER_CONSUMPTION.ADD_NEW_RECORD' | translate}}</span>
+    <span class="dialog-header-text">{{ 'POWER_CONSUMPTION.ADD_NEW_RECORD' | translate }}</span>
 </div>
 <div class="modal-body modal-content">
     <form [formGroup]="recordForm" autocomplete="on" class="edit-form">
         <mat-form-field appearance="outline">
-            <mat-label>{{'COMMON.DATE' | translate}}</mat-label>
-            <input matInput [matDatepicker]="picker3" placeholder="" formControlName="eventDateField" [readonly]="true"
-                [autofocus] (click)="picker3.open()">
+            <mat-label>{{ 'COMMON.DATE' | translate }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="picker3"
+                placeholder=""
+                formControlName="eventDateField"
+                [readonly]="true"
+                [autofocus]
+                (click)="picker3.open()"
+            />
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
         <div class="form-group timepicker-group">
             <!-- <label class="control-label" style="width: 90px;" for="eventTimeField">Time: </label> -->
-            <ngb-timepicker formControlName="eventTimeField" required class="timepicker"></ngb-timepicker>
+            <ngb-timepicker
+                formControlName="eventTimeField"
+                required
+                class="timepicker"
+            ></ngb-timepicker>
         </div>
         <mat-form-field appearance="outline">
-            <mat-label>{{'POWER_CONSUMPTION.VALUE' | translate}}</mat-label>
-            <input matInput decimalNumberOnly formControlName="factualDataField">
+            <mat-label>{{ 'POWER_CONSUMPTION.VALUE' | translate }}</mat-label>
+            <input matInput decimalNumberOnly formControlName="factualDataField" />
         </mat-form-field>
     </form>
 </div>
 
 <div class="modal-footer dialog-footer">
-    <button class="ok-button" type="submit" [disabled]="recordForm.invalid" mat-button tabindex="2"
-        (click)="saveItem()"> {{'BUTTONS.SAVE'
-        | translate}}
+    <button
+        class="ok-button"
+        type="submit"
+        [disabled]="recordForm.invalid"
+        mat-button
+        tabindex="2"
+        (click)="saveItem()"
+    >
+        {{ 'BUTTONS.SAVE' | translate }}
     </button>
-    <button class="cancel-button" type="reset" mat-button [matDialogClose]="null" tabindex="3"> {{'BUTTONS.CANCEL' |
-        translate}} </button>
+    <button class="cancel-button" type="reset" mat-button [matDialogClose]="null" tabindex="3">
+        {{ 'BUTTONS.CANCEL' | translate }}
+    </button>
 </div>

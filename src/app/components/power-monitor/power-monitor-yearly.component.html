@@ -1,12 +1,23 @@
 <div class="buttons-container">
-    <button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
-        matTooltipClass="tooltip">
+    <button
+        class="hourly__mat-button"
+        mat-button
+        (click)="refreshData()"
+        matTooltip="{{ 'COMMON.REFRESH' | translate }}"
+        matTooltipClass="tooltip"
+    >
         <mat-icon>refresh</mat-icon>
     </button>
 </div>
 <div class="chart-container" *ngIf="powerData">
     <div style="display: block" class="mb-5">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend" (chartClick)="chartClicked($event)"></canvas>
+        <canvas
+            baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            (chartClick)="chartClicked($event)"
+        ></canvas>
     </div>
 </div>

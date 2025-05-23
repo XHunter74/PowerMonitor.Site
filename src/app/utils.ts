@@ -5,13 +5,18 @@ export function daysInMonth(year: number, month: number) {
 
 export function isCurrentMonth(currentDate: Date) {
     const today = new Date();
-    const isCurrentMonthResult = currentDate.getFullYear() === today.getFullYear() &&
+    const isCurrentMonthResult =
+        currentDate.getFullYear() === today.getFullYear() &&
         currentDate.getMonth() === today.getMonth();
     return isCurrentMonthResult;
 }
 
 export function getStringDate(val: Date) {
-    const dateStr = val.getFullYear().toString() + '-' + (val.getMonth() + 1).toString() +
-        '-' + val.getDate().toString();
+    const dateStr =
+        val.getFullYear().toString() +
+        '-' +
+        (val.getMonth() + 1).toString() +
+        '-' +
+        val.getDate().toString();
     return dateStr;
 }

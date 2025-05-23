@@ -1,44 +1,70 @@
-<button class="hourly__mat-button" mat-button (click)="addNewRecord()"
-    matTooltip="{{'POWER_CONSUMPTION.ADD_NEW_RECORD' | translate}}" matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="addNewRecord()"
+    matTooltip="{{ 'POWER_CONSUMPTION.ADD_NEW_RECORD' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>add</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
-    matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="refreshData()"
+    matTooltip="{{ 'COMMON.REFRESH' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="table-responsive">
     <table mat-table [dataSource]="sortedData" class="table custom-table">
         <ng-container matColumnDef="eventDate">
-            <th *matHeaderCellDef class="right-align"> {{'COMMON.DATE' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.eventDate | date: 'dd.MM.yyyy HH:mm'}} </td>
+            <th *matHeaderCellDef class="right-align">{{ 'COMMON.DATE' | translate }}</th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.eventDate | date: 'dd.MM.yyyy HH:mm' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="factualData">
-            <th *matHeaderCellDef class="right-align"> {{'POWER_CONSUMPTION.FACTUAL' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.factualData}} </td>
+            <th *matHeaderCellDef class="right-align">
+                {{ 'POWER_CONSUMPTION.FACTUAL' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.factualData }}</td>
         </ng-container>
         <ng-container matColumnDef="monitorData">
-            <th *matHeaderCellDef class="right-align"> {{'POWER_CONSUMPTION.MONITOR' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.monitorData}} </td>
+            <th *matHeaderCellDef class="right-align">
+                {{ 'POWER_CONSUMPTION.MONITOR' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.monitorData }}</td>
         </ng-container>
         <ng-container matColumnDef="difference">
-            <th *matHeaderCellDef class="right-align"> {{'POWER_CONSUMPTION.DIFFERENCE' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.difference}} </td>
+            <th *matHeaderCellDef class="right-align">
+                {{ 'POWER_CONSUMPTION.DIFFERENCE' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.difference }}</td>
         </ng-container>
         <ng-container matColumnDef="coefficient">
-            <th *matHeaderCellDef class="right-align"> {{'POWER_CONSUMPTION.COEFFICIENT' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.coefficient}} </td>
+            <th *matHeaderCellDef class="right-align">
+                {{ 'POWER_CONSUMPTION.COEFFICIENT' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.coefficient }}</td>
         </ng-container>
         <ng-container matColumnDef="buttons">
             <th *matHeaderCellDef></th>
             <td *matCellDef="let element">
-                <button *ngIf="element.id" class="hourly__mat-button" [disabled]="isDeleteButtonDisabled(element.id)"
-                    mat-button (click)=deleteRecord(element.id)
-                    matTooltip="{{'POWER_CONSUMPTION.DELETE_RECORD' | translate}}" matTooltipClass="tooltip">
+                <button
+                    *ngIf="element.id"
+                    class="hourly__mat-button"
+                    [disabled]="isDeleteButtonDisabled(element.id)"
+                    mat-button
+                    (click)="deleteRecord(element.id)"
+                    matTooltip="{{ 'POWER_CONSUMPTION.DELETE_RECORD' | translate }}"
+                    matTooltipClass="tooltip"
+                >
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 </div>

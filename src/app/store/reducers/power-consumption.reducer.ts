@@ -1,5 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadPowerConsumptionData, loadPowerConsumptionDataSuccess, loadPowerConsumptionDataFailure, deletePowerConsumptionData, deletePowerConsumptionDataSuccess, deletePowerConsumptionDataFailure, addPowerConsumptionData, addPowerConsumptionDataFailure, addPowerConsumptionDataSuccess, editPowerConsumptionData, editPowerConsumptionDataFailure, editPowerConsumptionDataSuccess } from '../actions/power-consumption.actions';
+import {
+    loadPowerConsumptionData,
+    loadPowerConsumptionDataSuccess,
+    loadPowerConsumptionDataFailure,
+    deletePowerConsumptionData,
+    deletePowerConsumptionDataSuccess,
+    deletePowerConsumptionDataFailure,
+    addPowerConsumptionData,
+    addPowerConsumptionDataFailure,
+    addPowerConsumptionDataSuccess,
+    editPowerConsumptionData,
+    editPowerConsumptionDataFailure,
+    editPowerConsumptionDataSuccess,
+} from '../actions/power-consumption.actions';
 import { PowerMeteringDto } from '../../models/power-metering.dto';
 
 export interface PowerConsumptionState {
@@ -20,7 +33,11 @@ export const powerConsumptionReducer = createReducer(
     initialState,
     on(loadPowerConsumptionData, (state) => ({ ...state, loading: true, error: null })),
     on(loadPowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
-    on(loadPowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
+    on(loadPowerConsumptionDataFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
+    })),
 );
 
 export interface PowerConsumptionDeleteState {
@@ -32,14 +49,28 @@ export interface PowerConsumptionDeleteState {
 const initialDeleteState: PowerConsumptionDeleteState = {
     loading: false,
     error: null,
-    operationComplete: false
+    operationComplete: false,
 };
 
 export const powerConsumptionDeleteReducer = createReducer(
     initialDeleteState,
-    on(deletePowerConsumptionData, (state) => ({ ...state, loading: true, error: null, operationComplete: false })),
-    on(deletePowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false, operationComplete: true })),
-    on(deletePowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error, operationComplete: false }))
+    on(deletePowerConsumptionData, (state) => ({
+        ...state,
+        loading: true,
+        error: null,
+        operationComplete: false,
+    })),
+    on(deletePowerConsumptionDataSuccess, (_state, { data }) => ({
+        ...data,
+        loading: false,
+        operationComplete: true,
+    })),
+    on(deletePowerConsumptionDataFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
+        operationComplete: false,
+    })),
 );
 
 export interface PowerConsumptionAddState {
@@ -51,14 +82,28 @@ export interface PowerConsumptionAddState {
 const initialAddState: PowerConsumptionAddState = {
     loading: false,
     error: null,
-    operationComplete: false
+    operationComplete: false,
 };
 
 export const powerConsumptionAddReducer = createReducer(
     initialAddState,
-    on(addPowerConsumptionData, (state) => ({ ...state, loading: true, error: null, operationComplete: false })),
-    on(addPowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false, operationComplete: true })),
-    on(addPowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error, operationComplete: false }))
+    on(addPowerConsumptionData, (state) => ({
+        ...state,
+        loading: true,
+        error: null,
+        operationComplete: false,
+    })),
+    on(addPowerConsumptionDataSuccess, (_state, { data }) => ({
+        ...data,
+        loading: false,
+        operationComplete: true,
+    })),
+    on(addPowerConsumptionDataFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
+        operationComplete: false,
+    })),
 );
 
 export interface PowerConsumptionEditState {
@@ -70,12 +115,26 @@ export interface PowerConsumptionEditState {
 const initialEditState: PowerConsumptionEditState = {
     loading: false,
     error: null,
-    operationComplete: false
+    operationComplete: false,
 };
 
 export const powerConsumptionEditReducer = createReducer(
     initialEditState,
-    on(editPowerConsumptionData, (state) => ({ ...state, loading: true, error: null, operationComplete: false })),
-    on(editPowerConsumptionDataSuccess, (_state, { data }) => ({ ...data, loading: false, operationComplete: true })),
-    on(editPowerConsumptionDataFailure, (state, { error }) => ({ ...state, loading: false, error, operationComplete: false }))
+    on(editPowerConsumptionData, (state) => ({
+        ...state,
+        loading: true,
+        error: null,
+        operationComplete: false,
+    })),
+    on(editPowerConsumptionDataSuccess, (_state, { data }) => ({
+        ...data,
+        loading: false,
+        operationComplete: true,
+    })),
+    on(editPowerConsumptionDataFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
+        operationComplete: false,
+    })),
 );

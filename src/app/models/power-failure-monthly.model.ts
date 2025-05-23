@@ -1,6 +1,6 @@
 export class PowerFailureMonthlyModel {
     month: number;
-    monthStr:string
+    monthStr: string;
     year: number;
     eventDate: Date;
     duration: number;

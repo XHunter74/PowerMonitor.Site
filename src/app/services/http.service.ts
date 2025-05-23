@@ -7,7 +7,6 @@ import { catchError, Observable, retry, throwError, timeout } from 'rxjs';
 import { Constants } from '../constants';
 
 export class HttpService {
-
     private baseUrl: string;
 
     constructor(
@@ -18,9 +17,9 @@ export class HttpService {
         this.baseUrl = environment.apiUrl;
         if (parentModule) {
             throw new Error(
-                `${this.constructor.name} is already loaded. Import it in the AppModule only`);
+                `${this.constructor.name} is already loaded. Import it in the AppModule only`,
+            );
         }
-
     }
 
     get<T>(actionUrl: string, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
@@ -28,11 +27,16 @@ export class HttpService {
         return this.getExt<T>(`${this.baseUrl}${actionUrl}`, headers, params, shouldRetry);
     }
 
-    getExt<T>(actionUrl: string, headers: HeaderItem[], params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
+    getExt<T>(
+        actionUrl: string,
+        headers: HeaderItem[],
+        params?: HttpParams,
+        shouldRetry: boolean = true,
+    ): Observable<T> {
         let requestHeaders: HttpHeaders;
         if (headers && headers.length > 0) {
             requestHeaders = new HttpHeaders();
-            headers.forEach(e => {
+            headers.forEach((e) => {
                 requestHeaders = requestHeaders.append(e.name, e.value);
             });
         }
@@ -42,7 +46,7 @@ export class HttpService {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout)
+            timeout(Constants.RequestTimeout),
         );
         if (shouldRetry) {
             request = request.pipe(retry(Constants.RetryCount));
@@ -50,20 +54,26 @@ export class HttpService {
         return request;
     }
 
-    post<T>(actionUrl: string, body: any, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
+    post<T>(
+        actionUrl: string,
+        body: any,
+        params?: HttpParams,
+        shouldRetry: boolean = true,
+    ): Observable<T> {
         let headers = new HttpHeaders();
         if (!(body instanceof FormData)) {
             headers = new HttpHeaders({
                 'Content-Type': 'application/json',
             });
         }
-        let request = this.http.post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
+        let request = this.http
+            .post<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
             .pipe(
                 catchError((e: HttpErrorResponse) => {
                     const error = this.handleError(this.authService, e);
                     return throwError(() => error);
                 }),
-                timeout(Constants.RequestTimeout)
+                timeout(Constants.RequestTimeout),
             );
 
         if (shouldRetry) {
@@ -73,24 +83,36 @@ export class HttpService {
         return request;
     }
 
-    put<T>(actionUrl: string, body: any, params?: HttpParams, shouldRetry: boolean = true): Observable<T> {
+    put<T>(
+        actionUrl: string,
+        body: any,
+        params?: HttpParams,
+        shouldRetry: boolean = true,
+    ): Observable<T> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
-        let request = this.http.put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params }).pipe(
-            catchError((e: HttpErrorResponse) => {
-                const error = this.handleError(this.authService, e);
-                return throwError(() => error);
-            }),
-            timeout(Constants.RequestTimeout)
-        );
+        let request = this.http
+            .put<T>(`${this.baseUrl}${actionUrl}`, body, { headers, params })
+            .pipe(
+                catchError((e: HttpErrorResponse) => {
+                    const error = this.handleError(this.authService, e);
+                    return throwError(() => error);
+                }),
+                timeout(Constants.RequestTimeout),
+            );
         if (shouldRetry) {
             request = request.pipe(retry(Constants.RetryCount));
         }
         return request;
     }
 
-    delete(actionUrl: string, body?: any, params?: HttpParams, shouldRetry: boolean = true): Observable<any> {
+    delete(
+        actionUrl: string,
+        body?: any,
+        params?: HttpParams,
+        shouldRetry: boolean = true,
+    ): Observable<any> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
@@ -99,7 +121,7 @@ export class HttpService {
                 const error = this.handleError(this.authService, e);
                 return throwError(() => error);
             }),
-            timeout(Constants.RequestTimeout)
+            timeout(Constants.RequestTimeout),
         );
         if (shouldRetry) {
             request = request.pipe(retry(Constants.RetryCount));
@@ -124,7 +146,8 @@ export class HttpService {
             }
             console.error(
                 `Backend returned code ${error.status}, ` +
-                `body was: ${JSON.stringify(error.error)}`);
+                    `body was: ${JSON.stringify(error.error)}`,
+            );
         }
         return error;
     }

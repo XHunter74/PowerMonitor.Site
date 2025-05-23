@@ -1,10 +1,34 @@
 export class Constants {
     static systemStartDate = new Date(2019, 1, 18);
-    static shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    static monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
-    static AppLanguage = 'app-language'
+    static shortMonthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+    ];
+    static monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+    static AppLanguage = 'app-language';
     static RequestTimeout = 5000;
     static PingApiDelay = 20000;
     static RetryCount = 3;
@@ -34,4 +58,3 @@ export class ChartsConstants {
         defaultPower: 0,
     };
 }
-

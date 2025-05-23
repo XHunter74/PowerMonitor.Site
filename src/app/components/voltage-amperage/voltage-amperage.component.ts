@@ -4,29 +4,29 @@ import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-voltage-amperage',
-    templateUrl: './voltage-amperage.component.html'
+    templateUrl: './voltage-amperage.component.html',
 })
 export class VoltageAmperageComponent {
     selectedTab: number;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private router: Router,) {
+        private router: Router,
+    ) {
         if (router.url === '/' || router.url.toLowerCase() === '/voltage-amperage') {
-            router.navigate(['voltage-amperage', 'hourly'])
+            router.navigate(['voltage-amperage', 'hourly']);
         }
-        this.activatedRoute.data.subscribe(d => {
+        this.activatedRoute.data.subscribe((d) => {
             switch (d.name) {
-                case "hourly":
+                case 'hourly':
                     this.selectedTab = 1;
                     break;
-                case "daily":
+                case 'daily':
                     this.selectedTab = 2;
                     break;
-                case "monthly":
+                case 'monthly':
                     this.selectedTab = 3;
                     break;
-
             }
         });
     }
@@ -45,4 +45,3 @@ export class VoltageAmperageComponent {
         }
     }
 }
-

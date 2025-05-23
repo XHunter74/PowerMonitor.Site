@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { IPowerFailureModel } from '../../models/power-failure.model';
-import { loadHourlyFailuresData, loadHourlyFailuresDataFailure, loadHourlyFailuresDataSuccess } from '../actions/power-failures.hourly.actions';
+import {
+    loadHourlyFailuresData,
+    loadHourlyFailuresDataFailure,
+    loadHourlyFailuresDataSuccess,
+} from '../actions/power-failures.hourly.actions';
 
 export interface FailuresHourlyState {
     data: IPowerFailureModel[];
@@ -26,5 +30,5 @@ export const powerFailuresHourlyReducer = createReducer(
     initialState,
     on(loadHourlyFailuresData, (state) => ({ ...state, loading: true, error: null })),
     on(loadHourlyFailuresDataSuccess, (_state, { data }) => ({ ...data, loading: false })),
-    on(loadHourlyFailuresDataFailure, (state, { error }) => ({ ...state, loading: false, error }))
+    on(loadHourlyFailuresDataFailure, (state, { error }) => ({ ...state, loading: false, error })),
 );

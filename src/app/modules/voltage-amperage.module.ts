@@ -12,13 +12,11 @@ const routes: Routes = [
     {
         path: '',
         component: VoltageAmperageHourlyComponent,
-    }
+    },
 ];
 
 @NgModule({
-    declarations: [
-        VoltageAmperageHourlyComponent,
-    ],
+    declarations: [VoltageAmperageHourlyComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
@@ -28,4 +26,4 @@ const routes: Routes = [
         EffectsModule.forFeature([VoltageAmperageEffects]),
     ],
 })
-export class VoltageAmperageModule { }
+export class VoltageAmperageModule {}

@@ -1,20 +1,45 @@
 <div class="buttons-container">
-    <button class="hourly__mat-button" mat-button (click)="addDay('down')" [disabled]="isAddDayButtonDisabled('down')"
-        matTooltip="{{'COMMON.BACK' | translate}}" matTooltipClass="tooltip">
+    <button
+        class="hourly__mat-button"
+        mat-button
+        (click)="addDay('down')"
+        [disabled]="isAddDayButtonDisabled('down')"
+        matTooltip="{{ 'COMMON.BACK' | translate }}"
+        matTooltipClass="tooltip"
+    >
         <mat-icon>chevron_left</mat-icon>
     </button>
-    <button class="hourly__mat-button" mat-button (click)="addDay('up')" [disabled]="isAddDayButtonDisabled('up')"
-        mat-button matTooltip="{{'COMMON.FORWARD' | translate}}" matTooltipClass="tooltip">
+    <button
+        class="hourly__mat-button"
+        mat-button
+        (click)="addDay('up')"
+        [disabled]="isAddDayButtonDisabled('up')"
+        mat-button
+        matTooltip="{{ 'COMMON.FORWARD' | translate }}"
+        matTooltipClass="tooltip"
+    >
         <mat-icon>chevron_right</mat-icon>
     </button>
     <mat-form-field>
-        <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-            (click)="picker3.open()" (dateChange)="dateChanged($event)">
+        <input
+            matInput
+            [matDatepicker]="picker3"
+            placeholder=""
+            [value]="currentDateControl.value"
+            [readonly]="true"
+            (click)="picker3.open()"
+            (dateChange)="dateChanged($event)"
+        />
         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
     </mat-form-field>
-    <button class="refresh-button" mat-button matTooltip="{{'COMMON.REFRESH' | translate}}" matTooltipClass="tooltip"
-        (click)="refreshData()">
+    <button
+        class="refresh-button"
+        mat-button
+        matTooltip="{{ 'COMMON.REFRESH' | translate }}"
+        matTooltipClass="tooltip"
+        (click)="refreshData()"
+    >
         <mat-icon>refresh</mat-icon>
     </button>
 </div>
@@ -22,28 +47,40 @@
     <table>
         <tr>
             <td>
-                <p class="mb-0"><b>{{'POWER_MONITOR.TOTAL_POWER' | translate}}: </b>{{powerSum | formatNumber}},
-                    {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0">
+                    <b>{{ 'POWER_MONITOR.TOTAL_POWER' | translate }}: </b
+                    >{{ powerSum | formatNumber }}, {{ 'POWER_MONITOR.KWH' | translate }}
+                </p>
             </td>
         </tr>
         <tr *ngIf="powerAvg > 0">
             <td style="color: blue">
-                <p class="mb-0"><b>{{'POWER_MONITOR.AVERAGE_POWER' | translate}}: </b>{{powerAvg | formatNumber}},
-                    {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0">
+                    <b>{{ 'POWER_MONITOR.AVERAGE_POWER' | translate }}: </b
+                    >{{ powerAvg | formatNumber }}, {{ 'POWER_MONITOR.KWH' | translate }}
+                </p>
             </td>
         </tr>
         <tr class="forecast-row">
             <td *ngIf="powerForecast > 0">
-                <p class="mb-0"><b>{{'POWER_MONITOR.FORECAST_POWER' | translate}}: </b>{{powerForecast | formatNumber}},
-                    {{'POWER_MONITOR.KWH' | translate}}</p>
+                <p class="mb-0">
+                    <b>{{ 'POWER_MONITOR.FORECAST_POWER' | translate }}: </b
+                    >{{ powerForecast | formatNumber }}, {{ 'POWER_MONITOR.KWH' | translate }}
+                </p>
             </td>
         </tr>
     </table>
 </div>
 <div class="chart-container" *ngIf="powerData">
     <div style="display: block" class="mb-5">
-        <canvas #powerChart baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend"></canvas>
+        <canvas
+            #powerChart
+            baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+        ></canvas>
     </div>
 </div>
 <!-- </div> -->

@@ -6,7 +6,6 @@ import { Constants } from '../constants';
 
 @Injectable()
 export class AuthService {
-
     private isSignedInSubject = new Subject<boolean>();
     private jwtToken: JwtTokenDto | null = null;
     private authTokenInt: string | null = null;
@@ -29,7 +28,7 @@ export class AuthService {
             this.jwtToken = this.decodeToken(this.authToken);
             return this.jwtToken ? this.jwtToken.role : null;
         }
-        return null
+        return null;
     }
 
     public get authToken(): string | null {
@@ -59,8 +58,7 @@ export class AuthService {
         this.refreshTokenInt = token;
         if (token) {
             localStorage.setItem(Constants.RefreshToken, token);
-        }
-        else {
+        } else {
             localStorage.removeItem(Constants.RefreshToken);
         }
     }

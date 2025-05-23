@@ -1,5 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadPlatformInfo, loadPlatformInfoSuccess, loadPlatformInfoFailure } from '../actions/platform-info.actions';
+import {
+    loadPlatformInfo,
+    loadPlatformInfoSuccess,
+    loadPlatformInfoFailure,
+} from '../actions/platform-info.actions';
 import { ISystemInfo } from '../../models/sysinfo.model';
 import { IBoardInfoModel } from '../../models/board-info.model';
 
@@ -30,5 +34,5 @@ export const platformInfoReducer = createReducer(
         ...state,
         loading: false,
         error,
-    }))
+    })),
 );

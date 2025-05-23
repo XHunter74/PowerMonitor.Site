@@ -7,21 +7,20 @@ import { HealthState } from '../models/health-state.model';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
     providedIn: 'root',
 })
 export class InfoService extends HttpService {
-
-    constructor(http: HttpClient,
+    constructor(
+        http: HttpClient,
         authService: AuthService,
-        @Optional() @SkipSelf() parentModule: InfoService) {
+        @Optional() @SkipSelf() parentModule: InfoService,
+    ) {
         super(http, parentModule, authService);
     }
 
     getSystemInfo(): Observable<ISystemInfo> {
-        const params = new HttpParams()
-            .set('_ts', new Date().getTime().toString())
+        const params = new HttpParams().set('_ts', new Date().getTime().toString());
         return this.get<ISystemInfo>('info/sysinfo', params);
     }
 
@@ -30,8 +29,7 @@ export class InfoService extends HttpService {
     }
 
     getBoardVersion(): Observable<IBoardInfoModel> {
-        const params = new HttpParams()
-            .set('_ts', new Date().getTime().toString())
+        const params = new HttpParams().set('_ts', new Date().getTime().toString());
         return this.get<IBoardInfoModel>('info/board-build-date', params);
     }
 }

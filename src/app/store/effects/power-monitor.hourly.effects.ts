@@ -3,7 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
-import { loadHourlyMonitorData, loadHourlyMonitorDataFailure, loadHourlyMonitorDataSuccess } from '../actions/power-monitor.hourly.actions';
+import {
+    loadHourlyMonitorData,
+    loadHourlyMonitorDataFailure,
+    loadHourlyMonitorDataSuccess,
+} from '../actions/power-monitor.hourly.actions';
 import { MonitorHourlyState } from '../reducers/power-monitor.hourly.reducer';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
 import { IPowerDataStatsModel } from '../../models/power-data-stats.model';
@@ -11,10 +15,9 @@ import { IPowerDataHourlyModel } from '../../models/power-data-hourly.model';
 
 @Injectable()
 export class PowerMonitorHourlyEffects {
-
     private actions$ = inject(Actions);
 
-    constructor(private powerService: PowerService) { }
+    constructor(private powerService: PowerService) {}
 
     loadPowerMonitorHourlyData$ = createEffect(() =>
         this.actions$.pipe(
@@ -22,10 +25,11 @@ export class PowerMonitorHourlyEffects {
             switchMap(({ date }) => {
                 const hourlyData$ = this.powerService.getPowerDataHourly(date);
                 const currentDate = new Date();
-                const isCurrentDay = date.getDate() === currentDate.getDate() &&
+                const isCurrentDay =
+                    date.getDate() === currentDate.getDate() &&
                     date.getMonth() === currentDate.getMonth() &&
                     date.getFullYear() === currentDate.getFullYear();
-                
+
                 // If it's the current day, we'll need stats data too
                 if (isCurrentDay) {
                     const statsData$ = this.powerService.getPowerDataStats();
@@ -39,27 +43,27 @@ export class PowerMonitorHourlyEffects {
                         catchError((error) => {
                             console.error('Error in combineLatest for current day:', error);
                             return of(loadHourlyMonitorDataFailure({ error }));
-                        })
+                        }),
                     );
                 } else {
                     // For past days, we only need hourly data
                     return hourlyData$.pipe(
-                        map(data => {
+                        map((data) => {
                             const newState = this.createHourlyState(date, data);
                             return loadHourlyMonitorDataSuccess({ data: newState });
                         }),
                         catchError((error) => {
                             console.error('Error in hourlyData$ for past days:', error);
                             return of(loadHourlyMonitorDataFailure({ error }));
-                        })
+                        }),
                     );
                 }
             }),
             catchError((error) => {
                 console.error('Unexpected error in loadPowerMonitorHourlyData$:', error);
                 return of(loadHourlyMonitorDataFailure({ error }));
-            })
-        )
+            }),
+        ),
     );
 
     /**
@@ -69,19 +73,23 @@ export class PowerMonitorHourlyEffects {
         const newState = {} as MonitorHourlyState;
         newState.data = data;
         newState.date = date;
-        
+
         let powerSum = data.reduce((a, b) => a + b.power, 0);
         powerSum = Math.round(powerSum * 100) / 100;
         newState.powerSum = powerSum;
         newState.powerAvg = this.getAveragePower(date, powerSum, data);
-        
+
         return newState;
     }
 
-    getPowerForecast(currentHour: number, powerData: IPowerDataHourlyModel[], powerDataStats: IPowerDataStatsModel[]): number {
+    getPowerForecast(
+        currentHour: number,
+        powerData: IPowerDataHourlyModel[],
+        powerDataStats: IPowerDataStatsModel[],
+    ): number {
         let result = 0;
         for (let i = 0; i < 24; i++) {
-            const powerDataRecord = powerData.find(e => e.hours === i);
+            const powerDataRecord = powerData.find((e) => e.hours === i);
             const power = powerDataRecord ? powerDataRecord.power : 0;
             if (i < currentHour) {
                 result += power;
@@ -100,9 +108,11 @@ export class PowerMonitorHourlyEffects {
         let powerAvg = 0;
         if (powerData && powerData.length > 1) {
             const today = new Date();
-            if (today.getDate() === date.getDate() &&
+            if (
+                today.getDate() === date.getDate() &&
                 today.getMonth() === date.getMonth() &&
-                today.getFullYear() === date.getFullYear()) {
+                today.getFullYear() === date.getFullYear()
+            ) {
                 {
                     const partOfDay = today.getHours() + today.getMinutes() / 60;
                     if (partOfDay > 0) {

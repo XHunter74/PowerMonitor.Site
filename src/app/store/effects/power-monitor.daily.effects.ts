@@ -5,23 +5,29 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MonitorHourlyState } from '../reducers/power-monitor.hourly.reducer';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
-import { loadDailyMonitorData, loadDailyMonitorDataFailure, loadDailyMonitorDataSuccess } from '../actions/power-monitor.daily.actions';
+import {
+    loadDailyMonitorData,
+    loadDailyMonitorDataFailure,
+    loadDailyMonitorDataSuccess,
+} from '../actions/power-monitor.daily.actions';
 import { daysInMonth, isCurrentMonth } from '../../utils';
 
 @Injectable()
 export class PowerMonitorDailyEffects {
-
     private actions$ = inject(Actions);
 
-    constructor(private powerService: PowerService) { }
+    constructor(private powerService: PowerService) {}
 
     loadPowerMonitorHourlyData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadDailyMonitorData),
             mergeMap(({ date }) => {
                 const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
-                const finishDate = new Date(date.getFullYear(), date.getMonth(),
-                    daysInMonth(date.getFullYear(), date.getMonth() + 1));
+                const finishDate = new Date(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    daysInMonth(date.getFullYear(), date.getMonth() + 1),
+                );
                 return this.powerService.getPowerDataDaily(startDate, finishDate).pipe(
                     mergeMap((data) => {
                         const newState = {} as MonitorHourlyState;
@@ -36,17 +42,18 @@ export class PowerMonitorDailyEffects {
 
                         return of(loadDailyMonitorDataSuccess({ data: newState }));
                     }),
-                    catchError((error) => of(loadDailyMonitorDataFailure({ error })))
-                )
-            }
-            )
-        )
+                    catchError((error) => of(loadDailyMonitorDataFailure({ error }))),
+                );
+            }),
+        ),
     );
 
     getPowerForecast(date: Date, powerAvg: number): number {
         const currentDate = new Date();
-        if (date.getMonth() === currentDate.getMonth() &&
-            date.getFullYear() === currentDate.getFullYear()) {
+        if (
+            date.getMonth() === currentDate.getMonth() &&
+            date.getFullYear() === currentDate.getFullYear()
+        ) {
             const days = daysInMonth(date.getFullYear(), date.getMonth() + 1);
             const forecastPower = powerAvg * days;
             return forecastPower;
@@ -55,7 +62,11 @@ export class PowerMonitorDailyEffects {
         }
     }
 
-    getAveragePower(currentDate: Date, powerSum: number, powerData: IPowerDataDailyModel[]): number {
+    getAveragePower(
+        currentDate: Date,
+        powerSum: number,
+        powerData: IPowerDataDailyModel[],
+    ): number {
         let powerAvg = 0;
         if (powerData && powerData.length > 0) {
             let days = powerData.length;
@@ -73,6 +84,3 @@ export class PowerMonitorDailyEffects {
         return powerAvg;
     }
 }
-
-
-

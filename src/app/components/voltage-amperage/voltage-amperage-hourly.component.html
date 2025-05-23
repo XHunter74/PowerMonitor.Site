@@ -1,19 +1,44 @@
-<button class="hourly__mat-button" mat-button (click)="addDay('down')" [disabled]="isAddDayButtonDisabled('down')"
-    matTooltip="{{'COMMON.BACK' | translate}}" matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="addDay('down')"
+    [disabled]="isAddDayButtonDisabled('down')"
+    matTooltip="{{ 'COMMON.BACK' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>chevron_left</mat-icon>
 </button>
-<button class="hourly__mat-button" mat-button (click)="addDay('up')" [disabled]="isAddDayButtonDisabled('up')"
-    mat-button matTooltip="{{'COMMON.FORWARD' | translate}}" matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="addDay('up')"
+    [disabled]="isAddDayButtonDisabled('up')"
+    mat-button
+    matTooltip="{{ 'COMMON.FORWARD' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>chevron_right</mat-icon>
 </button>
 <mat-form-field>
-    <input matInput [matDatepicker]="picker3" placeholder="" [value]="currentDateControl.value" [readonly]="true"
-        (dateChange)="dateChanged($event)" (click)="picker3.open()">
+    <input
+        matInput
+        [matDatepicker]="picker3"
+        placeholder=""
+        [value]="currentDateControl.value"
+        [readonly]="true"
+        (dateChange)="dateChanged($event)"
+        (click)="picker3.open()"
+    />
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
 </mat-form-field>
-<button class="hourly__mat-button" mat-button (click)="refreshData()" matTooltip="{{'COMMON.REFRESH' | translate}}"
-    matTooltipClass="tooltip">
+<button
+    class="hourly__mat-button"
+    mat-button
+    (click)="refreshData()"
+    matTooltip="{{ 'COMMON.REFRESH' | translate }}"
+    matTooltipClass="tooltip"
+>
     <mat-icon>refresh</mat-icon>
 </button>
 <div class="row">
@@ -21,82 +46,118 @@
         <table class="d-inline-block" *ngIf="minVoltage && minAmperage">
             <tr>
                 <td class="pr-2">
-                    <b>{{'VOLTAGE_AMPERAGE.VOLTAGE' | translate}}:</b>
+                    <b>{{ 'VOLTAGE_AMPERAGE.VOLTAGE' | translate }}:</b>
                 </td>
                 <td class="text-right">
-                    {{minVoltage.voltageMin | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' | translate}},
-                    {{minVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{ minVoltage.voltageMin | number: '1.0-0'
+                    }}{{ 'VOLTAGE_AMPERAGE.V' | translate }}, {{ minVoltage.hours
+                    }}{{ 'VOLTAGE_AMPERAGE.LABEL_H' | translate }}
                 </td>
-                <td> - </td>
+                <td>-</td>
                 <td class="text-right">
-                    {{maxVoltage.voltageMax | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' | translate}},
-                    {{maxVoltage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{ maxVoltage.voltageMax | number: '1.0-0'
+                    }}{{ 'VOLTAGE_AMPERAGE.V' | translate }}, {{ maxVoltage.hours
+                    }}{{ 'VOLTAGE_AMPERAGE.LABEL_H' | translate }}
                 </td>
             </tr>
             <tr>
                 <td class="pr-2">
-                    <b>{{'VOLTAGE_AMPERAGE.VOLTAGE' | translate}}, Δ:</b>
+                    <b>{{ 'VOLTAGE_AMPERAGE.VOLTAGE' | translate }}, Δ:</b>
                 </td>
                 <td class="text-right">
-                    {{(maxVoltage.voltageMax - minVoltage.voltageMin) | number: '1.0-0'}}{{'VOLTAGE_AMPERAGE.V' |
-                    translate}}
+                    {{ maxVoltage.voltageMax - minVoltage.voltageMin | number: '1.0-0'
+                    }}{{ 'VOLTAGE_AMPERAGE.V' | translate }}
                 </td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td class="pr-2">
-                    <b>{{'VOLTAGE_AMPERAGE.AMPERAGE' | translate}}:</b>
+                    <b>{{ 'VOLTAGE_AMPERAGE.AMPERAGE' | translate }}:</b>
                 </td>
                 <td class="text-right">
-                    {{minAmperage.amperageMin | number: '1.1-1'}}{{'VOLTAGE_AMPERAGE.A' | translate}},
-                    {{minAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{ minAmperage.amperageMin | number: '1.1-1'
+                    }}{{ 'VOLTAGE_AMPERAGE.A' | translate }}, {{ minAmperage.hours
+                    }}{{ 'VOLTAGE_AMPERAGE.LABEL_H' | translate }}
                 </td>
-                <td> - </td>
+                <td>-</td>
                 <td class="text-right">
-                    {{maxAmperage.amperageMax | number: '1.1-1'}}{{'VOLTAGE_AMPERAGE.A' | translate}},
-                    {{maxAmperage.hours}}{{'VOLTAGE_AMPERAGE.LABEL_H' | translate}}
+                    {{ maxAmperage.amperageMax | number: '1.1-1'
+                    }}{{ 'VOLTAGE_AMPERAGE.A' | translate }}, {{ maxAmperage.hours
+                    }}{{ 'VOLTAGE_AMPERAGE.LABEL_H' | translate }}
                 </td>
             </tr>
         </table>
     </div>
 </div>
 <div class="table-responsive">
-    <table mat-table [dataSource]="sortedData" class="table custom-table" matSort (matSortChange)="sortData($event)">
+    <table
+        mat-table
+        [dataSource]="sortedData"
+        class="table custom-table"
+        matSort
+        (matSortChange)="sortData($event)"
+    >
         <ng-container matColumnDef="created">
-            <th *matHeaderCellDef mat-sort-header> {{'COMMON.DATE' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.created | date: 'dd.MM.yyyy'}} </td>
+            <th *matHeaderCellDef mat-sort-header>{{ 'COMMON.DATE' | translate }}</th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.created | date: 'dd.MM.yyyy' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="hours">
-            <th *matHeaderCellDef mat-sort-header> {{'COMMON.HOUR' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.hours}} </td>
+            <th *matHeaderCellDef mat-sort-header>{{ 'COMMON.HOUR' | translate }}</th>
+            <td *matCellDef="let element" class="numeric-text">{{ element.hours }}</td>
         </ng-container>
         <ng-container matColumnDef="voltageMax">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.voltageMax | number: '1.0-0'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.VOLTAGE_MAX' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.voltageMax | number: '1.0-0' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="voltageMin">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_MIN' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.voltageMin | number: '1.0-0'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.VOLTAGE_MIN' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.voltageMin | number: '1.0-0' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="voltageAvg">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.VOLTAGE_AVG' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.voltageAvg | number: '1.0-0'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.VOLTAGE_AVG' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.voltageAvg | number: '1.0-0' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="amperageMax">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_MAX' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.amperageMax | number: '1.1-1'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.AMPERAGE_MAX' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.amperageMax | number: '1.1-1' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="amperageMin">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_MIN' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.amperageMin | number: '1.1-1'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.AMPERAGE_MIN' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.amperageMin | number: '1.1-1' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="amperageAvg">
-            <th *matHeaderCellDef mat-sort-header> {{'VOLTAGE_AMPERAGE.AMPERAGE_AVG' | translate}} </th>
-            <td *matCellDef="let element" class="numeric-text"> {{element.amperageAvg | number: '1.1-1'}} </td>
+            <th *matHeaderCellDef mat-sort-header>
+                {{ 'VOLTAGE_AMPERAGE.AMPERAGE_AVG' | translate }}
+            </th>
+            <td *matCellDef="let element" class="numeric-text">
+                {{ element.amperageAvg | number: '1.1-1' }}
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 </div>

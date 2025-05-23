@@ -3,15 +3,15 @@ import { MonitorDailyState } from '../reducers/power-monitor.daily.reducer';
 
 export const loadDailyMonitorData = createAction(
     '[Monitor Daily] Load Data',
-    props<{ date: Date }>()
+    props<{ date: Date }>(),
 );
 
 export const loadDailyMonitorDataSuccess = createAction(
     '[Monitor Daily] Load Data Success',
-    props<{ data: MonitorDailyState }>()
+    props<{ data: MonitorDailyState }>(),
 );
 
 export const loadDailyMonitorDataFailure = createAction(
     '[Monitor Daily] Load Data Failure',
-    props<{ error: any }>()
+    props<{ error: any }>(),
 );

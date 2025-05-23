@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppBaseComponent } from '../../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
@@ -17,8 +17,7 @@ import { ISystemInfo } from '../../models/sysinfo.model';
     templateUrl: './platform-info.component.html',
     styleUrls: ['./platform-info.component.css'],
 })
-export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
-
+export class PlatformInfoComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public platformInfoState$: Observable<PlatformInfoState>;
     stateSubscription: Subscription;
     siteVersion: string;
@@ -28,7 +27,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
     constructor(
         private store: Store<AppState>,
         dialog: MatDialog,
-        translate: TranslateService
+        translate: TranslateService,
     ) {
         super(dialog, translate);
         this.siteVersion = environment.version;
@@ -36,9 +35,9 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     ngOnInit(): void {
         this.platformInfoState$ = this.store.select('platformInfo');
-        this.stateSubscription = this.platformInfoState$.subscribe(state => {
+        this.stateSubscription = this.platformInfoState$.subscribe((state) => {
             this.processChangedState(state);
-        })
+        });
         this.store.dispatch(loadPlatformInfo());
     }
 
@@ -53,18 +52,16 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
 
     private processChangedState(state: PlatformInfoState) {
         if (state.loading) {
-            this.translate.get('COMMON.LOADING')
-                .subscribe(text => {
-                    this.showSpinner(text);
-                });
+            this.translate.get('COMMON.LOADING').subscribe((text) => {
+                this.showSpinner(text);
+            });
         } else {
             this.closeSpinner();
         }
         if (state.error) {
-            this.translate.get('ERRORS.COMMON')
-                .subscribe(errorText => {
-                    ErrorDialogComponent.show(this.dialog, errorText);
-                });
+            this.translate.get('ERRORS.COMMON').subscribe((errorText) => {
+                ErrorDialogComponent.show(this.dialog, errorText);
+            });
             this.closeSpinner();
             return;
         }
@@ -72,7 +69,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
             this.sysInfo = state.sysInfo;
             this.boardInfo = {
                 ...state.boardInfo,
-                buildDate: new Date(state.boardInfo.buildDate)
+                buildDate: new Date(state.boardInfo.buildDate),
             };
         }
     }
@@ -97,8 +94,7 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit {
     }
 
     getSystemDateTime(): Date {
-        const localDate = new Date(this.sysInfo.systemDateTimeStr)
+        const localDate = new Date(this.sysInfo.systemDateTimeStr);
         return localDate;
     }
 }
-

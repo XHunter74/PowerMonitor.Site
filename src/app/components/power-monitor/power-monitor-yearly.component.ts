@@ -23,11 +23,10 @@ import { loadYearlyMonitorData } from '../../store/actions/power-monitor.yearly.
     styleUrls: ['./power-monitor.component.css'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS }
-    ]
+        { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS },
+    ],
 })
 export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
-
     public powerData: IPowerDataYearlyModel[];
 
     public barChartOptions: ChartConfiguration<'bar'>['options'] = {
@@ -40,14 +39,12 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
             } else {
                 target.style.cursor = 'default';
             }
-        }
+        },
     };
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [
-        { data: [], label: 'Power, kW/h' }
-    ];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
 
     // events
     public chartClicked(e: any): void {
@@ -61,12 +58,12 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
     powerMonitorDataState$: Observable<MonitorYearlyState>;
     stateSubscription: Subscription;
 
-
     constructor(
         private store: Store<AppState>,
         private router: Router,
         dialog: MatDialog,
-        translate: TranslateService) {
+        translate: TranslateService,
+    ) {
         super(dialog, translate);
         this.translateWords();
         translate.onLangChange.subscribe(async () => {
@@ -76,18 +73,16 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
 
     async translateWords() {
         const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
-        const data = [
-            { data: this.barChartData[0].data, label: chartLabel }
-        ];
+        const data = [{ data: this.barChartData[0].data, label: chartLabel }];
         this.barChartData = data;
     }
 
     ngOnInit() {
         this.powerMonitorDataState$ = this.store.select('powerMonitorYearly');
         Chart.register(Annotation);
-        this.stateSubscription = this.powerMonitorDataState$.subscribe(state => {
+        this.stateSubscription = this.powerMonitorDataState$.subscribe((state) => {
             this.processChangedState(state);
-        })
+        });
         this.store.dispatch(loadYearlyMonitorData({ data: null }));
     }
 
@@ -103,18 +98,16 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
 
     private processChangedState(state: MonitorYearlyState) {
         if (state.loading) {
-            this.translate.get('COMMON.LOADING')
-                .subscribe(text => {
-                    this.showSpinner(text);
-                });
+            this.translate.get('COMMON.LOADING').subscribe((text) => {
+                this.showSpinner(text);
+            });
         } else {
             this.closeSpinner();
         }
         if (state.error) {
-            this.translate.get('ERRORS.COMMON')
-                .subscribe(errorText => {
-                    ErrorDialogComponent.show(this.dialog, errorText);
-                });
+            this.translate.get('ERRORS.COMMON').subscribe((errorText) => {
+                ErrorDialogComponent.show(this.dialog, errorText);
+            });
             this.closeSpinner();
             return;
         }
@@ -129,10 +122,10 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
     }
 
     prepareChart(data: IPowerDataYearlyModel[]) {
-        const chartData = data.map(e => {
+        const chartData = data.map((e) => {
             return e.power;
         });
-        const chartLabels = data.map(e => {
+        const chartLabels = data.map((e) => {
             return e.year.toString();
         });
         this.barChartData[0].data = chartData;

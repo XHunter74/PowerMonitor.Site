@@ -4,13 +4,13 @@
     }
 
     .gauge-row {
-        justify-content: center
+        justify-content: center;
     }
 }
 
-@media screen and (min-width:961px) {
+@media screen and (min-width: 961px) {
     .gauge-row {
-        justify-content: left
+        justify-content: left;
     }
 
     .container {

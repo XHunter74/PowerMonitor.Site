@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AppBaseComponent } from '../../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,14 +21,21 @@ const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 @Component({
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html',
-    styleUrls: ['./voltage-amperage-hourly.component.css']
+    styleUrls: ['./voltage-amperage-hourly.component.css'],
 })
-export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit {
-
+export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     sortedData = new MatTableDataSource();
-    displayedColumns: string[] = ['created', 'hours', 'voltageMax', 'voltageMin',
-        'voltageAvg', 'amperageMax', 'amperageMin', 'amperageAvg'];
+    displayedColumns: string[] = [
+        'created',
+        'hours',
+        'voltageMax',
+        'voltageMin',
+        'voltageAvg',
+        'amperageMax',
+        'amperageMin',
+        'amperageAvg',
+    ];
 
     public currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
@@ -45,7 +52,7 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         private activatedRouter: ActivatedRoute,
         private router: Router,
         dialog: MatDialog,
-        translate: TranslateService
+        translate: TranslateService,
     ) {
         super(dialog, translate);
     }
@@ -57,7 +64,11 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
             const restoredSort = <Sort>JSON.parse(restoredSortStr);
             if (restoredSort.active && restoredSort.direction) {
                 sort.sort({ id: null, start: restoredSort.direction, disableClear: false });
-                sort.sort({ id: restoredSort.active, start: restoredSort.direction, disableClear: false });
+                sort.sort({
+                    id: restoredSort.active,
+                    start: restoredSort.direction,
+                    disableClear: false,
+                });
                 const sortable = sort.sortables.get(restoredSort.active);
                 if (sortable) {
                     (sortable as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
@@ -69,12 +80,14 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     ngOnInit() {
         this.voltageAmperageState$ = this.store.select('voltageAmperage');
 
-        this.activatedRouter.queryParams.subscribe(params => {
+        this.activatedRouter.queryParams.subscribe((params) => {
             const year = params['year'];
             const month = params['month'];
             const day = params['day'];
-            const date = year && month && day ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day)) :
-                new Date();
+            const date =
+                year && month && day
+                    ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+                    : new Date();
             if (!this.currentDate) {
                 this.currentDate = date;
                 this.store.dispatch(loadVoltageAmperage({ date }));
@@ -83,9 +96,9 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
         this.sortedData.sort = this.sort;
         this.restoreSort();
-        this.stateSubscription = this.voltageAmperageState$.subscribe(state => {
+        this.stateSubscription = this.voltageAmperageState$.subscribe((state) => {
             this.processChangedState(state);
-        })
+        });
     }
 
     ngOnDestroy(): void {
@@ -100,18 +113,16 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     processChangedState(state: VoltageAmperageState) {
         if (state.loading) {
-            this.translate.get('COMMON.LOADING')
-                .subscribe(text => {
-                    this.showSpinner(text);
-                });
+            this.translate.get('COMMON.LOADING').subscribe((text) => {
+                this.showSpinner(text);
+            });
         } else {
             this.closeSpinner();
         }
         if (state.error) {
-            this.translate.get('ERRORS.COMMON')
-                .subscribe(errorText => {
-                    ErrorDialogComponent.show(this.dialog, errorText);
-                });
+            this.translate.get('ERRORS.COMMON').subscribe((errorText) => {
+                ErrorDialogComponent.show(this.dialog, errorText);
+            });
             this.closeSpinner();
             return;
         }
@@ -122,8 +133,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                 queryParams: {
                     year: this.currentDate.getFullYear(),
                     month: this.currentDate.getMonth() + 1,
-                    day: this.currentDate.getDate()
-                }
+                    day: this.currentDate.getDate(),
+                },
             });
         }
         if (!state.loading && state.data) {
@@ -162,8 +173,11 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
     }
 
     isAddDayButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),
-            this.currentDate.getDate());
+        const nextDate = new Date(
+            this.currentDate.getFullYear(),
+            this.currentDate.getMonth(),
+            this.currentDate.getDate(),
+        );
         if (direction === 'up') {
             nextDate.setDate(nextDate.getDate() + 1);
             return nextDate > new Date();
@@ -177,4 +191,3 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         this.store.dispatch(loadVoltageAmperage({ date: this.currentDate }));
     }
 }
-

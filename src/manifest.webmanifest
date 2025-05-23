@@ -1,17 +1,17 @@
 {
-  "name": "PowerMonitor",
-  "short_name": "PowerMonitor",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
-  "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
-  "icons": [
-    {
-      "src": "assets/favicon.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "maskable any"
-    }
-  ]
+    "name": "PowerMonitor",
+    "short_name": "PowerMonitor",
+    "theme_color": "#1976d2",
+    "background_color": "#fafafa",
+    "display": "standalone",
+    "scope": "./",
+    "start_url": "./",
+    "icons": [
+        {
+            "src": "assets/favicon.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ]
 }

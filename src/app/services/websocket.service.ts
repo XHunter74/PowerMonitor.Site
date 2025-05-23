@@ -6,21 +6,17 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class WebSocket extends Socket {
-
     constructor(@Inject('BASE_URL') baseUrl: string) {
         baseUrl = baseUrl.replace('api/', '');
         super({ url: baseUrl, options: {} });
     }
-
 }
 
 @Injectable()
 export class WebSocketService {
-
     private socket: WebSocket;
 
-    constructor(private webSocket: WebSocket) {
-    }
+    constructor(private webSocket: WebSocket) {}
 
     sendMessage(message: string, data?: any) {
         this.webSocket.emit(message, data);
@@ -38,13 +34,14 @@ export class WebSocketService {
     }
 
     sensorsData(): Observable<ISensorsDataModel> {
-        var data = this.webSocket.fromEvent('sensors-data')
-            .pipe(map((data: ISensorsDataModel) => {
+        var data = this.webSocket.fromEvent('sensors-data').pipe(
+            map((data: ISensorsDataModel) => {
                 data.voltage = Math.round(data.voltage);
                 data.amperage = Math.round(data.amperage * 10) / 10;
-                data.power = Math.round(data.voltage * data.amperage / 1000 * 10) / 10;
+                data.power = Math.round(((data.voltage * data.amperage) / 1000) * 10) / 10;
                 return data;
-            }));
+            }),
+        );
         return data;
     }
 
@@ -56,5 +53,4 @@ export class WebSocketService {
     get isConnected(): boolean {
         return this.socket && this.socket.connected;
     }
-
 }
