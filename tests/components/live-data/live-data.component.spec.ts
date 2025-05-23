@@ -12,21 +12,21 @@ const mockChartsBuilder = {
     buildPowerChart: jest.fn(() => ({ data: [] })),
 };
 
-jest.mock('../../src/app/constants', () => ({
+jest.mock('../../../src/app/constants', () => ({
     Constants: mockConstants,
     ChartsConstants: mockChartsConstants,
 }));
 
-jest.mock('../../src/app/components/live-data/charts-builder', () => ({
+jest.mock('../../../src/app/components/live-data/charts-builder', () => ({
     ChartsBuilder: mockChartsBuilder,
 }));
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LiveDataComponent } from '../../src/app/components/live-data/live-data.component';
+import { LiveDataComponent } from '../../../src/app/components/live-data/live-data.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { WebSocketService } from '../../src/app/services/websocket.service';
+import { WebSocketService } from '../../../src/app/services/websocket.service';
 
 // Mocks
 class MockWebSocketService {

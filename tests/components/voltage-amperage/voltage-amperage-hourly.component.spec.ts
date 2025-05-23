@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { VoltageAmperageHourlyComponent } from '../../src/app/components/voltage-amperage/voltage-amperage-hourly.component';
+import { VoltageAmperageHourlyComponent } from '../../../src/app/components/voltage-amperage/voltage-amperage-hourly.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';

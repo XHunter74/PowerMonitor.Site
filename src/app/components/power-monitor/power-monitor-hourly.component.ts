@@ -129,7 +129,7 @@ export class PowerMonitorHourlyComponent
         }
     }
 
-    private processChangedState(state: MonitorHourlyState) {
+    public processChangedState(state: MonitorHourlyState) {
         if (state.loading) {
             this.translate.get('COMMON.LOADING').subscribe((text) => {
                 this.showSpinner(text);

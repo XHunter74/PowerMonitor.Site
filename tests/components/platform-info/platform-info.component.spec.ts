@@ -3,10 +3,10 @@ import { StoreModule, Store } from '@ngrx/store';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { PlatformInfoComponent } from '../../src/app/components/platform-info/platform-info.component';
-import { AppBaseComponent } from '../../src/app/components/base-component/app-base.component';
-import { PlatformInfoState } from '../../src/app/store/reducers/platform-info.reducer';
-import { loadPlatformInfo } from '../../src/app/store/actions/platform-info.actions';
+import { PlatformInfoComponent } from '../../../src/app/components/platform-info/platform-info.component';
+import { AppBaseComponent } from '../../../src/app/components/base-component/app-base.component';
+import { PlatformInfoState } from '../../../src/app/store/reducers/platform-info.reducer';
+import { loadPlatformInfo } from '../../../src/app/store/actions/platform-info.actions';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Mock AppBaseComponent to avoid side effects
