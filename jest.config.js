@@ -24,6 +24,7 @@ module.exports = {
     collectCoverageFrom: [
         'src/app/**/*.ts',
         '!src/app/**/*.module.ts',      // skip NgModules
+        '!src/app/**/*.factory.ts',      // skip Factories
         '!src/app/**/*.routing.ts',     // skip routing
         '!src/app/main.ts',             // entrypoint
         '!src/app/**/*.spec.ts'         // skip test files

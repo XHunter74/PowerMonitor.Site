@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { AppMaterialModule } from './material-module';
+import { AppMaterialModule } from './material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VoltageAmperageEffects } from '../store/effects/voltage-amperage.effects';
 import { VoltageAmperageHourlyComponent } from '../components/voltage-amperage/voltage-amperage-hourly.component';

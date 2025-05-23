@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './material-module';
+import { AppMaterialModule } from './material.module';
 import { AppComponent } from '../app.component';
 import { NavMenuComponent } from '../components/nav-menu/nav-menu.component';
 import { LoginModalComponent } from '../components/app-login/login-modal.component';

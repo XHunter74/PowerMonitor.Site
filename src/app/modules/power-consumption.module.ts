@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { AppMaterialModule } from './material-module';
+import { AppMaterialModule } from './material.module';
 import { PowerConsumptionComponent } from '../components/power-consumption/power-consumption.component';
 import { EditPowerConsumptionComponent } from '../components/power-consumption/edit-power-consumption.component';
 import { PowerConsumptionEffects } from '../store/effects/power-consumption.effects';

@@ -12,7 +12,7 @@ import { PowerMonitorHourlyComponent } from '../components/power-monitor/power-m
 import { PowerMonitorDailyComponent } from '../components/power-monitor/power-monitor-daily.component';
 import { PowerMonitorMonthlyComponent } from '../components/power-monitor/power-monitor-monthly.component';
 import { PowerMonitorYearlyComponent } from '../components/power-monitor/power-monitor-yearly.component';
-import { AppMaterialModule } from './material-module';
+import { AppMaterialModule } from './material.module';
 import { NgChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormatNumberPipe } from '../pipes/format-number.pipe';

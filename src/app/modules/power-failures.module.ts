@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { AppMaterialModule } from './material-module';
+import { AppMaterialModule } from './material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PowerFailuresComponent } from '../components/power-failures/power-failures.component';
 import { PowerFailuresHourlyComponent } from '../components/power-failures/power-failures-hourly.component';
