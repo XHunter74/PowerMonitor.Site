@@ -146,7 +146,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         }
     }
 
-    private processChangedState(state: MonitorMonthlyState) {
+    public processChangedState(state: MonitorMonthlyState) {
         if (state.loading) {
             this.translate.get('COMMON.LOADING').subscribe((text) => {
                 this.showSpinner(text);
