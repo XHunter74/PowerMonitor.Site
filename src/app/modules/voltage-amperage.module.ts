@@ -7,6 +7,7 @@ import { AppMaterialModule } from './material-module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VoltageAmperageEffects } from '../store/effects/voltage-amperage.effects';
 import { VoltageAmperageHourlyComponent } from '../components/voltage-amperage/voltage-amperage-hourly.component';
+import { VoltageAmperageComponent } from '../components/voltage-amperage/voltage-amperage.component';
 
 const routes: Routes = [
     {
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [VoltageAmperageHourlyComponent],
+    declarations: [VoltageAmperageComponent, VoltageAmperageHourlyComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
