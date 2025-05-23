@@ -5,6 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatDurationPipe implements PipeTransform {
     transform(duration: number): string {
+        if (duration <= 0 || isNaN(duration)) {
+            return '00:00:00';
+        }
         let sec_num = Math.floor(duration / 1000);
         const hours = Math.floor(sec_num / 3600);
         sec_num -= hours * 3600;
