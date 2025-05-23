@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IPowerDataYearlyModel } from '../../models/power-data-yearly.model';
 import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';

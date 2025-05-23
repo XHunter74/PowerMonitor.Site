@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPowerFailureModel } from '../../models/power-failure.model';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { Constants } from '../../constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

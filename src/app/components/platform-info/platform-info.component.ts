@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';

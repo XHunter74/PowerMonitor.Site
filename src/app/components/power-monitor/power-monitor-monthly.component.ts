@@ -5,7 +5,7 @@ import { Moment } from 'moment';
 import { UntypedFormControl } from '@angular/forms';
 import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
 import { Constants } from '../../constants';

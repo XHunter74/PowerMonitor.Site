@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../../models/voltage-amperage.model';

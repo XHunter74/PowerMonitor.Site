@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SpinnerDialogComponent } from '../dialogs/spinner-dialog/spinner-dialog.component';
+import { SpinnerDialogComponent } from '../../dialogs/spinner-dialog/spinner-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
 

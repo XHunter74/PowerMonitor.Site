@@ -10,7 +10,7 @@ import {
 import { IPowerDataHourlyModel } from '../../models/power-data-hourly.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
-import { AppBaseComponent } from '../../base-component/app-base.component';
+import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
 import { Constants } from '../../constants';
