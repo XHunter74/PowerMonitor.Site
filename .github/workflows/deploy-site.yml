@@ -30,11 +30,26 @@ jobs:
             - name: Lint code
               run: npm run lint
 
+            - name: Run tests
+              run: npm run test
+
             - name: Build project
               run: npm run build-prod
 
-            - name: Run tests
-              run: npm run test
+            - name: Upload build artifact (dist)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: dist
+                  path: dist/
+
+            - name: Upload build artifact (versioned files)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: versioned-files
+                  path: |
+                      package.json
+                      package-lock.json
+                      src/environments/environment.prod.ts
 
             - name: Check for changes in src folder
               id: src-changes
@@ -60,8 +75,17 @@ jobs:
               with:
                   node-version: 20
 
-            - name: Install dependencies
-              run: npm install
+            - name: Download build artifact (dist)
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist
+                  path: dist
+
+            - name: Download build artifact (versioned files)
+              uses: actions/download-artifact@v4
+              with:
+                  name: versioned-files
+                  path: ./
 
             - name: Setup Git identity
               run: |
