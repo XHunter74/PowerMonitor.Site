@@ -1,3 +1,4 @@
+// Co-located unit test for NavMenuComponent
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NavMenuComponent } from '../../../src/app/components/nav-menu/nav-menu.component';
@@ -9,36 +10,19 @@ import { of, throwError, Subscription } from 'rxjs';
 import { Constants } from '../../../src/app/constants';
 import { TranslateModule } from '@ngx-translate/core';
 
-// Suppress console.error output during tests
-jest.spyOn(console, 'error').mockImplementation(() => {});
-// Removed RouterTestingModule to prevent real RouterLink directives instantiation
-// Suppress console.error output in tests
+// Silence console.error from component API error handling
 jest.spyOn(console, 'error').mockImplementation(() => {});
 
-// Suppress console.error output during API error handling across tests
-jest.spyOn(console, 'error').mockImplementation(() => {});
-describe('NavMenuComponent', () => {
-
+// Mock the ChangeLanguageDialogComponent
 jest.mock(
     '../../../src/app/dialogs/change-language-dialog/change-language-dialog.component',
     () => ({ ChangeLanguageDialogComponent: { show: jest.fn() } }),
 );
-
 const MockChangeLanguageDialogComponent = jest.requireMock(
     '../../../src/app/dialogs/change-language-dialog/change-language-dialog.component',
 ).ChangeLanguageDialogComponent;
 
-import { Component, Directive, Input } from '@angular/core';
-
 describe('NavMenuComponent', () => {
-    // Suppress console.error output during tests
-    let consoleErrorSpy: jest.SpyInstance;
-    beforeAll(() => {
-        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    });
-    afterAll(() => {
-        consoleErrorSpy.mockRestore();
-    });
     let component: NavMenuComponent;
     let fixture: ComponentFixture<NavMenuComponent>;
     let authService: AuthService;
@@ -50,7 +34,7 @@ describe('NavMenuComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [NavMenuComponent],
             imports: [TranslateModule.forRoot()],
-            schemas: [NO_ERRORS_SCHEMA], // Ignore unknown directives like routerLink
+            schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {
                     provide: AuthService,
@@ -105,18 +89,16 @@ describe('NavMenuComponent', () => {
     });
 
     it('should set isAPIOnline to false when API is offline', () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         jest.spyOn(infoService, 'pingApi').mockReturnValue(
-            throwError(() => new Error('API error'))
+            throwError(() => new Error('API error')),
         );
         component['checkApiState']();
         expect(component.isAPIOnline).toBe(false);
-        consoleErrorSpy.mockRestore();
     });
 
     it('should return correct apiState values', () => {
-        component.isAPIOnline = undefined as any; // Use undefined to simulate undefined state
-        expect(component.apiState).toBe(0); // Expect 0 when undefined
+        component.isAPIOnline = undefined as any;
+        expect(component.apiState).toBe(0);
 
         component.isAPIOnline = false;
         expect(component.apiState).toBe(1);
@@ -132,14 +114,10 @@ describe('NavMenuComponent', () => {
     });
 
     it('should navigate to /app-login on logout when user is not authenticated', () => {
-        jest.spyOn(authService.isAuthenticated, 'subscribe').mockImplementation(
-            (next?: ((value: boolean) => void) | null | undefined) => {
-                if (next) {
-                    next(false);
-                }
-                return new Subscription();
-            },
-        );
+        jest.spyOn(authService.isAuthenticated, 'subscribe').mockImplementation((next) => {
+            next(false);
+            return new Subscription();
+        });
         component.ngOnInit();
         expect(router.navigate).toHaveBeenCalledWith(['/app-login']);
     });
