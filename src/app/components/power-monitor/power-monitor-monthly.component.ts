@@ -189,27 +189,35 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     prepareChart(data: IPowerDataMonthlyModel[]) {
         let chartData: number[] = [];
         let chartLabels: string[] = [];
-        if (data.length < 12) {
-            for (let i = 0; i < 12; i++) {
-                chartData.push(0);
-                chartLabels.push(Constants.shortMonthNames[i]);
-            }
-            for (const record of data) {
-                chartData[record.month - 1] = record.power;
-            }
-        } else {
-            chartData = data.map((e) => {
-                return e.power;
-            });
-            chartLabels = data.map((e) => {
-                return Constants.shortMonthNames[e.month - 1];
-            });
-        }
+        data = this.normalizeMonthlyData(data);
+        chartData = data.map((e) => {
+            return e.power;
+        });
+        chartLabels = data.map((e) => {
+            return Constants.shortMonthNames[e.month - 1];
+        });
         this.translate.get('MONTHS').subscribe((months: { [key: string]: string }) => {
             chartLabels = chartLabels.map((e) => months[e.toUpperCase()] || e);
         });
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
+    }
+
+    normalizeMonthlyData(data: IPowerDataMonthlyModel[]): IPowerDataMonthlyModel[] {
+        const normalizedData: IPowerDataMonthlyModel[] = [];
+        for (let i = 0; i < 12; i++) {
+            const record = data.find((e) => e.month === i + 1);
+            if (record) {
+                normalizedData.push(record);
+            } else {
+                normalizedData.push({
+                    month: i + 1,
+                    power: 0,
+                    year: 0,
+                });
+            }
+        }
+        return normalizedData;
     }
 
     addYear(direction: string) {
