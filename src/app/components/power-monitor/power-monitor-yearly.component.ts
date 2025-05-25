@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { Router } from '@angular/router';
 import { IPowerDataYearlyModel } from '../../models/power-data-yearly.model';
 import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
