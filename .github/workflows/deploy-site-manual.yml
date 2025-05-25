@@ -35,20 +35,16 @@ jobs:
             - name: Run tests
               run: npm run test
 
-            - name: Check for changes in src folder
-              id: src-changes
-              run: |
-                  if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q '^src/'; then
-                    echo "src_changed=true" >> $GITHUB_OUTPUT
-                  else
-                    echo "src_changed=false" >> $GITHUB_OUTPUT
-                  fi
-
     deploy:
         needs: build
         runs-on: ubuntu-latest
-        if: needs.build.outputs.src_changed == 'true'
         steps:
+            - name: Download build artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: dist
+                  path: dist
+
             - name: Checkout repo
               uses: actions/checkout@v3
               with:
