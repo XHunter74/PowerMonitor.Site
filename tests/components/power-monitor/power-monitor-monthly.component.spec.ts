@@ -1,3 +1,4 @@
+import { IPowerDataMonthlyModel } from '../../../src/app/models/power-data-monthly.model';
 import { UntypedFormControl, NgControl } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Input } from '@angular/core';
@@ -178,5 +179,47 @@ describe('PowerMonitorMonthlyComponent', () => {
         };
         component.processChangedState(state);
         expect(spy).toHaveBeenCalled();
+    });
+
+    it('should fill missing months with zeroed records', () => {
+        // Only months 1 and 3 are present
+        const input: IPowerDataMonthlyModel[] = [
+            { month: 1, power: 5, year: 2024 },
+            { month: 3, power: 10, year: 2024 },
+        ];
+        const result = component.normalizeMonthlyData(input);
+        expect(result.length).toBe(12);
+        // Check month 1 and 3 are preserved
+        expect(result[0].power).toBe(5);
+        expect(result[2].power).toBe(10);
+        // Check month 2 is zeroed
+        expect(result[1].power).toBe(0);
+        // Check all other months are zeroed
+        for (let i = 3; i < 12; i++) {
+            expect(result[i].power).toBe(0);
+            expect(result[i].month).toBe(i + 1);
+        }
+    });
+
+    it('should return all zeroed records for empty input', () => {
+        const result = component.normalizeMonthlyData([]);
+        expect(result.length).toBe(12);
+        for (let i = 0; i < 12; i++) {
+            expect(result[i].power).toBe(0);
+            expect(result[i].month).toBe(i + 1);
+        }
+    });
+
+    it('should preserve all records if all months are present', () => {
+        const input: IPowerDataMonthlyModel[] = [];
+        for (let i = 0; i < 12; i++) {
+            input.push({ month: i + 1, power: i + 1, year: 2024 });
+        }
+        const result = component.normalizeMonthlyData(input);
+        expect(result.length).toBe(12);
+        for (let i = 0; i < 12; i++) {
+            expect(result[i].power).toBe(i + 1);
+            expect(result[i].month).toBe(i + 1);
+        }
     });
 });
