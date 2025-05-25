@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PowerService } from '../../services/power-service';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MonitorHourlyState } from '../reducers/power-monitor.hourly.reducer';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
 import {
     loadDailyMonitorData,
@@ -11,6 +10,8 @@ import {
     loadDailyMonitorDataSuccess,
 } from '../actions/power-monitor.daily.actions';
 import { daysInMonth, isCurrentMonth } from '../../utils';
+import { MonitorDailyState } from '../reducers/power-monitor.daily.reducer';
+import { Constants } from '../../constants';
 
 @Injectable()
 export class PowerMonitorDailyEffects {
@@ -30,7 +31,7 @@ export class PowerMonitorDailyEffects {
                 );
                 return this.powerService.getPowerDataDaily(startDate, finishDate).pipe(
                     mergeMap((data) => {
-                        const newState = {} as MonitorHourlyState;
+                        const newState = {} as MonitorDailyState;
                         newState.data = data;
                         newState.date = startDate;
                         let powerSum = 0;
@@ -73,7 +74,9 @@ export class PowerMonitorDailyEffects {
             if (isCurrentMonth(currentDate)) {
                 days = days - 1;
                 const today = new Date();
-                const partOfDay = (today.getHours() + today.getMinutes() / 60) / 24;
+                const partOfDay =
+                    (today.getHours() + today.getMinutes() / Constants.MinutesImHours) /
+                    Constants.HoursInDay;
                 days = days + partOfDay;
             }
             if (days > 0) {

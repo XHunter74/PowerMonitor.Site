@@ -79,7 +79,6 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     powerMonitorDataState$: Observable<MonitorDailyState>;
     stateSubscription: Subscription;
 
-    // events
     public chartClicked(e: any): void {
         if (e.active.length > 0) {
             const days = e.active['0'].index + 1;
@@ -197,27 +196,33 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     prepareChart(currentDate: Date, data: IPowerDataDailyModel[]) {
         let chartData: number[] = [];
         let chartLabels: string[] = [];
-        const days = daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1);
-        if (data.length < days) {
-            for (let i = 0; i < days; i++) {
-                chartData.push(0);
-                chartLabels.push((i + 1).toString());
-            }
-            for (const record of data) {
-                const day = new Date(record.created).getDate();
-                chartData[day - 1] = record.power;
-            }
-        } else {
-            chartData = data.map((e) => {
-                return e.power;
-            });
-            chartLabels = data.map((e) => {
-                const day = new Date(e.created).getDate();
-                return day.toString();
-            });
-        }
+        data = this.normalizeDailyData(currentDate, data);
+        chartData = data.map((e) => {
+            return e.power;
+        });
+        chartLabels = data.map((e) => {
+            const day = new Date(e.created).getDate();
+            return day.toString();
+        });
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
+    }
+
+    normalizeDailyData(currentDate: Date, data: IPowerDataDailyModel[]): IPowerDataDailyModel[] {
+        const days = daysInMonth(currentDate.getFullYear(), currentDate.getMonth() + 1);
+        const normalizedData: IPowerDataDailyModel[] = [];
+        for (let i = 0; i < days; i++) {
+            const record = data.find((e) => new Date(e.created).getDate() === i + 1);
+            if (record) {
+                normalizedData.push(record);
+            } else {
+                normalizedData.push({
+                    power: 0,
+                    created: new Date(currentDate.getFullYear(), currentDate.getMonth(), i + 1),
+                });
+            }
+        }
+        return normalizedData;
     }
 
     async addMonth(direction: string) {
@@ -240,8 +245,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             nextDate.setMonth(nextDate.getMonth() + 1);
             const today = new Date();
             return (
-                nextDate.getFullYear() * 12 + nextDate.getMonth() >
-                today.getFullYear() * 12 + today.getMonth()
+                nextDate.getFullYear() * Constants.MonthsInYear + nextDate.getMonth() >
+                today.getFullYear() * Constants.MonthsInYear + today.getMonth()
             );
         } else {
             nextDate.setMonth(nextDate.getMonth() - 1);
