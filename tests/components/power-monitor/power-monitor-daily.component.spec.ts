@@ -1,3 +1,4 @@
+import { IPowerDataDailyModel } from '../../../src/app/models/power-data-daily.model';
 import { UntypedFormControl, NgControl } from '@angular/forms';
 import { Constants } from '../../../src/app/constants';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -176,5 +177,51 @@ describe('PowerMonitorDailyComponent', () => {
         };
         component.processChangedState(state);
         expect(spy).toHaveBeenCalled();
+    });
+    it('should fill missing days with zeroed records', () => {
+        const currentDate = new Date(2024, 4, 1); // May 2024
+        // Only day 1 and 3 are present
+        const input: IPowerDataDailyModel[] = [
+            { created: new Date(2024, 4, 1), power: 5 },
+            { created: new Date(2024, 4, 3), power: 10 },
+        ];
+        const result = component.normalizeDailyData(currentDate, input);
+        expect(result.length).toBe(31); // May has 31 days
+        // Check day 1 and 3 are preserved
+        expect(result[0].power).toBe(5);
+        expect(result[2].power).toBe(10);
+        // Check day 2 is zeroed
+        expect(result[1].power).toBe(0);
+        // Check all other days are zeroed
+        for (let i = 3; i < 31; i++) {
+            if (i !== 2) {
+                expect(result[i].power).toBe(0);
+                expect(new Date(result[i].created).getDate()).toBe(i + 1);
+            }
+        }
+    });
+
+    it('should return all zeroed records for empty input', () => {
+        const currentDate = new Date(2024, 4, 1); // May 2024
+        const result = component.normalizeDailyData(currentDate, []);
+        expect(result.length).toBe(31);
+        for (let i = 0; i < 31; i++) {
+            expect(result[i].power).toBe(0);
+            expect(new Date(result[i].created).getDate()).toBe(i + 1);
+        }
+    });
+
+    it('should preserve all records if all days are present', () => {
+        const currentDate = new Date(2024, 4, 1); // May 2024
+        const input: IPowerDataDailyModel[] = [];
+        for (let i = 0; i < 31; i++) {
+            input.push({ created: new Date(2024, 4, i + 1), power: i + 1 });
+        }
+        const result = component.normalizeDailyData(currentDate, input);
+        expect(result.length).toBe(31);
+        for (let i = 0; i < 31; i++) {
+            expect(result[i].power).toBe(i + 1);
+            expect(new Date(result[i].created).getDate()).toBe(i + 1);
+        }
     });
 });

@@ -185,4 +185,46 @@ describe('PowerMonitorHourlyComponent', () => {
         component.processChangedState(state);
         expect(spy).toHaveBeenCalled();
     });
+
+    it('should fill missing hours with zeroed records', () => {
+        // Only hours 0 and 2 are present
+        const input = [
+            { hours: 0, power: 5, created: new Date() },
+            { hours: 2, power: 10, created: new Date() },
+        ];
+        const result = component.normalizeHourlyData(input as any);
+        expect(result.length).toBe(Constants.HoursInDay);
+        // Check hour 0 and 2 are preserved
+        expect(result[0].power).toBe(5);
+        expect(result[2].power).toBe(10);
+        // Check hour 1 is zeroed
+        expect(result[1].power).toBe(0);
+        // Check all other hours are zeroed
+        for (let i = 3; i < Constants.HoursInDay; i++) {
+            expect(result[i].power).toBe(0);
+            expect(result[i].hours).toBe(i);
+        }
+    });
+
+    it('should return all zeroed records for empty input', () => {
+        const result = component.normalizeHourlyData([]);
+        expect(result.length).toBe(Constants.HoursInDay);
+        for (let i = 0; i < Constants.HoursInDay; i++) {
+            expect(result[i].power).toBe(0);
+            expect(result[i].hours).toBe(i);
+        }
+    });
+
+    it('should preserve all records if all hours are present', () => {
+        const input: any = [];
+        for (let i = 0; i < Constants.HoursInDay; i++) {
+            input.push({ hours: i, power: i + 1, created: new Date() });
+        }
+        const result = component.normalizeHourlyData(input as any);
+        expect(result.length).toBe(Constants.HoursInDay);
+        for (let i = 0; i < Constants.HoursInDay; i++) {
+            expect(result[i].power).toBe(i + 1);
+            expect(result[i].hours).toBe(i);
+        }
+    });
 });

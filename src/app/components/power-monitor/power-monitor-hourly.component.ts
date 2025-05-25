@@ -189,7 +189,7 @@ export class PowerMonitorHourlyComponent
     }
 
     prepareChart(data: IPowerDataHourlyModel[]) {
-        data = this.normalizeDailyData(data);
+        data = this.normalizeHourlyData(data);
         let chartData: number[] = [];
         let chartLabels: string[] = [];
         chartData = data.map((e) => {
@@ -202,7 +202,7 @@ export class PowerMonitorHourlyComponent
         this.barChartLabels = chartLabels;
     }
 
-    normalizeDailyData(data: IPowerDataHourlyModel[]): IPowerDataHourlyModel[] {
+    normalizeHourlyData(data: IPowerDataHourlyModel[]): IPowerDataHourlyModel[] {
         const normalizedData: IPowerDataHourlyModel[] = [];
         for (let i = 0; i < Constants.HoursInDay; i++) {
             const record = data.find((e) => e.hours === i);
