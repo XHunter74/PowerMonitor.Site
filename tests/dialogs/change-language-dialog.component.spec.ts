@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeLanguageDialogComponent } from '../../src/app/dialogs/change-language-dialog/change-language-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { MockTranslatePipe } from './mock-translate.pipe';
-import { MockTranslateService } from './mock-translate.service';
+import { MockTranslatePipe } from '../mock-translate.pipe';
+import { MockTranslateService } from '../mock-translate.service';
 import { environment } from '../../src/environments/environment';
 
 describe('ChangeLanguageDialogComponent', () => {

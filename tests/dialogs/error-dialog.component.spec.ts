@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorDialogComponent } from '../../src/app/dialogs/error-dialog/error-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorDialogData } from '../../src/app/dialogs/Models/error-dialog-data';
-import { MockTranslatePipe } from './mock-translate.pipe';
+import { MockTranslatePipe } from '../mock-translate.pipe';
 
 describe('ErrorDialogComponent', () => {
     let consoleErrorSpy: jasmine.Spy | jest.SpyInstance;
