@@ -4,10 +4,16 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionDialogDataDto } from '../../src/app/models/question-dialog-data.dto';
 
 describe('QuestionDialogComponent', () => {
+    let consoleErrorSpy: jasmine.Spy | jest.SpyInstance;
     let component: QuestionDialogComponent;
     let fixture: ComponentFixture<QuestionDialogComponent>;
 
     beforeEach(async () => {
+        if (typeof spyOn === 'function') {
+            consoleErrorSpy = spyOn(console, 'error').and.callFake(() => {});
+        } else if (typeof jest !== 'undefined' && jest.spyOn) {
+            consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        }
         await TestBed.configureTestingModule({
             declarations: [QuestionDialogComponent],
             providers: [

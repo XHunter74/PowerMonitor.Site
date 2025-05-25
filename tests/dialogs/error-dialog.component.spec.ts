@@ -5,10 +5,16 @@ import { ErrorDialogData } from '../../src/app/dialogs/Models/error-dialog-data'
 import { MockTranslatePipe } from './mock-translate.pipe';
 
 describe('ErrorDialogComponent', () => {
+    let consoleErrorSpy: jasmine.Spy | jest.SpyInstance;
     let component: ErrorDialogComponent;
     let fixture: ComponentFixture<ErrorDialogComponent>;
 
     beforeEach(async () => {
+        if (typeof spyOn === 'function') {
+            consoleErrorSpy = spyOn(console, 'error').and.callFake(() => {});
+        } else if (typeof jest !== 'undefined' && jest.spyOn) {
+            consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        }
         await TestBed.configureTestingModule({
             declarations: [ErrorDialogComponent, MockTranslatePipe],
             providers: [{ provide: MAT_DIALOG_DATA, useValue: new ErrorDialogData('Test error!') }],
