@@ -1,3 +1,4 @@
+// Suppress console.error globally for all tests (Jest only)
 import '@angular/localize/init';
 import 'zone.js';
 import 'zone.js/testing';
@@ -7,14 +8,14 @@ import {
     platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
+// Optionally suppress other log levels globally
 global.console = {
     ...console,
-    // uncomment to ignore a specific log level
     log: jest.fn(),
     debug: jest.fn(),
     info: jest.fn(),
-    // warn: jest.fn(),
-    // error: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
 };
 
 TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
