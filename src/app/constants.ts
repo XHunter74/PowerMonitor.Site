@@ -38,6 +38,7 @@ export class Constants {
     static CheckSocketConnectionInterval = 1000;
     static AdminRole = 'admin';
     static PongResponse = 'pong';
+    static HoursInDay = 24;
 }
 
 export class ChartsConstants {

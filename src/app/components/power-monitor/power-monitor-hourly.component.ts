@@ -189,26 +189,34 @@ export class PowerMonitorHourlyComponent
     }
 
     prepareChart(data: IPowerDataHourlyModel[]) {
+        data = this.normalizeDailyData(data);
         let chartData: number[] = [];
         let chartLabels: string[] = [];
-        if (data.length < 24) {
-            for (let i = 0; i < 24; i++) {
-                chartData.push(0);
-                chartLabels.push(i.toString());
-            }
-            for (const record of data) {
-                chartData[record.hours] = record.power;
-            }
-        } else {
-            chartData = data.map((e) => {
-                return e.power;
-            });
-            chartLabels = data.map((e) => {
-                return e.hours.toString();
-            });
-        }
+        chartData = data.map((e) => {
+            return e.power;
+        });
+        chartLabels = data.map((e) => {
+            return e.hours.toString();
+        });
         this.barChartData[0].data = chartData;
         this.barChartLabels = chartLabels;
+    }
+
+    normalizeDailyData(data: IPowerDataHourlyModel[]): IPowerDataHourlyModel[] {
+        const normalizedData: IPowerDataHourlyModel[] = [];
+        for (let i = 0; i < Constants.HoursInDay; i++) {
+            const record = data.find((e) => e.hours === i);
+            if (record) {
+                normalizedData.push(record);
+            } else {
+                normalizedData.push({
+                    hours: i,
+                    power: 0,
+                    created: undefined,
+                });
+            }
+        }
+        return normalizedData;
     }
 
     addDay(direction: string) {
@@ -233,12 +241,6 @@ export class PowerMonitorHourlyComponent
         } else {
             nextDate.setDate(nextDate.getDate() - 1);
             return nextDate < Constants.systemStartDate;
-        }
-    }
-
-    checkChart() {
-        if (this.powerData && this.context.canvas.hidden) {
-            this.prepareChart(this.powerData);
         }
     }
 }
