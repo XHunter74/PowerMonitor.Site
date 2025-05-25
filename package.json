@@ -60,7 +60,6 @@
         "@types/jest": "^29.5.14",
         "@typescript-eslint/eslint-plugin": "^8.32.1",
         "@typescript-eslint/parser": "^8.32.1",
-        "angular-eslint": "19.4.0",
         "babel-jest": "^29.7.0",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.1.5",
@@ -72,7 +71,6 @@
         "prettier": "^3.5.3",
         "replace-in-file": "^8.3.0",
         "ts-jest": "^29.3.4",
-        "typescript": "~5.5.4",
-        "typescript-eslint": "8.32.0"
+        "typescript": "~5.5.4"
     }
 }
