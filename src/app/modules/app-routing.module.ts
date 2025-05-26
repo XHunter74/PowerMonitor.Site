@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppLoginComponent } from '../components/app-login/login.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
-import { Constants } from '../constants';
+import { Constants } from '../shared/constants';
 
 const routes: Routes = [
     {

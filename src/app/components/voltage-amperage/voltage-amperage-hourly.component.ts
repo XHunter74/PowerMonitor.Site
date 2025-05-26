@@ -4,7 +4,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../constants';
+import { Constants } from '../../shared/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';

@@ -1,4 +1,4 @@
-import { ChartsConstants } from '../../constants';
+import { ChartsConstants } from '../../shared/constants';
 
 export class ChartsBuilder {
     public static buildVoltageChart(label: string, defaultVoltage: number, voltageLabel: string) {

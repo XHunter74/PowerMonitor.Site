@@ -1,6 +1,6 @@
 import { IPowerDataDailyModel } from '../../../src/app/models/power-data-daily.model';
 import { UntypedFormControl, NgControl } from '@angular/forms';
-import { Constants } from '../../../src/app/constants';
+import { Constants } from '../../../src/app/shared/constants';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PowerMonitorDailyComponent } from '../../../src/app/components/power-monitor/power-monitor-daily.component';
 import { MatDialogModule } from '@angular/material/dialog';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { UserTokenDto } from '../models/user-token.dto';
 import { JwtTokenDto } from '../models/jwt-token.dto';
-import { Constants } from '../constants';
+import { Constants } from '../shared/constants';
 
 @Injectable()
 export class AuthService {

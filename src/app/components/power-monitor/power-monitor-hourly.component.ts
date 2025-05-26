@@ -13,7 +13,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart } from 'chart.js';
-import { Constants } from '../../constants';
+import { Constants } from '../../shared/constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { default as Annotation } from 'chartjs-plugin-annotation';

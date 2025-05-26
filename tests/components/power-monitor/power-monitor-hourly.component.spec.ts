@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Constants } from '../../../src/app/constants';
+import { Constants } from '../../../src/app/shared/constants';
 import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA, InjectionToken } from '@angular/core';
 import { jest } from '@jest/globals';

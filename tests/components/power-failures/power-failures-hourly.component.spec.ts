@@ -1,6 +1,6 @@
 import { PowerFailuresHourlyComponent } from '../../../src/app/components/power-failures/power-failures-hourly.component';
 import { UntypedFormControl } from '@angular/forms';
-import { Constants } from '../../../src/app/constants';
+import { Constants } from '../../../src/app/shared/constants';
 import { Direction } from '../../../src/app/models/app.enums';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';

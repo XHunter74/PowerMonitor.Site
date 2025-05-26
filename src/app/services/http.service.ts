@@ -4,7 +4,7 @@ import { HeaderItem } from './header.item';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { catchError, Observable, retry, throwError, timeout } from 'rxjs';
-import { Constants } from '../constants';
+import { Constants } from '../shared/constants';
 
 export class HttpService {
     private baseUrl: string;

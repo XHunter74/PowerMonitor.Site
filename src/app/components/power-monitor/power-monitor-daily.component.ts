@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { daysInMonth } from '../../utils';
+import { daysInMonth } from '../../shared/utils';
 import { IPowerDataDailyModel } from '../../models/power-data-daily.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
@@ -9,7 +9,7 @@ import { MONTH_DATE_FORMATS } from '../../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
-import { Constants } from '../../constants';
+import { Constants } from '../../shared/constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';

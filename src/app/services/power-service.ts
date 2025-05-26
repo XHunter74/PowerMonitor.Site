@@ -15,7 +15,7 @@ import { PowerMeteringDto as PowerConsumptionDto } from '../models/power-meterin
 import { NewPowerMeteringDto } from '../models/new-power-metering.dto';
 import { AuthService } from './auth.service';
 import { map, Observable } from 'rxjs';
-import { getStringDate } from '../utils';
+import { getStringDate } from '../shared/utils';
 
 @Injectable({
     providedIn: 'root',

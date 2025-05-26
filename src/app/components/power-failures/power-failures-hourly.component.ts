@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IPowerFailureModel } from '../../models/power-failure.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../constants';
+import { Constants } from '../../shared/constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';

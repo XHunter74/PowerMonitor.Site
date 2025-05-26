@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs/operators';
-import { ChartsConstants, Constants } from '../../constants';
+import { ChartsConstants, Constants } from '../../shared/constants';
 import { ChartsBuilder } from './charts-builder';
 
 @Component({

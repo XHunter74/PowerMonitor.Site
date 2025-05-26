@@ -27,7 +27,7 @@ class MockActivatedRoute {
 
 import { jest } from '@jest/globals';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Constants } from '../../../src/app/constants';
+import { Constants } from '../../../src/app/shared/constants';
 
 class MockRouter {
     navigate = jest.fn();

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Constants } from '../../constants';
+import { Constants } from '../../shared/constants';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

@@ -12,7 +12,7 @@ const mockChartsBuilder = {
     buildPowerChart: jest.fn(() => ({ data: [] })),
 };
 
-jest.mock('../../../src/app/constants', () => ({
+jest.mock('../../../src/app/shared/constants', () => ({
     Constants: mockConstants,
     ChartsConstants: mockChartsConstants,
 }));

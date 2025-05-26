@@ -7,7 +7,7 @@ import { InfoService } from '../../../src/app/services/info-service';
 import { AuthService } from '../../../src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of, throwError, Subscription } from 'rxjs';
-import { Constants } from '../../../src/app/constants';
+import { Constants } from '../../../src/app/shared/constants';
 import { TranslateModule } from '@ngx-translate/core';
 
 // Silence console.error from component API error handling

@@ -1,5 +1,5 @@
 import { ChartsBuilder } from '../../../src/app/components/live-data/charts-builder';
-import { ChartsConstants } from '../../../src/app/constants';
+import { ChartsConstants } from '../../../src/app/shared/constants';
 
 describe('ChartsBuilder', () => {
     describe('buildVoltageChart', () => {

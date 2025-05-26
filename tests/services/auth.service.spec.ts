@@ -1,5 +1,5 @@
 import { AuthService } from '../../src/app/services/auth.service';
-import { Constants } from '../../src/app/constants';
+import { Constants } from '../../src/app/shared/constants';
 
 describe('AuthService', () => {
     let service: AuthService;
