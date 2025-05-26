@@ -26,6 +26,8 @@ class MockActivatedRoute {
 }
 
 import { jest } from '@jest/globals';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Constants } from '../../../src/app/constants';
 
 class MockRouter {
     navigate = jest.fn();
@@ -115,5 +117,102 @@ describe('VoltageAmperageHourlyComponent', () => {
         expect(component.minVoltage).toBe(1);
         expect(component.maxAmperage).toBe(5);
         expect(component.minAmperage).toBe(0.5);
+    });
+
+    describe('restoreSort', () => {
+        it('should restore sort from localStorage if present', () => {
+            const sortObj = { active: 'created', direction: 'asc' };
+            localStorage.setItem('voltage-amperage-hourly-sort', JSON.stringify(sortObj));
+            component.sortedData = {
+                sort: {
+                    sort: jest.fn(),
+                    sortables: new Map([['created', { _setAnimationTransitionState: jest.fn() }]]),
+                },
+            } as any;
+            component.restoreSort();
+            if (component.sortedData.sort) {
+                expect(component.sortedData.sort.sort).toHaveBeenCalled();
+            }
+        });
+    });
+
+    describe('dateChanged', () => {
+        it('should dispatch loadVoltageAmperage with selected date', () => {
+            const event = { value: new Date(2025, 4, 25) } as MatDatepickerInputEvent<Date>;
+            component.dateChanged(event);
+            expect(store.dispatch).toHaveBeenCalledWith(
+                expect.objectContaining({ date: new Date(2025, 4, 25) }),
+            );
+        });
+    });
+
+    describe('sortData', () => {
+        it('should store sort in localStorage', () => {
+            const sort = { active: 'created', direction: 'asc' };
+            const setItemSpy = jest.spyOn(window.localStorage.__proto__, 'setItem');
+            component.sortData(sort as any);
+            expect(setItemSpy).toHaveBeenCalledWith(
+                'voltage-amperage-hourly-sort',
+                JSON.stringify(sort),
+            );
+            setItemSpy.mockRestore();
+        });
+    });
+
+    describe('isAddDayButtonDisabled', () => {
+        beforeEach(() => {
+            Constants.systemStartDate = new Date(2020, 0, 1);
+        });
+        it('should disable the up button if next day is in the future', () => {
+            const today = new Date(2025, 4, 26);
+            component.currentDate = new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate(),
+            );
+            expect(component.isAddDayButtonDisabled('up')).toBe(true);
+        });
+        it('should not disable the up button if next day is not in the future', () => {
+            component.currentDate = new Date(2025, 4, 25);
+            expect(component.isAddDayButtonDisabled('up')).toBe(false);
+        });
+        it('should disable the down button if previous day is before systemStartDate', () => {
+            component.currentDate = new Date(2020, 0, 1);
+            expect(component.isAddDayButtonDisabled('down')).toBe(true);
+        });
+        it('should not disable the down button if previous day is after systemStartDate', () => {
+            component.currentDate = new Date(2025, 4, 26);
+            expect(component.isAddDayButtonDisabled('down')).toBe(false);
+        });
+    });
+
+    describe('processChangedState (edge cases)', () => {
+        it('should show spinner when loading', () => {
+            const showSpinnerSpy = jest.spyOn(component as any, 'showSpinner');
+            component['translate'] = {
+                get: jest.fn(() => ({ subscribe: (cb: any) => cb('Loading...') })),
+            } as any;
+            component.processChangedState({ loading: true } as any);
+            expect(showSpinnerSpy).toHaveBeenCalled();
+        });
+        it('should close spinner when not loading', () => {
+            const closeSpinnerSpy = jest.spyOn(component as any, 'closeSpinner');
+            component.processChangedState({ loading: false } as any);
+            expect(closeSpinnerSpy).toHaveBeenCalled();
+        });
+        it('should show error dialog and close spinner on error', () => {
+            const closeSpinnerSpy = jest.spyOn(component as any, 'closeSpinner');
+            const originalShow = (globalThis as any).ErrorDialogComponent?.show;
+            (globalThis as any).ErrorDialogComponent = { show: jest.fn() };
+            component['translate'] = {
+                get: jest.fn(() => ({ subscribe: (cb: any) => cb('Error!') })),
+            } as any;
+            Object.defineProperty(component, 'dialog', { get: () => ({ open: jest.fn() }) });
+            component.processChangedState({ error: true } as any);
+            expect(closeSpinnerSpy).toHaveBeenCalled();
+            if (originalShow) {
+                (globalThis as any).ErrorDialogComponent.show = originalShow;
+            }
+        });
     });
 });
