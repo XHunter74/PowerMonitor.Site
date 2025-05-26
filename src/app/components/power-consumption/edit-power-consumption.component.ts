@@ -2,6 +2,7 @@ import { Component, Optional, Inject, OnInit } from '@angular/core';
 import { PowerMeteringDto } from '../../models/power-metering.dto';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-edit-power-consumption',
@@ -39,7 +40,7 @@ export class EditPowerConsumptionComponent implements OnInit {
             height: '430px',
             data,
         });
-        const dialogData = (await dialogRef.afterClosed().toPromise()) as PowerMeteringDto;
+        const dialogData = (await firstValueFrom(dialogRef.afterClosed())) as PowerMeteringDto;
         return dialogData;
     }
 

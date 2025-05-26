@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionDialogDataDto } from '../../models/question-dialog-data.dto';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-dialog',
@@ -29,7 +30,7 @@ export class QuestionDialogComponent {
             height: '170px',
             data: new QuestionDialogDataDto(question, positiveButton, negativeButton),
         });
-        const dialogResult = await dialogRef.afterClosed().toPromise();
+        const dialogResult = await firstValueFrom(dialogRef.afterClosed());
         return dialogResult;
     }
 

@@ -103,7 +103,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     ) {
         super(dialog, translate);
         this.translateWords();
-        translate.onLangChange.subscribe(async () => {
+        translate.onLangChange.subscribe(() => {
             this.translateWords();
         });
     }

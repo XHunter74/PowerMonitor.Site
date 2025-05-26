@@ -109,7 +109,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     ) {
         super(dialog, translate);
         this.translateWords();
-        translate.onLangChange.subscribe(async () => {
+        translate.onLangChange.subscribe(() => {
             this.translateWords();
         });
     }

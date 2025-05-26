@@ -65,15 +65,16 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
     ) {
         super(dialog, translate);
         this.translateWords();
-        translate.onLangChange.subscribe(async () => {
-            await this.translateWords();
+        translate.onLangChange.subscribe(() => {
+            this.translateWords();
         });
     }
 
-    async translateWords() {
-        const chartLabel = await this.translate.get('POWER_MONITOR.CHART_LABEL').toPromise();
-        const data = [{ data: this.barChartData[0].data, label: chartLabel }];
-        this.barChartData = data;
+    translateWords() {
+        this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((chartLabel) => {
+            const data = [{ data: this.barChartData[0].data, label: chartLabel }];
+            this.barChartData = data;
+        });
     }
 
     ngOnInit() {

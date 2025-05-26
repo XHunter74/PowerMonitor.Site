@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Constants } from '../../constants';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-dialog',
@@ -19,7 +20,7 @@ export class ChangeLanguageDialogComponent implements OnInit {
             width: '300px',
             height: '200px',
         });
-        const dialogResult = await dialogRef.afterClosed().toPromise();
+        const dialogResult = await firstValueFrom(dialogRef.afterClosed());
         return dialogResult;
     }
 
@@ -67,12 +68,13 @@ export class ChangeLanguageDialogComponent implements OnInit {
         }
     }
 
-    async saveLanguage() {
+    saveLanguage() {
         const lang = this.getLangControl().value;
         if (lang !== this.translate.currentLang) {
-            await this.translate.use(lang).toPromise();
-            localStorage.setItem(Constants.AppLanguage, lang);
-            console.info(`Successfully initialized '${lang}' language.`);
+            this.translate.use(lang).subscribe(() => {
+                localStorage.setItem(Constants.AppLanguage, lang);
+                console.info(`Successfully initialized '${lang}' language.`);
+            });
         }
     }
 }
