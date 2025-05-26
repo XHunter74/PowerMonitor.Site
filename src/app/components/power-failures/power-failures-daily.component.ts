@@ -86,7 +86,7 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
         }
     }
 
-    private processChangedState(state: FailuresDailyState) {
+    public processChangedState(state: FailuresDailyState) {
         if (state.loading) {
             this.translate.get('COMMON.LOADING').subscribe((text) => {
                 this.showSpinner(text);
@@ -184,8 +184,9 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
         } else {
             nextDate.setMonth(nextDate.getMonth() - 1);
             return (
-                nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
-                nextDate.getMonth() < Constants.systemStartDate.getMonth()
+                nextDate.getFullYear() * Constants.MonthsInYear + nextDate.getMonth() <
+                Constants.systemStartDate.getFullYear() * Constants.MonthsInYear +
+                    Constants.systemStartDate.getMonth()
             );
         }
     }
