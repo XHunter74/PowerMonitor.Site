@@ -36,10 +36,10 @@ module.exports = {
     // optional: enforce minimum thresholds
     coverageThreshold: {
         global: {
-            branches: 75,
+            branches: 60,
             functions: 60,
             lines: 75,
-            statements: 60
+            statements: 75
         }
     }
 
