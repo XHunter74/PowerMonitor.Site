@@ -161,18 +161,6 @@ describe('PowerMonitorHourlyComponent', () => {
         expect(component.barChartLabels.length).toBe(24);
     });
 
-    it('should disable addDay button correctly', () => {
-        component.currentDate = new Date('2024-05-23');
-        // up: future date
-        expect(component.isAddDayButtonDisabled('up')).toBe(false);
-        // down: before systemStartDate
-        const oldDate = new Date(2000, 0, 1);
-        // override the static systemStartDate
-        Constants.systemStartDate = oldDate;
-        component.currentDate = new Date(2000, 0, 2);
-        expect(component.isAddDayButtonDisabled('down')).toBe(false);
-    });
-
     it('should call prepareChart in processChangedState', () => {
         const spy = jest.spyOn(component, 'prepareChart');
         const state: any = {

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IPowerFailureModel } from '../../models/power-failure.model';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../shared/constants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -16,6 +15,7 @@ import { FailuresHourlyState } from '../../store/reducers/power-failures.hourly.
 import { AppState } from '../../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadHourlyFailuresData } from '../../store/actions/power-failures.hourly.actions';
+import { ComponentUtils } from '../../shared/component-utils';
 
 const PowerFailuresSort = 'power-failures-sort-hourly';
 
@@ -26,6 +26,7 @@ const PowerFailuresSort = 'power-failures-sort-hourly';
 })
 export class PowerFailuresHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     Direction = Direction;
+    public isHourlyChangeDayButtonDisabled = ComponentUtils.isHourlyChangeDayButtonDisabled;
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     currentDate: Date = null;
@@ -154,21 +155,6 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
             date.setDate(date.getDate() - 1);
         }
         this.store.dispatch(loadHourlyFailuresData({ date }));
-    }
-
-    isAddDayButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === 'up') {
-            nextDate.setDate(nextDate.getDate() + 1);
-            return nextDate > new Date();
-        } else {
-            nextDate.setDate(nextDate.getDate() - 1);
-            return nextDate < Constants.systemStartDate;
-        }
     }
 
     dateChanged(event: MatDatepickerInputEvent<Date>) {

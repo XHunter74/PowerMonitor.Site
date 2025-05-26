@@ -23,6 +23,8 @@ import { MonitorHourlyState } from '../../store/reducers/power-monitor.hourly.re
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers';
 import { loadHourlyMonitorData } from '../../store/actions/power-monitor.hourly.actions';
+import { ComponentUtils } from '../../shared/component-utils';
+import { Direction } from '../../models/app.enums';
 
 @Component({
     selector: 'app-power-monitor-hourly',
@@ -37,6 +39,8 @@ export class PowerMonitorHourlyComponent
     public powerData: IPowerDataHourlyModel[];
     public powerSum: number;
     public powerAvg: number;
+    public isHourlyChangeDayButtonDisabled = ComponentUtils.isHourlyChangeDayButtonDisabled;
+    Direction = Direction;
 
     private annotation: any = {
         type: 'line',
@@ -227,20 +231,5 @@ export class PowerMonitorHourlyComponent
             date.setDate(this.currentDate.getDate() - 1);
         }
         this.store.dispatch(loadHourlyMonitorData({ date }));
-    }
-
-    isAddDayButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === 'up') {
-            nextDate.setDate(nextDate.getDate() + 1);
-            return nextDate > new Date();
-        } else {
-            nextDate.setDate(nextDate.getDate() - 1);
-            return nextDate < Constants.systemStartDate;
-        }
     }
 }

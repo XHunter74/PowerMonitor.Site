@@ -1,6 +1,5 @@
 import { PowerFailuresHourlyComponent } from '../../../src/app/components/power-failures/power-failures-hourly.component';
 import { UntypedFormControl } from '@angular/forms';
-import { Constants } from '../../../src/app/shared/constants';
 import { Direction } from '../../../src/app/models/app.enums';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -71,37 +70,6 @@ describe('PowerFailuresHourlyComponent', () => {
             expect(store.dispatch).toHaveBeenCalledWith(
                 expect.objectContaining({ date: new Date(2024, 4, 22) }),
             );
-        });
-    });
-
-    describe('isAddDayButtonDisabled', () => {
-        beforeEach(() => {
-            Constants.systemStartDate = new Date(2020, 0, 1);
-        });
-
-        it('should disable the up button if next day is in the future', () => {
-            const today = new Date();
-            component.currentDate = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate(),
-            );
-            expect(component.isAddDayButtonDisabled('up')).toBe(true);
-        });
-
-        it('should not disable the up button if next day is not in the future', () => {
-            component.currentDate = new Date(2024, 4, 23);
-            expect(component.isAddDayButtonDisabled('up')).toBe(false);
-        });
-
-        it('should disable the down button if previous day is before systemStartDate', () => {
-            component.currentDate = new Date(2020, 0, 1);
-            expect(component.isAddDayButtonDisabled('down')).toBe(true);
-        });
-
-        it('should not disable the down button if previous day is after systemStartDate', () => {
-            component.currentDate = new Date(2024, 4, 23);
-            expect(component.isAddDayButtonDisabled('down')).toBe(false);
         });
     });
 
