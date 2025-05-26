@@ -249,14 +249,4 @@ describe('PowerFailuresMonthlyComponent', () => {
             setItemSpy.mockRestore();
         });
     });
-
-    describe('formatMonth', () => {
-        it('should return formatted month string', async () => {
-            component['translate'] = {
-                get: jest.fn(() => ({ toPromise: () => Promise.resolve('May') })),
-            } as any;
-            const result = await component.formatMonth(new Date(2024, 4, 1));
-            expect(result).toBe('May 2024');
-        });
-    });
 });

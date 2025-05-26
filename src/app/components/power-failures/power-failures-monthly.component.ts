@@ -182,9 +182,4 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
             });
         }
     }
-
-    async formatMonth(date: Date): Promise<string> {
-        const month = await this.translate.get(`MONTHS.M${date.getMonth()}`).toPromise();
-        return `${month} ${date.getFullYear()}`;
-    }
 }
