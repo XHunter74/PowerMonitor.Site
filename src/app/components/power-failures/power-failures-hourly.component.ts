@@ -81,7 +81,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
         }
     }
 
-    private processChangedState(state: FailuresHourlyState) {
+    public processChangedState(state: FailuresHourlyState) {
         if (state.loading) {
             this.translate.get('COMMON.LOADING').subscribe((text) => {
                 this.showSpinner(text);
