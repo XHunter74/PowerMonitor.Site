@@ -9,7 +9,6 @@ import { MONTH_DATE_FORMATS } from '../../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { ChartConfiguration, Chart, ChartEvent, ActiveElement } from 'chart.js';
-import { Constants } from '../../shared/constants';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -20,6 +19,8 @@ import { MonitorDailyState } from '../../store/reducers/power-monitor.daily.redu
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers';
 import { loadDailyMonitorData } from '../../store/actions/power-monitor.daily.actions';
+import { ComponentUtils } from '../../shared/component-utils';
+import { Direction } from '../../models/app.enums';
 
 @Component({
     selector: 'app-power-monitor-daily',
@@ -34,6 +35,8 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
     public powerData: IPowerDataDailyModel[];
     public powerSum: number;
     public powerAvg: number;
+    public isDailyChangeDayButtonDisabled = ComponentUtils.isDailyChangeDayButtonDisabled;
+    Direction = Direction;
 
     private annotation: any = {
         type: 'line',
@@ -233,27 +236,5 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
             date.setMonth(this.currentDate.getMonth() - 1);
         }
         this.store.dispatch(loadDailyMonitorData({ date }));
-    }
-
-    isAddMonthButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === 'up') {
-            nextDate.setMonth(nextDate.getMonth() + 1);
-            const today = new Date();
-            return (
-                nextDate.getFullYear() * Constants.MonthsInYear + nextDate.getMonth() >
-                today.getFullYear() * Constants.MonthsInYear + today.getMonth()
-            );
-        } else {
-            nextDate.setMonth(nextDate.getMonth() - 1);
-            return (
-                nextDate.getFullYear() <= Constants.systemStartDate.getFullYear() &&
-                nextDate.getMonth() < Constants.systemStartDate.getMonth()
-            );
-        }
     }
 }

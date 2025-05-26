@@ -60,4 +60,54 @@ describe('ComponentUtils', () => {
             );
         });
     });
+
+    describe('ComponentUtils.isDailyChangeDayButtonDisabled', () => {
+        beforeEach(() => {
+            Constants.systemStartDate = new Date(2020, 0, 1);
+            Constants.MonthsInYear = 12;
+        });
+
+        it('should disable the up button if next month is in the future', () => {
+            const today = new Date(2025, 4, 26); // May 26, 2025
+            const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                true,
+            );
+        });
+
+        it('should not disable the up button if next month is not in the future', () => {
+            const currentDate = new Date(2025, 3, 26); // April 26, 2025
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                false,
+            );
+        });
+
+        it('should disable the down button if previous month is before systemStartDate', () => {
+            const currentDate = new Date(2020, 0, 1); // Jan 1, 2020
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Down)).toBe(
+                true,
+            );
+        });
+
+        it('should not disable the down button if previous month is after systemStartDate', () => {
+            const currentDate = new Date(2025, 4, 26); // May 26, 2025
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Down)).toBe(
+                false,
+            );
+        });
+
+        it('should handle edge case: currentDate is exactly systemStartDate and direction is up', () => {
+            const currentDate = new Date(2020, 0, 1);
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                false,
+            );
+        });
+
+        it('should handle edge case: currentDate is exactly systemStartDate and direction is down', () => {
+            const currentDate = new Date(2020, 0, 1);
+            expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Down)).toBe(
+                true,
+            );
+        });
+    });
 });

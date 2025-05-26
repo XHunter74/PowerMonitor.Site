@@ -1,6 +1,5 @@
 import { IPowerDataDailyModel } from '../../../src/app/models/power-data-daily.model';
 import { UntypedFormControl, NgControl } from '@angular/forms';
-import { Constants } from '../../../src/app/shared/constants';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PowerMonitorDailyComponent } from '../../../src/app/components/power-monitor/power-monitor-daily.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -151,18 +150,6 @@ describe('PowerMonitorDailyComponent', () => {
         component.prepareChart(new Date('2024-05-01'), data as any);
         expect(component.barChartData[0].data.length).toBe(31);
         expect(component.barChartLabels.length).toBe(31);
-    });
-
-    it('should disable addMonth button correctly', () => {
-        component.currentDate = new Date('2024-05-01');
-        // up: future beyond current month
-        expect(component.isAddMonthButtonDisabled('up')).toBe(false);
-        // down: before systemStartDate base
-        const old = new Date(2000, 0, 1);
-        // Override the static systemStartDate on Constants
-        Constants.systemStartDate = old;
-        component.currentDate = new Date(2000, 0, 2);
-        expect(component.isAddMonthButtonDisabled('down')).toBe(false);
     });
 
     it('should call prepareChart in processChangedState', () => {

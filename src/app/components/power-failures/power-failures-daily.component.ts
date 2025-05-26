@@ -7,7 +7,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MONTH_DATE_FORMATS } from '../../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../shared/constants';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,6 +20,7 @@ import { FailuresDailyState } from '../../store/reducers/power-failures.daily.re
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers';
 import { loadDailyFailuresData } from '../../store/actions/power-failures.daily.actions';
+import { ComponentUtils } from '../../shared/component-utils';
 
 const PowerFailuresSort = 'power-failures-sort-daily';
 
@@ -34,6 +34,7 @@ const PowerFailuresSort = 'power-failures-sort-daily';
     ],
 })
 export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
+    public isDailyChangeDayButtonDisabled = ComponentUtils.isDailyChangeDayButtonDisabled;
     Direction = Direction;
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -166,29 +167,6 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
             date.setMonth(date.getMonth() - 1);
         }
         this.store.dispatch(loadDailyFailuresData({ date }));
-    }
-
-    isAddMonthButtonDisabled(direction: Direction): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === Direction.Up) {
-            nextDate.setMonth(nextDate.getMonth() + 1);
-            const today = new Date();
-            return (
-                nextDate.getFullYear() * 12 + nextDate.getMonth() >
-                today.getFullYear() * 12 + today.getMonth()
-            );
-        } else {
-            nextDate.setMonth(nextDate.getMonth() - 1);
-            return (
-                nextDate.getFullYear() * Constants.MonthsInYear + nextDate.getMonth() <
-                Constants.systemStartDate.getFullYear() * Constants.MonthsInYear +
-                    Constants.systemStartDate.getMonth()
-            );
-        }
     }
 
     clickOnRowHandler(row: PowerFailureDailyModel) {

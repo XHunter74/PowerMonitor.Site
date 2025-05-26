@@ -1,6 +1,5 @@
 import { PowerFailuresDailyComponent } from '../../../src/app/components/power-failures/power-failures-daily.component';
 import { UntypedFormControl } from '@angular/forms';
-import { Constants } from '../../../src/app/shared/constants';
 import { Direction } from '../../../src/app/models/app.enums';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -70,33 +69,6 @@ describe('PowerFailuresDailyComponent', () => {
             expect(store.dispatch).toHaveBeenCalledWith(
                 expect.objectContaining({ date: new Date(2024, 3, 1) }),
             );
-        });
-    });
-
-    describe('isAddMonthButtonDisabled', () => {
-        beforeEach(() => {
-            Constants.systemStartDate = new Date(2020, 0, 1);
-        });
-        it('should disable the up button if next month is in the future', () => {
-            const today = new Date();
-            component.currentDate = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate(),
-            );
-            expect(component.isAddMonthButtonDisabled(Direction.Up)).toBe(true);
-        });
-        it('should not disable the up button if next month is not in the future', () => {
-            component.currentDate = new Date(2024, 4, 1);
-            expect(component.isAddMonthButtonDisabled(Direction.Up)).toBe(false);
-        });
-        it('should disable the down button if previous month is before systemStartDate', () => {
-            component.currentDate = new Date(2020, 0, 20);
-            expect(component.isAddMonthButtonDisabled(Direction.Down)).toBe(true);
-        });
-        it('should not disable the down button if previous month is after systemStartDate', () => {
-            component.currentDate = new Date(2024, 4, 1);
-            expect(component.isAddMonthButtonDisabled(Direction.Down)).toBe(false);
         });
     });
 

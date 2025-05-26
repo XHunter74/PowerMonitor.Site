@@ -3,7 +3,7 @@
         class="hourly__mat-button"
         mat-button
         (click)="addMonth('down')"
-        [disabled]="isAddMonthButtonDisabled('down')"
+        [disabled]="isDailyChangeDayButtonDisabled(currentDate, Direction.Down)"
         matTooltip="{{ 'COMMON.BACK' | translate }}"
         matTooltipClass="tooltip"
     >
@@ -13,7 +13,7 @@
         class="hourly__mat-button"
         mat-button
         (click)="addMonth('up')"
-        [disabled]="isAddMonthButtonDisabled('up')"
+        [disabled]="isDailyChangeDayButtonDisabled(currentDate, Direction.Up)"
         mat-button
         matTooltip="{{ 'COMMON.FORWARD' | translate }}"
         matTooltipClass="tooltip"
