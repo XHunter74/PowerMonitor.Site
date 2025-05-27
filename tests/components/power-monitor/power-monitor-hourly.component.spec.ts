@@ -31,6 +31,7 @@ export const MAT_MOCK_DATE_FORMATS = {
     },
 };
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Direction } from '../../../src/app/models/app.enums';
 // Minimal mock for DateAdapter
 class MockDateAdapter {
     setLocale() {}
@@ -138,7 +139,7 @@ describe('PowerMonitorHourlyComponent', () => {
     it('should call store.dispatch on addDay', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch');
         component.currentDate = new Date('2024-05-23');
-        component.addDay('up');
+        component.addDay(Direction.Up);
         expect(dispatchSpy).toHaveBeenCalled();
     });
 

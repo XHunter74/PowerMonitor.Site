@@ -68,7 +68,7 @@ describe('ComponentUtils', () => {
         });
 
         it('should disable the up button if next month is in the future', () => {
-            const today = new Date(2025, 4, 26); // May 26, 2025
+            const today = new Date(); // May 26, 2025
             const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             expect(ComponentUtils.isDailyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
                 true,

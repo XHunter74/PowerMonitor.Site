@@ -16,6 +16,7 @@ import {
     Input as NgInput,
 } from '@angular/core';
 import { jest } from '@jest/globals';
+import { Direction } from '../../../src/app/models/app.enums';
 
 export const TRANSLATE_TOKEN = new InjectionToken('translate');
 
@@ -133,7 +134,7 @@ describe('PowerMonitorDailyComponent', () => {
     it('should call store.dispatch on addMonth', () => {
         const spy = jest.spyOn(store, 'dispatch');
         component.currentDate = new Date('2024-05-01');
-        component.addMonth('up');
+        component.addMonth(Direction.Up);
         expect(spy).toHaveBeenCalled();
     });
 

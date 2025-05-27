@@ -164,7 +164,7 @@ describe('VoltageAmperageHourlyComponent', () => {
             Constants.systemStartDate = new Date(2020, 0, 1);
         });
         it('should disable the up button if next day is in the future', () => {
-            const today = new Date(2025, 4, 26);
+            const today = new Date();
             component.currentDate = new Date(
                 today.getFullYear(),
                 today.getMonth(),
