@@ -1,9 +1,62 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { QuestionDialogComponent } from '../../src/app/dialogs/question-dialog/question-dialog.component';
+import { of } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionDialogDataDto } from '../../src/app/models/question-dialog-data.dto';
 
 describe('QuestionDialogComponent', () => {
+    describe('show static method', () => {
+        let dialog: any;
+        beforeEach(() => {
+            dialog = {
+                open: jest.fn().mockReturnValue({
+                    afterClosed: () => of('positive'),
+                }),
+            };
+        });
+
+        it('should open dialog with default values if not provided', waitForAsync(async () => {
+            const result = await QuestionDialogComponent.show(dialog, 'Q?');
+            expect(dialog.open).toHaveBeenCalledWith(
+                QuestionDialogComponent,
+                expect.objectContaining({
+                    width: '500px',
+                    height: '170px',
+                    data: expect.objectContaining({
+                        question: 'Q?',
+                        positiveButton: 'Yes',
+                        negativeButton: 'No',
+                    }),
+                }),
+            );
+            expect(result).toBe('positive');
+        }));
+
+        it('should open dialog with custom button labels and width', waitForAsync(async () => {
+            const result = await QuestionDialogComponent.show(dialog, 'Q2?', 'Y', 'N', '300px');
+            expect(dialog.open).toHaveBeenCalledWith(
+                QuestionDialogComponent,
+                expect.objectContaining({
+                    width: '300px',
+                    height: '170px',
+                    data: expect.objectContaining({
+                        question: 'Q2?',
+                        positiveButton: 'Y',
+                        negativeButton: 'N',
+                    }),
+                }),
+            );
+            expect(result).toBe('positive');
+        }));
+
+        it('should resolve to the value returned by afterClosed', waitForAsync(async () => {
+            dialog.open = jest.fn().mockReturnValue({
+                afterClosed: () => of('negative'),
+            });
+            const result = await QuestionDialogComponent.show(dialog, 'Q3?');
+            expect(result).toBe('negative');
+        }));
+    });
     let consoleErrorSpy: jasmine.Spy | jest.SpyInstance;
     let component: QuestionDialogComponent;
     let fixture: ComponentFixture<QuestionDialogComponent>;
