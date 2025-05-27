@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeLanguageDialogComponent } from '../../src/app/dialogs/change-language-dialog/change-language-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -60,5 +61,58 @@ describe('ChangeLanguageDialogComponent', () => {
         ]);
         // Restore environment
         Object.assign(environment, originalEnv);
+    });
+
+    it('should return undefined from matchLangName if en or uk is falsy', () => {
+        // Patch translate.instant to return falsy
+        const origInstant = component['translate'].instant;
+        component['translate'].instant = () => '';
+        expect(component.matchLangName('en')).toBeUndefined();
+        expect(component.matchLangName('uk')).toBeUndefined();
+        component['translate'].instant = origInstant;
+    });
+
+    it('should not call translate.use or set localStorage if language is unchanged', () => {
+        const spyUse = jest.spyOn(component['translate'], 'use');
+        const spySet = jest.spyOn(window.localStorage.__proto__, 'setItem');
+        component['translate'].currentLang = 'en';
+        component.form.controls['languages'].setValue('en');
+        component.saveLanguage();
+        expect(spyUse).not.toHaveBeenCalled();
+        expect(spySet).not.toHaveBeenCalled();
+        spyUse.mockRestore();
+        spySet.mockRestore();
+    });
+
+    it('should call translate.use, set localStorage, and log when language changes', () => {
+        const spyUse = jest
+            .spyOn(component['translate'], 'use')
+            .mockReturnValue({ subscribe: (cb: any) => cb() } as any);
+        const spySet = jest.spyOn(window.localStorage.__proto__, 'setItem');
+        const spyLog = jest.spyOn(console, 'info').mockImplementation(() => {});
+        component['translate'].currentLang = 'en';
+        component.form.controls['languages'].setValue('uk');
+        component.saveLanguage();
+        expect(spyUse).toHaveBeenCalledWith('uk');
+        expect(spySet).toHaveBeenCalledWith(expect.any(String), 'uk');
+        expect(spyLog).toHaveBeenCalledWith(
+            expect.stringContaining("Successfully initialized 'uk' language."),
+        );
+        spyUse.mockRestore();
+        spySet.mockRestore();
+        spyLog.mockRestore();
+    });
+
+    it('getLangControl should return the languages form control', () => {
+        expect(component.getLangControl()).toBe(component.form.controls['languages']);
+    });
+
+    it('show static method should resolve with dialog result', async () => {
+        // Mock MatDialog
+        const dialogResult = 'result';
+        const afterClosed = () => of(dialogResult);
+        const dialog = { open: jest.fn(() => ({ afterClosed })) } as any;
+        const result = await ChangeLanguageDialogComponent.show(dialog);
+        expect(result).toBe(dialogResult);
     });
 });
