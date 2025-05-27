@@ -51,6 +51,6 @@ export class WebSocketService {
     }
 
     get isConnected(): boolean {
-        return this.socket && this.socket.connected;
+        return !!(this.socket && this.socket.connected);
     }
 }
