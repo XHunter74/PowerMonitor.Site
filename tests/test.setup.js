@@ -8,15 +8,29 @@ import {
     platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// Optionally suppress other log levels globally
-global.console = {
-    ...console,
-    log: jest.fn(),
-    debug: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+
+// Suppress jsdom navigation not implemented error only, allow other errors
+const originalError = console.error;
+console.error = (...args) => {
+    if (
+        typeof args[0] === 'string' &&
+        args[0].includes('Not implemented: navigation (except hash changes)')
+    ) {
+        // Suppress jsdom navigation not implemented error
+        return;
+    }
+    originalError(...args);
 };
+
+// Optionally suppress other log levels globally (uncomment if needed)
+// global.console = {
+//     ...console,
+//     log: jest.fn(),
+//     debug: jest.fn(),
+//     info: jest.fn(),
+//     warn: jest.fn(),
+//     error: jest.fn(),
+// };
 
 TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
 

@@ -3,12 +3,13 @@ import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { Intervals } from '../shared/constants';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UpdateService {
-    private readonly checkInterval = 5 * 60 * 1000; // Check every 10 minutes
+    private readonly checkInterval = 5 * Intervals.OneMinute;
 
     constructor(
         private swUpdate: SwUpdate,

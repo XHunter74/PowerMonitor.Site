@@ -61,3 +61,7 @@ export class ChartsConstants {
         defaultPower: 0,
     };
 }
+
+export class Intervals {
+    public static OneMinute = 60 * 1000;
+}
