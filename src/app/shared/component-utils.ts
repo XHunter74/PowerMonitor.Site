@@ -12,8 +12,10 @@ export class ComponentUtils {
             currentDate.getDate(),
         );
         if (direction === Direction.Up) {
+            const today = new Date();
+            today.setHours(23, 59, 59, 0);
             nextDate.setDate(nextDate.getDate() + 1);
-            return nextDate > new Date();
+            return nextDate > today;
         } else {
             nextDate.setDate(nextDate.getDate() - 1);
             return nextDate < Constants.systemStartDate;

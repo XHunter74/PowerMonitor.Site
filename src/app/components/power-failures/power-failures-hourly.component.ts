@@ -147,7 +147,7 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
         }
     }
 
-    addDay(direction: string) {
+    addDay(direction: Direction) {
         const date = new Date(this.currentDate);
         if (direction === Direction.Up) {
             date.setDate(date.getDate() + 1);

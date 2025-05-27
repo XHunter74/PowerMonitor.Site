@@ -223,9 +223,9 @@ export class PowerMonitorHourlyComponent
         return normalizedData;
     }
 
-    addDay(direction: string) {
+    addDay(direction: Direction) {
         const date = new Date(this.currentDate);
-        if (direction === 'up') {
+        if (direction === Direction.Up) {
             date.setDate(this.currentDate.getDate() + 1);
         } else {
             date.setDate(this.currentDate.getDate() - 1);

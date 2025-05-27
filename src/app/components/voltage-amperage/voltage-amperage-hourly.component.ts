@@ -4,7 +4,6 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoltageAmperageModel } from '../../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../shared/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -15,6 +14,8 @@ import { AppState } from '../../store/reducers';
 import { loadVoltageAmperage } from '../../store/actions/voltage-amperage.actions';
 import { VoltageAmperageState } from '../../store/reducers/voltage-amperage.reducer';
 import { Observable, Subscription } from 'rxjs';
+import { ComponentUtils } from '../../shared/component-utils';
+import { Direction } from '../../models/app.enums';
 
 const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
 
@@ -46,6 +47,8 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
 
     voltageAmperageState$: Observable<VoltageAmperageState>;
     stateSubscription: Subscription;
+    public isHourlyChangeDayButtonDisabled = ComponentUtils.isHourlyChangeDayButtonDisabled;
+    Direction = Direction;
 
     constructor(
         private store: Store<AppState>,
@@ -161,30 +164,15 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
         }
     }
 
-    addDay(direction: string) {
+    addDay(direction: Direction) {
         const currentDate = new Date(this.currentDate);
-        if (direction === 'up') {
+        if (direction === Direction.Up) {
             currentDate.setDate(currentDate.getDate() + 1);
         } else {
             currentDate.setDate(currentDate.getDate() - 1);
         }
 
         this.store.dispatch(loadVoltageAmperage({ date: currentDate }));
-    }
-
-    isAddDayButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === 'up') {
-            nextDate.setDate(nextDate.getDate() + 1);
-            return nextDate > new Date();
-        } else {
-            nextDate.setDate(nextDate.getDate() - 1);
-            return nextDate < Constants.systemStartDate;
-        }
     }
 
     refreshData() {

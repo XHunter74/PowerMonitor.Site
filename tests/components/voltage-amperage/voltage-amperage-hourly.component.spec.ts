@@ -10,6 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { jest } from '@jest/globals';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Direction } from '../../../src/app/models/app.enums';
+
 // Minimal mock for DateAdapter
 class MockDateAdapter {
     setLocale() {}
@@ -24,10 +28,6 @@ class MockStore {
 class MockActivatedRoute {
     queryParams = of({ year: '2024', month: '05', day: '23' });
 }
-
-import { jest } from '@jest/globals';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Constants } from '../../../src/app/shared/constants';
 
 class MockRouter {
     navigate = jest.fn();
@@ -92,7 +92,7 @@ describe('VoltageAmperageHourlyComponent', () => {
     it('should call store.dispatch on addDay', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch');
         component.currentDate = new Date('2024-05-23');
-        component.addDay('up');
+        component.addDay(Direction.Up);
         expect(dispatchSpy).toHaveBeenCalled();
     });
 
@@ -156,33 +156,6 @@ describe('VoltageAmperageHourlyComponent', () => {
                 JSON.stringify(sort),
             );
             setItemSpy.mockRestore();
-        });
-    });
-
-    describe('isAddDayButtonDisabled', () => {
-        beforeEach(() => {
-            Constants.systemStartDate = new Date(2020, 0, 1);
-        });
-        it('should disable the up button if next day is in the future', () => {
-            const today = new Date();
-            component.currentDate = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate(),
-            );
-            expect(component.isAddDayButtonDisabled('up')).toBe(true);
-        });
-        it('should not disable the up button if next day is not in the future', () => {
-            component.currentDate = new Date(2025, 4, 25);
-            expect(component.isAddDayButtonDisabled('up')).toBe(false);
-        });
-        it('should disable the down button if previous day is before systemStartDate', () => {
-            component.currentDate = new Date(2020, 0, 1);
-            expect(component.isAddDayButtonDisabled('down')).toBe(true);
-        });
-        it('should not disable the down button if previous day is after systemStartDate', () => {
-            component.currentDate = new Date(2025, 4, 26);
-            expect(component.isAddDayButtonDisabled('down')).toBe(false);
         });
     });
 
