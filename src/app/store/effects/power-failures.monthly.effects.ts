@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { PowerService } from '../../services/power-service';
+import { PowerService } from '../../services/power.service';
 import { catchError, map, mergeMap, toArray } from 'rxjs/operators';
 import { from, of } from 'rxjs';
 import {

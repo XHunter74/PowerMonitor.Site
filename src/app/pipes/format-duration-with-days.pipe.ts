@@ -23,6 +23,6 @@ export class FormatDurationWithDaysPipe implements PipeTransform {
         const minutesS = minutes.toString().padStart(2, '0');
         const secondsS = seconds.toString().padStart(2, '0');
 
-        return `${daysS} + ${hoursS}:${minutesS}:${secondsS}`;
+        return `${daysS}${hoursS}:${minutesS}:${secondsS}`;
     }
 }
