@@ -10,7 +10,7 @@ describe('ComponentUtils', () => {
         });
 
         it('should disable the up button if next day is in the future', () => {
-            const today = new Date(2025, 4, 26); // May 26, 2025
+            const today = new Date(); // Today
             const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             expect(ComponentUtils.isHourlyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
                 true,
@@ -53,7 +53,7 @@ describe('ComponentUtils', () => {
         });
 
         it('should handle edge case: currentDate is today and direction is up', () => {
-            const today = new Date(2025, 4, 26);
+            const today = new Date();
             const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             expect(ComponentUtils.isHourlyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
                 true,
