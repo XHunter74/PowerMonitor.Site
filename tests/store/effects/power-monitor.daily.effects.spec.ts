@@ -106,8 +106,12 @@ describe('PowerMonitorDailyEffects', () => {
             const date = new Date(2025, 4, 1);
             const data = Array(31).fill({ power: 10 });
             const sum = 310;
+            jest.useFakeTimers();
+            // Set system time to a month outside of May 2025 to force full-month logic
+            jest.setSystemTime(new Date(2045, 5, 15)); // June 15, 2045
             const avg = helper.getAveragePower(date, sum, data as any);
-            expect(avg).toBeCloseTo(10.15, 2);
+            expect(avg).toBeCloseTo(10, 2);
+            jest.useRealTimers();
         });
 
         it('getAveragePower computes partial month average for current month', () => {
