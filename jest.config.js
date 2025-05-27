@@ -28,7 +28,8 @@ module.exports = {
         '!src/app/**/*.routing.ts',     // skip routing
         '!src/app/main.ts',             // entrypoint
         '!src/app/**/*.spec.ts',        // skip test files
-        '!src/app/**/reducers.ts'       // skip reducers
+        '!src/app/**/reducers.ts',      // skip reducers
+        '!src/app/app.component.ts',    // skip app component
     ],
 
     coverageDirectory: '<rootDir>/coverage',
