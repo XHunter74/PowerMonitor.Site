@@ -12,7 +12,6 @@ import {
 } from '../../../src/app/store/actions/power-failures.monthly.actions';
 import { FailuresMonthlyState } from '../../../src/app/store/reducers/power-failures.monthly.reducer';
 import { PowerFailureMonthlyModel } from '../../../src/app/models/power-failure-monthly.model';
-import { AuthService } from '../../../src/app/services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('PowerFailuresMonthlyEffects', () => {
