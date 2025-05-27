@@ -11,6 +11,7 @@ import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operato
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
 import { UserTokenDto } from '../models/user-token.dto';
+import { Intervals } from '../shared/constants';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
@@ -21,7 +22,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     private tokenRefreshSubject = new BehaviorSubject<string | null>(null);
 
     // Threshold before expiration to trigger refresh (in milliseconds)
-    private readonly REFRESH_THRESHOLD = 60 * 1000; // 1 minute
+    private readonly REFRESH_THRESHOLD = Intervals.OneMinute; // 1 minute
 
     constructor(
         private readonly authService: AuthService,

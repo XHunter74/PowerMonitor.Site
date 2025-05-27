@@ -63,5 +63,9 @@ export class ChartsConstants {
 }
 
 export class Intervals {
+    public static OneSecond = 1000;
     public static OneMinute = 60 * 1000;
+    public static OneMinuteInSeconds = 60;
+    public static OneHourInSeconds = 60 * 60;
+    public static OneDayInSeconds = 24 * this.OneHourInSeconds;
 }

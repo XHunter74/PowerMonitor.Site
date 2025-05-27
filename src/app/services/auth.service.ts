@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { UserTokenDto } from '../models/user-token.dto';
 import { JwtTokenDto } from '../models/jwt-token.dto';
-import { Constants } from '../shared/constants';
+import { Constants, Intervals } from '../shared/constants';
 
 @Injectable()
 export class AuthService {
@@ -68,7 +68,7 @@ export class AuthService {
             if (this.authToken) {
                 const jwtToken = this.decodeToken(this.authToken);
                 if (jwtToken && jwtToken.exp) {
-                    this.tokenExpiresInInt = jwtToken.exp * 1000;
+                    this.tokenExpiresInInt = jwtToken.exp * Intervals.OneSecond;
                 }
             }
         }
@@ -88,7 +88,7 @@ export class AuthService {
         if (jwtToken) {
             this.authToken = userToken.token;
             this.refreshToken = userToken.refreshToken;
-            this.tokenExpiresInInt = jwtToken.exp * 1000;
+            this.tokenExpiresInInt = jwtToken.exp * Intervals.OneSecond;
 
             this.isSignedInSubject.next(true);
         }
