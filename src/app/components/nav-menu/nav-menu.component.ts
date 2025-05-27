@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfoService } from '../../services/info-service';
+import { InfoService } from '../../services/info.service';
 import { AuthService } from '../../services/auth.service';
 import { ChangeLanguageDialogComponent } from '../../dialogs/change-language-dialog/change-language-dialog.component';
 import { MatDialog } from '@angular/material/dialog';

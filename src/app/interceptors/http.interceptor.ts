@@ -9,7 +9,7 @@ import {
 import { Observable, throwError, BehaviorSubject, timer } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { UsersService } from '../services/users-service';
+import { UsersService } from '../services/users.service';
 import { UserTokenDto } from '../models/user-token.dto';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NavMenuComponent } from '../../../src/app/components/nav-menu/nav-menu.component';
 import { Router } from '@angular/router';
-import { InfoService } from '../../../src/app/services/info-service';
+import { InfoService } from '../../../src/app/services/info.service';
 import { AuthService } from '../../../src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of, throwError, Subscription } from 'rxjs';

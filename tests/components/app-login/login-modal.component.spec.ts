@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { UsersService } from '../../../src/app/services/users-service';
+import { UsersService } from '../../../src/app/services/users.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { ErrorDialogComponent } from '../../../src/app/dialogs/error-dialog/error-dialog.component';
 

@@ -1,6 +1,6 @@
 import { AppHttpInterceptor } from '../../src/app/interceptors/http.interceptor';
 import { AuthService } from '../../src/app/services/auth.service';
-import { UsersService } from '../../src/app/services/users-service';
+import { UsersService } from '../../src/app/services/users.service';
 import { UserTokenDto } from '../../src/app/models/user-token.dto';
 import { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';

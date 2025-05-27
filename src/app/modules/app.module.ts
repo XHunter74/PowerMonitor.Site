@@ -22,7 +22,7 @@ import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dia
 import { ChangeLanguageDialogComponent } from '../dialogs/change-language-dialog/change-language-dialog.component';
 import { AuthService } from '../services/auth.service';
 import { AppHttpInterceptor } from '../interceptors/http.interceptor';
-import { UsersService } from '../services/users-service';
+import { UsersService } from '../services/users.service';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';

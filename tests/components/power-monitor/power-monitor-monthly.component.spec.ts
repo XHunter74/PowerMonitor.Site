@@ -12,7 +12,6 @@ import { of } from 'rxjs';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { InjectionToken, NO_ERRORS_SCHEMA } from '@angular/core';
 import { jest } from '@jest/globals';
-import { Constants } from '../../../src/app/shared/constants';
 import { Direction } from '../../../src/app/models/app.enums';
 
 export const TRANSLATE_TOKEN = new InjectionToken('translate');

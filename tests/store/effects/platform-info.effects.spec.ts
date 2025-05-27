@@ -3,7 +3,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
 import { PlatformInfoEffects } from '../../../src/app/store/effects/platform-info.effects';
-import { InfoService } from '../../../src/app/services/info-service';
+import { InfoService } from '../../../src/app/services/info.service';
 import { AuthService } from '../../../src/app/services/auth.service';
 
 describe('PlatformInfoEffects', () => {

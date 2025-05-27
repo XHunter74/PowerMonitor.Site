@@ -1,4 +1,4 @@
-import { InfoService } from '../../src/app/services/info-service';
+import { InfoService } from '../../src/app/services/info.service';
 import { AuthService } from '../../src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';

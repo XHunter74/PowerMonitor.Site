@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { InfoService } from '../../services/info-service';
+import { InfoService } from '../../services/info.service';
 import {
     loadPlatformInfo,
     loadPlatformInfoSuccess,
