@@ -228,9 +228,9 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
         return normalizedData;
     }
 
-    async addMonth(direction: string) {
+    async addMonth(direction: Direction) {
         const date = new Date(this.currentDate);
-        if (direction === 'up') {
+        if (direction === Direction.Up) {
             date.setMonth(this.currentDate.getMonth() + 1);
         } else {
             date.setMonth(this.currentDate.getMonth() - 1);
