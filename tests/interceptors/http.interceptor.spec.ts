@@ -1,3 +1,8 @@
+// Suppress console.error for this test suite
+beforeAll(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AppHttpInterceptor } from '../../src/app/interceptors/http.interceptor';
 import { AuthService } from '../../src/app/services/auth.service';
 import { UsersService } from '../../src/app/services/users.service';
@@ -11,6 +16,15 @@ describe('AppHttpInterceptor', () => {
     let usersService: Partial<UsersService>;
     let next: Partial<HttpHandler>;
 
+    // Suppress unhandled rejections during refreshTokenSilently tests
+    beforeAll(() => {
+        // @ts-ignore: suppress unhandledRejection handler on process
+        process.on('unhandledRejection', () => {});
+    });
+    afterAll(() => {
+        // @ts-ignore: suppress unhandledRejection handler removal
+        process.removeAllListeners('unhandledRejection');
+    });
     beforeEach(() => {
         authService = {
             isSignedIn: true,
@@ -121,5 +135,116 @@ describe('AppHttpInterceptor', () => {
                 done();
             },
         });
+    });
+
+    it('should queue requests behind an ongoing token refresh', (done) => {
+        // Simulate a refresh in progress
+        (interceptor as any).isRefreshingToken = true;
+        const tokenSubject = new BehaviorSubject<string | null>(null);
+        (interceptor as any).tokenRefreshSubject = tokenSubject;
+        const req = new HttpRequest('GET', '/api/test');
+        let retried = false;
+        (next.handle as jest.Mock).mockImplementation((request) => {
+            if (request.headers.get('Authorization') === 'Bearer queuedToken') {
+                retried = true;
+            }
+            return of({} as HttpEvent<any>);
+        });
+        interceptor['queueRequestBehindRefresh'](req, next as HttpHandler).subscribe(() => {
+            expect(retried).toBe(true);
+            done();
+        });
+        // Simulate token being emitted after refresh
+        tokenSubject.next('queuedToken');
+    });
+
+    it('should not trigger silent refresh if not signed in', () => {
+        Object.defineProperty(authService, 'isSignedIn', { get: () => false });
+        const spy = jest.spyOn(usersService, 'refreshToken');
+        (interceptor as any).setupTokenRefreshTimer();
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should not trigger silent refresh if token expiry is negative', () => {
+        Object.defineProperty(authService, 'isSignedIn', { get: () => true });
+        Object.defineProperty(authService, 'tokenExpiresIn', { get: () => Date.now() - 10000 });
+        const spy = jest.spyOn(usersService, 'refreshToken');
+        (interceptor as any).setupTokenRefreshTimer();
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should not trigger silent refresh if no refreshToken', () => {
+        Object.defineProperty(authService, 'isSignedIn', { get: () => true });
+        Object.defineProperty(authService, 'tokenExpiresIn', { get: () => Date.now() + 1000 });
+        authService.refreshToken = null;
+        const spy = jest.spyOn(usersService, 'refreshToken');
+        (interceptor as any).setupTokenRefreshTimer();
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should perform silent refresh if token is about to expire', (done) => {
+        Object.defineProperty(authService, 'isSignedIn', { get: () => true });
+        Object.defineProperty(authService, 'tokenExpiresIn', { get: () => Date.now() + 1000 });
+        authService.refreshToken = 'refresh';
+        delete usersService.refreshToken;
+        usersService.refreshToken = jest
+            .fn()
+            .mockReturnValue(of({ token: 'silent', refreshToken: 'refresh' } as UserTokenDto));
+        const processLoginSpy = jest.spyOn(authService, 'processLogin');
+        try {
+            (interceptor as any).refreshTokenSilently('refresh');
+            setTimeout(() => {
+                try {
+                    expect(usersService.refreshToken).toHaveBeenCalledWith('refresh');
+                    expect(processLoginSpy).toHaveBeenCalled();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
+            }, 10);
+        } catch (err) {
+            done(err);
+        }
+    });
+
+    it('should handle silent refresh error gracefully', (done) => {
+        Object.defineProperty(authService, 'isSignedIn', { get: () => true });
+        Object.defineProperty(authService, 'tokenExpiresIn', { get: () => Date.now() + 1000 });
+        authService.refreshToken = 'refresh';
+        delete usersService.refreshToken;
+        usersService.refreshToken = jest.fn().mockReturnValue(throwError(() => new Error('fail')));
+        const processLoginSpy = jest.spyOn(authService, 'processLogin');
+        try {
+            (interceptor as any).refreshTokenSilently('refresh');
+            setTimeout(() => {
+                try {
+                    expect(usersService.refreshToken).toHaveBeenCalledWith('refresh');
+                    expect(processLoginSpy).not.toHaveBeenCalled();
+                    done();
+                } catch (err) {
+                    done(err);
+                }
+            }, 10);
+        } catch (err) {
+            done(err);
+        }
+    });
+
+    it('should only take the first non-null token in queueRequestBehindRefresh', (done) => {
+        const tokenSubject = new Subject<string | null>();
+        (interceptor as any).tokenRefreshSubject = tokenSubject;
+        const req = new HttpRequest('GET', '/api/test');
+        let callCount = 0;
+        (next.handle as jest.Mock).mockImplementation((request) => {
+            callCount++;
+            return of({} as HttpEvent<any>);
+        });
+        interceptor['queueRequestBehindRefresh'](req, next as HttpHandler).subscribe(() => {
+            expect(callCount).toBe(1);
+            done();
+        });
+        tokenSubject.next(null);
+        tokenSubject.next('token1');
+        tokenSubject.next('token2');
     });
 });

@@ -6,7 +6,7 @@ import {
     HttpEvent,
     HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject, timer } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, timer, of } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
@@ -75,13 +75,17 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 }),
                 catchError((error) => {
                     console.error('Silent token refresh failed:', error);
-                    return throwError(() => error);
+                    // Swallow error and complete gracefully
+                    return of(null as unknown as UserTokenDto);
                 }),
                 finalize(() => {
                     this.isRefreshingToken = false;
                 }),
             )
-            .subscribe();
+            .subscribe({
+                next: () => {},
+                error: () => {},
+            });
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
