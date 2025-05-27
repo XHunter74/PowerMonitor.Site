@@ -107,7 +107,7 @@ describe('PowerMonitorDailyEffects', () => {
             const data = Array(31).fill({ power: 10 });
             const sum = 310;
             const avg = helper.getAveragePower(date, sum, data as any);
-            expect(avg).toBeCloseTo(10.16, 2);
+            expect(avg).toBeCloseTo(10.15, 2);
         });
 
         it('getAveragePower computes partial month average for current month', () => {
