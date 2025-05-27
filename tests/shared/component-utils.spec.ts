@@ -110,4 +110,53 @@ describe('ComponentUtils', () => {
             );
         });
     });
+
+    describe('ComponentUtils.isMonthlyChangeDayButtonDisabled', () => {
+        beforeEach(() => {
+            Constants.systemStartDate = new Date(2020, 0, 1);
+        });
+
+        it('should disable the up button if next year is in the future', () => {
+            const today = new Date(); // May 27, 2025
+            const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            expect(ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                true,
+            );
+        });
+
+        it('should not disable the up button if next year is not in the future', () => {
+            const currentDate = new Date(2024, 4, 27); // May 27, 2024
+            expect(ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                false,
+            );
+        });
+
+        it('should disable the down button if previous year is before systemStartDate', () => {
+            const currentDate = new Date(2020, 0, 1); // Jan 1, 2020
+            expect(
+                ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Down),
+            ).toBe(true);
+        });
+
+        it('should not disable the down button if previous year is after systemStartDate', () => {
+            const currentDate = new Date(); // May 27, 2025
+            expect(
+                ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Down),
+            ).toBe(false);
+        });
+
+        it('should handle edge case: currentDate is exactly systemStartDate and direction is up', () => {
+            const currentDate = new Date(2020, 0, 1);
+            expect(ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Up)).toBe(
+                false,
+            );
+        });
+
+        it('should handle edge case: currentDate is exactly systemStartDate and direction is down', () => {
+            const currentDate = new Date(2020, 0, 1);
+            expect(
+                ComponentUtils.isMonthlyChangeDayButtonDisabled(currentDate, Direction.Down),
+            ).toBe(true);
+        });
+    });
 });

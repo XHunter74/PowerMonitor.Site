@@ -19,6 +19,8 @@ import { MonitorMonthlyState } from '../../store/reducers/power-monitor.monthly.
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers';
 import { loadMonthlyMonitorData } from '../../store/actions/power-monitor.monthly.actions';
+import { ComponentUtils } from '../../shared/component-utils';
+import { Direction } from '../../models/app.enums';
 
 @Component({
     selector: 'app-power-monitor-monthly',
@@ -33,6 +35,8 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     public powerData: IPowerDataMonthlyModel[];
     public powerSum: number;
     public powerAvg: number;
+    public isMonthlyChangeDayButtonDisabled = ComponentUtils.isMonthlyChangeDayButtonDisabled;
+    Direction = Direction;
 
     private annotation: any = {
         type: 'line',
@@ -220,28 +224,13 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
         return normalizedData;
     }
 
-    addYear(direction: string) {
+    addYear(direction: Direction) {
         const date = new Date(this.currentDate);
-        if (direction === 'up') {
+        if (direction === Direction.Up) {
             date.setFullYear(this.currentDate.getFullYear() + 1);
         } else {
             date.setFullYear(this.currentDate.getFullYear() - 1);
         }
         this.store.dispatch(loadMonthlyMonitorData({ date }));
-    }
-
-    isAddYearButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === 'up') {
-            nextDate.setFullYear(nextDate.getFullYear() + 1);
-            return nextDate.getFullYear() > new Date().getFullYear();
-        } else {
-            nextDate.setFullYear(nextDate.getFullYear() - 1);
-            return nextDate.getFullYear() < Constants.systemStartDate.getFullYear();
-        }
     }
 }

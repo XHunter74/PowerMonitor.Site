@@ -6,7 +6,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { YEAR_DATE_FORMATS } from '../../adapters/app-date-format';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
-import { Constants } from '../../shared/constants';
 import { PowerFailureMonthlyModel } from '../../models/power-failure-monthly.model';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
@@ -20,6 +19,7 @@ import { FailuresMonthlyState } from '../../store/reducers/power-failures.monthl
 import { AppState } from '../../store/reducers';
 import { Store } from '@ngrx/store';
 import { loadMonthlyFailuresData } from '../../store/actions/power-failures.monthly.actions';
+import { ComponentUtils } from '../../shared/component-utils';
 
 const PowerFailuresSort = 'power-failures-sort-monthly';
 
@@ -40,7 +40,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
     sortedData = new MatTableDataSource();
     totalPowerFailure: number;
     failureAmount: number;
-
+    public isMonthlyChangeDayButtonDisabled = ComponentUtils.isMonthlyChangeDayButtonDisabled;
     Direction = Direction;
     failuresDataState$: Observable<FailuresMonthlyState>;
     stateSubscription: Subscription;
@@ -143,7 +143,7 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
         }
     }
 
-    async addYear(direction: string) {
+    async addYear(direction: Direction) {
         const date = new Date(this.currentDate);
         if (direction === Direction.Up) {
             date.setFullYear(date.getFullYear() + 1);
@@ -151,21 +151,6 @@ export class PowerFailuresMonthlyComponent extends AppBaseComponent implements O
             date.setFullYear(date.getFullYear() - 1);
         }
         this.store.dispatch(loadMonthlyFailuresData({ date }));
-    }
-
-    isAddYearButtonDisabled(direction: string): boolean {
-        const nextDate = new Date(
-            this.currentDate.getFullYear(),
-            this.currentDate.getMonth(),
-            this.currentDate.getDate(),
-        );
-        if (direction === Direction.Up) {
-            nextDate.setFullYear(nextDate.getFullYear() + 1);
-            return nextDate.getFullYear() > new Date().getFullYear();
-        } else {
-            nextDate.setFullYear(nextDate.getFullYear() - 1);
-            return nextDate.getFullYear() < Constants.systemStartDate.getFullYear();
-        }
     }
 
     chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {

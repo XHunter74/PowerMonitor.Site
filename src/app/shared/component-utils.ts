@@ -44,4 +44,22 @@ export class ComponentUtils {
             );
         }
     }
+
+    public static isMonthlyChangeDayButtonDisabled(
+        currentDate: Date,
+        direction: Direction,
+    ): boolean {
+        const nextDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate(),
+        );
+        if (direction === Direction.Up) {
+            nextDate.setFullYear(nextDate.getFullYear() + 1);
+            return nextDate.getFullYear() > new Date().getFullYear();
+        } else {
+            nextDate.setFullYear(nextDate.getFullYear() - 1);
+            return nextDate.getFullYear() < Constants.systemStartDate.getFullYear();
+        }
+    }
 }

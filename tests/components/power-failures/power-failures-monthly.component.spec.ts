@@ -81,33 +81,6 @@ describe('PowerFailuresMonthlyComponent', () => {
         });
     });
 
-    describe('isAddYearButtonDisabled', () => {
-        beforeEach(() => {
-            Constants.systemStartDate = new Date(2020, 0, 1);
-        });
-        it('should disable the up button if next year is in the future', () => {
-            const today = new Date();
-            component.currentDate = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate(),
-            );
-            expect(component.isAddYearButtonDisabled(Direction.Up)).toBe(true);
-        });
-        it('should not disable the up button if next year is not in the future', () => {
-            component.currentDate = new Date(2024, 0, 1);
-            expect(component.isAddYearButtonDisabled(Direction.Up)).toBe(false);
-        });
-        it('should disable the down button if previous year is before systemStartDate', () => {
-            component.currentDate = new Date(2020, 0, 1);
-            expect(component.isAddYearButtonDisabled(Direction.Down)).toBe(true);
-        });
-        it('should not disable the down button if previous year is after systemStartDate', () => {
-            component.currentDate = new Date(2024, 0, 1);
-            expect(component.isAddYearButtonDisabled(Direction.Down)).toBe(false);
-        });
-    });
-
     describe('chosenYearHandler', () => {
         it('should dispatch loadMonthlyFailuresData with selected year', () => {
             const datepicker = { close: jest.fn() } as any;

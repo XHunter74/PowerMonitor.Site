@@ -13,6 +13,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { InjectionToken, NO_ERRORS_SCHEMA } from '@angular/core';
 import { jest } from '@jest/globals';
 import { Constants } from '../../../src/app/shared/constants';
+import { Direction } from '../../../src/app/models/app.enums';
 
 export const TRANSLATE_TOKEN = new InjectionToken('translate');
 
@@ -132,7 +133,7 @@ describe('PowerMonitorMonthlyComponent', () => {
     it('should call store.dispatch on addYear', () => {
         const spy = jest.spyOn(store, 'dispatch');
         component.currentDate = new Date('2024-01-01');
-        component.addYear('up');
+        component.addYear(Direction.Up);
         expect(spy).toHaveBeenCalled();
     });
 
@@ -152,20 +153,6 @@ describe('PowerMonitorMonthlyComponent', () => {
         component.prepareChart(data as any);
         expect(component.barChartData[0].data.length).toBe(12);
         expect(component.barChartLabels.length).toBe(12);
-    });
-
-    it('should disable addYear button correctly', () => {
-        component.currentDate = new Date('2024-01-01');
-        // up beyond current year
-        expect(component.isAddYearButtonDisabled('up')).toBe(false);
-        // down before systemStartDate: should be disabled
-        const old = new Date(2000, 0, 1);
-        Constants.systemStartDate = old;
-        component.currentDate = new Date(2000, 0, 2);
-        expect(component.isAddYearButtonDisabled('down')).toBe(true);
-        // down: enabled if not before systemStartDate
-        component.currentDate = new Date(2001, 0, 2);
-        expect(component.isAddYearButtonDisabled('down')).toBe(false);
     });
 
     it('should call prepareChart in processChangedState', () => {
