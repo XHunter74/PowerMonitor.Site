@@ -34,7 +34,7 @@ PowerMonitor is a comprehensive Angular application for monitoring, visualizing,
 
 ## Tech Stack
 
-- **Framework**: Angular 18
+- **Framework**: Angular 19
 - **State Management**: NgRx
 - **UI**: Angular Material, ng2-charts, Bootstrap
 - **Testing**: Jest
