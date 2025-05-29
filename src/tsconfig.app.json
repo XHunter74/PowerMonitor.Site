@@ -6,6 +6,12 @@
         "module": "es2020",
         "types": []
     },
-    "exclude": ["test.ts", "**/*.spec.ts"],
-    "include": ["**/*.ts"]
+    "exclude": [
+        "test.ts",
+        "**/*.spec.ts"
+    ],
+    "include": [
+        "**/*.ts",
+        "../src/polyfills.ts"
+    ]
 }

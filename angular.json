@@ -22,13 +22,18 @@
                         "index": "src/index.html",
                         "tsConfig": "src/tsconfig.app.json",
                         "progress": true,
-                        "polyfills": ["zone.js", "@angular/localize/init"],
+                        "polyfills": [
+                            "zone.js",
+                            "src/polyfills.ts"
+                        ],
                         "assets": [
                             "src/assets/favicon.png",
                             "src/assets",
                             "src/manifest.webmanifest"
                         ],
-                        "styles": ["src/styles.css"],
+                        "styles": [
+                            "src/styles.css"
+                        ],
                         "scripts": [],
                         "allowedCommonJsDependencies": [
                             "chart.js",
@@ -95,7 +100,10 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
                     }
                 }
             }
