@@ -73,12 +73,13 @@ describe('PowerMonitorHourlyComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PowerMonitorHourlyComponent, MockMatDatepickerInputDirective],
+            declarations: [PowerMonitorHourlyComponent],
             imports: [
                 MatDialogModule,
                 // MatDatepickerModule removed to prevent MatDatepickerInput instantiation
                 TranslateModule.forRoot(),
                 ReactiveFormsModule,
+                MockMatDatepickerInputDirective,
             ],
             providers: [
                 { provide: Store, useClass: MockStore },

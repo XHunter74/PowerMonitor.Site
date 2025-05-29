@@ -16,7 +16,8 @@ describe('ErrorDialogComponent', () => {
             consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         }
         await TestBed.configureTestingModule({
-            declarations: [ErrorDialogComponent, MockTranslatePipe],
+            declarations: [ErrorDialogComponent],
+            imports: [MockTranslatePipe],
             providers: [{ provide: MAT_DIALOG_DATA, useValue: new ErrorDialogData('Test error!') }],
         }).compileComponents();
 

@@ -21,13 +21,14 @@ describe('EditPowerConsumptionComponent', () => {
         const dto = new PowerMeteringDto();
         dto.eventDate = new Date();
         await TestBed.configureTestingModule({
-            declarations: [EditPowerConsumptionComponent, MockTranslatePipe],
+            declarations: [EditPowerConsumptionComponent],
             imports: [
                 ReactiveFormsModule,
                 MatInputModule,
                 MatFormFieldModule,
                 NgbTimepickerModule,
                 NoopAnimationsModule,
+                MockTranslatePipe,
             ],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: dto },

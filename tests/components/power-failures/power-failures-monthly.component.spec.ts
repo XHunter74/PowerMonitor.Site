@@ -45,8 +45,8 @@ describe('PowerFailuresMonthlyComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PowerFailuresMonthlyComponent, MockFormatDurationPipe],
-            imports: [TranslateModule.forRoot()],
+            declarations: [PowerFailuresMonthlyComponent],
+            imports: [TranslateModule.forRoot(), MockFormatDurationPipe],
             providers: [
                 { provide: Store, useClass: MockStore },
                 { provide: Router, useClass: MockRouter },

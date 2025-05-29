@@ -18,7 +18,8 @@ describe('ChangeLanguageDialogComponent', () => {
             consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         }
         await TestBed.configureTestingModule({
-            declarations: [ChangeLanguageDialogComponent, MockTranslatePipe],
+            declarations: [ChangeLanguageDialogComponent],
+            imports: [MockTranslatePipe],
             providers: [{ provide: TranslateService, useClass: MockTranslateService }],
         }).compileComponents();
 

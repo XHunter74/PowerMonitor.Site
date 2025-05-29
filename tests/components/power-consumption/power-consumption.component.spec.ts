@@ -34,8 +34,8 @@ describe('PowerConsumptionComponent', () => {
         }
         const { DateAdapter } = await import('@angular/material/core');
         await TestBed.configureTestingModule({
-            declarations: [PowerConsumptionComponent, MockTranslatePipe],
-            imports: [MatTableModule],
+            declarations: [PowerConsumptionComponent],
+            imports: [MatTableModule, MockTranslatePipe],
             providers: [
                 { provide: MatDialog, useValue: {} },
                 { provide: TranslateService, useClass: MockTranslateService },

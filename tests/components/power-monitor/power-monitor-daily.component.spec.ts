@@ -78,8 +78,13 @@ describe('PowerMonitorDailyComponent', () => {
 
     beforeEach(async () => {
         const module = TestBed.configureTestingModule({
-            declarations: [PowerMonitorDailyComponent, MockMatDatepickerInputDirective],
-            imports: [MatDialogModule, TranslateModule.forRoot(), ReactiveFormsModule],
+            declarations: [PowerMonitorDailyComponent],
+            imports: [
+                MatDialogModule,
+                TranslateModule.forRoot(),
+                ReactiveFormsModule,
+                MockMatDatepickerInputDirective,
+            ],
             providers: [
                 { provide: Store, useClass: MockStore },
                 { provide: 'dialog', useClass: MockDialog },

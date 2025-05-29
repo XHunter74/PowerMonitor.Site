@@ -51,12 +51,12 @@ describe('PowerFailuresYearlyComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [
-                PowerFailuresYearlyComponent,
+            declarations: [PowerFailuresYearlyComponent],
+            imports: [
+                TranslateModule.forRoot(),
                 MockFormatDurationPipe,
                 MockFormatDurationWithDaysPipe,
             ],
-            imports: [TranslateModule.forRoot()],
             providers: [
                 { provide: Store, useClass: MockStore },
                 { provide: Router, useClass: MockRouter },
