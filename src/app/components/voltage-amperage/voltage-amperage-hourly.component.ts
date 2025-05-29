@@ -6,7 +6,7 @@ import { IVoltageAmperageModel } from '../../models/voltage-amperage.model';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html',
     styleUrls: ['./voltage-amperage-hourly.component.css'],
-    standalone: false
+    standalone: false,
 })
 export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -73,10 +73,6 @@ export class VoltageAmperageHourlyComponent extends AppBaseComponent implements 
                     start: restoredSort.direction,
                     disableClear: false,
                 });
-                const sortable = sort.sortables.get(restoredSort.active);
-                if (sortable) {
-                    (sortable as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
-                }
             }
         }
     }

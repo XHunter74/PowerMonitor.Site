@@ -10,7 +10,7 @@ import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.co
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../../models/app.enums';
 import { PowerFailureDailyModel } from '../../models/power-failure-daily.model';
@@ -32,7 +32,7 @@ const PowerFailuresSort = 'power-failures-sort-daily';
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS },
     ],
-    standalone: false
+    standalone: false,
 })
 export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public isDailyChangeDayButtonDisabled = ComponentUtils.isDailyChangeDayButtonDisabled;
@@ -133,11 +133,6 @@ export class PowerFailuresDailyComponent extends AppBaseComponent implements OnI
                     start: restoredSort.direction,
                     disableClear: false,
                 });
-                if (sort.sortables.get(restoredSort.active) != undefined) {
-                    (
-                        sort.sortables.get(restoredSort.active) as MatSortHeader
-                    )._setAnimationTransitionState({ toState: 'active' });
-                }
             }
         }
     }

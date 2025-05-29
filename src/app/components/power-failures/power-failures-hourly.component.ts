@@ -6,7 +6,7 @@ import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Direction } from '../../models/app.enums';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +23,7 @@ const PowerFailuresSort = 'power-failures-sort-hourly';
     selector: 'app-power-failures-hourly',
     templateUrl: './power-failures-hourly.component.html',
     styleUrls: ['./power-failures.components.css'],
-    standalone: false
+    standalone: false,
 })
 export class PowerFailuresHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     Direction = Direction;
@@ -129,11 +129,6 @@ export class PowerFailuresHourlyComponent extends AppBaseComponent implements On
                     start: restoredSort.direction,
                     disableClear: false,
                 });
-                if (sort.sortables.get(restoredSort.active) != undefined) {
-                    (
-                        sort.sortables.get(restoredSort.active) as MatSortHeader
-                    )._setAnimationTransitionState({ toState: 'active' });
-                }
             }
         }
     }

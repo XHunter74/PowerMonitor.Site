@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AppBaseComponent } from '../base-component/app-base.component';
 import { ErrorDialogComponent } from '../../dialogs/error-dialog/error-dialog.component';
 import { PowerFailureMonthlyModel } from '../../models/power-failure-monthly.model';
-import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Direction } from '../../models/app.enums';
@@ -20,7 +20,7 @@ const PowerFailuresSort = 'power-failures-sort-yearly';
     selector: 'app-power-failures-yearly',
     templateUrl: './power-failures-yearly.component.html',
     styleUrls: ['./power-failures.components.css'],
-    standalone: false
+    standalone: false,
 })
 export class PowerFailuresYearlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -96,11 +96,6 @@ export class PowerFailuresYearlyComponent extends AppBaseComponent implements On
                     start: restoredSort.direction,
                     disableClear: false,
                 });
-                if (sort.sortables.get(restoredSort.active) != undefined) {
-                    (
-                        sort.sortables.get(restoredSort.active) as MatSortHeader
-                    )._setAnimationTransitionState({ toState: 'active' });
-                }
             }
         }
     }

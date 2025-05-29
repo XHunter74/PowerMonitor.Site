@@ -1,11 +1,20 @@
+import { TestBed } from '@angular/core/testing';
 import { AppDateAdapter } from '../../src/app/adapters/app-date.adapter';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 describe('AppDateAdapter', () => {
     let adapter: AppDateAdapter;
 
     beforeEach(() => {
-        // Initialize the adapter with a locale (e.g., 'en-US')
-        adapter = new AppDateAdapter('en-US');
+        TestBed.configureTestingModule({
+            providers: [
+                { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+                { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {} },
+                AppDateAdapter,
+            ],
+        });
+        adapter = TestBed.inject(AppDateAdapter);
     });
 
     it('should return 1 (Monday) as the first day of the week', () => {
