@@ -2,7 +2,7 @@ const esModules = ['@angular', 'zone', 'dayjs'];
 
 module.exports = {
     preset: 'jest-preset-angular',
-    setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+    setupFilesAfterEnv: ['<rootDir>/tests/test.setup.js'],
     testEnvironment: 'jsdom',
     extensionsToTreatAsEsm: ['.ts'],
     moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],

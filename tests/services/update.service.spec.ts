@@ -32,21 +32,10 @@ describe('UpdateService', () => {
         service = new UpdateService(swUpdate, snackBar, translate);
     });
 
-    // Suppress console.error and console.warn for all tests
-    let errorSpy: jest.SpyInstance;
-    let warnSpy: jest.SpyInstance;
-    beforeAll(() => {
-        errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-        warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    });
-
-    afterAll(() => {
-        errorSpy.mockRestore();
-        warnSpy.mockRestore();
-    });
+    // Console suppression is handled globally in tests/test.setup.js
 
     afterEach(() => {
-        jest.clearAllMocks();
+        jest.resetAllMocks();
     });
 
     it('should call setupUpdateChecking and setupVersionReadyListener if swUpdate.isEnabled', () => {
@@ -89,13 +78,12 @@ describe('UpdateService', () => {
     });
 
     it('should call swUpdate.activateUpdate and reload on activateUpdate', async () => {
-        // Mock window.location with a writable reload method
-        const originalLocation = window.location;
         const reloadMock = jest.fn();
-        // @ts-ignore
-        delete window.location;
-        // @ts-ignore
-        window.location = { ...originalLocation, reload: reloadMock };
+        const originalLocation = window.location;
+        Object.defineProperty(window, 'location', {
+            configurable: true,
+            value: { ...window.location, reload: reloadMock },
+        });
 
         const cachesMock = {
             keys: jest.fn(() => Promise.resolve(['cache1', 'cache2'])),
@@ -110,21 +98,27 @@ describe('UpdateService', () => {
         expect(reloadMock).toHaveBeenCalled();
 
         // Restore window.location
-        window.location = originalLocation;
+        Object.defineProperty(window, 'location', {
+            configurable: true,
+            value: originalLocation,
+        });
     });
 
     it('should reload if activateUpdate throws', async () => {
         swUpdate.activateUpdate = jest.fn(() => Promise.reject('fail'));
-        const originalLocation = window.location;
         const reloadMock = jest.fn();
-        // @ts-ignore
-        delete window.location;
-        // @ts-ignore
-        window.location = { ...originalLocation, reload: reloadMock };
+        const originalLocation = window.location;
+        Object.defineProperty(window, 'location', {
+            configurable: true,
+            value: { ...window.location, reload: reloadMock },
+        });
         await (service as any).activateUpdate();
         expect(reloadMock).toHaveBeenCalled();
         // Restore window.location
-        window.location = originalLocation;
+        Object.defineProperty(window, 'location', {
+            configurable: true,
+            value: originalLocation,
+        });
     });
 
     it('should log error if checkForUpdate fails', async () => {
