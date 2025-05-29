@@ -6,7 +6,13 @@ export class MockTranslateService {
         return { subscribe: (fn: any) => fn(key) };
     }
     use(lang: string) {
-        return lang;
+        // Return an observable with subscribe, like the real TranslateService
+        return {
+            subscribe: (fn: any) => {
+                fn(lang);
+                return { unsubscribe: () => {} };
+            },
+        };
     }
     setDefaultLang(lang: string) {
         return lang;
