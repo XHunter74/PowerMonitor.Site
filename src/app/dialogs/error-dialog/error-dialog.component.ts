@@ -6,6 +6,7 @@ import { ErrorDialogData } from '../Models/error-dialog-data';
     selector: 'app-error-dialog',
     templateUrl: './error-dialog.component.html',
     styleUrls: ['./error-dialog.component.css'],
+    standalone: false
 })
 export class ErrorDialogComponent {
     static show(dialog: MatDialog, message: string, width?: string) {

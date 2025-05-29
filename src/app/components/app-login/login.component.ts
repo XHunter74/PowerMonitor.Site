@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
+    standalone: false
 })
 export class AppLoginComponent implements AfterViewInit {
     constructor(private matDialog: MatDialog) {}

@@ -30,6 +30,7 @@ import { Direction } from '../../models/app.enums';
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS },
     ],
+    standalone: false
 })
 export class PowerMonitorDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public powerData: IPowerDataDailyModel[];

@@ -16,6 +16,7 @@ import { ISystemInfo } from '../../models/sysinfo.model';
     selector: 'app-platform-info',
     templateUrl: './platform-info.component.html',
     styleUrls: ['./platform-info.component.css'],
+    standalone: false
 })
 export class PlatformInfoComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public platformInfoState$: Observable<PlatformInfoState>;

@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
     selector: 'app-spinner-dialog',
     templateUrl: './spinner-dialog.component.html',
     styleUrls: ['./spinner-dialog.component.css'],
+    standalone: false
 })
 export class SpinnerDialogComponent {
     public message: string;

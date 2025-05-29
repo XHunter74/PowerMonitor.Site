@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
     selector: 'app-edit-power-consumption',
     templateUrl: './edit-power-consumption.component.html',
     styleUrls: ['./edit-power-consumption.component.css'],
+    standalone: false
 })
 export class EditPowerConsumptionComponent implements OnInit {
     data: PowerMeteringDto;

@@ -10,6 +10,7 @@ import { firstValueFrom } from 'rxjs';
     selector: 'app-dialog',
     templateUrl: './change-language-dialog.component.html',
     styleUrls: ['./change-language-dialog.component.css'],
+    standalone: false
 })
 export class ChangeLanguageDialogComponent implements OnInit {
     languageList: any;

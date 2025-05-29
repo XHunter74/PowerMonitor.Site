@@ -6,6 +6,7 @@ import { filter, Subscription } from 'rxjs';
 @Component({
     selector: 'app-power-failures',
     templateUrl: './power-failures.component.html',
+    standalone: false
 })
 export class PowerFailuresComponent implements OnInit, OnDestroy {
     selectedTab: number = 1;

@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
     selector: 'app-dialog',
     templateUrl: './question-dialog.component.html',
     styleUrls: ['./question-dialog.component.css'],
+    standalone: false
 })
 export class QuestionDialogComponent {
     static async show(

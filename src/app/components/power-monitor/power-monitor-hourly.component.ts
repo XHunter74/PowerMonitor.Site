@@ -31,6 +31,7 @@ import { Direction } from '../../models/app.enums';
     templateUrl: './power-monitor-hourly.component.html',
     styleUrls: ['./power-monitor.component.css'],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PowerMonitorHourlyComponent
     extends AppBaseComponent

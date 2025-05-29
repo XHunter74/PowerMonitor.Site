@@ -31,6 +31,7 @@ const PowerFailuresSort = 'power-failures-sort-monthly';
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS },
     ],
+    standalone: false
 })
 export class PowerFailuresMonthlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;

@@ -10,6 +10,7 @@ import { Constants } from '../../shared/constants';
     selector: 'app-nav-menu',
     templateUrl: './nav-menu.component.html',
     styleUrls: ['./nav-menu.component.css'],
+    standalone: false
 })
 export class NavMenuComponent implements OnInit, OnDestroy {
     isExpanded = false;

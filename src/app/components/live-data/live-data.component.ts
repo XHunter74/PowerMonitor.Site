@@ -12,6 +12,7 @@ import { ChartsBuilder } from './charts-builder';
     selector: 'app-live-data',
     templateUrl: './live-data.component.html',
     styleUrls: ['./live-data.component.css'],
+    standalone: false
 })
 export class LiveDataComponent implements OnInit, OnDestroy {
     private voltage = ChartsConstants.voltageChart.defaultVoltage;

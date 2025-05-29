@@ -24,6 +24,7 @@ import { loadYearlyMonitorData } from '../../store/actions/power-monitor.yearly.
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: YEAR_DATE_FORMATS },
     ],
+    standalone: false
 })
 export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public powerData: IPowerDataYearlyModel[];

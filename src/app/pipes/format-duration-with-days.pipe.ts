@@ -3,6 +3,7 @@ import { Intervals } from '../shared/constants';
 
 @Pipe({
     name: 'formatDurationWithDays',
+    standalone: false
 })
 export class FormatDurationWithDaysPipe implements PipeTransform {
     transform(duration: number): string {

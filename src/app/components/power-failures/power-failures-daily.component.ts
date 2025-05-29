@@ -32,6 +32,7 @@ const PowerFailuresSort = 'power-failures-sort-daily';
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_DATE_FORMATS },
     ],
+    standalone: false
 })
 export class PowerFailuresDailyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     public isDailyChangeDayButtonDisabled = ComponentUtils.isDailyChangeDayButtonDisabled;

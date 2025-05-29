@@ -23,6 +23,7 @@ const PowerFailuresSort = 'power-failures-sort-hourly';
     selector: 'app-power-failures-hourly',
     templateUrl: './power-failures-hourly.component.html',
     styleUrls: ['./power-failures.components.css'],
+    standalone: false
 })
 export class PowerFailuresHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     Direction = Direction;

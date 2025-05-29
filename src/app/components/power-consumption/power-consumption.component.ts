@@ -28,6 +28,7 @@ import {
     selector: 'app-power-consumption',
     templateUrl: './power-consumption.component.html',
     styleUrls: ['./power-consumption.component.css'],
+    standalone: false
 })
 export class PowerConsumptionComponent extends AppBaseComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = [

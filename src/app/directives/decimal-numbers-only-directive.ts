@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
     selector: 'input[decimalNumberOnly]',
+    standalone: false
 })
 export class DecimalNumbersOnlyDirective {
     // Allow decimal numbers and negative values

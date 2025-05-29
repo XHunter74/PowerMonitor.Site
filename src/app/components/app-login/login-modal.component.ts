@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
     selector: 'app-login-modal-component',
     templateUrl: './login-modal.component.html',
     styleUrls: ['./login-modal.component.css'],
+    standalone: false
 })
 export class LoginModalComponent implements OnInit {
     returnUrl: string;

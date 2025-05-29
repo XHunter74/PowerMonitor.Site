@@ -6,6 +6,7 @@ import { filter, Subscription } from 'rxjs';
 @Component({
     selector: 'app-power-monitor',
     templateUrl: './power-monitor.component.html',
+    standalone: false
 })
 export class PowerMonitorComponent implements OnInit, OnDestroy {
     selectedTab: number = 1;

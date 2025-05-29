@@ -20,6 +20,7 @@ const PowerFailuresSort = 'power-failures-sort-yearly';
     selector: 'app-power-failures-yearly',
     templateUrl: './power-failures-yearly.component.html',
     styleUrls: ['./power-failures.components.css'],
+    standalone: false
 })
 export class PowerFailuresYearlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;

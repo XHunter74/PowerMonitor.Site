@@ -23,6 +23,7 @@ const VoltageAmperageHourlySort = 'voltage-amperage-hourly-sort';
     selector: 'app-voltage-amperage-hourly',
     templateUrl: './voltage-amperage-hourly.component.html',
     styleUrls: ['./voltage-amperage-hourly.component.css'],
+    standalone: false
 })
 export class VoltageAmperageHourlyComponent extends AppBaseComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true }) sort: MatSort;

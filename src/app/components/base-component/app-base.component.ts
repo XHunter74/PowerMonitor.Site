@@ -6,6 +6,7 @@ import { DateAdapter } from '@angular/material/core';
 
 @Component({
     template: '',
+    standalone: false
 })
 export class AppBaseComponent implements OnDestroy {
     private readonly dateAdapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
