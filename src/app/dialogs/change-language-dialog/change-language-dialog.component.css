@@ -47,3 +47,9 @@
 .modal-content ::ng-deep .ng-select.ng-select-single .ng-select-container {
     min-height: 38px;
 }
+
+.select-language {
+    width: 90%;
+    margin-left: 10px;
+    margin-top: 10px;
+}

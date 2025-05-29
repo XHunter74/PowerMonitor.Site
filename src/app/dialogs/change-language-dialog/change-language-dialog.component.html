@@ -3,17 +3,11 @@
 </div>
 <div class="modal-body modal-content">
     <form role="form" [formGroup]="form" novalidate>
-        <ng-select
-            [dropdownPosition]="'bottom'"
-            bindValue="id"
-            bindLabel="name"
-            [clearable]="false"
-            [items]="languageList"
-            [searchable]="false"
-            [multiple]="false"
-            formControlName="languages"
-        >
-        </ng-select>
+        <mat-select [(value)]="currentLang" class="select-language">
+            <mat-option *ngFor="let language of languageList" [value]="language.id">
+                {{ language.name }}
+            </mat-option>
+        </mat-select>
     </form>
 </div>
 <div class="modal-footer dialog-footer">

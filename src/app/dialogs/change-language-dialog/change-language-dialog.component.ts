@@ -10,11 +10,12 @@ import { firstValueFrom } from 'rxjs';
     selector: 'app-dialog',
     templateUrl: './change-language-dialog.component.html',
     styleUrls: ['./change-language-dialog.component.css'],
-    standalone: false
+    standalone: false,
 })
 export class ChangeLanguageDialogComponent implements OnInit {
     languageList: any;
     form: UntypedFormGroup;
+    currentLang: string;
 
     static async show(dialog: MatDialog): Promise<string> {
         const dialogRef = dialog.open(ChangeLanguageDialogComponent, {
@@ -36,12 +37,7 @@ export class ChangeLanguageDialogComponent implements OnInit {
 
     ngOnInit() {
         this.languageList = this.getLanguagesSelectObj();
-        const currentLang = this.translate.currentLang;
-        this.getLangControl().setValue(currentLang);
-    }
-
-    getLangControl() {
-        return this.form.controls['languages'];
+        this.currentLang = this.translate.currentLang;
     }
 
     getLanguagesSelectObj() {
@@ -70,11 +66,10 @@ export class ChangeLanguageDialogComponent implements OnInit {
     }
 
     saveLanguage() {
-        const lang = this.getLangControl().value;
-        if (lang !== this.translate.currentLang) {
-            this.translate.use(lang).subscribe(() => {
-                localStorage.setItem(Constants.AppLanguage, lang);
-                console.info(`Successfully initialized '${lang}' language.`);
+        if (this.currentLang !== this.translate.currentLang) {
+            this.translate.use(this.currentLang).subscribe(() => {
+                localStorage.setItem(Constants.AppLanguage, this.currentLang);
+                console.info(`Successfully initialized '${this.currentLang}' language.`);
             });
         }
     }

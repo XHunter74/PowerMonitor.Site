@@ -27,7 +27,6 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
 import { environment } from '../../environments/environment';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthGuard, OpenGuard } from '../guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../store/reducers';
@@ -66,7 +65,6 @@ import { RoleGuard } from '../guards/role.guard';
                 deps: [HttpClient],
             },
         }),
-        NgSelectModule,
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(),
         ServiceWorkerModule.register('ngsw-worker.js', {
