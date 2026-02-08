@@ -99,15 +99,25 @@ describe('PowerMonitorMonthlyEffects', () => {
         });
 
         it('should compute average excluding current month entries when powerCurrentMonth is zero', () => {
-            // today is May 27, 2025
+            // Use current date when test runs
+            const now = new Date();
+            jest.useFakeTimers();
+            jest.setSystemTime(now);
+
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1; // Convert to 1-indexed
+
             const data = [
-                { year: 2025, month: 5, power: 0 }, // current month zero
-                { year: 2025, month: 6, power: 60 },
-                { year: 2025, month: 7, power: 30 },
+                { year: currentYear, month: currentMonth, power: 0 }, // current month zero
+                { year: currentYear, month: currentMonth + 1, power: 60 }, // next month
+                { year: currentYear, month: currentMonth + 2, power: 30 }, // month after
             ];
             const avg = helper.getAveragePower(data as any);
             // powerSum = 60+30 =90, months=3-1=2 => avg=45
             expect(avg).toBe(45);
+
+            // Restore real timers
+            jest.useRealTimers();
         });
 
         it('should include fractional month when current month has power', () => {

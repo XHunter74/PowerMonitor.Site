@@ -23,24 +23,41 @@ describe('getStringDate', () => {
 });
 
 describe('isCurrentMonth', () => {
+    let now: Date;
+    let currentYear: number;
+    let currentMonth: number;
+
+    beforeEach(() => {
+        now = new Date();
+        jest.useFakeTimers();
+        jest.setSystemTime(now);
+        currentYear = now.getFullYear();
+        currentMonth = now.getMonth();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
     it('should return true if the date is in the current month and year', () => {
-        // May 2025 (current date is May 26, 2025)
-        const date = new Date(2025, 4, 1); // May is month 4 (0-based)
+        const date = new Date(currentYear, currentMonth, 1);
         expect(isCurrentMonth(date)).toBe(true);
     });
 
     it('should return false if the date is in a different month but same year', () => {
-        const date = new Date(2025, 3, 1); // April 2025
+        const differentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        const date = new Date(currentYear, differentMonth, 1);
         expect(isCurrentMonth(date)).toBe(false);
     });
 
     it('should return false if the date is in a different year but same month', () => {
-        const date = new Date(2024, 4, 1); // May 2024
+        const date = new Date(currentYear - 1, currentMonth, 1);
         expect(isCurrentMonth(date)).toBe(false);
     });
 
     it('should return false if the date is in a different month and year', () => {
-        const date = new Date(2024, 3, 1); // April 2024
+        const differentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        const date = new Date(currentYear - 1, differentMonth, 1);
         expect(isCurrentMonth(date)).toBe(false);
     });
 });
