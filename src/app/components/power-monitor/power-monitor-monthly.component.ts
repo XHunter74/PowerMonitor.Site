@@ -211,7 +211,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
     normalizeMonthlyData(data: IPowerDataMonthlyModel[]): IPowerDataMonthlyModel[] {
         const normalizedData: IPowerDataMonthlyModel[] = [];
         for (let i = 0; i < 12; i++) {
-            const record = data.find((e) => e.month === i + 1);
+            const record = data.find((e) => Number(e.month) === i + 1);
             if (record) {
                 normalizedData.push(record);
             } else {
