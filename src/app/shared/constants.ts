@@ -51,13 +51,13 @@ export class ChartsConstants {
         defaultVoltage: 230,
     };
     static amperageChart = {
-        maxAmperage: 30,
-        nominalMax: 20,
+        maxAmperage: 40,
+        nominalMax: 28,
         defaultAmperage: 0,
     };
     static powerChart = {
-        maxPower: 8,
-        nominalMax: 5,
+        maxPower: 10,
+        nominalMax: 6,
         defaultPower: 0,
     };
 }
