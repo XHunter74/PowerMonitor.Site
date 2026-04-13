@@ -38,7 +38,7 @@ export class WebSocketService {
             map((data: ISensorsDataModel) => {
                 data.voltage = Math.round(data.voltage);
                 data.amperage = Math.round(data.amperage * 10) / 10;
-                data.power = data.power >= 0 ? Math.round((data.power / 1000) * 100) / 100 : 0;
+                data.power = data.power >= 0 ? Math.round((data.power / 1000) * 10) / 10 : 0;
                 return data;
             }),
         );
