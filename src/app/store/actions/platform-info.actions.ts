@@ -1,12 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { ISystemInfo } from '../../models/sysinfo.model';
-import { IBoardInfoModel } from '../../models/board-info.model';
 
 export const loadPlatformInfo = createAction('[Platform Info] Load Platform Info');
 
 export const loadPlatformInfoSuccess = createAction(
     '[Platform Info] Load Platform Info Success',
-    props<{ sysInfo: ISystemInfo; boardInfo: IBoardInfoModel }>(),
+    props<{ sysInfo: ISystemInfo }>(),
 );
 
 export const loadPlatformInfoFailure = createAction(

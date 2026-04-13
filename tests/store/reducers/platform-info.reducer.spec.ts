@@ -11,7 +11,6 @@ import {
 describe('platformInfoReducer', () => {
     const initialState: PlatformInfoState = {
         sysInfo: null,
-        boardInfo: null,
         loading: false,
         error: null,
     };
@@ -22,15 +21,10 @@ describe('platformInfoReducer', () => {
         expect(state.error).toBeNull();
     });
 
-    it('should update sysInfo and boardInfo on success', () => {
+    it('should update sysInfo on success', () => {
         const sysInfo = {} as any;
-        const boardInfo = {} as any;
-        const state = platformInfoReducer(
-            initialState,
-            loadPlatformInfoSuccess({ sysInfo, boardInfo }),
-        );
+        const state = platformInfoReducer(initialState, loadPlatformInfoSuccess({ sysInfo }));
         expect(state.sysInfo).toBe(sysInfo);
-        expect(state.boardInfo).toBe(boardInfo);
         expect(state.loading).toBe(false);
     });
 

@@ -7,7 +7,7 @@ import {
     loadPlatformInfoFailure,
 } from '../actions/platform-info.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { combineLatest, of } from 'rxjs';
+import { of } from 'rxjs';
 
 @Injectable()
 export class PlatformInfoEffects {
@@ -19,11 +19,8 @@ export class PlatformInfoEffects {
         this.actions$.pipe(
             ofType(loadPlatformInfo),
             switchMap(() =>
-                combineLatest([
-                    this.infoService.getSystemInfo(),
-                    this.infoService.getBoardVersion(),
-                ]).pipe(
-                    map(([sysInfo, boardInfo]) => loadPlatformInfoSuccess({ sysInfo, boardInfo })),
+                this.infoService.getSystemInfo().pipe(
+                    map((sysInfo) => loadPlatformInfoSuccess({ sysInfo })),
                     catchError((error) => of(loadPlatformInfoFailure({ error }))),
                 ),
             ),

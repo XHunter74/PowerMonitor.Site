@@ -29,9 +29,6 @@ describe('PlatformInfoComponent', () => {
             systemUptime: { days: 1, hours: 2, minutes: 3, seconds: 4 },
             systemDateTimeStr: '2024-01-01T12:34:56Z',
         },
-        boardInfo: {
-            buildDate: '2024-01-01T00:00:00Z',
-        },
     } as any;
 
     beforeEach(async () => {

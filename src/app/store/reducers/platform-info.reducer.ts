@@ -5,18 +5,15 @@ import {
     loadPlatformInfoFailure,
 } from '../actions/platform-info.actions';
 import { ISystemInfo } from '../../models/sysinfo.model';
-import { IBoardInfoModel } from '../../models/board-info.model';
 
 export interface PlatformInfoState {
     sysInfo: ISystemInfo | null;
-    boardInfo: IBoardInfoModel | null;
     loading: boolean;
     error: any;
 }
 
 const initialState: PlatformInfoState = {
     sysInfo: null,
-    boardInfo: null,
     loading: false,
     error: null,
 };
@@ -24,10 +21,9 @@ const initialState: PlatformInfoState = {
 export const platformInfoReducer = createReducer(
     initialState,
     on(loadPlatformInfo, (state) => ({ ...state, loading: true, error: null })),
-    on(loadPlatformInfoSuccess, (state, { sysInfo, boardInfo }) => ({
+    on(loadPlatformInfoSuccess, (state, { sysInfo }) => ({
         ...state,
         sysInfo,
-        boardInfo,
         loading: false,
     })),
     on(loadPlatformInfoFailure, (state, { error }) => ({

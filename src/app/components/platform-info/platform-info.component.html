@@ -10,15 +10,6 @@
             {{ 'PLATFORM_INFO.API_VERSION' | translate }}: <strong>{{ sysInfo.version }}</strong>
         </li>
     </ul>
-    <ul *ngIf="boardInfo">
-        <li>
-            {{ 'PLATFORM_INFO.BOARD_VERSION' | translate }}:
-            <strong
-                >{{ boardInfo.version }},
-                {{ boardInfo.buildDate | date: 'yyyy-MM-dd HH:mm' }}</strong
-            >
-        </li>
-    </ul>
     <div *ngIf="sysInfo">
         <ul>
             <li>

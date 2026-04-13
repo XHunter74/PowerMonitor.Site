@@ -43,15 +43,4 @@ describe('InfoService', () => {
             done();
         });
     });
-
-    it('should call http.get for getBoardVersion', (done) => {
-        http.get.mockReturnValue(of({}));
-        service.getBoardVersion().subscribe((result) => {
-            expect(http.get).toHaveBeenCalledWith(
-                expect.stringContaining('info/board-build-date'),
-                expect.objectContaining({ params: expect.any(Object) }),
-            );
-            done();
-        });
-    });
 });

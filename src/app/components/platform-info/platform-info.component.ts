@@ -9,21 +9,19 @@ import { AppState } from '../../store/reducers';
 import { loadPlatformInfo } from '../../store/actions/platform-info.actions';
 import { PlatformInfoState } from '../../store/reducers/platform-info.reducer';
 import { Observable, Subscription } from 'rxjs';
-import { IBoardInfoModel } from '../../models/board-info.model';
 import { ISystemInfo } from '../../models/sysinfo.model';
 
 @Component({
     selector: 'app-platform-info',
     templateUrl: './platform-info.component.html',
     styleUrls: ['./platform-info.component.css'],
-    standalone: false
+    standalone: false,
 })
 export class PlatformInfoComponent extends AppBaseComponent implements OnInit, OnDestroy {
-    public platformInfoState$: Observable<PlatformInfoState>;
-    stateSubscription: Subscription;
+    public platformInfoState$!: Observable<PlatformInfoState>;
+    stateSubscription?: Subscription;
     siteVersion: string;
-    public sysInfo: ISystemInfo;
-    public boardInfo: IBoardInfoModel;
+    public sysInfo!: ISystemInfo;
 
     constructor(
         private store: Store<AppState>,
@@ -46,9 +44,6 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit, O
         if (this.stateSubscription) {
             this.stateSubscription.unsubscribe();
         }
-        if (this.platformInfoState$) {
-            this.platformInfoState$ = null;
-        }
     }
 
     private processChangedState(state: PlatformInfoState) {
@@ -66,12 +61,8 @@ export class PlatformInfoComponent extends AppBaseComponent implements OnInit, O
             this.closeSpinner();
             return;
         }
-        if (!state.loading && state.sysInfo && state.boardInfo) {
+        if (!state.loading && state.sysInfo) {
             this.sysInfo = state.sysInfo;
-            this.boardInfo = {
-                ...state.boardInfo,
-                buildDate: new Date(state.boardInfo.buildDate),
-            };
         }
     }
 

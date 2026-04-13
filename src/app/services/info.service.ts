@@ -1,7 +1,6 @@
 import { Injectable, Optional, SkipSelf } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ISystemInfo } from '../models/sysinfo.model';
-import { IBoardInfoModel } from '../models/board-info.model';
 import { HttpService } from './http.service';
 import { HealthState } from '../models/health-state.model';
 import { AuthService } from './auth.service';
@@ -26,10 +25,5 @@ export class InfoService extends HttpService {
 
     pingApi(): Observable<HealthState> {
         return this.post<HealthState>('info/ping', null);
-    }
-
-    getBoardVersion(): Observable<IBoardInfoModel> {
-        const params = new HttpParams().set('_ts', new Date().getTime().toString());
-        return this.get<IBoardInfoModel>('info/board-build-date', params);
     }
 }
