@@ -68,7 +68,7 @@ describe('WebSocketService', () => {
             const input: ISensorsDataModel = {
                 voltage: 221.7,
                 amperage: 5.26,
-                power: 0,
+                power: 1200,
                 created: new Date(),
                 powerFactor: 0,
             };
@@ -76,7 +76,7 @@ describe('WebSocketService', () => {
             service.sensorsData().subscribe((result) => {
                 expect(result.voltage).toBe(222);
                 expect(result.amperage).toBe(5.3);
-                expect(result.power).toBeCloseTo(1.2, 1); // (222*5.3/1000) rounded to 1 decimal
+                expect(result.power).toBe(1.2); // maps incoming watts to kW with 2 decimal precision
                 done();
             });
         });
