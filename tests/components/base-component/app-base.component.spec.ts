@@ -1,7 +1,7 @@
+import { TestBed } from '@angular/core/testing';
 import { AppBaseComponent } from '../../../src/app/components/base-component/app-base.component';
 import { SpinnerDialogComponent } from '../../../src/app/dialogs/spinner-dialog/spinner-dialog.component';
 import { DateAdapter } from '@angular/material/core';
-import * as ngCore from '@angular/core';
 
 class TestAppBaseComponent extends AppBaseComponent {
     getDialogRef() {
@@ -35,11 +35,12 @@ describe('AppBaseComponent', () => {
             },
         };
         dateAdapter = { setLocale: jest.fn() };
-        jest.spyOn(ngCore, 'inject').mockImplementation((token: any) => {
-            if (token === DateAdapter) return dateAdapter;
-            return undefined;
+
+        TestBed.configureTestingModule({
+            providers: [{ provide: DateAdapter, useValue: dateAdapter }],
         });
-        component = new TestAppBaseComponent(dialog, translate);
+
+        component = TestBed.runInInjectionContext(() => new TestAppBaseComponent(dialog, translate));
     });
 
     afterEach(() => {
@@ -53,7 +54,7 @@ describe('AppBaseComponent', () => {
     it('should set default language if currentLang is falsy', () => {
         translate.currentLang = undefined;
         translate.use.mockClear();
-        new AppBaseComponent(dialog, translate);
+        TestBed.runInInjectionContext(() => new AppBaseComponent(dialog, translate));
         expect(translate.use).toHaveBeenCalledWith('en');
     });
 

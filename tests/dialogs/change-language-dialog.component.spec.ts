@@ -71,7 +71,7 @@ describe('ChangeLanguageDialogComponent', () => {
             .spyOn(component['translate'], 'use')
             .mockImplementation((lang: string) => of(undefined));
         const spySet = jest.spyOn(window.localStorage.__proto__, 'setItem');
-        component['translate'].currentLang = 'en';
+        (component['translate'] as any).currentLang = 'en';
         component.form.controls['languages'].setValue('en');
         // Patch component.currentLang to match form value before saveLanguage
         component.currentLang = 'en';
@@ -88,7 +88,7 @@ describe('ChangeLanguageDialogComponent', () => {
             .mockImplementation((lang: string) => of(undefined));
         const spySet = jest.spyOn(window.localStorage.__proto__, 'setItem');
         const spyLog = jest.spyOn(console, 'info').mockImplementation(() => {});
-        component['translate'].currentLang = 'en';
+        (component['translate'] as any).currentLang = 'en';
         component.form.controls['languages'].setValue('uk');
         // Patch component.currentLang to match form value before saveLanguage
         component.currentLang = 'uk';
