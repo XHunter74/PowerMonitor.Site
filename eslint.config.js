@@ -29,6 +29,7 @@ module.exports = tseslint.config(
     },
     rules: {
       "@angular-eslint/prefer-standalone": "off",
+      "@angular-eslint/prefer-inject": "off",
       "prettier/prettier": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",

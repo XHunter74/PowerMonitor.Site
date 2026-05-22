@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, Injector, NgModule, isDevMode } from '@angular/core';
 import {
     HTTP_INTERCEPTORS,
-    HttpClient,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -24,8 +23,9 @@ import { AuthService } from '../services/auth.service';
 import { AppHttpInterceptor } from '../interceptors/http.interceptor';
 import { UsersService } from '../services/users.service';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { appInitializerFactory, HttpLoaderFactory } from './app-initialize.factory';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { appInitializerFactory } from './app-initialize.factory';
 import { environment } from '../../environments/environment';
 import { AuthGuard, OpenGuard } from '../guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
@@ -59,11 +59,6 @@ import { RoleGuard } from '../guards/role.guard';
         ReactiveFormsModule,
         TranslateModule.forRoot({
             defaultLanguage: environment.defaultLocale,
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
         }),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(),
@@ -91,6 +86,7 @@ import { RoleGuard } from '../guards/role.guard';
         },
         UpdateService,
         provideHttpClient(withInterceptorsFromDi()),
+        ...provideTranslateHttpLoader(),
     ],
 })
 export class AppModule {

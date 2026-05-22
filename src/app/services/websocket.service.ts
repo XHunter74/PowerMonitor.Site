@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { ApplicationRef, Injectable, Inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ISensorsDataModel } from '../models/sensors-data.model';
 import { map } from 'rxjs/operators';
@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class WebSocket extends Socket {
-    constructor(@Inject('BASE_URL') baseUrl: string) {
+    constructor(@Inject('BASE_URL') baseUrl: string, appRef: ApplicationRef) {
         baseUrl = baseUrl.replace('api/', '');
-        super({ url: baseUrl, options: {} });
+        super({ url: baseUrl, options: {} }, appRef);
     }
 }
 

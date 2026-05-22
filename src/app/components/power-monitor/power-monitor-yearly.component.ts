@@ -44,7 +44,7 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h', backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
 
     // events
     public chartClicked(e: any): void {
@@ -73,7 +73,7 @@ export class PowerMonitorYearlyComponent extends AppBaseComponent implements OnI
 
     translateWords() {
         this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((chartLabel) => {
-            const data = [{ data: this.barChartData[0].data, label: chartLabel }];
+            const data = [{ data: this.barChartData[0].data, label: chartLabel, backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
             this.barChartData = data;
         });
     }

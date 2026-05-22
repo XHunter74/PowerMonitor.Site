@@ -75,7 +75,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h', backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
 
     currentDate: Date = null;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
@@ -120,7 +120,7 @@ export class PowerMonitorDailyComponent extends AppBaseComponent implements OnIn
 
     translateWords() {
         this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((chartLabel) => {
-            const data = [{ data: this.barChartData[0].data, label: chartLabel }];
+            const data = [{ data: this.barChartData[0].data, label: chartLabel, backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
             this.barChartData = data;
         });
     }

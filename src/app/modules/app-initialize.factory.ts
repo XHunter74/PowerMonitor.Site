@@ -1,8 +1,6 @@
 import { Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../../environments/environment';
 import { Constants } from '../shared/constants';
 
@@ -28,6 +26,3 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
         });
 }
 
-export function HttpLoaderFactory(httpClient: HttpClient) {
-    return new TranslateHttpLoader(httpClient);
-}

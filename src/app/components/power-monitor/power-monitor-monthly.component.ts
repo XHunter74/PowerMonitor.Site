@@ -76,7 +76,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
 
     public barChartLabels: string[] = [];
 
-    public barChartData: any[] = [{ data: [], label: 'Power, kW/h' }];
+    public barChartData: any[] = [{ data: [], label: 'Power, kW/h', backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
     currentDate: Date;
     currentDateControl: UntypedFormControl = new UntypedFormControl();
     powerMonitorDataState$: Observable<MonitorMonthlyState>;
@@ -115,7 +115,7 @@ export class PowerMonitorMonthlyComponent extends AppBaseComponent implements On
 
     translateWords() {
         this.translate.get('POWER_MONITOR.CHART_LABEL').subscribe((chartLabel) => {
-            const data = [{ data: this.barChartData[0].data, label: chartLabel }];
+            const data = [{ data: this.barChartData[0].data, label: chartLabel, backgroundColor: 'rgba(255,99,132,0.4)', borderColor: 'rgba(255,99,132,1)' }];
             this.barChartData = data;
         });
         this.translate.get('MONTHS').subscribe((months: { [key: string]: string }) => {

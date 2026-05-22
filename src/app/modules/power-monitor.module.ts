@@ -13,7 +13,7 @@ import { PowerMonitorDailyComponent } from '../components/power-monitor/power-mo
 import { PowerMonitorMonthlyComponent } from '../components/power-monitor/power-monitor-monthly.component';
 import { PowerMonitorYearlyComponent } from '../components/power-monitor/power-monitor-yearly.component';
 import { AppMaterialModule } from './material.module';
-import { NgChartsModule } from 'ng2-charts';
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormatNumberPipe } from '../pipes/format-number.pipe';
 
@@ -44,7 +44,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         CommonModule,
         AppMaterialModule,
-        NgChartsModule,
+        BaseChartDirective,
         NgbModule,
         TranslateModule.forChild(),
         EffectsModule.forFeature([
@@ -54,5 +54,6 @@ const routes: Routes = [
             PowerMonitorYearlyEffects,
         ]),
     ],
+    providers: [provideCharts(withDefaultRegisterables())],
 })
 export class PowerMonitorModule {}
