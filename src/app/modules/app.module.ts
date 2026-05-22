@@ -58,7 +58,7 @@ import { RoleGuard } from '../guards/role.guard';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forRoot({
-            defaultLanguage: environment.defaultLocale,
+            fallbackLang: environment.defaultLocale,
         }),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(),
