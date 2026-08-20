@@ -14,12 +14,12 @@ jobs:
       src_changed: ${{ steps.src-changes.outputs.src_changed }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: 'npm'
@@ -36,13 +36,13 @@ jobs:
         run: npm run build-prod
 
       - name: Upload build artifact (dist)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
 
       - name: Upload build artifact (versioned files)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: versioned-files
           path: |
@@ -55,23 +55,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
       - name: Download build artifact (dist)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist
 
       - name: Download build artifact (versioned files)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: versioned-files
           path: ./
